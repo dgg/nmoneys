@@ -1,5 +1,5 @@
 #summary Frequently Asked Questions
-#labels Phase-Support
+#labels Phase-Support,Featured
 
 = Introduction =
 
