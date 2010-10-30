@@ -1,6 +1,9 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Markup;
+using NMoneys.Support;
 using NMoneys.Tests.CustomConstraints;
 using NMoneys.Tests.Support;
 using NUnit.Framework;
@@ -231,6 +234,22 @@ namespace NMoneys.Tests
 			Assert.That(lev.Symbol, Is.EqualTo(bulgaria.CurrencySymbol));
 		}
 
+		[Test]
+		public void FindAll_GetsAllCurrencies()
+		{
+			Currency[] allCurrencies = Currency.FindAll().ToArray();
+			CurrencyIsoCode[] allCodes = Enumeration.GetValues<CurrencyIsoCode>();
+
+			Assert.That(allCurrencies.Select(c => c.IsoCode), Is.EquivalentTo(allCodes));
+		}
+
+		[Test]
+		public void FindAll_CanBeUsedForLinq()
+		{
+			Func<Currency, bool> currenciesWithDollarSymbol = c => c.Symbol.Equals("$", StringComparison.Ordinal);
+			Assert.That(Currency.FindAll().Where(currenciesWithDollarSymbol), Is.Not.Empty);
+		}
+
 		#region serialization
 
 		[Test]
@@ -307,5 +326,3 @@ namespace NMoneys.Tests
 		}
 	}
 }
-
-

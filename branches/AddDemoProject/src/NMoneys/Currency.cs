@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
@@ -540,6 +541,25 @@ namespace NMoneys
 				tryGet = TryGet(region.ISOCurrencySymbol, out currency);
 			}
 			return tryGet;
+		}
+
+		public static IEnumerable<Currency> FindAll()
+		{
+			CurrencyIsoCode[] isoCodes = Enumeration.GetValues<CurrencyIsoCode>();
+			using (var initializer = CurrencyInfo.CreateInitializer())
+			{
+				for (int i = 0; i < isoCodes.Length; i++)
+				{
+					CurrencyIsoCode isoCode = isoCodes[i];
+					Currency maybe;
+					if (!_byIsoCode.TryGet(isoCode, out maybe))
+					{
+						maybe = new Currency(initializer.Get(isoCode));
+						fillCaches(maybe);
+					}
+					yield return maybe;
+				}
+			}
 		}
 
 		#endregion
