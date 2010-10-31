@@ -787,5 +787,34 @@ namespace NMoneys
 		}
 
 		#endregion
+
+		#region parsing
+
+		public static Money Parse(string s, Currency currency)
+		{
+			return Parse(s, NumberStyles.Currency, currency);
+		}
+
+		public static Money Parse(string s, NumberStyles style, Currency currency)
+		{
+			decimal amount = decimal.Parse(s, style, currency);
+
+			return new Money(amount, currency);
+		}
+
+		public static bool TryParse(string s, Currency currency, out Money? money)
+		{
+			return TryParse(s, NumberStyles.Currency, currency, out money);
+		}
+
+		public static bool TryParse(string s, NumberStyles style, Currency currency, out Money? money)
+		{
+			decimal amount;
+			bool result = decimal.TryParse(s, style, currency, out amount);
+			money = result ? new Money(amount, currency) : (Money?)null;
+			return result;
+		}
+
+		#endregion
 	}
 }
