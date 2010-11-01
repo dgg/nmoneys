@@ -556,13 +556,13 @@ namespace NMoneys
 				for (int i = 0; i < isoCodes.Length; i++)
 				{
 					CurrencyIsoCode isoCode = isoCodes[i];
-					Currency maybe;
-					if (!_byIsoCode.TryGet(isoCode, out maybe))
+					Currency maybeInCache;
+					if (!_byIsoCode.TryGet(isoCode, out maybeInCache))
 					{
-						maybe = new Currency(initializer.Get(isoCode));
-						fillCaches(maybe);
+						maybeInCache = new Currency(initializer.Get(isoCode));
+						fillCaches(maybeInCache);
 					}
-					yield return maybe;
+					yield return maybeInCache;
 				}
 			}
 		}

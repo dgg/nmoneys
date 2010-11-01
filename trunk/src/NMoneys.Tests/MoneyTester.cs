@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using NMoneys.Tests.CustomConstraints;
@@ -1090,7 +1091,7 @@ namespace NMoneys.Tests
 			new TestCaseData("€ -100", Currency.Euro, -100m).SetName("negative danish style"),
 			new TestCaseData("(1.2)", Currency.Euro, -12m).SetName("negative dollar style with no symbol")
 		};
-		
+
 		[Test]
 		public void Parse_Default_IncorrectFormat_Exception()
 		{
@@ -1120,8 +1121,24 @@ namespace NMoneys.Tests
 		{
 			Assert.That(() => Money.Parse("AF", NumberStyles.Integer, Currency.None), Throws.InstanceOf<FormatException>());
 			Assert.That(() => Money.Parse("1e-1", NumberStyles.HexNumber, Currency.None), Throws.InstanceOf<ArgumentException>());
-			
+
 		}
+
+		[Test, Combinatorial]
+		public void Parse_CanParseAllWrittenCurrencies(
+			[ValueSource("nonFractionalAmounts")]decimal amount,
+			[ValueSource("allCurrencies")]Currency currency)
+		{
+			Money beforeWritting = new Money(amount, currency);
+			Money afterParsing = Money.Parse(beforeWritting.ToString(), currency);
+
+			Assert.That(beforeWritting, Is.EqualTo(afterParsing));
+		}
+
+		// only non-fractional amounts are chosen to not deal with ronding problems for currencies that do not support decimals
+		internal static decimal[] nonFractionalAmounts = new[] { 123m, -123m };
+
+		internal static IEnumerable<Currency> allCurrencies = Currency.FindAll();
 
 		#endregion
 
@@ -1155,7 +1172,7 @@ namespace NMoneys.Tests
 		public void TryParse_CurrencyStyle_CurrenciesWithNoDecimals_MaintainsAmountButNoRepresented()
 		{
 			Money? moreThanOneYen;
-			
+
 			Money.TryParse("¥1.49", Currency.Jpy, out moreThanOneYen);
 			Assert.That(moreThanOneYen, Must.Be.MoneyWith(1.49m, Currency.Jpy));
 			Assert.That(moreThanOneYen.ToString(), Is.EqualTo("¥1"));
@@ -1211,7 +1228,18 @@ namespace NMoneys.Tests
 			Assert.That(notParsed, Is.Null);
 			Assert.That(Money.TryParse("1e-1", NumberStyles.Currency, Currency.None, out notParsed), Is.False);
 			Assert.That(notParsed, Is.Null);
+		}
 
+		[Test, Combinatorial]
+		public void TryParse_CanParseAllWrittenCurrencies(
+			[ValueSource("nonFractionalAmounts")]decimal amount,
+			[ValueSource("allCurrencies")]Currency currency)
+		{
+			Money beforeWritting = new Money(amount, currency);
+			Money? afterParsing;
+			Money.TryParse(beforeWritting.ToString(), currency, out afterParsing);
+
+			Assert.That(beforeWritting, Is.EqualTo(afterParsing));
 		}
 
 		#endregion
