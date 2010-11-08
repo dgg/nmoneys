@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using NMoneys.Extensions;
 using NMoneys.Tests.CustomConstraints;
 using NMoneys.Tests.Support;
 using NUnit.Framework;
@@ -123,6 +124,195 @@ namespace NMoneys.Tests
 			Assert.That(() => Money.ForCurrentCulture(decimal.Zero),
 				Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.StringContaining("BGL"),
 				"Framework returns wrong ISOCurrencySymbol (BGL instead of BGN)");
+		}
+
+		#endregion
+
+		#region Zero
+
+		[Test]
+		public void Zero_NoneCurrency()
+		{
+			Assert.That(Money.Zero(), Must.Be.MoneyWith(decimal.Zero, Currency.None));
+		}
+
+		[Test]
+		public void Zero_ExistingIsoCode_PropertiesSet()
+		{
+			Assert.That(Money.Zero(CurrencyIsoCode.USD), Must.Be.MoneyWith(decimal.Zero, Currency.Usd));
+		}
+
+		[Test]
+		public void Zero_ExistingIsoSymbol_PropertiesSet()
+		{
+			Assert.That(Money.Zero("EUR"), Must.Be.MoneyWith(decimal.Zero, Currency.Euro));
+		}
+
+		[Test]
+		public void Zero_NullSymbol_Exception()
+		{
+			Assert.That(() => Money.Zero((string)null), Throws.InstanceOf<ArgumentNullException>());
+		}
+
+		[Test]
+		public void Zero_Currency_PropertiesSet()
+		{
+			Assert.That(Money.Zero(Currency.Gbp), Must.Be.MoneyWith(decimal.Zero, Currency.Gbp));
+		}
+
+		[Test]
+		public void Zero_NullCurrency_Exception()
+		{
+			Assert.Throws<NullReferenceException>(() => Money.Zero((Currency)null));
+		}
+
+		[Test]
+		public void Zero_NonExistingIsoCode_Exception()
+		{
+			CurrencyIsoCode nonExistingCode = (CurrencyIsoCode)(-7);
+
+			Assert.That(() => Money.Zero(nonExistingCode), Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.StringContaining("-7"));
+		}
+
+		[Test]
+		public void Zero_NonExistingIsoSymbol_PropertiesSet()
+		{
+			string nonExistentIsoSymbol = "XYZ";
+			Assert.That(() => Money.Zero(nonExistentIsoSymbol), Throws.InstanceOf<InvalidEnumArgumentException>());
+		}
+
+		#endregion
+
+		#region Major/Minor
+
+		[Test]
+		public void ForMajor_Currency()
+		{
+			Assert.That(Currency.Gbp.SignificantDecimalDigits, Is.EqualTo(2));
+			Assert.That(Money.ForMajor(234, Currency.Gbp), Must.Be.MoneyWith(234, Currency.Gbp));
+		}
+
+		[TestCaseSource("forMinorAllowingDecimals")]
+		public void ForMinor_Currency_AllowingDecimals_AmountShiftedAsManyDigitsAsCurrencySpecifies(Currency currency, int decimalDigits, long minorAmount, decimal amount)
+		{
+			Assert.That(currency.SignificantDecimalDigits, Is.EqualTo(decimalDigits));
+			Assert.That(Money.ForMinor(minorAmount, currency), Must.Be.MoneyWith(amount, currency));
+		}
+
+#pragma warning disable 169
+		private static TestCaseData[] forMinorAllowingDecimals = new[]
+		{
+			new TestCaseData(Currency.Gbp, 2, 234, 2.34m).SetName("bigger than cent factor"),
+			new TestCaseData(Currency.Gbp, 2, 34, .34m).SetName("same as cent factor"),
+			new TestCaseData(Currency.Gbp, 2, 4, .04m).SetName("less than cent factor"),
+			new TestCaseData(Currency.Get(CurrencyIsoCode.BHD), 3, 2345, 2.345m).SetName("bigger than cent factor"),
+			new TestCaseData(Currency.Get(CurrencyIsoCode.BHD), 3, 234, .234m).SetName("same as cent factor"),
+			new TestCaseData(Currency.Get(CurrencyIsoCode.BHD), 3, 34, .034m).SetName("less than cent factor"),
+		};
+#pragma warning restore 169
+
+		[Test]
+		public void ForMinor_Currency_NotAllowingDecimals_AmountStaysAtItis()
+		{
+			Currency notAllowingDecimals = Currency.Jpy;
+			Assert.That(notAllowingDecimals.SignificantDecimalDigits, Is.EqualTo(0));
+			Assert.That(Money.ForMinor(234, notAllowingDecimals), Must.Be.MoneyWith(234m, notAllowingDecimals));
+		}
+
+		[Test]
+		public void MajorAmount_NotDecimalAmount_SameValueForBoth()
+		{
+			Assert.That(tenner.MajorAmount, Is.EqualTo(10m));
+			Assert.That(oweMeQuid.MajorAmount, Is.EqualTo(-1m));
+		}
+
+		[Test]
+		public void MajorAmount_DecimalAmount_Truncated()
+		{
+			Assert.That(2.5m.Eur().MajorAmount, Is.EqualTo(2m));
+			Assert.That(-2.5m.Eur().MajorAmount, Is.EqualTo(-2m));
+		}
+
+		[Test]
+		public void MajorIntegralAmount_NotDecimalAmount_SameValueForBoth()
+		{
+			Assert.That(tenner.MajorIntegralAmount, Is.EqualTo(10L));
+			Assert.That(oweMeQuid.MajorIntegralAmount, Is.EqualTo(-1L));
+		}
+
+		[Test]
+		public void MajorIntegralAmount_DecimalAmount_Truncated()
+		{
+			Assert.That(2.5m.Eur().MajorIntegralAmount, Is.EqualTo(2L));
+			Assert.That(-2.5m.Eur().MajorIntegralAmount, Is.EqualTo(-2L));
+		}
+		
+		[Test]
+		public void MinorAmount_CurrencyWithDecimals_DecimalShifted()
+		{
+			Assert.That(new Money(2.34m, Currency.Gbp).MinorAmount, Is.EqualTo(234m));
+			Assert.That(new Money(-2.34m, Currency.Gbp).MinorAmount, Is.EqualTo(-234m));
+			Assert.That(new Money(-2.3m, Currency.Eur).MinorAmount, Is.EqualTo(-230m));
+			Assert.That(new Money(12.378m, Currency.Eur).MinorAmount, Is.EqualTo(1237m));
+			Assert.That(new Money(5m, Currency.Eur).MinorAmount, Is.EqualTo(500m));
+		}
+
+		[Test]
+		public void MinorAmount_CurrencyWithoutDecimals_DecimalNotShifted()
+		{
+			Assert.That(new Money(2.34m, Currency.Jpy).MinorAmount, Is.EqualTo(2m));
+			Assert.That(new Money(-2.34m, Currency.Jpy).MinorAmount, Is.EqualTo(-2m));
+		}
+
+		[Test]
+		public void MinorIntegralAmount_CurrencyWithDecimals_DecimalShifted()
+		{
+			Assert.That(new Money(2.34m, Currency.Gbp).MinorIntegralAmount, Is.EqualTo(234L));
+			Assert.That(new Money(-2.34m, Currency.Gbp).MinorIntegralAmount, Is.EqualTo(-234L));
+			Assert.That(new Money(-2.3m, Currency.Eur).MinorIntegralAmount, Is.EqualTo(-230m));
+			Assert.That(new Money(12.378m, Currency.Eur).MinorIntegralAmount, Is.EqualTo(1237L));
+			Assert.That(new Money(5m, Currency.Eur).MinorIntegralAmount, Is.EqualTo(500L));
+		}
+
+		[Test]
+		public void MinorIntegralAmount_CurrencyWithoutDecimals_DecimalNotShifted()
+		{
+			Assert.That(new Money(2.34m, Currency.Jpy).MinorIntegralAmount, Is.EqualTo(2L));
+			Assert.That(new Money(-2.34m, Currency.Jpy).MinorIntegralAmount, Is.EqualTo(-2L));
+		}
+
+		#endregion
+
+		#region Total
+
+		[Test]
+		public void Total_AllOfSameCurrency_NewInstanceWithAmountAsSumOfAll()
+		{
+			Assert.That(Money.Total(2m.Dollars(), 3m.Dollars(), 5m.Dollars()), Must.Be.MoneyWith(10m, Currency.Dollar));
+		}
+
+		[Test]
+		public void Total_DiffCurrency_NewInstanceWithAmountAsSumOfAll()
+		{
+			Assert.That(() => Money.Total(2m.Dollars(), 3m.Eur(), 5m.Dollars()), Throws.InstanceOf<DifferentCurrencyException>());
+		}
+
+		[Test]
+		public void Total_NullMoneys_Exception()
+		{
+
+		}
+
+		[Test]
+		public void Total_EmptyMoneys_Exception()
+		{
+
+		}
+
+		[Test]
+		public void Total_OnlyOneMoney_AnotherMoneyInstanceWithSameInformation()
+		{
+
 		}
 
 		#endregion
@@ -385,11 +575,27 @@ namespace NMoneys.Tests
 		}
 
 		[Test]
+		public void IsPositiveOrZero_TruenWhenPositiveOrZero()
+		{
+			Assert.That(fiver.IsPositiveOrZero(), Is.True);
+			Assert.That(nought.IsPositiveOrZero(), Is.True);
+			Assert.That(oweMeQuid.IsPositiveOrZero(), Is.False);
+		}
+
+		[Test]
 		public void IsNegative_TrueWhenNegative()
 		{
 			Assert.That(fiver.IsNegative(), Is.False);
 			Assert.That(nought.IsNegative(), Is.False);
 			Assert.That(oweMeQuid.IsNegative(), Is.True);
+		}
+
+		[Test]
+		public void IsNegativeOrZero_TrueWhenNegativeOrZero()
+		{
+			Assert.That(fiver.IsNegativeOrZero(), Is.False);
+			Assert.That(nought.IsNegativeOrZero(), Is.True);
+			Assert.That(oweMeQuid.IsNegativeOrZero(), Is.True);
 		}
 
 		[TestCaseSource("sameCurrency")]
@@ -886,15 +1092,17 @@ namespace NMoneys.Tests
 
 		#endregion
 
+		#region Perform
+
 		[Test]
 		public void Perform_Unary_UnaryOperationPerformed()
 		{
 			bool performed = false;
 			Func<decimal, decimal> unary = d =>
-			{
-				performed = true;
-				return d;
-			};
+											{
+												performed = true;
+												return d;
+											};
 
 			decimal amount = 2m;
 			var subject = new Money(amount, CurrencyIsoCode.XTS);
@@ -911,13 +1119,13 @@ namespace NMoneys.Tests
 		{
 			bool performed = false;
 			Func<decimal, decimal, decimal> binary = (x, y) =>
-			{
-				performed = true;
-				return x * y;
-			};
+														{
+															performed = true;
+															return x * y;
+														};
 
 			Money subject = new Money(2m, CurrencyIsoCode.XTS),
-				operand = new Money(3m, CurrencyIsoCode.XTS);
+				  operand = new Money(3m, CurrencyIsoCode.XTS);
 
 			Money result = subject.Perform(operand, binary);
 
@@ -932,17 +1140,35 @@ namespace NMoneys.Tests
 		{
 			bool performed = false;
 			Func<decimal, decimal, decimal> binary = (x, y) =>
-			{
-				performed = true;
-				return x * y;
-			};
+														{
+															performed = true;
+															return x * y;
+														};
 
 			Money subject = new Money(2m, CurrencyIsoCode.XTS),
-				operand = new Money(2m, CurrencyIsoCode.XXX);
+				  operand = new Money(2m, CurrencyIsoCode.XXX);
 
 			Assert.That(() => subject.Perform(operand, binary), Throws.InstanceOf<DifferentCurrencyException>());
 			Assert.That(performed, Is.False);
 		}
+
+		#endregion
+
+		#region HasDecimals
+
+		[Test]
+		public void HasDecimals_Integer_False()
+		{
+			Assert.That(new Money(3m, Currency.Usd).HasDecimals, Is.False);
+		}
+
+		[Test]
+		public void HasDecimals_NotInteger_False()
+		{
+			Assert.That(new Money(3.0000001m, Currency.Usd).HasDecimals, Is.True);
+		}
+
+		#endregion
 
 		#endregion
 

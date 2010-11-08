@@ -324,5 +324,63 @@ namespace NMoneys.Tests
 		{
 			Assert.DoesNotThrow(Currency.InitializeAllCurrencies);
 		}
+
+		[Test]
+		public void NumericValue_HoldsTheValueOfTheCode()
+		{
+			Assert.That(Currency.Dollar.NumericCode, Is.EqualTo(840));
+			Assert.That(Currency.Euro.NumericCode, Is.EqualTo(978));
+		}
+
+		[Test]
+		public void PaddedNumericValue_ThreeDigitedValue_NoLeadingZeros()
+		{
+			Assert.That(Currency.Dollar.PaddedNumericCode, Is.EqualTo("840"));
+		}
+
+		[Test]
+		public void PaddedNumericValue_TwoDigitedValue_OneLeadingZero()
+		{
+			Assert.That(Currency.Get(CurrencyIsoCode.BZD).PaddedNumericCode, Is.EqualTo("084"));
+		}
+
+		[Test]
+		public void PaddedNumericValue_OneDigitedValue_OneLeadingZero()
+		{
+			Assert.That(Currency.Get(CurrencyIsoCode.ALL).PaddedNumericCode, Is.EqualTo("008"));
+		}
+
+		[Test]
+		public void CompareTo_NonGeneric_AccordingToSpec()
+		{
+			object to = null;
+			Assert.That(Currency.Xts.CompareTo(to), Is.GreaterThan(0));
+
+			to = Currency.Xts;
+			Assert.That(Currency.Xts.CompareTo(to), Is.EqualTo(0));
+			to = Currency.Xxx;
+			Assert.That(Currency.Xts.CompareTo(to), Is.LessThan(0));
+			to = Currency.Aud;
+			Assert.That(Currency.Xts.CompareTo(to), Is.GreaterThan(0));
+
+			Exception notACurrency = new Exception();
+			Assert.That(()=>Currency.Xts.CompareTo(notACurrency), Throws
+				.ArgumentException
+				.With.Message.StringContaining("Currency"));
+		}
+
+		[Test]
+		public void CompareTo_Generic_AccordingToSpec()
+		{
+			Currency to = null;
+			Assert.That(Currency.Xts.CompareTo(to), Is.GreaterThan(0));
+
+			to = Currency.Xts;
+			Assert.That(Currency.Xts.CompareTo(to), Is.EqualTo(0));
+			to = Currency.Xxx;
+			Assert.That(Currency.Xts.CompareTo(to), Is.LessThan(0));
+			to = Currency.Aud;
+			Assert.That(Currency.Xts.CompareTo(to), Is.GreaterThan(0));
+		}
 	}
 }
