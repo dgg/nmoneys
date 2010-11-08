@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Xml;
@@ -64,10 +66,175 @@ namespace NMoneys
 			return new Money(amount, Currency.Get(culture));
 		}
 
+		public static Money Zero()
+		{
+			return new Money(decimal.Zero);
+		}
+
+		public static Money Zero(CurrencyIsoCode currency)
+		{
+			return new Money(decimal.Zero, currency);
+		}
+
+		public static Money Zero(Currency currency)
+		{
+			return new Money(decimal.Zero, currency);
+		}
+
+		public static Money Zero(string threeLetterIsoCode)
+		{
+			return new Money(decimal.Zero, threeLetterIsoCode);
+		}
+
+		public static Money ForMajor(long amountMajor)
+		{
+			return ForMajor(amountMajor, CurrencyIsoCode.XXX);
+		}
+
+		public static Money ForMajor(long amountMajor, CurrencyIsoCode currency)
+		{
+			return ForMajor(amountMajor, Currency.Get(currency));
+		}
+
+		/// <summary>
+		/// Creates an instance of <see cref="Money"/> from an amount in major units of the specified <paramref name="currency"/>.
+		/// </summary>
+		/// <remarks>The amount is a whole number. Thus 'USD 20' can be initialized, but not 'USD 20.32'.</remarks>
+		/// <param name="amountMajor">The amount in the major division of the currency</param>
+		/// <param name="currency">Currency</param>
+		/// <returns>A new instance with the major amount and currency specified.</returns>
+		/// <exception cref="ArgumentNullException">if <paramref name="currency"/> is null.</exception>
+		public static Money ForMajor(long amountMajor, Currency currency)
+		{
+			Guard.AgainstNullArgument("currency", currency); 
+			return new Money(decimal.Truncate(amountMajor), currency);
+		}
+
+		public static Money ForMajor(long amountMajor, string threeLetterIsoCode)
+		{
+			return ForMajor(amountMajor, Currency.Get(threeLetterIsoCode));
+		}
+
+		public static Money ForMinor(long amountMinor)
+		{
+			return ForMinor(amountMinor, CurrencyIsoCode.XXX);
+		}
+
+		public static Money ForMinor(long amountMinor, CurrencyIsoCode currency)
+		{
+			return ForMinor(amountMinor, Currency.Get(currency));
+		}
+
+		/// <summary>
+		/// Creates an instance of <see cref="Money"/> from an amount in major units.
+		/// </summary>
+		/// <remarks>Allows creating an instance with an amount expressed in terms of the minor unit of the currency.
+		/// <para>For example, when constructing 'US Dollars', the <paramref name="amountMinor"/> represents 'cents'.</para>
+		/// <para>When the currency has zero decimal places, <see cref="MajorAmount"/> and <see cref="MinorAmount"/> are the same.</para>
+		/// </remarks>
+		/// <example>Money.ForMinor(Currency.Usd, 2595) creates an instance of 'USD 29.95'</example>
+		/// <param name="amountMinor">The amount of money in the minor division of the currency.</param>
+		/// <param name="currency">The currency</param>
+		/// <returns>A new instance with the <paramref name="amountMinor"/> and <paramref name="currency"/> specified.</returns>
+		/// <exception cref="ArgumentNullException">if <paramref name="currency"/> is null.</exception>
+		public static Money ForMinor(long amountMinor, Currency currency)
+		{
+			Guard.AgainstNullArgument("currency", currency);
+			int centFactor = _cents[currency.SignificantDecimalDigits];
+			return new Money(decimal.Divide(amountMinor, centFactor), currency);
+		}
+
+		public static Money ForMinor(long amountMinor, string threeLetterIsoCode)
+		{
+			return ForMinor(amountMinor, Currency.Get(threeLetterIsoCode));
+		}
+
+		/// <summary>
+		/// Creates an instance of <see cref="Money"/> witht the total value of an array.
+		/// </summary>
+		/// <remarks>All moneys have to have the same currency, otherwise and exception will be thrown.</remarks>
+		/// <param name="moneys">A not null and not empty array of moneys.</param>
+		/// <returns>An <see cref="Money"/> instance which <see cref="Amount"/> is the sum of all amounts of the moneys in the array,
+		/// and <see cref="Currency"/> the same as all the moneys in the array.</returns>
+		/// <exception cref="ArgumentNullException">If <paramref name="moneys"/> is null.</exception>
+		/// <exception cref="ArgumentException">If <paramref name="moneys"/> is empty.</exception>
+		/// <exception cref="DifferentCurrencyException">If any of the currencies of <paramref name="moneys"/> differ.</exception>
+		public static Money Total(params Money[] moneys)
+		{
+			return Total((IEnumerable<Money>) moneys);
+		}
+
+		/// <summary>
+		/// Creates an instance of <see cref="Money"/> witht the total value of an collection of moneys.
+		/// </summary>
+		/// <remarks></remarks>
+		/// <param name="moneys">A not null and not empty collection of moneys.</param>
+		/// <returns>An <see cref="Money"/> instance which <see cref="Amount"/> is the sum of all amounts of the moneys in the collection,
+		/// and <see cref="Currency"/> the same as all the moneys in the collection.</returns>
+		/// /// <exception cref="ArgumentNullException">If <paramref name="moneys"/> is null.</exception>
+		/// <exception cref="ArgumentException">If <paramref name="moneys"/> is empty.</exception>
+		/// <exception cref="DifferentCurrencyException">If any of the currencies of <paramref name="moneys"/> differ.</exception>
+		public static Money Total(IEnumerable<Money> moneys)
+		{
+			Guard.AgainstNullArgument("moneys", moneys);
+			Guard.AgainstArgument("moneys", !moneys.Any(), "The collection of moneys cannot be empty.");
+
+			return moneys.Aggregate((a, b) => a + b);
+		}
+
 		#endregion
 
 		public CurrencyIsoCode CurrencyCode { get; private set; }
 		public decimal Amount { get; private set; }
+
+		/// <summary>
+		/// Gets the amount in major units
+		/// </summary>
+		/// <remarks>This method returns the monetary amount in terms of the major units of the currency, truncating the <see cref="Amount"/> if necessary.
+		/// <para>For example, 'EUR 2.35' will return a major amount of 2, since EUR has 2 significant decimal values. 
+		/// 'BHD -1.345' will return -1.</para></remarks>
+		public decimal MajorAmount
+		{
+			get { return Truncate().Amount; }
+		}
+
+		/// <summary>
+		/// Gets the amount in major units as a <see cref="long"/>.
+		/// </summary>
+		/// <remarks>This property returns the monetary amount in terms of the major units of the currency, truncating the amount if necessary.
+		/// <para>For example, 'EUR 2.35' will return a major amount of 2, since EUR has 2 significant decimal values. 
+		/// 'BHD -1.345' will return -1.</para></remarks>
+		public long MajorIntegralAmount
+		{
+			get { return Convert.ToInt64(MajorAmount); }
+		}
+
+		/// <summary>
+		/// Gets the amount in minor units.
+		/// </summary>
+		/// <remarks>This property return the monetary amount in terms of the minor units of the currency, truncating the amount if necessary.
+		/// <para>For example, 'EUR 2.35' will return a minor amount of 235, since EUR has 2 significant decimal values. 
+		/// 'BHD -1.345' will return -1345.</para></remarks>
+		public decimal MinorAmount
+		{
+			get
+			{
+				Currency currency = Currency.Get(CurrencyCode);
+				int centFactor = _cents[currency.SignificantDecimalDigits];
+				return decimal.Truncate(decimal.Multiply(Amount, centFactor));
+			}
+		}
+
+		/// <summary>
+		/// Gets the amount in minor units as a <see cref="long"/>.
+		/// </summary>
+		/// <remarks>This property return the monetary amount in terms of the minor units of the currency, truncating the amount if necessary.
+		/// <para>For example, 'EUR 2.35' will return a minor amount of 235, since EUR has 2 significant decimal values. 
+		/// 'BHD -1.345' will return -1345.</para></remarks>
+		public long MinorIntegralAmount
+		{
+			get { return Convert.ToInt64(MinorAmount); }
+		}
 
 		#region formatting
 
@@ -391,6 +558,16 @@ namespace NMoneys
 			return Amount.Equals(decimal.Zero);
 		}
 
+		public bool IsNegativeOrZero()
+		{
+			return IsNegative() || IsZero();
+		}
+
+		public bool IsPositiveOrZero()
+		{
+			return IsPositive() || IsZero();
+		}
+
 		#endregion
 
 		#region cloning
@@ -573,7 +750,7 @@ namespace NMoneys
 			return truncatedAmount;
 		}
 
-		
+
 		/// <summary>
 		/// Returns the integral digits of this instance of <see cref="Money"/>; any fractional digits are discarded.
 		/// </summary>
@@ -722,6 +899,15 @@ namespace NMoneys
 			Guard.AgainstNullArgument("unaryOperation", unaryOperation);
 
 			return new Money(unaryOperation(Amount), CurrencyCode);
+		}
+
+		public bool HasDecimals
+		{
+			get
+			{
+				decimal truncated = decimal.Truncate(Amount);
+				return Amount - truncated != decimal.Zero;
+			}
 		}
 
 		#endregion
