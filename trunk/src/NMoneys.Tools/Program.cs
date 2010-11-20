@@ -8,26 +8,33 @@ namespace NMoneys.Tools
 		static void Main(string[] args)
 		{
 			Console.WriteLine(Environment.Version);
+			Console.ReadLine();
 			bool help = true;
 
 			OptionSet set = new OptionSet()
-				.Add("i", "Extracts the currency relevat information for the given culture name",
+				.Add("eic", "Extracts the currency relevant information for the given culture name",
 					option =>
 					{
 						help = false;
-						new ExtractCurrencyInfoCommand().Execute();
+						new ExtractInfoFromCulture().Execute();
 					})
-				.Add("e", "Extracts the codepoints that make up a given string",
+				.Add("es", "Extracts the codepoints that make up a given string",
 					option =>
 					{
 						help = false;
-						new EncodeSymbolCommand().Execute();
+						new EncodeSymbol().Execute();
 					})
-				.Add("c", "Compares the information provided by the culture in .Net with the information provided in the config file",
+				.Add("cg", "Compares the information provided by the culture in .Net with the information provided in the config file",
 					option =>
 					{
 						help = false;
-						new CompareWithGlobalizationCommand().Execute();
+						new CompareWithGlobalization().Execute();
+					})
+				.Add("sw", "Scraped the information contained in the ISO.org web page for the 4217 standard",
+					option =>
+					{
+						help = false;
+						new ScrapeWebsite().Execute();
 					})
 				.Add("h|?|help", "Displays Help", opt => help = true);
 

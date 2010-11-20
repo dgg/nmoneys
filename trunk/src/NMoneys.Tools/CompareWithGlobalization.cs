@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace NMoneys.Tools
 {
-	internal class CompareWithGlobalizationCommand : Command
+	internal class CompareWithGlobalization : Command
 	{
 		protected override void DoExecute()
 		{

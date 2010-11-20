@@ -3,7 +3,7 @@ using NMoneys.Support;
 
 namespace NMoneys.Tools
 {
-	internal class EncodeSymbolCommand : Command
+	internal class EncodeSymbol : Command
 	{
 		protected override void DoExecute()
 		{
