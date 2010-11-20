@@ -4,7 +4,7 @@ using NMoneys.Support;
 
 namespace NMoneys.Tools
 {
-	internal class ExtractInfoFromCulture : Command
+	internal class ExtractCurrencyInfoCommand : Command
 	{
 		protected override void DoExecute()
 		{

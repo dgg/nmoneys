@@ -105,6 +105,7 @@ namespace NMoneys
 		GNF = 324,
 		[CanonicalCulture("es-GT")]
 		GTQ = 320,
+		GWP = 624,
 		GYD = 328,
 		[CanonicalCulture("zh-HK")]
 		HKD = 344,
@@ -321,29 +322,14 @@ namespace NMoneys
 	public static class IsoCodeExtensions
 	{
 		private const string EQUAL = " = ";
-
-		/// <summary>
-		/// Returns a combination of the ISO 4217 code and its numeric value, separated by the equals sign '<code>=</code>'.
-		/// </summary>
 		public static string AsValuePair(this CurrencyIsoCode isoCode)
 		{
-			return isoCode + EQUAL + isoCode.NumericCode();
+			return isoCode + EQUAL + (short)isoCode;
 		}
 
-		/// <summary>
-		/// The numeric ISO 4217 code of the <see cref="CurrencyIsoCode"/>
-		/// </summary>
-		public static short NumericCode(this CurrencyIsoCode isoCode)
+		public static short Value(this CurrencyIsoCode isoCode)
 		{
 			return (short)isoCode;
-		}
-
-		/// <summary>
-		/// Returns a padded three digit string representation of the <see cref="NumericCode"/>.
-		/// </summary>
-		public static string PaddedNumericCode(this CurrencyIsoCode isoCode)
-		{
-			return isoCode.NumericCode().ToString("000");
 		}
 	}
 }

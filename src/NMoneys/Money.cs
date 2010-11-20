@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Xml;
@@ -66,175 +64,12 @@ namespace NMoneys
 			return new Money(amount, Currency.Get(culture));
 		}
 
-		public static Money Zero()
-		{
-			return new Money(decimal.Zero);
-		}
-
-		public static Money Zero(CurrencyIsoCode currency)
-		{
-			return new Money(decimal.Zero, currency);
-		}
-
-		public static Money Zero(Currency currency)
-		{
-			return new Money(decimal.Zero, currency);
-		}
-
-		public static Money Zero(string threeLetterIsoCode)
-		{
-			return new Money(decimal.Zero, threeLetterIsoCode);
-		}
-
-		public static Money ForMajor(long amountMajor)
-		{
-			return ForMajor(amountMajor, CurrencyIsoCode.XXX);
-		}
-
-		public static Money ForMajor(long amountMajor, CurrencyIsoCode currency)
-		{
-			return ForMajor(amountMajor, Currency.Get(currency));
-		}
-
-		/// <summary>
-		/// Creates an instance of <see cref="Money"/> from an amount in major units of the specified <paramref name="currency"/>.
-		/// </summary>
-		/// <remarks>The amount is a whole number. Thus 'USD 20' can be initialized, but not 'USD 20.32'.</remarks>
-		/// <param name="amountMajor">The amount in the major division of the currency</param>
-		/// <param name="currency">Currency</param>
-		/// <returns>A new instance with the major amount and currency specified.</returns>
-		/// <exception cref="ArgumentNullException">if <paramref name="currency"/> is null.</exception>
-		public static Money ForMajor(long amountMajor, Currency currency)
-		{
-			Guard.AgainstNullArgument("currency", currency); 
-			return new Money(decimal.Truncate(amountMajor), currency);
-		}
-
-		public static Money ForMajor(long amountMajor, string threeLetterIsoCode)
-		{
-			return ForMajor(amountMajor, Currency.Get(threeLetterIsoCode));
-		}
-
-		public static Money ForMinor(long amountMinor)
-		{
-			return ForMinor(amountMinor, CurrencyIsoCode.XXX);
-		}
-
-		public static Money ForMinor(long amountMinor, CurrencyIsoCode currency)
-		{
-			return ForMinor(amountMinor, Currency.Get(currency));
-		}
-
-		/// <summary>
-		/// Creates an instance of <see cref="Money"/> from an amount in major units.
-		/// </summary>
-		/// <remarks>Allows creating an instance with an amount expressed in terms of the minor unit of the currency.
-		/// <para>For example, when constructing 'US Dollars', the <paramref name="amountMinor"/> represents 'cents'.</para>
-		/// <para>When the currency has zero decimal places, <see cref="MajorAmount"/> and <see cref="MinorAmount"/> are the same.</para>
-		/// </remarks>
-		/// <example>Money.ForMinor(Currency.Usd, 2595) creates an instance of 'USD 29.95'</example>
-		/// <param name="amountMinor">The amount of money in the minor division of the currency.</param>
-		/// <param name="currency">The currency</param>
-		/// <returns>A new instance with the <paramref name="amountMinor"/> and <paramref name="currency"/> specified.</returns>
-		/// <exception cref="ArgumentNullException">if <paramref name="currency"/> is null.</exception>
-		public static Money ForMinor(long amountMinor, Currency currency)
-		{
-			Guard.AgainstNullArgument("currency", currency);
-			int centFactor = _cents[currency.SignificantDecimalDigits];
-			return new Money(decimal.Divide(amountMinor, centFactor), currency);
-		}
-
-		public static Money ForMinor(long amountMinor, string threeLetterIsoCode)
-		{
-			return ForMinor(amountMinor, Currency.Get(threeLetterIsoCode));
-		}
-
-		/// <summary>
-		/// Creates an instance of <see cref="Money"/> witht the total value of an array.
-		/// </summary>
-		/// <remarks>All moneys have to have the same currency, otherwise and exception will be thrown.</remarks>
-		/// <param name="moneys">A not null and not empty array of moneys.</param>
-		/// <returns>An <see cref="Money"/> instance which <see cref="Amount"/> is the sum of all amounts of the moneys in the array,
-		/// and <see cref="Currency"/> the same as all the moneys in the array.</returns>
-		/// <exception cref="ArgumentNullException">If <paramref name="moneys"/> is null.</exception>
-		/// <exception cref="ArgumentException">If <paramref name="moneys"/> is empty.</exception>
-		/// <exception cref="DifferentCurrencyException">If any of the currencies of <paramref name="moneys"/> differ.</exception>
-		public static Money Total(params Money[] moneys)
-		{
-			return Total((IEnumerable<Money>) moneys);
-		}
-
-		/// <summary>
-		/// Creates an instance of <see cref="Money"/> witht the total value of an collection of moneys.
-		/// </summary>
-		/// <remarks></remarks>
-		/// <param name="moneys">A not null and not empty collection of moneys.</param>
-		/// <returns>An <see cref="Money"/> instance which <see cref="Amount"/> is the sum of all amounts of the moneys in the collection,
-		/// and <see cref="Currency"/> the same as all the moneys in the collection.</returns>
-		/// /// <exception cref="ArgumentNullException">If <paramref name="moneys"/> is null.</exception>
-		/// <exception cref="ArgumentException">If <paramref name="moneys"/> is empty.</exception>
-		/// <exception cref="DifferentCurrencyException">If any of the currencies of <paramref name="moneys"/> differ.</exception>
-		public static Money Total(IEnumerable<Money> moneys)
-		{
-			Guard.AgainstNullArgument("moneys", moneys);
-			Guard.AgainstArgument("moneys", !moneys.Any(), "The collection of moneys cannot be empty.");
-
-			return moneys.Aggregate((a, b) => a + b);
-		}
-
 		#endregion
 
+		//[XmlIgnore]
 		public CurrencyIsoCode CurrencyCode { get; private set; }
+		//[XmlIgnore]
 		public decimal Amount { get; private set; }
-
-		/// <summary>
-		/// Gets the amount in major units
-		/// </summary>
-		/// <remarks>This method returns the monetary amount in terms of the major units of the currency, truncating the <see cref="Amount"/> if necessary.
-		/// <para>For example, 'EUR 2.35' will return a major amount of 2, since EUR has 2 significant decimal values. 
-		/// 'BHD -1.345' will return -1.</para></remarks>
-		public decimal MajorAmount
-		{
-			get { return Truncate().Amount; }
-		}
-
-		/// <summary>
-		/// Gets the amount in major units as a <see cref="long"/>.
-		/// </summary>
-		/// <remarks>This property returns the monetary amount in terms of the major units of the currency, truncating the amount if necessary.
-		/// <para>For example, 'EUR 2.35' will return a major amount of 2, since EUR has 2 significant decimal values. 
-		/// 'BHD -1.345' will return -1.</para></remarks>
-		public long MajorIntegralAmount
-		{
-			get { return Convert.ToInt64(MajorAmount); }
-		}
-
-		/// <summary>
-		/// Gets the amount in minor units.
-		/// </summary>
-		/// <remarks>This property return the monetary amount in terms of the minor units of the currency, truncating the amount if necessary.
-		/// <para>For example, 'EUR 2.35' will return a minor amount of 235, since EUR has 2 significant decimal values. 
-		/// 'BHD -1.345' will return -1345.</para></remarks>
-		public decimal MinorAmount
-		{
-			get
-			{
-				Currency currency = Currency.Get(CurrencyCode);
-				int centFactor = _cents[currency.SignificantDecimalDigits];
-				return decimal.Truncate(decimal.Multiply(Amount, centFactor));
-			}
-		}
-
-		/// <summary>
-		/// Gets the amount in minor units as a <see cref="long"/>.
-		/// </summary>
-		/// <remarks>This property return the monetary amount in terms of the minor units of the currency, truncating the amount if necessary.
-		/// <para>For example, 'EUR 2.35' will return a minor amount of 235, since EUR has 2 significant decimal values. 
-		/// 'BHD -1.345' will return -1345.</para></remarks>
-		public long MinorIntegralAmount
-		{
-			get { return Convert.ToInt64(MinorAmount); }
-		}
 
 		#region formatting
 
@@ -558,16 +393,6 @@ namespace NMoneys
 			return Amount.Equals(decimal.Zero);
 		}
 
-		public bool IsNegativeOrZero()
-		{
-			return IsNegative() || IsZero();
-		}
-
-		public bool IsPositiveOrZero()
-		{
-			return IsPositive() || IsZero();
-		}
-
 		#endregion
 
 		#region cloning
@@ -750,7 +575,7 @@ namespace NMoneys
 			return truncatedAmount;
 		}
 
-
+		
 		/// <summary>
 		/// Returns the integral digits of this instance of <see cref="Money"/>; any fractional digits are discarded.
 		/// </summary>
@@ -901,15 +726,6 @@ namespace NMoneys
 			return new Money(unaryOperation(Amount), CurrencyCode);
 		}
 
-		public bool HasDecimals
-		{
-			get
-			{
-				decimal truncated = decimal.Truncate(Amount);
-				return Amount - truncated != decimal.Zero;
-			}
-		}
-
 		#endregion
 
 		#region serialization
@@ -974,41 +790,11 @@ namespace NMoneys
 
 		#region parsing
 
-		/// <summary>
-		/// Converts the string representation of a monetary quantity to its <see cref="Money"/> equivalent
-		/// using the <see cref="NumberStyles.Currency"/> style and the specified currency as format information.
-		/// </summary>
-		/// <remaks>This method assumes <paramref name="s"/> to have a <see cref="NumberStyles.Currency"/> style.</remaks>
-		/// <param name="s">The string representation of the monetary quantity to convert.</param>
-		/// <param name="currency">Expected currency of <paramref name="s"/> that provides format information.</param>
-		/// <returns>The <see cref="Money"/> equivalent to the monetary quantity contained in <paramref name="s"/> as specified by the <paramref name="currency"/>.</returns>
-		/// <exception cref="FormatException"><paramref name="s"/> is not in the correct format.</exception>
-		/// <exception cref="OverflowException"><paramref name="s"/> representes a montary quantity less than <see cref="decimal.MinValue"/> or greater than <see cref="decimal.MaxValue"/>.</exception>
-		/// <exception cref="ArgumentNullException"><paramref name="s"/> is null.</exception>
-		/// <seealso cref="decimal.Parse(string, NumberStyles, IFormatProvider)" />
 		public static Money Parse(string s, Currency currency)
 		{
 			return Parse(s, NumberStyles.Currency, currency);
 		}
 
-		/// <summary>
-		/// Converts the string representation of a monetary quantity to its <see cref="Money"/> equivalent
-		/// using the specified style and the specified currency as format information.
-		/// </summary>
-		/// <remarks>Use this method when <paramref name="s"/> is supected not to have a <see cref="NumberStyles.Currency"/> style or more control over the operation is needed.</remarks>
-		/// <param name="s">The string representation of the monetary quantity to convert.</param>
-		/// <param name="style">A bitwise combination of <see cref="NumberStyles"/> values that indicates the style elements that can be present in <paramref name="s"/>.
-		/// A typical value to specify is <see cref="Number"/>.</param>
-		/// <param name="currency">Expected currency of <paramref name="s"/> that provides format information.</param>
-		/// <returns>The <see cref="Money"/> equivalent to the monetary quantity contained in <paramref name="s"/> as specified by <paramref name="style"/> and <paramref name="currency"/>.</returns>
-		/// <exception cref="FormatException"><paramref name="s"/> is not in the correct format.</exception>
-		/// <exception cref="OverflowException"><paramref name="s"/> representes a montary quantity less than <see cref="decimal.MinValue"/> or greater than <see cref="decimal.MaxValue"/>.</exception>
-		/// <exception cref="ArgumentNullException"><paramref name="s"/> is null.</exception>
-		/// <exception cref="ArgumentException"><paramref name="style"/> is not a <see cref="NumberStyles"/> value
-		/// <para>-or-</para>
-		/// <paramref name="style"/> is the <see cref="NumberStyles.AllowHexSpecifier"/> value.
-		/// </exception>
-		/// <seealso cref="decimal.Parse(string, NumberStyles, IFormatProvider)" />
 		public static Money Parse(string s, NumberStyles style, Currency currency)
 		{
 			decimal amount = decimal.Parse(s, style, currency);
@@ -1016,45 +802,11 @@ namespace NMoneys
 			return new Money(amount, currency);
 		}
 
-		/// <summary>
-		/// Converts the string representation of a monetary quantity to its <see cref="Money"/> equivalent
-		/// using <see cref="NumberStyles.Currency"/> and the provided currency as format infomation.
-		/// A return value indicates whether the conversion succeeded or failed.
-		/// </summary>
-		/// <param name="s">The string representation of the monetary quantity to convert.</param>
-		/// <param name="currency">Expected currency of <paramref name="s"/> that provides format information.</param>
-		/// <param name="money">When this method returns, contains the <see cref="Money"/> that is equivalent to the monetary quantity contained in <paramref name="s"/>,
-		/// if the conversion succeeded, or is null if the conversion failed.
-		/// The conversion fails if the <paramref name="s"/> parameter is null, is not in a format compliant with currency style,
-		/// or represents a number less than <see cref="decimal.MinValue"/> or greater than <see cref="decimal.MaxValue"/>.
-		/// This parameter is passed uninitialized. </param>
-		/// <returns>true if s was converted successfully; otherwise, false.</returns>
-		/// <seealso cref="decimal.TryParse(string, NumberStyles, IFormatProvider, out decimal)" />
 		public static bool TryParse(string s, Currency currency, out Money? money)
 		{
 			return TryParse(s, NumberStyles.Currency, currency, out money);
 		}
 
-		/// <summary>
-		/// Converts the string representation of a monetary quantity to its <see cref="Money"/> equivalent
-		/// using the specified style and the provided currency as format infomation.
-		/// A return value indicates whether the conversion succeeded or failed.
-		/// </summary>
-		/// <param name="s">The string representation of the monetary quantity to convert.</param>
-		/// <param name="style">A bitwise combination of enumeration values that indicates the permitted format of <paramref name="s"/>.
-		/// A typical value to specify is <see cref="Number"/>.</param>
-		/// <param name="currency">Expected currency of <paramref name="s"/> that provides format information.</param>
-		/// <param name="money">When this method returns, contains the <see cref="Money"/> that is equivalent to the monetary quantity contained in <paramref name="s"/>,
-		/// if the conversion succeeded, or is null if the conversion failed.
-		/// The conversion fails if the <paramref name="s"/> parameter is null, is not in a format compliant with currency style,
-		/// or represents a number less than <see cref="decimal.MinValue"/> or greater than <see cref="decimal.MaxValue"/>.
-		/// This parameter is passed uninitialized. </param>
-		/// <returns>true if s was converted successfully; otherwise, false.</returns>
-		/// <exception cref="ArgumentException"><paramref name="style"/> is not a <see cref="NumberStyles"/> value
-		/// <para>-or-</para>
-		/// <paramref name="style"/> is the <see cref="NumberStyles.AllowHexSpecifier"/> value.
-		/// </exception>
-		/// <seealso cref="decimal.TryParse(string, NumberStyles, IFormatProvider, out decimal)" />
 		public static bool TryParse(string s, NumberStyles style, Currency currency, out Money? money)
 		{
 			decimal amount;

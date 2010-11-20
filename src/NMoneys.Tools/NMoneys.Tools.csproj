@@ -35,23 +35,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HtmlAgilityPack">
-      <HintPath>..\..\lib\HtmlAgilityPack\HtmlAgilityPack.dll</HintPath>
-    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\..\tools\NUnit\framework\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Command.cs" />
-    <Compile Include="CompareWithGlobalization.cs" />
-    <Compile Include="EncodeSymbol.cs" />
-    <Compile Include="ExtractInfoFromCulture.cs" />
-    <Compile Include="ScrapeWebsite.cs" />
+    <Compile Include="CompareWithGlobalizationCommand.cs" />
+    <Compile Include="EncodeSymbolCommand.cs" />
+    <Compile Include="ExtractCurrencyInfoCommand.cs" />
     <Compile Include="Mono.Options.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
