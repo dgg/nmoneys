@@ -27,12 +27,12 @@ namespace NMoneys
 		/// <summary>
 		/// The numeric ISO 4217 code of the <see cref="Currency"/>
 		/// </summary>
-		public short NumericCode { get { return (short) IsoCode; } }
+		public short NumericCode { get { return IsoCode.NumericCode(); } }
 
 		/// <summary>
 		/// Returns a padded three digit string representation of the <see cref="NumericCode"/>.
 		/// </summary>
-		public string PaddedNumericCode { get { return NumericCode.ToString("000"); } }
+		public string PaddedNumericCode { get { return IsoCode.PaddedNumericCode(); } }
 
 		/// <summary>
 		/// Gets the name, in English, of the <see cref="Currency"/>.

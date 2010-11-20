@@ -311,9 +311,9 @@
 		<negativePattern>0</negativePattern>
 	</currency>
 	<currency code="CHE">
-		<englishName>Swiss Franc</englishName>
-		<nativeName>Schweizer Franken</nativeName>
-		<symbol>70 114 46</symbol>
+		<englishName>WIR Euro</englishName>
+		<nativeName>WIR Euro</nativeName>
+		<symbol>8364</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>.</decimalSeparator>
 		<groupSeparator>'</groupSeparator>
@@ -333,8 +333,8 @@
 		<negativePattern>2</negativePattern>
 	</currency>
 	<currency code="CHW">
-		<englishName>Swiss Franc</englishName>
-		<nativeName>Schweizer Franken</nativeName>
+		<englishName>WIR Franc</englishName>
+		<nativeName>WIR Franken</nativeName>
 		<symbol>70 114 46</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>.</decimalSeparator>
@@ -644,17 +644,6 @@
 		<englishName>Guatemalan Quetzal</englishName>
 		<nativeName>Quetzal</nativeName>
 		<symbol>81</symbol>
-		<significantDecimalDigits>2</significantDecimalDigits>
-		<decimalSeparator>.</decimalSeparator>
-		<groupSeparator>,</groupSeparator>
-		<groupSizes>3</groupSizes>
-		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
-	</currency>
-	<currency code="GWP">
-		<englishName>Guinea-Bissau Peso</englishName>
-		<nativeName>Guinea-Bissau Peso</nativeName>
-		<symbol>164</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>.</decimalSeparator>
 		<groupSeparator>,</groupSeparator>
