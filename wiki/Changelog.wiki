@@ -1,0 +1,15 @@
+#summary Summary of changes.
+#labels Phase-Support
+
+= 1.1.0.0 =
+@revision 15
+   * Added `Currency.FindAll()`
+   * Added `Money.Parse()` and `Money.TryParse()`
+   * Implemented `IComparable` and `IComparabe<>` on `Currency`
+   * Added _Joda-Money_ features:
+      * Creation methods: `Money.Zero()`, `Money.ForMajor()`, `Money.ForMinor()`, and `Money.Total()`
+      * Properties `Money.MinorAmount`, `Money.MajorAmount`, `Money.HasDecimals`
+   * Removed "long" obsolete currency: Guinea-Bissau Franc GWP (624).
+= 1.0.0.0 =
+@revision 11
+   * Baseline version
