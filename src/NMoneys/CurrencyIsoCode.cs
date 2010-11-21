@@ -5,7 +5,7 @@ namespace NMoneys
 	/// <summary>
 	/// Currency codes as stated by the ISO 4217 standard 
 	/// </summary>
-	/// <see cref="http://www.iso.org/iso/support/currency_codes_list-1.htm" />
+	/// <seealso href="http://www.iso.org/iso/support/currency_codes_list-1.htm" />
 	public enum CurrencyIsoCode : short
 	{
 		[CanonicalCulture("ar-AE")]
@@ -318,6 +318,9 @@ namespace NMoneys
 		ZWL = 932
 	}
 
+	/// <summary>
+	/// Contains extension to the type <see cref="CurrencyIsoCode"/>
+	/// </summary>
 	public static class IsoCodeExtensions
 	{
 		private const string EQUAL = " = ";

@@ -12,26 +12,54 @@ using NMoneys.Support;
 
 namespace NMoneys
 {
+	/// <summary>
+	/// A monetary quantity in a given currency
+	/// </summary>
 	[Serializable]
 	[XmlRoot(Namespace = Serialization.Data.NAMESPACE, ElementName = Serialization.Data.Money.ROOT_NAME, DataType = Serialization.Data.Money.DATA_TYPE, IsNullable = false)]
 	public struct Money : IEquatable<Money>, IComparable, IComparable<Money>, ICloneable, ISerializable, IXmlSerializable
 	{
 		#region .ctor
 
+		/// <summary>
+		/// Creates an instance of <see cref="Money"/> with the <paramref name="amount"/> provided
+		/// and the unspecified (<see cref="CurrencyIsoCode.XXX"/>) currency.
+		/// </summary>
+		/// <param name="amount">The <see cref="Amount"/> of the monetary quantity.</param>
 		public Money(decimal amount) : this(amount, CurrencyIsoCode.XXX) { }
 
-		public Money(decimal amount, CurrencyIsoCode currency)
-			: this()
+		/// <summary>
+		/// Creates an instance of <see cref="Money"/> with the <paramref name="amount"/> provided
+		/// and the specified <paramref name="currency"/>.
+		/// </summary>
+		/// <param name="amount">The <see cref="Amount"/> of the monetary quantity.</param>
+		/// <param name="currency">The <see cref="CurrencyCode"/> of the monetary quantity.</param>
+		public Money(decimal amount, CurrencyIsoCode currency) : this()
 		{
 			setAllFields(amount, currency);
 		}
 
+		/// <summary>
+		/// Creates an instance of <see cref="Money"/> with the <paramref name="amount"/> provided
+		/// and the specified <paramref name="currency"/>.
+		/// </summary>
+		/// <param name="amount">The <see cref="Amount"/> of the monetary quantity.</param>
+		/// <param name="currency">The incarnation of the <see cref="CurrencyCode"/>.</param>
 		public Money(decimal amount, Currency currency) : this(amount, currency.IsoCode) { }
 
+		/// <summary>
+		/// Creates an instance of <see cref="Money"/> with the <paramref name="amount"/> provided
+		/// and <see cref="Currency"/> the specified <paramref name="threeLetterIsoCode"/>.
+		/// </summary>
+		/// <param name="amount">The <see cref="Amount"/> of the monetary quantity.</param>
+		/// <param name="threeLetterIsoCode">Textual representation of the ISO 4217 <see cref="CurrencyCode"/>.</param>
 		public Money(decimal amount, string threeLetterIsoCode) : this(amount, Enumeration.Parse<CurrencyIsoCode>(threeLetterIsoCode)) { }
 
-		public Money(Money money)
-			: this()
+		/// <summary>
+		/// Creates an instance of <see cref="Money"/> based on the information provided by <paramref name="money"/>.
+		/// </summary>
+		/// <param name="money">A <see cref="Money"/> instance from which capture the values from.</param>
+		public Money(Money money) : this()
 		{
 			setAllFields(money.Amount, money.CurrencyCode);
 		}
@@ -55,42 +83,110 @@ namespace NMoneys
 
 		#region creation methods
 
+		/// <summary>
+		/// Creates an <see cref="Money"/> instance with the specified <see cref="Amount"/> and the <see cref="CurrencyCode"/> from the region
+		/// associated with the current culture.
+		/// </summary>
+		/// <remarks>The current culture is calculated as the value of <see cref="CultureInfo.CurrentCulture"/>.
+		/// <para>There might be cases that the framework will provide non-standard or out-dated information for
+		/// the current culture. In this case it might be possible that an exception is thrown even if the region
+		/// corresponding to the current culture can be created.</para>
+		/// </remarks>
+		/// <param name="amount">The <see cref="Amount"/> of the monetary quantity.</param>
+		/// <returns>An instance of <see cref="Money"/> with the <paramref name="amount"/> specified and the currency associated to the current culture.</returns>
+		/// /// <exception cref="ArgumentException">The current is either an invariant or custom, or a <see cref="RegionInfo"/> cannot be instantiated from it.</exception>
+		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The ISO symbol associated to the current culture does not exist in the <see cref="CurrencyIsoCode"/> enumeration.</exception>
+		/// <exception cref="MissconfiguredCurrencyException">The currency associated to the current culture has not been properly configured by the library implementor. Please, log a issue.</exception>
 		public static Money ForCurrentCulture(decimal amount)
 		{
 			return ForCulture(amount, CultureInfo.CurrentCulture);
 		}
 
+		/// <summary>
+		/// Creates an <see cref="Money"/> instance with the specified <see cref="Amount"/> and the <see cref="CurrencyCode"/> from the region
+		/// associated with the provided <paramref name="culture"/>.
+		/// </summary>
+		/// <remarks>There might be cases that the framework will provided non-standard or out-dated information for
+		/// the given <paramref name="culture"/>. In this case it might be possible that an exception is thrown even if the region
+		/// corresponding to the <paramref name="culture"/> can be created.</remarks>
+		/// <param name="amount">The <see cref="Amount"/> of the monetary quantity.</param>
+		/// <param name="culture">A <see cref="CultureInfo"/> from which retrieve the associated currency.</param>
+		/// <returns>An instance of <see cref="Money"/> with the <paramref name="amount"/> specified and the currency associated to the specified <paramref name="culture"/>.</returns>
+		/// <exception cref="ArgumentNullException">The <paramref name="culture"/> is null.</exception>
+		/// <exception cref="ArgumentException">The <paramref name="culture"/> is either an invariant, custom or neutral culture, or a <see cref="RegionInfo"/> cannot be instantiated from it.</exception>
+		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The ISO symbol associated to the <paramref name="culture"/> does not exist in the <see cref="CurrencyIsoCode"/> enumeration.</exception>
+		/// <exception cref="MissconfiguredCurrencyException">The currency associated to the <paramref name="culture"/> has not been properly configured by the library implementor. Please, log a issue.</exception>
 		public static Money ForCulture(decimal amount, CultureInfo culture)
 		{
 			Guard.AgainstNullArgument("culture", culture);
 			return new Money(amount, Currency.Get(culture));
 		}
 
+		/// <summary>
+		/// Creates an instance of <see cref="Money"/> with <see cref="decimal.Zero"/> quantity and the unspecified currency.
+		/// </summary>
+		/// <returns>An <see cref="Money"/> instance with zero <see cref="Amount"/> and unspecified currency (<see cref="CurrencyIsoCode.XXX"/>).</returns>
+		/// <seealso cref="Money(decimal)"/>
 		public static Money Zero()
 		{
 			return new Money(decimal.Zero);
 		}
 
+		/// <summary>
+		/// Creates an instance of <see cref="Money"/> with <see cref="decimal.Zero"/> quantity and the specified currency.
+		/// </summary>
+		/// <param name="currency">The <see cref="CurrencyCode"/> of the monetary quantity.</param>
+		/// <returns>An <see cref="Money"/> instance with zero <see cref="Amount"/> and the specified <paramref name="currency"/>.</returns>
+		/// <seealso cref="Money(decimal, CurrencyIsoCode)"/>
 		public static Money Zero(CurrencyIsoCode currency)
 		{
 			return new Money(decimal.Zero, currency);
 		}
 
+		/// <summary>
+		/// Creates an instance of <see cref="Money"/> with <see cref="decimal.Zero"/> quantity and the specified currency.
+		/// </summary>
+		/// <param name="currency">The incarnation of the <see cref="CurrencyCode"/>.</param>
+		/// <returns>An <see cref="Money"/> instance with zero <see cref="Amount"/> and the specified <paramref name="currency"/>.</returns>
+		/// <seealso cref="Money(decimal, Currency)"/>
 		public static Money Zero(Currency currency)
 		{
 			return new Money(decimal.Zero, currency);
 		}
 
+		/// <summary>
+		/// Creates an instance of <see cref="Money"/> with <see cref="decimal.Zero"/> quantity and the specified currency.
+		/// </summary>
+		/// <param name="threeLetterIsoCode">Textual representation of the ISO 4217 <see cref="CurrencyCode"/>.</param>
+		/// <returns>An <see cref="Money"/> instance with zero <see cref="Amount"/> and the specified <paramref name="threeLetterIsoCode"/>.</returns>
+		/// <seealso cref="Money(decimal, string)"/>
 		public static Money Zero(string threeLetterIsoCode)
 		{
 			return new Money(decimal.Zero, threeLetterIsoCode);
 		}
 
+		/// <summary>
+		/// Creates an instance of <see cref="Money"/> with the specified amount and the unspecified currency.
+		/// </summary>
+		/// <remarks>The <see cref="Amount"/> is a whole number only.
+		/// Thus 'XXX 20' can be intialised, but not the value 'XXX 20.32'.</remarks>
+		/// <param name="amountMajor">The <see cref="Amount"/> in the major division of the currency.</param>
+		/// <returns>A <see cref="Money"/> with the specified <paramref name="amountMajor"/> and unspecified currency (<see cref="CurrencyIsoCode.XXX"/>).</returns>
+		/// <seealso cref="Money(decimal)"/>
 		public static Money ForMajor(long amountMajor)
 		{
 			return ForMajor(amountMajor, CurrencyIsoCode.XXX);
 		}
 
+		/// <summary>
+		/// Creates an instance of <see cref="Money"/> with the specified amount and the specified currency.
+		/// </summary>
+		/// <remarks>The <see cref="Amount"/> is a whole number only.
+		/// Thus 'USD 20' can be intialised, but not the value 'USD 20.32'.</remarks>
+		/// <param name="amountMajor">The <see cref="Amount"/> in the major division of the currency.</param>
+		/// <param name="currency">The <see cref="CurrencyCode"/> of the monetary quantity.</param>
+		/// <returns>A <see cref="Money"/> with the specified <paramref name="amountMajor"/> and <paramref name="currency"/>.</returns>
+		/// <seealso cref="Money(decimal)"/>
 		public static Money ForMajor(long amountMajor, CurrencyIsoCode currency)
 		{
 			return ForMajor(amountMajor, Currency.Get(currency));
@@ -99,43 +195,68 @@ namespace NMoneys
 		/// <summary>
 		/// Creates an instance of <see cref="Money"/> from an amount in major units of the specified <paramref name="currency"/>.
 		/// </summary>
-		/// <remarks>The amount is a whole number. Thus 'USD 20' can be initialized, but not 'USD 20.32'.</remarks>
-		/// <param name="amountMajor">The amount in the major division of the currency</param>
-		/// <param name="currency">Currency</param>
-		/// <returns>A new instance with the major amount and currency specified.</returns>
-		/// <exception cref="ArgumentNullException">if <paramref name="currency"/> is null.</exception>
+		/// <remarks>The <see cref="Amount"/> is a whole number. Thus 'USD 20' can be initialized, but not 'USD 20.32'.</remarks>
+		/// <param name="amountMajor">The <see cref="Amount"/> in the major division of the currency.</param>
+		/// <param name="currency">The incarnation of the <see cref="CurrencyCode"/>.</param>
+		/// <returns>A <see cref="Money"/> with the specified <paramref name="amountMajor"/> and <paramref name="currency"/>.</returns>
+		/// <exception cref="ArgumentNullException">If <paramref name="currency"/> is null.</exception>
 		public static Money ForMajor(long amountMajor, Currency currency)
 		{
 			Guard.AgainstNullArgument("currency", currency); 
 			return new Money(decimal.Truncate(amountMajor), currency);
 		}
 
+		/// <summary>
+		/// Creates an instance of <see cref="Money"/> from an amount in major units of the specified <paramref name="threeLetterIsoCode"/>.
+		/// </summary>
+		/// <remarks>The <see cref="Amount"/> is a whole number. Thus 'USD 20' can be initialized, but not 'USD 20.32'.</remarks>
+		/// <param name="amountMajor">The <see cref="Amount"/> in the major division of the currency.</param>
+		/// <param name="threeLetterIsoCode">Textual representation of the ISO 4217 <see cref="CurrencyCode"/>.</param>
+		/// <returns>A <see cref="Money"/> with the specified <paramref name="amountMajor"/> and <paramref name="threeLetterIsoCode"/>.</returns>
 		public static Money ForMajor(long amountMajor, string threeLetterIsoCode)
 		{
 			return ForMajor(amountMajor, Currency.Get(threeLetterIsoCode));
 		}
 
+		/// <summary>
+		/// Creates an instance of <see cref="Money"/> from an amount in major units of the unspecified currency.
+		/// </summary>
+		/// <remarks>Allows the creation of an instance with an amount expressed in terms of the minor unit of the unspecified currency.
+		/// For the unspecified currency the input to this method represents cents.</remarks>
+		/// <param name="amountMinor">The <see cref="Amount"/> in the minor division of the currency.</param>
+		/// <returns>A <see cref="Money"/> with the specified <paramref name="amountMinor"/> and unspecified currency (<see cref="CurrencyIsoCode.XXX"/>).</returns>
 		public static Money ForMinor(long amountMinor)
 		{
 			return ForMinor(amountMinor, CurrencyIsoCode.XXX);
 		}
 
+		/// <summary>
+		/// Creates an instance of <see cref="Money"/> from an amount in major units of the specified currency.
+		/// </summary>
+		/// <remarks>Allows creating an instance with an amount expressed in terms of the minor unit of the currency.
+		/// <para>For example, when constructing 'US Dollars', the <paramref name="amountMinor"/> represents 'cents'.</para>
+		/// <para>When the currency has zero decimal places, <see cref="MajorAmount"/> and <see cref="MinorAmount"/> are the same.</para>
+		/// </remarks>
+		/// /// <example>Money.ForMinor(CurrencyIsoCode.USD, 2595) creates an instance of 'USD 29.95'</example>
+		/// <param name="amountMinor">The <see cref="Amount"/> in the minor division of the currency.</param>
+		/// <param name="currency">The <see cref="CurrencyCode"/> of the monetary quantity.</param>
+		/// <returns>A <see cref="Money"/> with the specified <paramref name="amountMinor"/> and <paramref name="currency"/>.</returns>
 		public static Money ForMinor(long amountMinor, CurrencyIsoCode currency)
 		{
 			return ForMinor(amountMinor, Currency.Get(currency));
 		}
 
 		/// <summary>
-		/// Creates an instance of <see cref="Money"/> from an amount in major units.
+		/// Creates an instance of <see cref="Money"/> from an amount in major units of the specified currency.
 		/// </summary>
 		/// <remarks>Allows creating an instance with an amount expressed in terms of the minor unit of the currency.
 		/// <para>For example, when constructing 'US Dollars', the <paramref name="amountMinor"/> represents 'cents'.</para>
 		/// <para>When the currency has zero decimal places, <see cref="MajorAmount"/> and <see cref="MinorAmount"/> are the same.</para>
 		/// </remarks>
 		/// <example>Money.ForMinor(Currency.Usd, 2595) creates an instance of 'USD 29.95'</example>
-		/// <param name="amountMinor">The amount of money in the minor division of the currency.</param>
-		/// <param name="currency">The currency</param>
-		/// <returns>A new instance with the <paramref name="amountMinor"/> and <paramref name="currency"/> specified.</returns>
+		/// <param name="amountMinor">The <see cref="Amount"/> in the minor division of the currency.</param>
+		/// <param name="currency">The incarnation of the <see cref="CurrencyCode"/>.</param>
+		/// <returns>A <see cref="Money"/> with the specified <paramref name="amountMinor"/> and <paramref name="currency"/>.</returns>
 		/// <exception cref="ArgumentNullException">if <paramref name="currency"/> is null.</exception>
 		public static Money ForMinor(long amountMinor, Currency currency)
 		{
@@ -144,6 +265,17 @@ namespace NMoneys
 			return new Money(decimal.Divide(amountMinor, centFactor), currency);
 		}
 
+		/// <summary>
+		/// Creates an instance of <see cref="Money"/> from an amount in major units of the specified currency.
+		/// </summary>
+		/// <remarks>Allows creating an instance with an amount expressed in terms of the minor unit of the currency.
+		/// <para>For example, when constructing 'US Dollars', the <paramref name="amountMinor"/> represents 'cents'.</para>
+		/// <para>When the currency has zero decimal places, <see cref="MajorAmount"/> and <see cref="MinorAmount"/> are the same.</para>
+		/// </remarks>
+		/// <example>Money.ForMinor(Currency.Usd, 2595) creates an instance of 'USD 29.95'</example>
+		/// <param name="amountMinor">The <see cref="Amount"/> in the minor division of the currency.</param>
+		/// <param name="threeLetterIsoCode">Textual representation of the ISO 4217 <see cref="CurrencyCode"/>.</param>
+		/// <returns>A <see cref="Money"/> with the specified <paramref name="amountMinor"/> and <paramref name="threeLetterIsoCode"/>.</returns>
 		public static Money ForMinor(long amountMinor, string threeLetterIsoCode)
 		{
 			return ForMinor(amountMinor, Currency.Get(threeLetterIsoCode));
@@ -184,7 +316,14 @@ namespace NMoneys
 
 		#endregion
 
+		/// <summary>
+		/// The ISO 4217 code of the currency of a monetary quantity.
+		/// </summary>
 		public CurrencyIsoCode CurrencyCode { get; private set; }
+
+		/// <summary>
+		/// The amount of a monetary quantity
+		/// </summary>
 		public decimal Amount { get; private set; }
 
 		/// <summary>
@@ -269,7 +408,7 @@ namespace NMoneys
 		/// </summary>
 		/// <param name="provider">An object that supplies culture-specific formatting information.</param>
 		/// <returns>The string representation of the value of this instance as specified by the<c>"Currency"</c> format specifier and 
-		/// <paramref name="provider>"/>.</returns>
+		/// <paramref name="provider"/>.</returns>
 		public string ToString(IFormatProvider provider)
 		{
 			return ToString("C", provider);
@@ -282,7 +421,7 @@ namespace NMoneys
 		/// <param name="format">A numeric format string</param>
 		/// <param name="provider">An object that supplies culture-specific formatting information.</param>
 		/// <returns>The string representation of the value of this instance as specified by <paramref name="format"/>the<c>"Currency"</c> format specifier and 
-		/// and <paramref name="provider>"/>.</returns>
+		/// and <paramref name="provider"/>.</returns>
 		public string ToString(string format, IFormatProvider provider)
 		{
 			return Amount.ToString(format, provider);
@@ -379,11 +518,27 @@ namespace NMoneys
 
 		#region equality
 
+		/// <summary>
+		/// Indicates whether the current <see cref="Money"/> is equal to another <see cref="Money"/>.
+		/// </summary>
+		/// <returns>
+		/// true if the current instance has equal <see cref="Amount"/> and <see cref="Currency"/>as the <paramref name="other"/> parameter;
+		/// otherwise, false.
+		/// </returns>
+		/// <param name="other">An money to compare with this instance.</param>
 		public bool Equals(Money other)
 		{
 			return Equals(other.CurrencyCode, CurrencyCode) && other.Amount == Amount;
 		}
 
+
+		/// <summary>
+		/// Indicates whether this instance and a specified object are equal.
+		/// </summary>
+		/// <returns>
+		/// true if <paramref name="obj"/> and this instance are the same type and represent the same value; otherwise, false.
+		/// </returns>
+		/// <param name="obj">Another object to compare to.</param>
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(null, obj)) return false;
@@ -391,6 +546,12 @@ namespace NMoneys
 			return Equals((Money)obj);
 		}
 
+		/// <summary>
+		/// Returns the hash code for this instance.
+		/// </summary>
+		/// <returns>
+		/// A 32-bit signed integer that is the hash code for this instance.
+		/// </returns>
 		public override int GetHashCode()
 		{
 			unchecked
@@ -399,11 +560,23 @@ namespace NMoneys
 			}
 		}
 
+		/// <summary>
+		/// Returns a value indicating whether two instances of <see cref="Money"/> are equal.
+		/// </summary>
+		/// <param name="left">The first value to compare.</param>
+		/// <param name="right">The second value to compare.</param>
+		/// <returns>true if <paramref name="left"/> and <paramref name="right"/> are equal; otherwise, false.</returns>
 		public static bool operator ==(Money left, Money right)
 		{
 			return Equals(left, right);
 		}
 
+		/// <summary>
+		/// Returns a value indicating whether two instances of <see cref="Money"/> are not equal.
+		/// </summary>
+		/// <param name="left">The first value to compare.</param>
+		/// <param name="right">The second value to compare.</param>
+		/// <returns>true if <paramref name="left"/> and <paramref name="right"/> are not equal; otherwise, false.</returns>
 		public static bool operator !=(Money left, Money right)
 		{
 			return !Equals(left, right);
@@ -550,7 +723,7 @@ namespace NMoneys
 		}
 
 		/// <summary>
-		/// Returns a value indicating whether the <see cref="Amount"/> is stricly equal to<see cref="decimal.Zero"/>.
+		/// Returns a value indicating whether the <see cref="Amount"/> is stricly equal to <see cref="decimal.Zero"/>.
 		/// </summary>
 		/// <returns>true if <see cref="Amount"/> is equal to <see cref="decimal.Zero"/>; otherwise, false.</returns>
 		public bool IsZero()
@@ -558,11 +731,23 @@ namespace NMoneys
 			return Amount.Equals(decimal.Zero);
 		}
 
+		/// <summary>
+		/// Returns a value indicating whether the <see cref="Amount"/> is less than or equal to <see cref="decimal.Zero"/>.
+		/// </summary>
+		/// <returns>true if <see cref="Amount"/> is less or equal than <see cref="decimal.Zero"/>; otherwise, false.</returns>
+		/// <seealso cref="IsNegative()"/>
+		/// <seealso cref="IsZero()"/>
 		public bool IsNegativeOrZero()
 		{
 			return IsNegative() || IsZero();
 		}
 
+		/// <summary>
+		/// Returns a value indicating whether the <see cref="Amount"/> is greater than or equal to <see cref="decimal.Zero"/>.
+		/// </summary>
+		/// <returns>true if <see cref="Amount"/> is greater or equal than <see cref="decimal.Zero"/>; otherwise, false.</returns>
+		/// <seealso cref="IsPositive()"/>
+		/// <seealso cref="IsZero()"/>
 		public bool IsPositiveOrZero()
 		{
 			return IsPositive() || IsZero();
@@ -901,6 +1086,9 @@ namespace NMoneys
 			return new Money(unaryOperation(Amount), CurrencyCode);
 		}
 
+		/// <summary>
+		/// Specifies whether the <see cref="Amount"/> is not a whole number.
+		/// </summary>
 		public bool HasDecimals
 		{
 			get
@@ -914,18 +1102,34 @@ namespace NMoneys
 
 		#region serialization
 
+		/// <summary>
+		/// Populates a <see cref="SerializationInfo"/> with the data needed to serialize the target object.
+		/// </summary>
+		/// <param name="info">The <see cref="System.Runtime.Serialization.SerializationInfo"/> to populate with data.</param>
+		/// <param name="context">The destination (see <see cref="T:System.Runtime.Serialization.StreamingContext"/>) for this serialization.</param>
+		/// <exception cref="T:System.Security.SecurityException">The caller does not have the required permission.</exception>
 		public void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
 			info.AddValue(Serialization.Data.Money.AMOUNT, Amount);
 			info.AddValue(Serialization.Data.Money.CURRENCY, CurrencyCode, typeof(Currency));
 		}
 
+		/// <summary>
+		/// This method is reserved and should not be used.
+		/// When implementing the <see cref="IXmlSerializable"/> interface, you should return null from this method, and instead, if specifying a custom schema is required, apply the <see cref="T:System.Xml.Serialization.XmlSchemaProviderAttribute"/> to the class.
+		/// </summary>
+		/// <returns>null</returns>
 		[Obsolete("deprecated, use SchemaProviders instead")]
 		XmlSchema IXmlSerializable.GetSchema()
 		{
 			return null;
 		}
 
+		/// <summary>
+		/// Returns the XML schema applied for serialization.
+		/// </summary>
+		/// <param name="xs">A cache of XML Schema definition language (XSD) schemas.</param>
+		/// <returns>Represents the complexType element from XML Schema as specified by the <paramref name="xs"/>.</returns>
 		public static XmlSchemaComplexType GetSchema(XmlSchemaSet xs)
 		{
 			XmlSchemaComplexType complex = null;
@@ -950,6 +1154,10 @@ namespace NMoneys
 			return complex;
 		}
 
+		/// <summary>
+		/// Generates an object from its XML representation.
+		/// </summary>
+		/// <param name="reader">The <see cref="XmlReader"/> stream from which the object is deserialized.</param>
 		public void ReadXml(XmlReader reader)
 		{
 			reader.ReadStartElement();
@@ -959,6 +1167,10 @@ namespace NMoneys
 			reader.ReadEndElement();
 		}
 
+		/// <summary>
+		/// Converts an object into its XML representation.
+		/// </summary>
+		/// <param name="writer">The <see cref="XmlWriter"/> stream to which the object is serialized.</param>
 		public void WriteXml(XmlWriter writer)
 		{
 			writer.WriteStartElement(Serialization.Data.Money.AMOUNT, Serialization.Data.NAMESPACE);
