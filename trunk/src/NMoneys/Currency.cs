@@ -12,6 +12,9 @@ using NMoneys.Support.Ext;
 
 namespace NMoneys
 {
+	///<summary>
+	/// Represents a currency unit such as Euro or American Dollar.
+	///</summary>
 	[Serializable]
 	[XmlSchemaProvider("GetSchema")]
 	[XmlRoot(Namespace = Serialization.Data.NAMESPACE, ElementName = Serialization.Data.Currency.ROOT_NAME, DataType = Serialization.Data.Currency.DATA_TYPE, IsNullable = false)]
@@ -85,14 +88,14 @@ namespace NMoneys
 		/// <summary>
 		/// Gets format pattern for negative currency values. 
 		/// </summary>
-		/// <remarks>For more information about this pattern see <seealso cref="NumberFormatInfo.CurrencyNegativePattern"/>.</remarks>
+		/// <remarks>For more information about this pattern see <see cref="NumberFormatInfo.CurrencyNegativePattern"/>.</remarks>
 		[XmlIgnore]
 		public int NegativePattern { get; private set; }
 
 		/// <summary>
 		/// Gets the format pattern for positive currency values. 
 		/// </summary>
-		/// <remarks>For more information about this pattern see <seealso cref="NumberFormatInfo.currencyPositivePattern"/>.</remarks>
+		/// <remarks>For more information about this pattern see <see cref="NumberFormatInfo.CurrencyPositivePattern"/>.</remarks>
 		[XmlIgnore]
 		public int PositivePattern { get; private set; }
 
@@ -396,6 +399,9 @@ namespace NMoneys
 			Test = Xts;
 		}
 
+		/// <summary>
+		/// Stores the currency in both symbol and code caches
+		/// </summary>
 		private static void fillCaches(Currency currency)
 		{
 			Guard.AgainstNullArgument("currency", currency);
@@ -409,6 +415,12 @@ namespace NMoneys
 			return new Currency(infoReading(isoCode));
 		}
 
+		/// <summary>
+		/// Actively initializes the information for all currencies.
+		/// </summary>
+		/// <remarks>Use this method if you plan to use a lot of currencies in your program.
+		/// <para>When most of currencies are expected to be used, it is recommeneded to initialize the information for all of them,
+		/// saving time each time the first instance is accessed.</para></remarks>
 		public static void InitializeAllCurrencies()
 		{
 			CurrencyIsoCode[] isoCodes = Enumeration.GetValues<CurrencyIsoCode>();
@@ -430,6 +442,13 @@ namespace NMoneys
 
 		#region equality
 
+		/// <summary>
+		/// Indicates whether the current <see cref="Currency"/> instance is equal to another instance.
+		/// </summary>
+		/// <returns>
+		/// true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
+		/// </returns>
+		/// <param name="other">A <see cref="Currency"/> to compare with this object.</param>
 		public bool Equals(Currency other)
 		{
 			if (ReferenceEquals(null, other)) return false;
@@ -438,6 +457,13 @@ namespace NMoneys
 			return Equals(other.IsoCode, IsoCode);
 		}
 
+		/// <summary>
+		/// Determines whether the specified <see cref="object"/> is equal to the current <see cref="Currency"/>.
+		/// </summary>
+		/// <returns>
+		/// true if the specified <see cref="object"/> is equal to the current <see cref="Currency"/>; otherwise, false.
+		/// </returns>
+		/// <param name="obj">The <see cref="object"/> to compare with the current <see cref="Currency"/>.</param> 
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(null, obj)) return false;
@@ -446,16 +472,34 @@ namespace NMoneys
 			return Equals((Currency)obj);
 		}
 
+		/// <summary>
+		/// Serves as a hash function for a particular type. 
+		/// </summary>
+		/// <returns>
+		/// A hash code for the current <see cref="Currency"/>.
+		/// </returns>
 		public override int GetHashCode()
 		{
 			return IsoCode.GetHashCode();
 		}
 
+		///<summary>
+		/// Determines whether two specified currencies are equal.
+		///</summary>
+		///<param name="left">The first <see cref="Currency"/> to compare, or null.</param>
+		///<param name="right">The second <see cref="Currency"/> to compare, or null.</param>
+		///<returns>true if <paramref name="left"/> is equal to <paramref name="right"/>; otherwise, false.</returns>
 		public static bool operator ==(Currency left, Currency right)
 		{
 			return Equals(left, right);
 		}
 
+		///<summary>
+		/// Determines whether two specified currencies are not equal.
+		///</summary>
+		///<param name="left">The first <see cref="Currency"/> to compare, or null.</param>
+		///<param name="right">The second <see cref="Currency"/> to compare, or null.</param>
+		///<returns>true if <paramref name="left"/> is not equal to <paramref name="right"/>; otherwise, false.</returns>
 		public static bool operator !=(Currency left, Currency right)
 		{
 			return !Equals(left, right);
@@ -518,15 +562,15 @@ namespace NMoneys
 		/// </listheader>
 		/// <item>
 		/// <term>Less than zero</term>
-		/// <description>This instance is less than <paramref name="obj"/>.</description>
+		/// <description>This instance is less than <paramref name="other"/>.</description>
 		/// </item>
 		/// <item>
 		/// <term>Zero</term>
-		/// <description>This instance is equal to <paramref name="obj"/>.</description>
+		/// <description>This instance is equal to <paramref name="other"/>.</description>
 		/// </item>
 		/// <item>
 		/// <term>Greater than zero</term>
-		/// <description>This instance is greater than <paramref name="obj"/>.</description>
+		/// <description>This instance is greater than <paramref name="other"/>.</description>
 		/// </item>
 		/// </list>
 		/// </returns>
@@ -538,6 +582,14 @@ namespace NMoneys
 
 		#endregion
 
+		/// <summary>
+		/// Returns an object that provides formatting services for the specified type.
+		/// </summary>
+		/// <returns>
+		/// An instance of the object specified by <paramref name="formatType"/>,
+		/// if the <see cref="IFormatProvider"/> implementation is <see cref="NumberFormatInfo"/>; otherwise, null.
+		/// </returns>
+		/// <param name="formatType">An object that specifies the type of format object to return.</param>
 		public object GetFormat(Type formatType)
 		{
 			return formatType == typeof(NumberFormatInfo) ? FormatInfo : null;
@@ -545,6 +597,20 @@ namespace NMoneys
 
 		#region factory methods
 
+		/// <summary>
+		/// Obtains the instance of <see cref="Currency"/> associated to the <see cref="CurrencyIsoCode"/> specified.
+		/// </summary>
+		/// <remarks><see cref="Currency"/> behaves as a singleton, therefore successive calls to <see cref="Currency.Get(CurrencyIsoCode)"/>
+		/// will return the same instance of <see cref="Currency"/>.
+		/// <para>An internal cache with the information of the currency is maintained.
+		/// If it is the first time such currency is obtained within the context of the running application, the information
+		/// will be loaded individually.</para>
+		/// <para>If many different instances of <see cref="Currency"/> are to be used, it is recommended the use of <see cref="InitializeAllCurrencies"/>
+		/// in order to save some initialization time.</para></remarks>
+		/// <param name="isoCode">ISO 4217 code.</param>
+		/// <returns>The instance of <see cref="Currency"/> represented by the <paramref name="isoCode"/>.</returns>
+		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The <paramref name="isoCode"/> does not exist in the <see cref="CurrencyIsoCode"/> enumeration.</exception>
+		/// <exception cref="MissconfiguredCurrencyException">The currency represented by <paramref name="isoCode"/> has not been properly configured by the library implementor. Please, log a issue.</exception>
 		public static Currency Get(CurrencyIsoCode isoCode)
 		{
 			Enumeration.AssertDefined(isoCode);
@@ -560,6 +626,20 @@ namespace NMoneys
 			return currency;
 		}
 
+		/// <summary>
+		/// Obtains the instance of <see cref="Currency"/> associated to the <paramref name="threeLetterIsoCode"/> specified.
+		/// </summary>
+		/// <remarks><see cref="Currency"/> behaves as a singleton, therefore successive calls to <see cref="Currency.Get(string)"/>
+		/// will return the same instance of <see cref="Currency"/>.
+		/// <para>An internal cache with the information of the currency is maintained.
+		/// If it is the first time such currency is obtained within the context of the running application, the information
+		/// will be loaded individually.</para>
+		/// <para>If many different instances of <see cref="Currency"/> are to be used, it is recommended the use of <see cref="InitializeAllCurrencies"/>
+		/// in order to save some initialization time.</para></remarks>
+		/// <param name="threeLetterIsoCode">A string representing a three-letter ISO 4217 code.</param>
+		/// <returns>The instance of <see cref="Currency"/> represented by the <paramref name="threeLetterIsoCode"/>.</returns>
+		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The <paramref name="threeLetterIsoCode"/> does not exist in the <see cref="CurrencyIsoCode"/> enumeration.</exception>
+		/// <exception cref="MissconfiguredCurrencyException">The currency represented by <paramref name="threeLetterIsoCode"/> has not been properly configured by the library implementor. Please, log a issue.</exception>
 		public static Currency Get(string threeLetterIsoCode)
 		{
 			Currency currency;
@@ -573,12 +653,48 @@ namespace NMoneys
 			return currency;
 		}
 
+		/// <summary>
+		/// Obtains the instance of <see cref="Currency"/> associated to the <see cref="CultureInfo"/> specified.
+		/// </summary>
+		/// <remarks><see cref="Currency"/> behaves as a singleton, therefore successive calls to <see cref="Currency.Get(CultureInfo)"/>
+		/// will return the same instance of <see cref="Currency"/>.
+		/// <para>An internal cache with the information of the currency is maintained.
+		/// If it is the first time such currency is obtained within the context of the running application, the information
+		/// will be loaded individually.</para>
+		/// <para>If many different instances of <see cref="Currency"/> are to be used, it is recommended the use of <see cref="InitializeAllCurrencies"/>
+		/// in order to save some initialization time.</para>
+		/// <para>There might be cases that the framework will provide non-standard or out-dated information for
+		/// the given <paramref name="culture"/>. In this case it might be possible that an exception is thrown even if the region
+		/// corresponding to the <paramref name="culture"/> can be created.</para>
+		/// </remarks>
+		/// <param name="culture">A <see cref="CultureInfo"/> from which retrieve the associated currency.</param>
+		/// <returns>The instance of <see cref="Currency"/> from to the region associated to the <paramref name="culture"/>.</returns>
+		/// <exception cref="ArgumentNullException">The <paramref name="culture"/> is null.</exception>
+		/// <exception cref="ArgumentException">The <paramref name="culture"/> is either an invariant, custom or neutral culture, or a <see cref="RegionInfo"/> cannot be instantiated from it.</exception>
+		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The ISO symbol associated to the <paramref name="culture"/> does not exist in the <see cref="CurrencyIsoCode"/> enumeration.</exception>
+		/// <exception cref="MissconfiguredCurrencyException">The currency associated to the <paramref name="culture"/> has not been properly configured by the library implementor. Please, log a issue.</exception>
 		public static Currency Get(CultureInfo culture)
 		{
+			Guard.AgainstNullArgument("culture", culture); 
 			RegionInfo region = new RegionInfo(culture.LCID);
 			return Get(region.ISOCurrencySymbol);
 		}
 
+		/// <summary>
+		/// Obtains the instance of <see cref="Currency"/> associated to the <see cref="CurrencyIsoCode"/> specified.
+		/// A return value indicates wheter the lookup succeeded.
+		/// </summary>
+		/// <remarks><see cref="Currency"/> behaves as a singleton, therefore successive calls to <see cref="Currency.TryGet(CurrencyIsoCode, out Currency)"/>
+		/// will obtain the same instance of <see cref="Currency"/>.
+		/// <para>An internal cache with the information of the currency is maintained.
+		/// If it is the first time such currency is obtained within the context of the running application, the information
+		/// will be loaded individually.</para>
+		/// <para>If many different instances of <see cref="Currency"/> are to be used, it is recommended the use of <see cref="InitializeAllCurrencies"/>
+		/// in order to save some initialization time.</para></remarks>
+		/// <param name="isoCode">ISO 4217 code.</param>
+		/// <param name="currency">When this method returns, contains the <see cref="Currency"/> instance represented by the <paramref name="isoCode"/> if the
+		/// lookup suceeds, or null if the lookup fails.</param>
+		/// <returns>true if <paramref name="isoCode"/> was looked up successfully; otherwise, false.</returns>
 		public static bool TryGet(CurrencyIsoCode isoCode, out Currency currency)
 		{
 			bool tryGet = false;
@@ -600,6 +716,21 @@ namespace NMoneys
 			return tryGet;
 		}
 
+		/// <summary>
+		/// Obtains the instance of <see cref="Currency"/> associated to the ISO symbol specified.
+		/// A return value indicates wheter the lookup succeeded.
+		/// </summary>
+		/// <remarks><see cref="Currency"/> behaves as a singleton, therefore successive calls to <see cref="Currency.TryGet(string, out Currency)"/>
+		/// will obtain the same instance of <see cref="Currency"/>.
+		/// <para>An internal cache with the information of the currency is maintained.
+		/// If it is the first time such currency is obtained within the context of the running application, the information
+		/// will be loaded individually.</para>
+		/// <para>If many different instances of <see cref="Currency"/> are to be used, it is recommended the use of <see cref="InitializeAllCurrencies"/>
+		/// in order to save some initialization time.</para></remarks>
+		/// <param name="threeLetterIsoSymbol">A string representing a three-letter ISO 4217 code.</param>
+		/// <param name="currency">When this method returns, contains the <see cref="Currency"/> instance represented by the <paramref name="threeLetterIsoSymbol"/> if the
+		/// lookup suceeds, or null if the lookup fails.</param>
+		/// <returns>true if <paramref name="threeLetterIsoSymbol"/> was looked up successfully; otherwise, false.</returns>
 		public static bool TryGet(string threeLetterIsoSymbol, out Currency currency)
 		{
 			bool tryGet = _byIsoSymbol.TryGet(threeLetterIsoSymbol, out currency);
@@ -620,6 +751,25 @@ namespace NMoneys
 			return tryGet;
 		}
 
+		/// <summary>
+		/// Obtains the instance of <see cref="Currency"/> associated to the <see cref="CultureInfo"/> specified.
+		/// A return value indicates wheter the lookup succeeded.
+		/// </summary>
+		/// <remarks><see cref="Currency"/> behaves as a singleton, therefore successive calls to <see cref="Currency.TryGet(CultureInfo, out Currency)"/>
+		/// will obtain the same instance of <see cref="Currency"/>.
+		/// <para>An internal cache with the information of the currency is maintained.
+		/// If it is the first time such currency is obtained within the context of the running application, the information
+		/// will be loaded individually.</para>
+		/// <para>If many different instances of <see cref="Currency"/> are to be used, it is recommended the use of <see cref="InitializeAllCurrencies"/>
+		/// in order to save some initialization time.</para>
+		/// <para>There might be cases that the framework will provide non-standard or out-dated information for
+		/// the given <paramref name="culture"/>. In this case it might be possible that the lookup is not successfull even if the region
+		/// corresponding to the <paramref name="culture"/> can be created.</para>
+		/// </remarks>
+		/// <param name="culture">A <see cref="CultureInfo"/> from which retrieve the associated currency.</param>
+		/// <param name="currency">When this method returns, contains the <see cref="Currency"/> instance from the region associated to 
+		/// the <paramref name="culture"/> if the lookup suceeds, or null if the lookup fails.</param>
+		/// <returns>true if <paramref name="currency"/> was looked up successfully; otherwise, false.</returns>
 		public static bool TryGet(CultureInfo culture, out Currency currency)
 		{
 			bool tryGet = false;
@@ -658,6 +808,13 @@ namespace NMoneys
 
 		#endregion
 
+		/// <summary>
+		/// Returns a <see cref="string"/> that represents the current <see cref="Currency"/>.
+		/// </summary>
+		/// <remarks>It actually is a representation of the <see cref="IsoCode"/>.</remarks>
+		/// <returns>
+		/// A <see cref="string"/> that represents the current <see cref="Currency"/>.
+		/// </returns>
 		public override string ToString()
 		{
 			return IsoCode.ToString();
@@ -678,12 +835,23 @@ namespace NMoneys
 			info.AddValue(Serialization.Data.Currency.ISO_CODE, IsoSymbol);
 		}
 
+		/// <summary>
+		/// This method is reserved and should not be used.
+		/// When implementing the <see cref="IXmlSerializable"/> interface, you should return null from this method, and instead,
+		/// if specifying a custom schema is required, apply the <see cref="XmlSchemaProviderAttribute"/> to the class.
+		/// </summary>
+		/// <returns>null</returns>
 		[Obsolete("deprecated, use SchemaProviders instead")]
 		XmlSchema IXmlSerializable.GetSchema()
 		{
 			return null;
 		}
 
+		/// <summary>
+		/// Returns the XML schema applied for serialization.
+		/// </summary>
+		/// <param name="xs">A cache of XML Schema definition language (XSD) schemas.</param>
+		/// <returns>Represents the complexType element from XML Schema as specified by the <paramref name="xs"/>.</returns>
 		public static XmlSchemaComplexType GetSchema(XmlSchemaSet xs)
 		{
 			XmlSchemaComplexType complex = null;
@@ -708,6 +876,10 @@ namespace NMoneys
 			return complex;
 		}
 
+		/// <summary>
+		/// Generates an object from its XML representation.
+		/// </summary>
+		/// <param name="reader">The <see cref="XmlReader"/> stream from which the object is deserialized.</param>
 		public void ReadXml(XmlReader reader)
 		{
 			var isoCode = ReadXmlData(reader);
@@ -725,11 +897,23 @@ namespace NMoneys
 			             paradigm.NegativePattern);
 		}
 
+		/// <summary>
+		/// Converts an object into its XML representation.
+		/// </summary>
+		/// <param name="writer">The <see cref="XmlWriter"/> stream to which the object is serialized.</param>
 		public void WriteXml(XmlWriter writer)
 		{
 			writer.WriteElementString(Serialization.Data.Currency.ISO_CODE, Serialization.Data.NAMESPACE, IsoSymbol);
 		}
 
+		/// <summary>
+		/// Returns the real object that should be deserialized, rather than the object that the serialized stream specifies.
+		/// </summary>
+		/// <returns>
+		/// Returns the actual object that is put into the graph.
+		/// </returns>
+		/// <param name="context">The <see cref="StreamingContext"/> from which the current object is deserialized.</param>
+		/// <exception cref="System.Security.SecurityException">The caller does not have the required permission. The call will not work on a medium trusted server.</exception>
 		public object GetRealObject(StreamingContext context)
 		{
 			return Get(IsoCode);

@@ -2,7 +2,7 @@ using System;
 
 namespace NMoneys.Support
 {
-	public class Guard
+	internal class Guard
 	{
 		public static void AgainstNullArgument<T>(string paramName, T value) where T : class 
 		{
