@@ -191,11 +191,19 @@ namespace NMoneys.Tests
 		}
 
 		[Test]
-		public void TryGet_UndefinedIsoSymbol_Exception()
+		public void TryGet_UndefinedIsoSymbol_False()
 		{
 			string notDefined = "5000";
 			Currency tried;
 			Assert.That(Currency.TryGet(notDefined, out tried), Is.False);
+			Assert.That(tried, Is.Null);
+		}
+
+		[Test]
+		public void TryGet_NullSymbol_False()
+		{
+			Currency tried;
+			Assert.That(Currency.TryGet((string)null, out tried), Is.False);
 			Assert.That(tried, Is.Null);
 		}
 

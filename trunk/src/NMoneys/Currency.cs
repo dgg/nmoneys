@@ -733,7 +733,8 @@ namespace NMoneys
 		/// <returns>true if <paramref name="threeLetterIsoSymbol"/> was looked up successfully; otherwise, false.</returns>
 		public static bool TryGet(string threeLetterIsoSymbol, out Currency currency)
 		{
-			bool tryGet = _byIsoSymbol.TryGet(threeLetterIsoSymbol, out currency);
+			currency = null;
+			bool tryGet = threeLetterIsoSymbol == null ? false : _byIsoSymbol.TryGet(threeLetterIsoSymbol, out currency);
 
 			if (!tryGet)
 			{
@@ -774,6 +775,7 @@ namespace NMoneys
 		{
 			bool tryGet = false;
 			currency = null;
+
 			if (!culture.IsNeutralCulture && !culture.Equals(CultureInfo.InvariantCulture))
 			{
 				RegionInfo region = new RegionInfo(culture.LCID);
