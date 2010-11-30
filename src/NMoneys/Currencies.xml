@@ -1663,7 +1663,29 @@
 		<positivePattern>0</positivePattern>
 		<negativePattern>0</negativePattern>
 	</currency>
-	<currency code="UYI">
+    <currency code="USN">
+        <englishName>US Dollar (Next day)</englishName>
+        <nativeName>US Dollar (Next day)</nativeName>
+        <symbol>36</symbol>
+        <significantDecimalDigits>2</significantDecimalDigits>
+        <decimalSeparator>.</decimalSeparator>
+        <groupSeparator>,</groupSeparator>
+        <groupSizes>3</groupSizes>
+        <positivePattern>0</positivePattern>
+        <negativePattern>0</negativePattern>
+    </currency>
+    <currency code="USS">
+        <englishName>US Dollar (Same day)</englishName>
+        <nativeName>US Dollar (Same day)</nativeName>
+        <symbol>36</symbol>
+        <significantDecimalDigits>2</significantDecimalDigits>
+        <decimalSeparator>.</decimalSeparator>
+        <groupSeparator>,</groupSeparator>
+        <groupSizes>3</groupSizes>
+        <positivePattern>0</positivePattern>
+        <negativePattern>0</negativePattern>
+    </currency>
+    <currency code="UYI">
 		<englishName>Peso Uruguayo</englishName>
 		<nativeName>Peso</nativeName>
 		<symbol>36 85</symbol>

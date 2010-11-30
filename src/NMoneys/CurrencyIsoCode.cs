@@ -261,6 +261,8 @@ namespace NMoneys
 		UGX = 800,
 		[CanonicalCulture("en-US")]
 		USD = 840,
+        USN= 997,
+        USS = 998,
 		[CanonicalCulture("es-UY")]
 		UYI = 940,
 		[CanonicalCulture("es-UY")]
