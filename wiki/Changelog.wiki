@@ -6,11 +6,11 @@
    * Completed Xml documentation for public members
    * `Currency.TryParse()` and `Money.TryParse()` do not throw any exception anymore
    * Added USN and USS after merging all information back from the ISO website
-   * Added NuGet package. It should be available from the public feed
+   * Added _NuGet_ package. It should be available from the public feed
    * Added MSBuild script to ease usage
       * Run tests and creates reports
       * Compiles binaries
-      * Creates NuGet package
+      * Creates _NuGet_ package
       * Copies to output _build_ directory
 
 = 1.1.0.0 =
