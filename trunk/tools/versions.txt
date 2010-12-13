@@ -3,5 +3,5 @@
 * NUnit-Summary:
 	0.25.0.0
 *NuGet:
-	1.0.0.0 (RC2)
+	1.0.10128.22 (Release Candidate)
 	
