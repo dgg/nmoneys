@@ -10,10 +10,10 @@ In theory, it should run in every platform that supports the .Net Framework as i
 
 Building the library is as simple as getting the latest source code from the trunk of the repository and from a command prompt that contains .Net framework _MsBuild.exe_ in the path, invoke:
 {{{
-msbuild path_to_source_code\NMoneys.sln /p:configuration=release
+msbuild path_to_source_code\NMoneys.build
 }}}
-and the built binary can be copied from
-`path_to_source_code\src\NMoneys\bind\Release\NMoneys.dll` into your reference folder for your solution.
+and the built binary and XML documentation can be copied from
+`path_to_source_code\build` into the folder that contains dependencies for your solution.
 
 = Use the Library =
 
