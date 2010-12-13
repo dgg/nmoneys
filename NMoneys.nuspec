@@ -18,5 +18,6 @@
     </metadata>
 	<files>
 		<file src="src\NMoneys\bin\release\NMoneys.dll" />
+		<file src="src\NMoneys\bin\release\NMoneys.XML" />
 	</files>
 </package>

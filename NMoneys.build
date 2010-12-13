@@ -4,6 +4,7 @@
 		<Configuration>Release</Configuration>
 		<solutionFile>NMoneys.sln</solutionFile>
 		<nunitPath>tools\NUnit\</nunitPath>
+		<nunitSummaryPath>tools\NUnitSummary\</nunitSummaryPath>
 		<projectPath>src\NMoneys\</projectPath>
 		<testProjectPath>src\NMoneys.Tests\</testProjectPath>
 		<testProjectFile>NMoneys.Tests.csproj</testProjectFile>
@@ -12,7 +13,7 @@
 		<nuGetManifest>NMoneys.nuspec</nuGetManifest>
 	</PropertyGroup>
 	<ItemGroup Label="testDeployables">
-		<testResults Include="TestResult.xml;TestResult.htm" />
+		<testResults Include="TestResult.xml;*.htm" />
 		<assemblyFile Include="$(MSBuildProjectDirectory)\$(projectPath)bin\$(Configuration)\NMoneys.dll" />
 		<pdbFile Include="$(MSBuildProjectDirectory)\$(projectPath)bin\$(Configuration)\NMoneys.pdb" />
 		<docFile Include="$(MSBuildProjectDirectory)\$(projectPath)bin\$(Configuration)\NMoneys.XML" />
@@ -22,9 +23,11 @@
 	</Target>
 	<Target Name="runTests" DependsOnTargets="compile">
 		<Exec Command="$(nunitPath)nunit-console.exe $(testProjectPath)bin\$(Configuration)\$(testAssemblyFile)" />
-		<Exec Command="$(nunitPath)nunit-summary.exe -html -o=TestResult.htm " />
+		<Exec Command="$(nunitSummaryPath)nunit-summary.exe -html -o=TestSummary.htm " />
+		<Exec Command="$(nunitSummaryPath)nunit-summary.exe -xsl=$(nunitSummaryPath)AlternativeNUnitDetails.xsl -o=TestDetails.htm " />
 	</Target>
 	<Target Name="build" DependsOnTargets="runTests">
+		<RemoveDir Directories="build" />
 		<Copy SourceFiles="@(assemblyFile)" DestinationFolder="build" />
 		<Copy SourceFiles="@(testResults)" DestinationFolder="build" />
 		<Copy Condition="'$(Configuration)'=='Release'" SourceFiles="@(docFile)" DestinationFolder="build" />
