@@ -29,8 +29,10 @@
 	<Target Name="build" DependsOnTargets="runTests">
 		<RemoveDir Directories="build" />
 		<Copy SourceFiles="@(assemblyFile)" DestinationFolder="build" />
+		<Copy SourceFiles="@(assemblyFile)" DestinationFolder="gems\lib" />
 		<Copy SourceFiles="@(testResults)" DestinationFolder="build" />
 		<Copy Condition="'$(Configuration)'=='Release'" SourceFiles="@(docFile)" DestinationFolder="build" />
+		<Copy Condition="'$(Configuration)'=='Release'" SourceFiles="@(docFile)" DestinationFolder="gems\lib" />
 		<Copy Condition="'$(Configuration)'=='Debug'" SourceFiles="@(pdbFile)" DestinationFolder="build" />
 		<Exec Condition="'$(Configuration)'=='Release'" Command="$(nuGetPath)nuget.exe pack $(nuGetManifest) /o build" />
 	</Target>
