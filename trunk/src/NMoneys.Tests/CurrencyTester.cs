@@ -170,6 +170,20 @@ namespace NMoneys.Tests
 		}
 
 		[Test]
+		public void Get_RegionWithUpdatedInformation_Currency()
+		{
+			RegionInfo denmark = new RegionInfo("DK");
+			Assert.That(Currency.Get(denmark), Is.SameAs(Currency.Dkk));
+		}
+
+		[Test, Platform(Include = "Net-2.0")]
+		public void Get_RegionWithOutdatedInformation_Exception()
+		{
+			RegionInfo SerbioAndMontenegro = new RegionInfo("CS");
+			Assert.That(() => Currency.Get(SerbioAndMontenegro), Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.StringContaining("CSD"));
+		}
+
+		[Test]
 		public void Get_NotAShortcut_Currency()
 		{
 			Currency notAShortcut = Currency.Get(CurrencyIsoCode.NAD);
@@ -240,6 +254,25 @@ namespace NMoneys.Tests
 			Assert.That(lev.IsoSymbol, Is.Not.EqualTo(bulgaria.ISOCurrencySymbol));
 			Assert.That(lev.NativeName, Is.Not.EqualTo(bulgaria.CurrencyNativeName));
 			Assert.That(lev.Symbol, Is.EqualTo(bulgaria.CurrencySymbol));
+		}
+
+		[Test]
+		public void TryGet_RegionWithUpdatedInformation_True()
+		{
+			RegionInfo denmark = new RegionInfo("DK");
+			Currency dkk;
+
+			Assert.That(Currency.TryGet(denmark, out dkk), Is.True);
+			Assert.That(dkk, Is.SameAs(Currency.Dkk));
+		}
+
+		[Test, Platform(Include = "Net-2.0")]
+		public void TryGet_RegionWithOutdatedInformation_False()
+		{
+			RegionInfo SerbioAndMontenegro = new RegionInfo("CS");
+			Currency rsd;
+			Assert.That(Currency.TryGet(SerbioAndMontenegro, out rsd), Is.False);
+			Assert.That(rsd, Is.Null);
 		}
 
 		[Test]
@@ -372,7 +405,7 @@ namespace NMoneys.Tests
 			Assert.That(Currency.Xts.CompareTo(to), Is.GreaterThan(0));
 
 			Exception notACurrency = new Exception();
-			Assert.That(()=>Currency.Xts.CompareTo(notACurrency), Throws
+			Assert.That(() => Currency.Xts.CompareTo(notACurrency), Throws
 				.ArgumentException
 				.With.Message.StringContaining("Currency"));
 		}
