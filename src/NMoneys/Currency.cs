@@ -675,8 +675,31 @@ namespace NMoneys
 		/// <exception cref="MissconfiguredCurrencyException">The currency associated to the <paramref name="culture"/> has not been properly configured by the library implementor. Please, log a issue.</exception>
 		public static Currency Get(CultureInfo culture)
 		{
-			Guard.AgainstNullArgument("culture", culture); 
-			RegionInfo region = new RegionInfo(culture.LCID);
+			Guard.AgainstNullArgument("culture", culture);
+			return Get(new RegionInfo(culture.LCID));
+		}
+
+		/// <summary>
+		/// Obtains the instance of <see cref="Currency"/> associated to the <see cref="RegionInfo"/> specified.
+		/// </summary>
+		/// <remarks><see cref="Currency"/> behaves as a singleton, therefore successive calls to <see cref="Currency.Get(CultureInfo)"/>
+		/// will return the same instance of <see cref="Currency"/>.
+		/// <para>An internal cache with the information of the currency is maintained.
+		/// If it is the first time such currency is obtained within the context of the running application, the information
+		/// will be loaded individually.</para>
+		/// <para>If many different instances of <see cref="Currency"/> are to be used, it is recommended the use of <see cref="InitializeAllCurrencies"/>
+		/// in order to save some initialization time.</para>
+		/// <para>There might be cases that the framework will provide non-standard or out-dated information for
+		/// the given <paramref name="region"/>. In this case it might be possible that an exception is thrown.</para>
+		/// </remarks>
+		/// <param name="region">A <see cref="RegionInfo"/> from which retrieve the associated currency.</param>
+		/// <returns>The instance of <see cref="Currency"/> corresponding to the region.</returns>
+		/// <exception cref="ArgumentNullException">The <paramref name="region"/> is null.</exception>
+		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The ISO symbol associated to the <paramref name="region"/> does not exist in the <see cref="CurrencyIsoCode"/> enumeration.</exception>
+		/// <exception cref="MissconfiguredCurrencyException">The currency associated to the <paramref name="region"/> has not been properly configured by the library implementor. Please, log a issue.</exception>
+		public static Currency Get(RegionInfo region)
+		{
+			Guard.AgainstNullArgument("region", region);
 			return Get(region.ISOCurrencySymbol);
 		}
 
@@ -764,7 +787,7 @@ namespace NMoneys
 		/// <para>If many different instances of <see cref="Currency"/> are to be used, it is recommended the use of <see cref="InitializeAllCurrencies"/>
 		/// in order to save some initialization time.</para>
 		/// <para>There might be cases that the framework will provide non-standard or out-dated information for
-		/// the given <paramref name="culture"/>. In this case it might be possible that the lookup is not successfull even if the region
+		/// the given <paramref name="culture"/>. In this case it might be possible that the lookup is not successful even if the region
 		/// corresponding to the <paramref name="culture"/> can be created.</para>
 		/// </remarks>
 		/// <param name="culture">A <see cref="CultureInfo"/> from which retrieve the associated currency.</param>
@@ -776,9 +799,39 @@ namespace NMoneys
 			bool tryGet = false;
 			currency = null;
 
-			if (!culture.IsNeutralCulture && !culture.Equals(CultureInfo.InvariantCulture))
+			if (culture != null && !culture.IsNeutralCulture && !culture.Equals(CultureInfo.InvariantCulture))
 			{
 				RegionInfo region = new RegionInfo(culture.LCID);
+				tryGet = TryGet(region, out currency);
+			}
+			return tryGet;
+		}
+
+		/// <summary>
+		/// Obtains the instance of <see cref="Currency"/> associated to the <see cref="RegionInfo"/> specified.
+		/// A return value indicates wheter the lookup succeeded.
+		/// </summary>
+		/// <remarks><see cref="Currency"/> behaves as a singleton, therefore successive calls to <see cref="Currency.TryGet(RegionInfo, out Currency)"/>
+		/// will obtain the same instance of <see cref="Currency"/>.
+		/// <para>An internal cache with the information of the currency is maintained.
+		/// If it is the first time such currency is obtained within the context of the running application, the information
+		/// will be loaded individually.</para>
+		/// <para>If many different instances of <see cref="Currency"/> are to be used, it is recommended the use of <see cref="InitializeAllCurrencies"/>
+		/// in order to save some initialization time.</para>
+		/// <para>There might be cases that the framework will provide non-standard or out-dated information for
+		/// the given <paramref name="region"/>. In this case it might be possible that the lookup is not successful.</para>
+		/// </remarks>
+		/// <param name="region">A <see cref="RegionInfo"/> from which retrieve the associated currency.</param>
+		/// <param name="currency">When this method returns, contains the <see cref="Currency"/> instance from the region associated to 
+		/// the <paramref name="region"/> if the lookup suceeds, or null if the lookup fails.</param>
+		/// <returns>true if <paramref name="currency"/> was looked up successfully; otherwise, false.</returns>
+		public static bool TryGet(RegionInfo region, out Currency currency)
+		{
+			bool tryGet = false;
+			currency = null;
+
+			if (region != null)
+			{
 				tryGet = TryGet(region.ISOCurrencySymbol, out currency);
 			}
 			return tryGet;
