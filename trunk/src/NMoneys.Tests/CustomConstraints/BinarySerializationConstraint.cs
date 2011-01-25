@@ -34,6 +34,7 @@ namespace NMoneys.Tests.CustomConstraints
 					str.Flush();
 					str.Seek(0, SeekOrigin.Begin);
 
+					// serialized not used, but helps to debug
 					string serialized = new StreamReader(str).ReadToEnd();
 					str.Seek(0, SeekOrigin.Begin);
 

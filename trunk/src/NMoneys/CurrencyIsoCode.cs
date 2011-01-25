@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 
 namespace NMoneys
@@ -222,7 +223,7 @@ namespace NMoneys
 		/// <summary>
 		/// Estonian Kroon
 		/// </summary>
-		[CanonicalCulture("et-EE")]
+		[CanonicalCulture("et-EE"), Obsolete]
 		EEK = 233,
 		/// <summary>
 		/// Egyptian Pound

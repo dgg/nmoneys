@@ -54,5 +54,20 @@ namespace NMoneys.Tests.CustomConstraints
 		{
 			return new JsonDeserializationConstraint<T>(to);
 		}
+
+		public static Constraint Once(this Must.RaiseObsoleteEventEntryPoint entryPoint)
+		{
+			return new ObsoleteCurrencyRaisedConstraint(1);
+		}
+
+		public static Constraint None(this Must.RaiseObsoleteEventEntryPoint entryPoint)
+		{
+			return new ObsoleteCurrencyRaisedConstraint(0);
+		}
+
+		public static Constraint EntityWith(this Must.BeEntryPoint entry, string entityName, string entityNumber)
+		{
+			return new CharacterReferenceConstraint(entityName, entityNumber);
+		}
 	}
 }

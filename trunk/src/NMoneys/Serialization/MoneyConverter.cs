@@ -24,8 +24,8 @@ namespace NMoneys.Serialization
 			if (type != typeof(Money)) throw new NotSupportedException();
 
 			Currency currency = serializer.ConvertToType<Currency>(dictionary[Data.Money.CURRENCY]);
-			decimal amount = (decimal)dictionary[Data.Money.AMOUNT];
-			return new Money(amount, currency);
+			decimal amount = serializer.ConvertToType<decimal>(dictionary[Data.Money.AMOUNT]);
+			return new Money(amount, currency, ObsoleteCurrencyEventBehavior.Ignore);
 		}
 
 		/// <summary>

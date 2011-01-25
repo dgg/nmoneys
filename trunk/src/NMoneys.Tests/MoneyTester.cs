@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using NMoneys.Extensions;
+using NMoneys.Support;
 using NMoneys.Tests.CustomConstraints;
 using NMoneys.Tests.Support;
 using NUnit.Framework;
@@ -39,6 +40,14 @@ namespace NMoneys.Tests
 		}
 
 		[Test]
+		public void Ctor_ObsoleteIsoCode_EventRaised()
+		{
+			CurrencyIsoCode obsolete = Enumeration.Parse<CurrencyIsoCode>("EEK");
+			Action moneyWithObsoleteCurrency = () => new Money(10, obsolete);
+			Assert.That(moneyWithObsoleteCurrency, Must.RaiseObsoleteEvent.Once());
+		}
+
+		[Test]
 		public void Ctor_ExistingIsoSymbol_PropertiesSet()
 		{
 			Money hundredLerus = new Money(100, "EUR");
@@ -47,9 +56,24 @@ namespace NMoneys.Tests
 		}
 
 		[Test]
+		public void Ctor_ObsoleteIsoSymbol_EventRaised()
+		{
+			Action moneyWithObsoleteCurrency = () => new Money(10, "EEK");
+			Assert.That(moneyWithObsoleteCurrency, Must.RaiseObsoleteEvent.Once());
+		}
+
+		[Test]
 		public void Ctor_NullSymbol_Exception()
 		{
 			Assert.That(() => new Money(decimal.Zero, (string)null), Throws.InstanceOf<ArgumentNullException>());
+		}
+
+		[Test]
+		public void Ctor_ObsoleteCurrency_EventRaised()
+		{
+			Currency obsolete = Currency.Get("EEK");
+			Action moneyWithObsoleteCurrency = () => new Money(10, obsolete);
+			Assert.That(moneyWithObsoleteCurrency, Must.RaiseObsoleteEvent.Once());
 		}
 
 		[Test]
@@ -100,6 +124,13 @@ namespace NMoneys.Tests
 				"Framework returns wrong ISOCurrencySymbol (BGL instead of BGN)");
 		}
 
+		[Test, Platform(Include = "Net-2.0")]
+		public void ForCulture_CultureWithObsoleteCulture_EventRaised()
+		{
+			Action moneyWithObsoleteCurrency = ()=> Money.ForCulture(decimal.Zero, CultureInfo.GetCultureInfo("et-EE"));
+			Assert.That(moneyWithObsoleteCurrency, Must.RaiseObsoleteEvent.Once());
+		}
+
 		[Test]
 		public void ForCulture_NullDefaultCulture_Exception()
 		{
@@ -124,6 +155,13 @@ namespace NMoneys.Tests
 			Assert.That(() => Money.ForCurrentCulture(decimal.Zero),
 				Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.StringContaining("BGL"),
 				"Framework returns wrong ISOCurrencySymbol (BGL instead of BGN)");
+		}
+
+		[Test, Platform(Include = "Net-2.0"), SetCulture("et-EE")]
+		public void ForCurrentCulture_CultureWithObsoleteCulture_EventRaised()
+		{
+			Action moneyWithObsoleteCurrency = () => Money.ForCurrentCulture(decimal.Zero);
+			Assert.That(moneyWithObsoleteCurrency, Must.RaiseObsoleteEvent.Once());
 		}
 
 		#endregion
@@ -246,7 +284,7 @@ namespace NMoneys.Tests
 			Assert.That(2.5m.Eur().MajorIntegralAmount, Is.EqualTo(2L));
 			Assert.That(-2.5m.Eur().MajorIntegralAmount, Is.EqualTo(-2L));
 		}
-		
+
 		[Test]
 		public void MinorAmount_CurrencyWithDecimals_DecimalShifted()
 		{
@@ -1181,6 +1219,18 @@ namespace NMoneys.Tests
 		}
 
 		[Test]
+		public void BinarySerialization_ObsoleteCurrency_RaisesEvent()
+		{
+			Money obsolete = new Money(2m, "EEK");
+			using (var serializer = new OneGoBinarySerializer<Money>())
+			{
+				serializer.Serialize(obsolete);
+				Action deserializeObsolete = () => serializer.Deserialize();
+				Assert.That(deserializeObsolete, Must.RaiseObsoleteEvent.Once());
+			}
+		}
+
+		[Test]
 		public void CanBe_XmlSerialized()
 		{
 			Assert.That(new Money(3.757m), Must.Be.XmlSerializable<Money>());
@@ -1195,6 +1245,18 @@ namespace NMoneys.Tests
 				"<currency><isoCode>XXX</isoCode></currency>" +
 				"</money>";
 			Assert.That(serializedMoney, Must.Be.XmlDeserializableInto(new Money(3.757m)));
+		}
+
+		[Test]
+		public void XmlSerialization_ObsoleteCurrency_RaisesEvent()
+		{
+			Money obsolete = new Money(2m, "EEK");
+			using (var serializer = new OneGoXmlSerializer<Money>())
+			{
+				serializer.Serialize(obsolete);
+				Action deserializeObsolete = () => serializer.Deserialize();
+				Assert.That(deserializeObsolete, Must.RaiseObsoleteEvent.Once());
+			}
 		}
 
 		[Test]
@@ -1225,7 +1287,19 @@ namespace NMoneys.Tests
 		}
 
 		[Test]
-		public void CanBe_DataContractJsonSerialized()
+		public void DataContractSerialization_ObsoleteCurrency_RaisesEvent()
+		{
+			Money obsolete = new Money(2m, "EEK");
+			using (var serializer = new OneGoDataContractSerializer<Money>())
+			{
+				serializer.Serialize(obsolete);
+				Action deserializeObsolete = () => serializer.Deserialize();
+				Assert.That(deserializeObsolete, Must.RaiseObsoleteEvent.Once());
+			}
+		}
+
+		[Test]
+		public void CannotBe_DataContractJsonSerialized()
 		{
 			Assert.That(new Money(3.757m), Must.Not.Be.DataContractJsonSerializable<Money>());
 		}
@@ -1241,6 +1315,18 @@ namespace NMoneys.Tests
 		{
 			string serializedMoney = "{\"amount\":3.757,\"currency\":{\"isoCode\":\"XXX\"}}";
 			Assert.That(serializedMoney, Must.Be.JsonDeserializableInto(new Money(3.757m)));
+		}
+
+		[Test]
+		public void JsonSerialization_ObsoleteCurrency_RaisesEvent()
+		{
+			Money obsolete = new Money(2m, "EEK");
+			using (var serializer = new OneGoJsonSerializer<Money>())
+			{
+				serializer.Serialize(obsolete);
+				Action deserializeObsolete = () => serializer.Deserialize();
+				Assert.That(deserializeObsolete, Must.RaiseObsoleteEvent.Once());
+			}
 		}
 
 		#endregion

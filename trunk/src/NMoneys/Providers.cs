@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Resources;
 using System.Xml.XPath;
+using NMoneys.Support.Ext;
 
 namespace NMoneys
 {
@@ -31,15 +32,17 @@ namespace NMoneys
 
 			CurrencyInfo info = new CurrencyInfo(
 				code,
-				node.SelectSingleNode(EmbeddedXml.englishName).Value,
-				node.SelectSingleNode(EmbeddedXml.nativeName).Value,
-				node.SelectSingleNode(EmbeddedXml.symbol).Value,
-				node.SelectSingleNode(EmbeddedXml.significantDecimalDigits).ValueAsInt,
-				node.SelectSingleNode(EmbeddedXml.decimalSeparator).Value,
-				node.SelectSingleNode(EmbeddedXml.groupSeparator).Value,
-				node.SelectSingleNode(EmbeddedXml.groupSizes).Value,
-				node.SelectSingleNode(EmbeddedXml.positivePattern).ValueAsInt,
-				node.SelectSingleNode(EmbeddedXml.negativePattern).ValueAsInt);
+				node.SelectMandatory(englishName),
+				node.SelectMandatory(nativeName),
+				node.SelectMandatory(symbol),
+				node.SelectMandatory(significantDecimalDigits, n => n.ValueAsInt),
+				node.SelectMandatory(decimalSeparator),
+				node.SelectMandatory(groupSeparator),
+				node.SelectMandatory(groupSizes),
+				node.SelectMandatory(positivePattern, n => n.ValueAsInt),
+				node.SelectMandatory(negativePattern, n => n.ValueAsInt),
+				node.SelectOptional(obsolete, n => n.ValueAsBoolean),
+				node.SelectOptional(entity, n => new CharacterReference(n.Value), null));
 
 			return info;
 		}
@@ -52,7 +55,9 @@ namespace NMoneys
 				groupSeparator,
 				groupSizes,
 				positivePattern,
-				negativePattern;
+				negativePattern,
+				obsolete,
+				entity;
 
 		static EmbeddedXml()
 		{
@@ -65,6 +70,8 @@ namespace NMoneys
 			groupSizes = XPathExpression.Compile("groupSizes");
 			positivePattern = XPathExpression.Compile("positivePattern");
 			negativePattern = XPathExpression.Compile("negativePattern");
+			obsolete = XPathExpression.Compile("obsolete");
+			entity = XPathExpression.Compile("entity");
 		}
 	}
 
@@ -108,23 +115,6 @@ namespace NMoneys
 				_stream.Close();
 				_stream.Dispose();
 			}
-		}
-	}
-
-	internal class ConfigurationProvider : ICurrencyInfoProvider
-	{
-		public CurrencyInfo Get(CurrencyIsoCode code)
-		{
-			return null;
-		}
-	}
-
-	// use if only configuration is very memory consuming
-	internal class AttibuteProvider : ICurrencyInfoProvider
-	{
-		public CurrencyInfo Get(CurrencyIsoCode code)
-		{
-			return null;
 		}
 	}
 }

@@ -40,6 +40,13 @@ namespace NMoneys.Support
 			}
 		}
 
+		public static bool CheckDefined<TEnum>(TEnum value) where TEnum : struct , IComparable, IFormattable, IConvertible
+		{
+			assertEnum<TEnum>();
+			Type tEnum = typeof(TEnum);
+			return Enum.IsDefined(tEnum, value);
+		}
+
 		public static TEnum Parse<TEnum>(string text) where TEnum : struct, IComparable, IFormattable, IConvertible
 		{
 			assertEnum<TEnum>();
@@ -65,6 +72,15 @@ namespace NMoneys.Support
 			assertEnum<TEnum>();
 			FieldInfo field = fieldOf(value);
 			return (TAttr)field.GetCustomAttributes(typeof (TAttr), false).Single();
+		}
+
+		public static bool HasAttribute<TEnum, TAttr>(TEnum value)
+			where TEnum : struct, IComparable, IFormattable, IConvertible
+			where TAttr : Attribute
+		{
+			assertEnum<TEnum>();
+			FieldInfo field = fieldOf(value);
+			return field.GetCustomAttributes(typeof(TAttr), false).Any();
 		}
 
 		public static bool TryGetAttribute<TEnum, TAttr>(TEnum value, out TAttr attribute)

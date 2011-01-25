@@ -5,7 +5,7 @@ namespace NMoneys
 {
 	internal sealed class CurrencyInfo
 	{
-		public CurrencyInfo(CurrencyIsoCode code, string englishName, string nativeName, string tokenizedSymbol, int significantDecimalDigits, string decimalSeparator, string groupSeparator, string tokenizedGroupSizes, int positivePattern, int negativePattern)
+		public CurrencyInfo(CurrencyIsoCode code, string englishName, string nativeName, string tokenizedSymbol, int significantDecimalDigits, string decimalSeparator, string groupSeparator, string tokenizedGroupSizes, int positivePattern, int negativePattern, bool obsolete, CharacterReference entity)
 		{
 			Code = code;
 			EnglishName = englishName;
@@ -18,6 +18,9 @@ namespace NMoneys
 			GroupSizes = Support.GroupSizes.FromTokenizedSizes(tokenizedGroupSizes).Sizes;
 			PositivePattern = positivePattern;
 			NegativePattern = negativePattern;
+
+			Obsolete = obsolete;
+			Entity = entity;
 		}
 
 		public CurrencyIsoCode Code { get; private set; }
@@ -31,6 +34,8 @@ namespace NMoneys
 		public int[] GroupSizes { get; private set; }
 		public int PositivePattern { get; private set; }
 		public int NegativePattern { get; private set; }
+		public bool Obsolete { get; private set; }
+		public CharacterReference Entity { get; private set; }
 
 		public override string ToString()
 		{
@@ -57,6 +62,8 @@ namespace NMoneys
 			sb.AppendFormat("PositivePattern {0}", PositivePattern);
 			sb.AppendLine();
 			sb.AppendFormat("NegativePattern {0}", NegativePattern);
+			sb.AppendLine();
+			sb.AppendFormat("Obsolete {0}", Obsolete);
 			sb.AppendLine();
 			return sb.ToString();
 		}

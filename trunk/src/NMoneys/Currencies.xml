@@ -56,6 +56,7 @@
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
 		<negativePattern>0</negativePattern>
+		<entity>fnof</entity>
 	</currency>
 	<currency code="AOA">
 		<englishName>Kwanza</englishName>
@@ -100,6 +101,7 @@
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
 		<negativePattern>0</negativePattern>
+		<entity>fnof</entity>
 	</currency>
 	<currency code="AZN">
 		<englishName>Azerbaijanian Manat</englishName>
@@ -320,6 +322,7 @@
 		<groupSizes>3</groupSizes>
 		<positivePattern>2</positivePattern>
 		<negativePattern>2</negativePattern>
+		<entity>euro</entity>
 	</currency>
 	<currency code="CHF">
 		<englishName>Swiss Franc</englishName>
@@ -375,6 +378,7 @@
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
 		<negativePattern>2</negativePattern>
+		<entity>yen</entity>
 	</currency>
 	<currency code="COP">
 		<englishName>Colombian Peso</englishName>
@@ -507,6 +511,7 @@
 		<groupSizes>3</groupSizes>
 		<positivePattern>3</positivePattern>
 		<negativePattern>8</negativePattern>
+		<obsolete>true</obsolete>
 	</currency>
 	<currency code="EGP">
 		<englishName>Egyptian Pound</englishName>
@@ -551,6 +556,7 @@
 		<groupSizes>3</groupSizes>
 		<positivePattern>3</positivePattern>
 		<negativePattern>8</negativePattern>
+		<entity>euro</entity>
 	</currency>	
 	<currency code="FJD">
 		<englishName>Fiji Dollar</englishName>
@@ -573,6 +579,7 @@
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
 		<negativePattern>0</negativePattern>
+		<entity>pound</entity>
 	</currency>
 	<currency code="GBP">
 		<englishName>UK Pound Sterling</englishName>
@@ -584,6 +591,7 @@
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
 		<negativePattern>1</negativePattern>
+		<entity>pound</entity>
 	</currency>
 	<currency code="GEL">
 		<englishName>Lari</englishName>
@@ -617,6 +625,7 @@
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
 		<negativePattern>0</negativePattern>
+		<entity>pound</entity>
 	</currency>
 	<currency code="GMD">
 		<englishName>Dalasi</englishName>
@@ -815,6 +824,7 @@
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
 		<negativePattern>1</negativePattern>
+		<entity>yen</entity>
 	</currency>
 	<currency code="KES">
 		<englishName>Kenyan Shilling</englishName>
@@ -1453,6 +1463,7 @@
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
 		<negativePattern>0</negativePattern>
+		<entity>pound</entity>
 	</currency>
 	<currency code="SLL">
 		<englishName>Leone</englishName>
@@ -1805,6 +1816,7 @@
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
 		<negativePattern>0</negativePattern>
+		<entity>curren</entity>
 	</currency>
 	<currency code="XBB">
 		<englishName>European Monetary Unit (E.M.U.-6)</englishName>
@@ -1816,6 +1828,7 @@
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
 		<negativePattern>0</negativePattern>
+		<entity>curren</entity>
 	</currency>
 	<currency code="XBC">
 		<englishName>European Unit of Account 9(E.U.A.-9)</englishName>
@@ -1827,6 +1840,7 @@
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
 		<negativePattern>0</negativePattern>
+		<entity>curren</entity>
 	</currency>
 	<currency code="XBD">
 		<englishName>European Unit of Account 17(E.U.A.-17)</englishName>
@@ -1838,6 +1852,7 @@
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
 		<negativePattern>0</negativePattern>
+		<entity>curren</entity>
 	</currency>
 	<currency code="XCD">
 		<englishName>East Caribbean Dollar</englishName>
@@ -1860,6 +1875,7 @@
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
 		<negativePattern>0</negativePattern>
+		<entity>curren</entity>
 	</currency>
 	<currency code="XOF">
 		<englishName>CFA Franc BCEAO</englishName>
@@ -1904,6 +1920,7 @@
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
 		<negativePattern>0</negativePattern>
+		<entity>curren</entity>
 	</currency>
 	<currency code="XTS">
 		<englishName>Test currency</englishName>
@@ -1915,6 +1932,7 @@
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
 		<negativePattern>0</negativePattern>
+		<entity>curren</entity>
 	</currency>
 	<currency code="XXX">
 		<englishName>No currency</englishName>
@@ -1926,6 +1944,7 @@
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
 		<negativePattern>0</negativePattern>
+		<entity>curren</entity>
 	</currency>
 	<currency code="YER">
 		<englishName>Yemeni Rial</englishName>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml.XPath;
 
 namespace NMoneys.Support.Ext
 {
@@ -94,6 +95,27 @@ namespace NMoneys.Support.Ext
 					throw new ArgumentOutOfRangeException("currencyNegativePattern", currencyNegativePattern, "A valid currencyNegativePattern must be between 0 and 15, inclusive.");
 			}
 			return numberNegativePattern;
+		}
+
+		public static string SelectMandatory(this XPathNavigator node, XPathExpression selector)
+		{
+			return node.SelectMandatory(selector, n => n.Value);
+		}
+
+		public static T SelectMandatory<T>(this XPathNavigator node, XPathExpression selector, Func<XPathNavigator, T> value)
+		{
+			return value(node.SelectSingleNode(selector));
+		}
+
+		public static T SelectOptional<T>(this XPathNavigator node, XPathExpression selector, Func<XPathNavigator, T> value)
+		{
+			return SelectOptional(node, selector, value, default(T));
+		}
+
+		public static T SelectOptional<T>(this XPathNavigator node, XPathExpression selector, Func<XPathNavigator, T> value, T defaultValue)
+		{
+			XPathNavigator found = node.SelectSingleNode(selector);
+			return found != null ? value(found) : defaultValue;
 		}
 	}
 }

@@ -18,14 +18,17 @@ namespace NMoneys.Tests.Support
 		public int[] GroupSizes { get; set; }
 		public int PositivePattern { get; set; }
 		public int NegativePattern { get; set; }
+		public bool Obsolete { get; set; }
+		public string EntityName { get; set; }
 
 		public CurrencyInfo Build()
 		{
 			return new CurrencyInfo(Code, EnglishName, NativeName,
 				UnicodeSymbol.FromSymbol(Symbol).TokenizedCodePoints,
 				SignificantDecimalDigits, DecimalSeparator, GroupSeparator,
-				NMoneys.Support.GroupSizes.FromSizes(this.GroupSizes).TokenizedSizes,
-				PositivePattern, NegativePattern);
+				NMoneys.Support.GroupSizes.FromSizes(GroupSizes).TokenizedSizes,
+				PositivePattern, NegativePattern, Obsolete,
+				string.IsNullOrEmpty(EntityName) ? null : new CharacterReference(EntityName));
 		}
 
 		public IEqualityComparer<CurrencyInfo> Comparer

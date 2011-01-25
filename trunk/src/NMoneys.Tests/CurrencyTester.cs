@@ -179,8 +179,8 @@ namespace NMoneys.Tests
 		[Test, Platform(Include = "Net-2.0")]
 		public void Get_RegionWithOutdatedInformation_Exception()
 		{
-			RegionInfo SerbioAndMontenegro = new RegionInfo("CS");
-			Assert.That(() => Currency.Get(SerbioAndMontenegro), Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.StringContaining("CSD"));
+			RegionInfo SerbiaAndMontenegro = new RegionInfo("CS");
+			Assert.That(() => Currency.Get(SerbiaAndMontenegro), Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.StringContaining("CSD"));
 		}
 
 		[Test]
@@ -193,6 +193,34 @@ namespace NMoneys.Tests
 			Assert.That(notAShortcut.IsoSymbol, Is.EqualTo("NAD"));
 			Assert.That(notAShortcut.Symbol, Is.EqualTo("$"));
 			Assert.That(notAShortcut.EnglishName, Is.EqualTo("Namibian Dollar"));
+		}
+
+		[Test]
+		public void Get_ObsoleteCurrencyIsoCode_EventRaised()
+		{
+			Action getObsolete = ()=> Currency.Get(Enumeration.Parse<CurrencyIsoCode>("EEK")); 
+			Assert.That(getObsolete, Must.RaiseObsoleteEvent.Once());
+		}
+
+		[Test]
+		public void Get_ObsoleteCurrencyCode_EventRaised()
+		{
+			Action getObsolete = () => Currency.Get("EEK");
+			Assert.That(getObsolete, Must.RaiseObsoleteEvent.Once());
+		}
+
+		[Test]
+		public void Get_ObsoleteCulture_EventRaised()
+		{
+			Action getObsolete = () => Currency.Get(CultureInfo.GetCultureInfo("et-EE"));
+			Assert.That(getObsolete, Must.RaiseObsoleteEvent.Once());
+		}
+
+		[Test]
+		public void Get_ObsoleteRegion_EventRaised()
+		{
+			Action getObsolete = () => Currency.Get(new RegionInfo("EE"));
+			Assert.That(getObsolete, Must.RaiseObsoleteEvent.Once());
 		}
 
 		[Test]
@@ -269,10 +297,42 @@ namespace NMoneys.Tests
 		[Test, Platform(Include = "Net-2.0")]
 		public void TryGet_RegionWithOutdatedInformation_False()
 		{
-			RegionInfo SerbioAndMontenegro = new RegionInfo("CS");
+			RegionInfo SerbiaAndMontenegro = new RegionInfo("CS");
 			Currency rsd;
-			Assert.That(Currency.TryGet(SerbioAndMontenegro, out rsd), Is.False);
+			Assert.That(Currency.TryGet(SerbiaAndMontenegro, out rsd), Is.False);
 			Assert.That(rsd, Is.Null);
+		}
+
+		[Test]
+		public void TryGet_ObsoleteCurrencyIsoCode_EventRaised()
+		{
+			Currency c;
+			Action tryGetObsolete = () => Currency.TryGet(Enumeration.Parse<CurrencyIsoCode>("EEK"), out c);
+			Assert.That(tryGetObsolete, Must.RaiseObsoleteEvent.Once());
+		}
+
+		[Test]
+		public void TryGet_ObsoleteCurrencyCode_EventRaised()
+		{
+			Currency c;
+			Action tryGetObsolete = () => Currency.TryGet("EEK", out c);
+			Assert.That(tryGetObsolete, Must.RaiseObsoleteEvent.Once());
+		}
+
+		[Test]
+		public void TryGet_ObsoleteCulture_EventRaised()
+		{
+			Currency c;
+			Action tryGetObsolete = () => Currency.TryGet(CultureInfo.GetCultureInfo("et-EE"), out c);
+			Assert.That(tryGetObsolete, Must.RaiseObsoleteEvent.Once());
+		}
+
+		[Test]
+		public void TryGet_ObsoleteRegion_EventRaised()
+		{
+			Currency c;
+			Action tryGetObsolete = () => Currency.TryGet(new RegionInfo("EE"), out c);
+			Assert.That(tryGetObsolete, Must.RaiseObsoleteEvent.Once());
 		}
 
 		[Test]
@@ -291,12 +351,42 @@ namespace NMoneys.Tests
 			Assert.That(Currency.FindAll().Where(currenciesWithDollarSymbol), Is.Not.Empty);
 		}
 
+		[Test]
+		public void FindAll_ReturnsObsoleteCurrencies()
+		{
+			Action iterateAllCurrencies = () => Currency.FindAll().ToArray();
+			Assert.That(iterateAllCurrencies, Must.RaiseObsoleteEvent.Once());
+		}
+
 		#region serialization
 
 		[Test]
 		public void CanBe_BinarySerialized()
 		{
 			Assert.That(Currency.Dollar, Must.Be.BinarySerializable<Currency>(Is.SameAs));
+		}
+
+		[Test]
+		public void BinaryDeserialization_OfObsoleteCurrency_RaisesEvent()
+		{
+			using (var serializer = new OneGoBinarySerializer<Currency>())
+			{
+				var obsolete = Currency.Get("EEK");
+				serializer.Serialize(obsolete);
+				Action deserializeObsolete = () => serializer.Deserialize();
+				Assert.That(deserializeObsolete, Must.RaiseObsoleteEvent.Once());
+			}
+		}
+
+		[Test]
+		public void BinaryDeserialization_PreservesInstanceUniqueness()
+		{
+			using (var serializer = new OneGoBinarySerializer<Currency>())
+			{
+				Currency usd = Currency.Get("USD");
+				serializer.Serialize(usd);
+				Assert.That(serializer.Deserialize(), Is.SameAs(usd));
+			}
 		}
 
 		[Test]
@@ -313,6 +403,30 @@ namespace NMoneys.Tests
 				"<isoCode>USD</isoCode>" +
 				"</currency>";
 			Assert.That(serializedDollar, Must.Be.XmlDeserializableInto(Currency.Dollar));
+		}
+
+		[Test]
+		public void XmlDeserialization_OfObsoleteCurrency_RaisesEvent()
+		{
+			using (var serializer = new OneGoXmlSerializer<Currency>())
+			{
+				var obsolete = Currency.Get("EEK");
+				serializer.Serialize(obsolete);
+				Action deserializeObsolete = () => serializer.Deserialize();
+				Assert.That(deserializeObsolete, Must.RaiseObsoleteEvent.Once());
+			}
+		}
+
+		[Test]
+		public void XmlDeserialization_DoesNotPreserveInstanceUniqueness()
+		{
+			using (var serializer = new OneGoXmlSerializer<Currency>())
+			{
+				Currency usd = Currency.Get("USD");
+				serializer.Serialize(usd);
+				Assert.That(serializer.Deserialize(), Is.Not.SameAs(usd)
+					.And.EqualTo(usd));
+			}
 		}
 
 		[Test]
@@ -340,6 +454,30 @@ namespace NMoneys.Tests
 		}
 
 		[Test]
+		public void DataContractDeserialization_OfObsoleteCurrency_RaisesEvent()
+		{
+			using (var serializer = new OneGoDataContractSerializer<Currency>())
+			{
+				var obsolete = Currency.Get("EEK");
+				serializer.Serialize(obsolete);
+				Action deserializeObsolete = () => serializer.Deserialize();
+				Assert.That(deserializeObsolete, Must.RaiseObsoleteEvent.Once());
+			}
+		}
+
+		[Test]
+		public void DataContractDeserialization_DoesNotPreserveInstanceUniqueness()
+		{
+			using (var serializer = new OneGoDataContractSerializer<Currency>())
+			{
+				Currency usd = Currency.Get("USD");
+				serializer.Serialize(usd);
+				Assert.That(serializer.Deserialize(), Is.Not.SameAs(usd)
+					.And.EqualTo(usd));
+			}
+		}
+
+		[Test]
 		public void CannotBe_DataContractJsonSerialized()
 		{
 			Assert.That(Currency.Dollar, Must.Not.Be.DataContractJsonSerializable<Currency>());
@@ -356,6 +494,29 @@ namespace NMoneys.Tests
 		{
 			string serializedDollar = "{\"isoCode\":\"USD\"}";
 			Assert.That(serializedDollar, Must.Be.JsonDeserializableInto(Currency.Dollar));
+		}
+
+		[Test]
+		public void JsonDeserialization_OfObsoleteCurrency_RaisesEvent()
+		{
+			using (var serializer = new OneGoJsonSerializer<Currency>())
+			{
+				var obsolete = Currency.Get("EEK");
+				serializer.Serialize(obsolete);
+				Action deserializeObsolete = () => serializer.Deserialize();
+				Assert.That(deserializeObsolete, Must.RaiseObsoleteEvent.Once());
+			}
+		}
+
+		[Test]
+		public void JsonDeserialization_DoesPreserveInstanceUniqueness()
+		{
+			using (var serializer = new OneGoJsonSerializer<Currency>())
+			{
+				Currency usd = Currency.Get("USD");
+				serializer.Serialize(usd);
+				Assert.That(serializer.Deserialize(), Is.SameAs(usd));
+			}
 		}
 
 		#endregion
@@ -423,5 +584,64 @@ namespace NMoneys.Tests
 			to = Currency.Aud;
 			Assert.That(Currency.Xts.CompareTo(to), Is.GreaterThan(0));
 		}
+
+		[Test]
+		public void ObsoleteCurrencies_AreConsistent()
+		{
+			Currency[] obsoleteCurrencies = Currency.FindAll().Where(c => c.IsObsolete).ToArray();
+			CurrencyIsoCode[] obsoleteCodes = obsoleteCurrencies.Select(c => c.IsoCode).ToArray();
+
+			// all currencies are in the cache of obsolete currencies
+			Assert.That(obsoleteCurrencies, Has.All.Matches<Currency>(c => ObsoleteCurrencies.Instance.IsObsolete(c)));
+
+			// all currency codes are marked as obsolete
+			Assert.That(obsoleteCodes, Has.All.Matches<CurrencyIsoCode>(Enumeration.HasAttribute<CurrencyIsoCode, ObsoleteAttribute>));
+
+			// there no more currency codes marked as obsolete than obsolete currencies
+			Assert.That(obsoleteCodes, Is.EquivalentTo(
+				Enumeration.GetValues<CurrencyIsoCode>()
+					.Where(Enumeration.HasAttribute<CurrencyIsoCode, ObsoleteAttribute>)));
+		}
+
+		[Test, TestCaseSource("HtmlEntitySpec")]
+		public void SomeCurrencies_HaveAnHtmlEntity(string isoSymbol, string entityName, string entityNumber)
+		{
+			Currency withHtmlEntity = Currency.Get(isoSymbol);
+			Assert.That(withHtmlEntity.Entity, Must.Be.EntityWith(entityName, entityNumber));
+		}
+
+		[Test]
+		public void MostCurrencies_DoNotHaveAnHtmlEntity()
+		{
+			Assert.That(Currency.Dkk.Entity, Is.Null);
+			Assert.That(Currency.Nok.Entity, Is.Null);
+		}
+
+#pragma warning disable 169
+		private static object[] HtmlEntitySpec = new[]
+		{
+			new object[]{"ANG", "&fnof;", "&#402;" },
+			new object[]{"AWG", "&fnof;", "&#402;" },
+			
+			new object[]{"GBP", "&pound;", "&#163;" },
+			new object[]{"SHP", "&pound;", "&#163;" },
+			new object[]{"FKP", "&pound;", "&#163;" },
+
+			new object[]{"JPY", "&yen;", "&#165;" },
+			new object[]{"CNY", "&yen;", "&#165;" },
+
+			new object[]{"EUR", "&euro;", "&#8364;" },
+			new object[]{"CHE", "&euro;", "&#8364;" },
+
+			new object[]{"XXX", "&curren;", "&#164;" },
+			new object[]{"XBA", "&curren;", "&#164;" },
+			new object[]{"XBB", "&curren;", "&#164;" },
+			new object[]{"XBC", "&curren;", "&#164;" },
+			new object[]{"XBD", "&curren;", "&#164;" },
+			new object[]{"XDR", "&curren;", "&#164;" },
+			new object[]{"XPT", "&curren;", "&#164;" },
+			new object[]{"XTS", "&curren;", "&#164;" },
+		};
+#pragma warning restore 169
 	}
 }
