@@ -18,7 +18,7 @@ namespace NMoneys
 	[Serializable]
 	[XmlSchemaProvider("GetSchema")]
 	[XmlRoot(Namespace = Serialization.Data.NAMESPACE, ElementName = Serialization.Data.Currency.ROOT_NAME, DataType = Serialization.Data.Currency.DATA_TYPE, IsNullable = false)]
-	public sealed class Currency : IFormatProvider, IEquatable<Currency>, ISerializable, IXmlSerializable, IObjectReference,IComparable, IComparable<Currency>
+	public sealed class Currency : IFormatProvider, IEquatable<Currency>, ISerializable, IXmlSerializable, IObjectReference, IComparable, IComparable<Currency>
 	{
 		#region properties
 
@@ -106,6 +106,18 @@ namespace NMoneys
 		public NumberFormatInfo FormatInfo { get; private set; }
 
 		/// <summary>
+		/// Indicates whether the currency is legal tender or it has been obsoleted
+		/// </summary>
+		[XmlIgnore]
+		public bool IsObsolete { get; private set; }
+
+		/// <summary>
+		/// Represents the textual html entity
+		/// </summary>
+		[XmlIgnore]
+		public CharacterReference Entity { get; private set; }
+
+		/// <summary>
 		/// Gets the default currency symbol.
 		/// </summary>
 		public static readonly string DefaultSymbol = CultureInfo.InvariantCulture.NumberFormat.CurrencySymbol;
@@ -117,15 +129,16 @@ namespace NMoneys
 		[Obsolete("serialization")]
 		private Currency() { }
 
-		private Currency(CurrencyIsoCode isoCode, string englishName, string nativeName, string symbol, int significantDecimalDigits, string decimalSeparator, string groupSeparator, int[] groupSizes, int positivePattern, int negativePattern)
+		private Currency(CurrencyIsoCode isoCode, string englishName, string nativeName, string symbol, int significantDecimalDigits, string decimalSeparator, string groupSeparator, int[] groupSizes, int positivePattern, int negativePattern, bool isObsolete, CharacterReference entity)
 		{
-			setAllFields(isoCode, englishName, nativeName, symbol, significantDecimalDigits, decimalSeparator, groupSeparator, groupSizes, positivePattern, negativePattern);
+			setAllFields(isoCode, englishName, nativeName, symbol, significantDecimalDigits, decimalSeparator, groupSeparator, groupSizes, positivePattern, negativePattern, isObsolete, entity);
 		}
 
 		internal Currency(CurrencyInfo info)
 			: this(info.Code, info.EnglishName, info.NativeName,
 			info.Symbol, info.SignificantDecimalDigits, info.DecimalSeparator,
-			info.GroupSeparator, info.GroupSizes, info.PositivePattern, info.NegativePattern) { }
+			info.GroupSeparator, info.GroupSizes, info.PositivePattern, info.NegativePattern,
+			info.Obsolete, info.Entity) { }
 
 		/// <summary>
 		/// Initializes a new instace of <see cref="Currency"/> with serialized data
@@ -136,24 +149,15 @@ namespace NMoneys
 		/// <param name="context">The <see cref="StreamingContext"/> that contains contextual information about the source or destination.</param>
 		private Currency(SerializationInfo info, StreamingContext context)
 		{
-			CurrencyIsoCode isoCode = Enumeration.Parse<CurrencyIsoCode>((string)info.GetValue(Serialization.Data.Currency.ISO_CODE, typeof(string)));//(CurrencyIsoCode)info.GetValue(Serialization.Currency.ISO_CODE, typeof(CurrencyIsoCode));
-			Currency paradigm = Get(isoCode);
-			setAllFields(paradigm.IsoCode,
-				paradigm.EnglishName,
-				paradigm.NativeName,
-				paradigm.Symbol,
-				paradigm.SignificantDecimalDigits,
-				paradigm.DecimalSeparator,
-				paradigm.GroupSeparator,
-				paradigm.GroupSizes,
-				paradigm.PositivePattern,
-				paradigm.NegativePattern);
+			CurrencyIsoCode isoCode = Enumeration.Parse<CurrencyIsoCode>((string)info.GetValue(Serialization.Data.Currency.ISO_CODE, typeof(string)));
+			// no need to populate all fields as they will be overriden by the GetRealObject() call
+			IsoCode = isoCode;
 		}
 
 		/// <summary>
 		/// Allows setting all field both for constructors and serialization methods.
 		/// </summary>
-		private void setAllFields(CurrencyIsoCode isoCode, string englishName, string nativeName, string symbol, int significantDecimalDigits, string decimalSeparator, string groupSeparator, int[] groupSizes, int positivePattern, int negativePattern)
+		private void setAllFields(CurrencyIsoCode isoCode, string englishName, string nativeName, string symbol, int significantDecimalDigits, string decimalSeparator, string groupSeparator, int[] groupSizes, int positivePattern, int negativePattern, bool isObsolete, CharacterReference entity)
 		{
 			IsoCode = isoCode;
 			EnglishName = englishName;
@@ -166,6 +170,8 @@ namespace NMoneys
 			GroupSizes = groupSizes;
 			PositivePattern = positivePattern;
 			NegativePattern = negativePattern;
+			IsObsolete = isObsolete;
+			Entity = entity;
 
 			FormatInfo = NumberFormatInfo.ReadOnly(new NumberFormatInfo
 			{
@@ -614,6 +620,7 @@ namespace NMoneys
 		public static Currency Get(CurrencyIsoCode isoCode)
 		{
 			Enumeration.AssertDefined(isoCode);
+			RaiseIfObsolete(isoCode);
 
 			Currency currency;
 			if (!_byIsoCode.TryGet(isoCode, out currency))
@@ -650,6 +657,7 @@ namespace NMoneys
 				if (currency == null) throw new MissconfiguredCurrencyException(isoCode);
 				fillCaches(currency);
 			}
+			RaiseIfObsolete(currency);
 			return currency;
 		}
 
@@ -723,7 +731,7 @@ namespace NMoneys
 			bool tryGet = false;
 			currency = null;
 
-			if (Enum.IsDefined(typeof(CurrencyIsoCode), isoCode))
+			if (Enumeration.CheckDefined(isoCode))
 			{
 				tryGet = _byIsoCode.TryGet(isoCode, out currency);
 				if (!tryGet)
@@ -736,6 +744,7 @@ namespace NMoneys
 					}
 				}
 			}
+			RaiseIfObsolete(currency);
 			return tryGet;
 		}
 
@@ -772,6 +781,7 @@ namespace NMoneys
 					}
 				}
 			}
+			RaiseIfObsolete(currency);
 			return tryGet;
 		}
 
@@ -850,6 +860,7 @@ namespace NMoneys
 				for (int i = 0; i < isoCodes.Length; i++)
 				{
 					CurrencyIsoCode isoCode = isoCodes[i];
+					RaiseIfObsolete(isoCode);
 					Currency maybeInCache;
 					if (!_byIsoCode.TryGet(isoCode, out maybeInCache))
 					{
@@ -941,15 +952,17 @@ namespace NMoneys
 
 			Currency paradigm = Get(isoCode);
 			setAllFields(paradigm.IsoCode,
-			             paradigm.EnglishName,
-			             paradigm.NativeName,
-			             paradigm.Symbol,
-			             paradigm.SignificantDecimalDigits,
-			             paradigm.DecimalSeparator,
-			             paradigm.GroupSeparator,
-			             paradigm.GroupSizes,
-			             paradigm.PositivePattern,
-			             paradigm.NegativePattern);
+						 paradigm.EnglishName,
+						 paradigm.NativeName,
+						 paradigm.Symbol,
+						 paradigm.SignificantDecimalDigits,
+						 paradigm.DecimalSeparator,
+						 paradigm.GroupSeparator,
+						 paradigm.GroupSizes,
+						 paradigm.PositivePattern,
+						 paradigm.NegativePattern,
+						 paradigm.IsObsolete,
+						 paradigm.Entity);
 		}
 
 		/// <summary>
@@ -971,7 +984,12 @@ namespace NMoneys
 		/// <exception cref="System.Security.SecurityException">The caller does not have the required permission. The call will not work on a medium trusted server.</exception>
 		public object GetRealObject(StreamingContext context)
 		{
-			return Get(IsoCode);
+			//TODO: figure out why it is called multiple times
+
+			// only the instance is populated when fields are empty
+			return string.IsNullOrEmpty(IsoSymbol) ?
+				Get(IsoCode) : 
+				null;
 		}
 
 		internal static CurrencyIsoCode ReadXmlData(XmlReader reader)
@@ -983,5 +1001,29 @@ namespace NMoneys
 		}
 
 		#endregion
+
+		///<summary>
+		/// 
+		///</summary>
+		/// <remarks>Beware memory leaks.</remarks>
+		public static EventHandler<ObsoleteCurrencyEventArgs> ObsoleteCurrency;
+
+		internal static void RaiseIfObsolete(CurrencyIsoCode code)
+		{
+			if (ObsoleteCurrencies.Instance.IsObsolete(code))
+			{
+				EventHandler<ObsoleteCurrencyEventArgs> handler = ObsoleteCurrency;
+				if (handler != null) handler(null, new ObsoleteCurrencyEventArgs(code));
+			}
+		}
+
+		internal static void RaiseIfObsolete(Currency currency)
+		{
+			if (ObsoleteCurrencies.Instance.IsObsolete(currency))
+			{
+				EventHandler<ObsoleteCurrencyEventArgs> handler = ObsoleteCurrency;
+				if (handler != null) handler(null, new ObsoleteCurrencyEventArgs(currency.IsoCode));
+			}
+		}
 	}
 }

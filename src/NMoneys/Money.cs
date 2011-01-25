@@ -39,6 +39,12 @@ namespace NMoneys
 			setAllFields(amount, currency);
 		}
 
+		internal Money(decimal amount, Currency currency, ObsoleteCurrencyEventBehavior eventBehavior)
+			: this()
+		{
+			setAllFields(amount, currency.IsoCode, eventBehavior);
+		}
+
 		/// <summary>
 		/// Creates an instance of <see cref="Money"/> with the <paramref name="amount"/> provided
 		/// and the specified <paramref name="currency"/>.
@@ -74,7 +80,14 @@ namespace NMoneys
 
 		private void setAllFields(decimal amount, CurrencyIsoCode currency)
 		{
+			setAllFields(amount, currency, ObsoleteCurrencyEventBehavior.Raise);
+		}
+
+		private void setAllFields(decimal amount, CurrencyIsoCode currency, ObsoleteCurrencyEventBehavior eventBehavior)
+		{
 			Enumeration.AssertDefined(currency);
+			if (eventBehavior == ObsoleteCurrencyEventBehavior.Raise) Currency.RaiseIfObsolete(currency);
+
 			Amount = amount;
 			CurrencyCode = currency;
 		}
@@ -119,7 +132,7 @@ namespace NMoneys
 		public static Money ForCulture(decimal amount, CultureInfo culture)
 		{
 			Guard.AgainstNullArgument("culture", culture);
-			return new Money(amount, Currency.Get(culture));
+			return new Money(amount, Currency.Get(culture), ObsoleteCurrencyEventBehavior.Ignore);
 		}
 
 		/// <summary>
@@ -1161,9 +1174,8 @@ namespace NMoneys
 		public void ReadXml(XmlReader reader)
 		{
 			reader.ReadStartElement();
-			Amount = reader.ReadElementContentAsDecimal(Serialization.Data.Money.AMOUNT, Serialization.Data.NAMESPACE);
-			CurrencyIsoCode isoCode = Currency.ReadXmlData(reader);
-			CurrencyCode = isoCode;
+			setAllFields(reader.ReadElementContentAsDecimal(Serialization.Data.Money.AMOUNT, Serialization.Data.NAMESPACE),
+				Currency.ReadXmlData(reader));
 			reader.ReadEndElement();
 		}
 

@@ -41,6 +41,11 @@ namespace NMoneys.Tests.CustomConstraints
 		private static readonly BeEntryPoint _beEntryPoint = new BeEntryPoint();
 		public static BeEntryPoint Be { get { return _beEntryPoint; } }
 
+		public class RaiseObsoleteEventEntryPoint { }
+
+		private static readonly RaiseObsoleteEventEntryPoint _raiseObsoleteEventEntryPoint = new RaiseObsoleteEventEntryPoint();
+		public static RaiseObsoleteEventEntryPoint RaiseObsoleteEvent { get { return _raiseObsoleteEventEntryPoint; } }
+
 		public class SatisfyEntryPoint
 		{
 			internal SatisfyEntryPoint() { }
