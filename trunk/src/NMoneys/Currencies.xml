@@ -614,6 +614,7 @@
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
 		<negativePattern>0</negativePattern>
+		<entity>cent</entity>
 	</currency>
 	<currency code="GIP">
 		<englishName>Gibraltar Pound</englishName>

@@ -641,6 +641,8 @@ namespace NMoneys.Tests
 			new object[]{"XDR", "&curren;", "&#164;" },
 			new object[]{"XPT", "&curren;", "&#164;" },
 			new object[]{"XTS", "&curren;", "&#164;" },
+
+			new object[]{"GHS", "&cent;", "&#162;" },
 		};
 #pragma warning restore 169
 	}
