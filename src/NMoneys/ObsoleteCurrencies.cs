@@ -3,10 +3,13 @@ using NMoneys.Support;
 
 namespace NMoneys
 {
-	internal sealed class ObsoleteCurrencies
+	/// <summary>
+	/// Maintains a list of obsolete currencies
+	/// </summary>
+	internal static class ObsoleteCurrencies
 	{
-		private readonly HashSet<CurrencyIsoCode> _set;
-		private ObsoleteCurrencies()
+		private static readonly HashSet<CurrencyIsoCode> _set;
+		static ObsoleteCurrencies()
 		{
 #pragma warning disable 612,618
 			_set = new HashSet<CurrencyIsoCode>(FastEnumComparer<CurrencyIsoCode>.Instance)
@@ -16,34 +19,14 @@ namespace NMoneys
 #pragma warning restore 612,618
 		}
 
-		public bool IsObsolete(CurrencyIsoCode code)
+		public static bool IsObsolete(CurrencyIsoCode code)
 		{
 			return _set.Contains(code);
 		}
 
-		public bool IsObsolete(Currency currency)
+		public static bool IsObsolete(Currency currency)
 		{
 			return currency == null || IsObsolete(currency.IsoCode);
-		}
-
-		public static ObsoleteCurrencies Instance
-		{
-			get
-			{
-				return Nested.instance;
-			}
-		}
-
-		// needed for lazy initialized singleton
-		class Nested
-		{
-			// Explicit static constructor to tell C# compiler
-			// not to mark type as beforefieldinit
-			static Nested()
-			{
-			}
-
-			internal static readonly ObsoleteCurrencies instance = new ObsoleteCurrencies();
 		}
 	}
 }
