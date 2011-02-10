@@ -49,7 +49,7 @@ namespace NMoneys.Tests
 			Assert.That(CharacterReference.Empty.EntityNumber, Is.EqualTo("&#00;"));
 			Assert.That(CharacterReference.Empty.SimpleName, Is.Empty);
 			Assert.That(CharacterReference.Empty.CodePoint, Is.EqualTo(0));
-			Assert.That(CharacterReference.Empty.Character, Is.Not.Empty.And.EqualTo(HttpUtility.HtmlDecode("&#0;")));
+			Assert.That(CharacterReference.Empty.Character, Is.Empty);
 			Assert.That(CharacterReference.Empty.IsEmpty, Is.True);
 		}
 
