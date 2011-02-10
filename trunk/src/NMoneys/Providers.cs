@@ -42,7 +42,9 @@ namespace NMoneys
 				node.SelectMandatory(positivePattern, n => n.ValueAsInt),
 				node.SelectMandatory(negativePattern, n => n.ValueAsInt),
 				node.SelectOptional(obsolete, n => n.ValueAsBoolean),
-				node.SelectOptional(entity, n => new CharacterReference(n.Value), null));
+				node.SelectOptional(entity,
+				n => CurrencyCharacterReferences.Get(n.Value),
+				CharacterReference.Empty));
 
 			return info;
 		}

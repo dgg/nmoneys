@@ -47,6 +47,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Currency.cs" />
+    <Compile Include="CurrencyCharacterReferences.cs" />
+    <Compile Include="CurrencyEqualityComparer.cs" />
     <Compile Include="CurrencyInfo.cs" />
     <Compile Include="CurrencyIsoCode.cs" />
     <Compile Include="CanonicalCultureAttribute.cs" />

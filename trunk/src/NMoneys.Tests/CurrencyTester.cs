@@ -363,7 +363,7 @@ namespace NMoneys.Tests
 		[Test]
 		public void CanBe_BinarySerialized()
 		{
-			Assert.That(Currency.Dollar, Must.Be.BinarySerializable<Currency>(Is.SameAs));
+			Assert.That(Currency.Dollar, Must.Be.BinarySerializable<Currency>(Is.EqualTo));
 		}
 
 		[Test]
@@ -379,13 +379,13 @@ namespace NMoneys.Tests
 		}
 
 		[Test]
-		public void BinaryDeserialization_PreservesInstanceUniqueness()
+		public void BinaryDeserialization_DoesNotPreservesInstanceUniqueness()
 		{
 			using (var serializer = new OneGoBinarySerializer<Currency>())
 			{
 				Currency usd = Currency.Get("USD");
 				serializer.Serialize(usd);
-				Assert.That(serializer.Deserialize(), Is.SameAs(usd));
+				Assert.That(serializer.Deserialize(), Is.EqualTo(usd));
 			}
 		}
 
@@ -592,7 +592,11 @@ namespace NMoneys.Tests
 			CurrencyIsoCode[] obsoleteCodes = obsoleteCurrencies.Select(c => c.IsoCode).ToArray();
 
 			// all currencies are in the cache of obsolete currencies
-			Assert.That(obsoleteCurrencies, Has.All.Matches<Currency>(c => ObsoleteCurrencies.Instance.IsObsolete(c)));
+			Assert.That(obsoleteCurrencies, Has.All.Matches<Currency>(ObsoleteCurrencies.IsObsolete));
+
+			// there no more obsolete currencies than the ones in the cache
+			Currency[] obsoleteCurrenciesInCache = Currency.FindAll().Where(ObsoleteCurrencies.IsObsolete).ToArray();
+			Assert.That(obsoleteCurrenciesInCache, Is.EquivalentTo(obsoleteCurrencies));
 
 			// all currency codes are marked as obsolete
 			Assert.That(obsoleteCodes, Has.All.Matches<CurrencyIsoCode>(Enumeration.HasAttribute<CurrencyIsoCode, ObsoleteAttribute>));
@@ -613,8 +617,8 @@ namespace NMoneys.Tests
 		[Test]
 		public void MostCurrencies_DoNotHaveAnHtmlEntity()
 		{
-			Assert.That(Currency.Dkk.Entity, Is.Null);
-			Assert.That(Currency.Nok.Entity, Is.Null);
+			Assert.That(Currency.Dkk.Entity, Is.SameAs(CharacterReference.Empty));
+			Assert.That(Currency.Nok.Entity, Is.SameAs(CharacterReference.Empty));
 		}
 
 #pragma warning disable 169

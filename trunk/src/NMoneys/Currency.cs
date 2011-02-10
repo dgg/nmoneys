@@ -18,7 +18,7 @@ namespace NMoneys
 	[Serializable]
 	[XmlSchemaProvider("GetSchema")]
 	[XmlRoot(Namespace = Serialization.Data.NAMESPACE, ElementName = Serialization.Data.Currency.ROOT_NAME, DataType = Serialization.Data.Currency.DATA_TYPE, IsNullable = false)]
-	public sealed class Currency : IFormatProvider, IEquatable<Currency>, ISerializable, IXmlSerializable, IObjectReference, IComparable, IComparable<Currency>
+	public sealed class Currency : IFormatProvider, IEquatable<Currency>, ISerializable, IXmlSerializable, IComparable, IComparable<Currency>
 	{
 		#region properties
 
@@ -114,6 +114,8 @@ namespace NMoneys
 		/// <summary>
 		/// Represents the textual html entity
 		/// </summary>
+		/// <remarks>Not all currencies have an character reference.
+		/// For those who does not have one, a <see cref="CharacterReference.Empty"/> instance is returned.</remarks>
 		[XmlIgnore]
 		public CharacterReference Entity { get; private set; }
 
@@ -150,8 +152,11 @@ namespace NMoneys
 		private Currency(SerializationInfo info, StreamingContext context)
 		{
 			CurrencyIsoCode isoCode = Enumeration.Parse<CurrencyIsoCode>((string)info.GetValue(Serialization.Data.Currency.ISO_CODE, typeof(string)));
-			// no need to populate all fields as they will be overriden by the GetRealObject() call
-			IsoCode = isoCode;
+			// get a paradigm with the most current values
+			Currency paradigm = Get(isoCode);
+			setAllFields(paradigm.IsoCode, paradigm.EnglishName, paradigm.NativeName, paradigm.Symbol,
+				paradigm.SignificantDecimalDigits, paradigm.DecimalSeparator, paradigm.GroupSeparator, paradigm.GroupSizes,
+				paradigm.PositivePattern, paradigm.NegativePattern, paradigm.IsObsolete, paradigm.Entity);
 		}
 
 		/// <summary>
@@ -451,6 +456,7 @@ namespace NMoneys
 		/// <summary>
 		/// Indicates whether the current <see cref="Currency"/> instance is equal to another instance.
 		/// </summary>
+		/// <remarks>Only <see cref="IsoCode"/> is checked as the object cannot be mutated. For more thorough comparison use <see cref="CurrencyEqualityComparer"/></remarks>
 		/// <returns>
 		/// true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
 		/// </returns>
@@ -974,24 +980,6 @@ namespace NMoneys
 			writer.WriteElementString(Serialization.Data.Currency.ISO_CODE, Serialization.Data.NAMESPACE, IsoSymbol);
 		}
 
-		/// <summary>
-		/// Returns the real object that should be deserialized, rather than the object that the serialized stream specifies.
-		/// </summary>
-		/// <returns>
-		/// Returns the actual object that is put into the graph.
-		/// </returns>
-		/// <param name="context">The <see cref="StreamingContext"/> from which the current object is deserialized.</param>
-		/// <exception cref="System.Security.SecurityException">The caller does not have the required permission. The call will not work on a medium trusted server.</exception>
-		public object GetRealObject(StreamingContext context)
-		{
-			//TODO: figure out why it is called multiple times
-
-			// only the instance is populated when fields are empty
-			return string.IsNullOrEmpty(IsoSymbol) ?
-				Get(IsoCode) : 
-				null;
-		}
-
 		internal static CurrencyIsoCode ReadXmlData(XmlReader reader)
 		{
 			reader.ReadStartElement();
@@ -1003,14 +991,38 @@ namespace NMoneys
 		#endregion
 
 		///<summary>
-		/// 
+		/// Occurs when an obsolete currency is created.
 		///</summary>
-		/// <remarks>Beware memory leaks.</remarks>
+		/// <remarks>
+		/// Do remember to unsubscribe from this event when you are no longer insterested it its ocurrence.
+		/// Failing to do so can prevent your objects from being garbage collected and result in a memory leak.
+		/// <para>By its static nature, the notification is available even when no instance of the class is existing yet.
+		/// This very same nature will cause that subscribers are notified for ocurrences that are "far" from the code that is likely to raise an event in concurrent systems.
+		/// For example, another thread could make the event to raise and a totally unrelated code will get the notification. This may well be the desired effect,
+		/// but awareness need to be raised for when it is not the desired effect.</para>
+		/// <para>Currencies are transient entities in the real world, getting deprecated and/or substituted.
+		/// When a currency that is no longer current is created this event will be raised. This can happen in a number of cases:
+		/// <list type="bullet">
+		/// <item><description>A <see cref="Currency"/> factory method is used.</description></item>
+		/// <item><description>A <see cref="Currency"/> instance gets deserialized.</description></item>
+		/// <item><description>A <see cref="Money"/> instance gets created.</description></item>
+		/// <item><description>A <see cref="Money"/> instance gets deserialized.</description></item>
+		/// </list>
+		/// </para>
+		/// </remarks>
+		/// <seealso cref="Get(CurrencyIsoCode)"/>
+		/// <seealso cref="Get(string)"/>
+		/// <seealso cref="Get(CultureInfo)"/>
+		/// <seealso cref="Get(RegionInfo)"/>
+		/// <seealso cref="TryGet(CurrencyIsoCode, out Currency)"/>
+		/// <seealso cref="TryGet(string, out Currency)"/>
+		/// <seealso cref="TryGet(CultureInfo, out Currency)"/>
+		/// <seealso cref="TryGet(RegionInfo, out Currency)"/>
 		public static EventHandler<ObsoleteCurrencyEventArgs> ObsoleteCurrency;
 
 		internal static void RaiseIfObsolete(CurrencyIsoCode code)
 		{
-			if (ObsoleteCurrencies.Instance.IsObsolete(code))
+			if (ObsoleteCurrencies.IsObsolete(code))
 			{
 				EventHandler<ObsoleteCurrencyEventArgs> handler = ObsoleteCurrency;
 				if (handler != null) handler(null, new ObsoleteCurrencyEventArgs(code));
@@ -1019,7 +1031,7 @@ namespace NMoneys
 
 		internal static void RaiseIfObsolete(Currency currency)
 		{
-			if (ObsoleteCurrencies.Instance.IsObsolete(currency))
+			if (ObsoleteCurrencies.IsObsolete(currency))
 			{
 				EventHandler<ObsoleteCurrencyEventArgs> handler = ObsoleteCurrency;
 				if (handler != null) handler(null, new ObsoleteCurrencyEventArgs(currency.IsoCode));
