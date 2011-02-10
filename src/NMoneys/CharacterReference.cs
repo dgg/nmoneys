@@ -17,7 +17,6 @@ namespace NMoneys
 		private CharacterReference()
 		{
 			EntityName = SimpleName = Character = string.Empty;
-			Character = char.ConvertFromUtf32(0);
 			CodePoint = 0;
 			EntityNumber = "&#00;";
 			IsEmpty = true;
