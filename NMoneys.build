@@ -9,8 +9,11 @@
 		<testProjectPath>src\NMoneys.Tests\</testProjectPath>
 		<testProjectFile>NMoneys.Tests.csproj</testProjectFile>
 		<testAssemblyFile>NMoneys.Tests.dll</testAssemblyFile>
+		<releasePath>release\</releasePath>
 		<nuGetPath>tools\NuGet\</nuGetPath>
 		<nuGetManifest>NMoneys.nuspec</nuGetManifest>
+		<nuGetReleasePath>$(releasePath)nuget\</nuGetReleasePath>
+		<nuGetReleaseLib>$(nuGetReleasePath)lib\Net20</nuGetReleaseLib>
 	</PropertyGroup>
 	<ItemGroup Label="testDeployables">
 		<testResults Include="TestResult.xml;*.htm" />
@@ -27,13 +30,16 @@
 		<Exec Command="$(nunitSummaryPath)nunit-summary.exe -xsl=$(nunitSummaryPath)AlternativeNUnitDetails.xsl -o=TestDetails.htm " />
 	</Target>
 	<Target Name="build" DependsOnTargets="runTests">
-		<RemoveDir Directories="build" />
-		<Copy SourceFiles="@(assemblyFile)" DestinationFolder="build" />
+		<RemoveDir Directories="$(releasePath)" />
+		<Copy SourceFiles="@(assemblyFile)" DestinationFolder="$(releasePath)" />
 		<Copy SourceFiles="@(assemblyFile)" DestinationFolder="gems\lib" />
-		<Copy SourceFiles="@(testResults)" DestinationFolder="build" />
-		<Copy Condition="'$(Configuration)'=='Release'" SourceFiles="@(docFile)" DestinationFolder="build" />
+		<Copy SourceFiles="@(assemblyFile)" DestinationFolder="$(nuGetReleaseLib)" />
+		<Copy SourceFiles="@(testResults)" DestinationFolder="$(releasePath)" />
+		<Copy Condition="'$(Configuration)'=='Release'" SourceFiles="@(docFile)" DestinationFolder="$(releasePath)" />
 		<Copy Condition="'$(Configuration)'=='Release'" SourceFiles="@(docFile)" DestinationFolder="gems\lib" />
-		<Copy Condition="'$(Configuration)'=='Debug'" SourceFiles="@(pdbFile)" DestinationFolder="build" />
-		<Exec Condition="'$(Configuration)'=='Release'" Command="$(nuGetPath)nuget.exe pack $(nuGetManifest) /o build" />
+		<Copy Condition="'$(Configuration)'=='Release'" SourceFiles="@(docFile)" DestinationFolder="$(nuGetReleaseLib)" />
+		<Copy Condition="'$(Configuration)'=='Debug'" SourceFiles="@(pdbFile)" DestinationFolder="$(releasePath)" />
+		<Copy SourceFiles="$(nuGetManifest)" DestinationFolder="$(nuGetReleasePath)" />
+		<Exec Condition="'$(Configuration)'=='Release'" Command="$(nuGetPath)nuget.exe pack $(nuGetReleasePath)$(nuGetManifest) /o $(nuGetReleasePath)" />
 	</Target>
 </Project> 
