@@ -1,6 +1,19 @@
 #summary Summary of changes.
 #labels Phase-Support
 
+= 1.3.0.0 =
+2010/11/20 @revision 37
+   * Support for deprecated currencies
+   * Estonian Kroon (EEK) has been deprecated
+   * `Currency.Get()`, `Currency.Get()` can receive a `RegionInfo` as argument
+   * Added support for HTML/XML entities (such as &eur;)
+   * Updated _NuGet_ to v1.0 RTM.
+   * _NuGet_ [http://nuget.org/Packages/Packages/Details/NMoneys-1-3-0-0 package] published.
+   * Updated _NUnit_ to 2.5.9.10348
+   * Changed MSBuild script to ease usage
+      * Creates more correct _NuGet_ package
+      * Copies to output _release_ directory
+
 = 1.2.0.0 =
 2010/11/20 @revision 24
    * Completed Xml documentation for public members
