@@ -15,6 +15,8 @@
 							<xs:element name="groupSizes" type="xs:string" maxOccurs="1" minOccurs="1" nillable="false" />
 							<xs:element name="positivePattern" type="xs:unsignedByte" maxOccurs="1" minOccurs="1" nillable="false" />
 							<xs:element name="negativePattern" type="xs:unsignedByte" maxOccurs="1" minOccurs="1" nillable="false" />
+							<xs:element name="obsolete" type="xs:boolean" maxOccurs="1" minOccurs="0" nillable="true" />
+							<xs:element name="entity" type="xs:string" maxOccurs="1" minOccurs="0" nillable="true" />
 						</xs:sequence>
 						<xs:attribute name="code" type="xs:string" use="required" />
 					</xs:complexType>
