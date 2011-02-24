@@ -1594,14 +1594,13 @@ namespace NMoneys.Tests
 			var p = new MoneyContainer();
 			var someMoney = new Money(500, Currency.Dkk);
 
-			Assert.That(p.Money, Is.EqualTo(someMoney));
+			Assert.That(p.Money, Is.Not.EqualTo(someMoney));
 		}
 
 		public class MoneyContainer
 		{
 			public Money Money { get; set; }
 		}
-
 
 		#endregion
 	}
