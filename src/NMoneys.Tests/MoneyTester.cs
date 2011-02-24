@@ -24,6 +24,14 @@ namespace NMoneys.Tests
 		#region Ctor
 
 		[Test]
+		public void Ctor_Default_CurrencyIsNotDefault_ButUndefined()
+		{
+			Money @default = new Money();
+
+			Assert.That(@default.CurrencyCode, Is.Not.EqualTo(default(CurrencyIsoCode)).And.EqualTo(CurrencyIsoCode.XXX));
+		}
+
+		[Test]
 		public void Ctor_Amount_AmountWithNoneCurrency()
 		{
 			Money defaultMoney = new Money(3m);
@@ -358,13 +366,13 @@ namespace NMoneys.Tests
 		#region formatting
 
 		[Test]
-		public void ToString_Default_CurrencyFormat_NonVista()
+		public void ToString_Default_CurrencyFormat()
 		{
 			Money subject = new Money(5, CurrencyIsoCode.GBP);
 			Assert.That(subject.ToString(), Is.EqualTo("£5.00"));
 
 			subject = new Money(5, CurrencyIsoCode.DKK);
-			Assert.That(subject.ToString(), Is.EqualTo("kr 5,00"), "Kroner symbol DOES not include dot. Vista bug. Change your regional settings");
+			Assert.That(subject.ToString(), Is.EqualTo("kr 5,00"), "Kroner symbol DOES not include dot. Mistake in Vista and newer.");
 
 			subject = new Money(5, CurrencyIsoCode.USD);
 			Assert.That(subject.ToString(), Is.EqualTo("$5.00"));
@@ -374,14 +382,14 @@ namespace NMoneys.Tests
 		}
 
 		[Test]
-		public void ToString_Format_CurrencyDependentFormat_NonVista()
+		public void ToString_WithCustomFormat_CurrencyDependentFormat()
 		{
 			Money subject = new Money(1000, Currency.Gbp);
 			Assert.That(subject.ToString("C"), Is.EqualTo("£1,000.00"));
 			Assert.That(subject.ToString("N"), Is.EqualTo("1,000.00"));
 
 			subject = new Money(1000, CurrencyIsoCode.DKK);
-			Assert.That(subject.ToString("C"), Is.EqualTo("kr 1.000,00"), "Kroner symbol DOES not include dot. Vista bug. Change your regional settings");
+			Assert.That(subject.ToString("C"), Is.EqualTo("kr 1.000,00"), "Kroner symbol DOES not include dot. Mistake in Vista and newer.");
 			Assert.That(subject.ToString("00.000"), Is.EqualTo("1000,000"));
 		}
 
@@ -1553,6 +1561,47 @@ namespace NMoneys.Tests
 
 			Assert.That(beforeWritting, Is.EqualTo(afterParsing));
 		}
+
+		#endregion
+
+		#region non Zero-Based enumeration behaviors
+
+		[Test]
+		public void CurrencyDependentMethod_CanBeUsedWithDefaultInstance()
+		{
+			Money @default = new Money();
+
+			Assert.That(() => @default.ToString(), Throws.Nothing);
+		}
+
+		[Test]
+		public void CannotBeCreated_WithDefaultCode_AsItIsUndefined()
+		{
+			Assert.That(()=> new Money(2, default(CurrencyIsoCode)), Throws.InstanceOf<InvalidEnumArgumentException>());
+		}
+
+		[Test]
+		public void DefaultInstances_HaveDefinedCode_InsteadOfUndefined()
+		{
+			Money? @null = null;
+
+			Assert.That(@null.GetValueOrDefault().CurrencyCode, Is.EqualTo(CurrencyIsoCode.XXX));
+		}
+
+		[Test]
+		public void Moneycontainer_CanHaveUnitializedMembers()
+		{
+			var p = new MoneyContainer();
+			var someMoney = new Money(500, Currency.Dkk);
+
+			Assert.That(p.Money, Is.EqualTo(someMoney));
+		}
+
+		public class MoneyContainer
+		{
+			public Money Money { get; set; }
+		}
+
 
 		#endregion
 	}

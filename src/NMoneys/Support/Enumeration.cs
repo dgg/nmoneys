@@ -47,6 +47,11 @@ namespace NMoneys.Support
 			return Enum.IsDefined(tEnum, value);
 		}
 
+		public static bool CheckDefault<TEnum>(TEnum value) where TEnum : struct , IComparable, IFormattable, IConvertible
+		{
+			return value.Equals(default(TEnum));
+		}
+
 		public static TEnum Parse<TEnum>(string text) where TEnum : struct, IComparable, IFormattable, IConvertible
 		{
 			assertEnum<TEnum>();
