@@ -718,11 +718,11 @@ namespace NMoneys
 		/// <summary>
 		/// US Dollar (Next day)
 		/// </summary>
-        USN= 997,
+		USN = 997,
 		/// <summary>
 		/// US Dollar (Same day)
 		/// </summary>
-        USS = 998,
+		USS = 998,
 		/// <summary>
 		/// Peso Uruguayo
 		/// </summary>
@@ -809,6 +809,10 @@ namespace NMoneys
 		/// Platinum
 		/// </summary>
 		XPT = 962,
+		/// <summary>
+		/// Sucre
+		/// </summary>
+		XSU = 994,
 		/// <summary>
 		/// Test currency
 		/// </summary>
