@@ -62,62 +62,6 @@ namespace NMoneys.Tests.Support
 
 		#endregion
 
-		#region CheckDefault
-
-		[TestCaseSource("zeroBasedDefaults")]
-		public void CheckDefault_Default_ZeroBasedEnum_IsDefault(Test1 @default)
-		{
-			Assert.That(Enumeration.CheckDefault(@default), Is.True);
-		}
-
-		protected TestCaseData[] zeroBasedDefaults = new[]
-		{
-			new TestCaseData(default(Test1)).SetDescription("default keyword"),
-			new TestCaseData(Test1.Value1).SetDescription("known default"),
-			new TestCaseData((Test1)0).SetDescription("casted default"),
-		};
-
-		[TestCaseSource("zeroBasedNotDefaults")]
-		public void CheckDefault_NotDefault_ZeroBasedEnum_IsDefault(Test1 notDefault)
-		{
-			Assert.That(Enumeration.CheckDefault(notDefault), Is.False);
-		}
-
-		protected TestCaseData[] zeroBasedNotDefaults = new[]
-		{
-			new TestCaseData(Test1.Value2).SetDescription("known non-default"),
-			new TestCaseData(Test1.Value3).SetDescription("known non-default"),
-			new TestCaseData((Test1)6).SetDescription("not defined"),
-			new TestCaseData((Test1)(-1)).SetDescription("not defined"),
-		};
-
-		[TestCaseSource("nonZeroBasedDefaults")]
-		public void CheckDefault_Default_NonZeroBasedEnum_IsDefault(CurrencyIsoCode @default)
-		{
-			Assert.That(Enumeration.CheckDefault(@default), Is.True);
-		}
-
-		protected TestCaseData[] nonZeroBasedDefaults = new[]
-		{
-			new TestCaseData(default(CurrencyIsoCode)).SetDescription("default keyword: not defined"),
-			new TestCaseData((CurrencyIsoCode)0).SetDescription("casted default: not defined"),
-		};
-
-		[TestCaseSource("nonZeroBasedNotDefaults")]
-		public void CheckDefault_NotDefault_NonZeroBasedEnum_IsDefault(Test1 notDefault)
-		{
-			Assert.That(Enumeration.CheckDefault(notDefault), Is.False);
-		}
-
-		protected TestCaseData[] nonZeroBasedNotDefaults = new[]
-		{
-			new TestCaseData(CurrencyIsoCode.XXX).SetDescription("known non-default"),
-			new TestCaseData((CurrencyIsoCode)6).SetDescription("not defined"),
-			new TestCaseData((CurrencyIsoCode)(-1)).SetDescription("not defined"),
-		};
-
-		#endregion
-
 		#region Parse / TryParse
 
 		[Test]
