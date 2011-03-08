@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using NMoneys.Extensions;
 using NMoneys.Support;
@@ -135,7 +136,7 @@ namespace NMoneys.Tests
 		[Test, Platform(Include = "Net-2.0")]
 		public void ForCulture_CultureWithObsoleteCulture_EventRaised()
 		{
-			Action moneyWithObsoleteCurrency = ()=> Money.ForCulture(decimal.Zero, CultureInfo.GetCultureInfo("et-EE"));
+			Action moneyWithObsoleteCurrency = () => Money.ForCulture(decimal.Zero, CultureInfo.GetCultureInfo("et-EE"));
 			Assert.That(moneyWithObsoleteCurrency, Must.RaiseObsoleteEvent.Once());
 		}
 
@@ -1572,12 +1573,13 @@ namespace NMoneys.Tests
 			Money @default = new Money();
 
 			Assert.That(() => @default.ToString(), Throws.Nothing);
+			Assert.That(@default.CurrencyCode, Is.EqualTo(CurrencyIsoCode.XXX));
 		}
 
 		[Test]
 		public void CannotBeCreated_WithDefaultCode_AsItIsUndefined()
 		{
-			Assert.That(()=> new Money(2, default(CurrencyIsoCode)), Throws.InstanceOf<InvalidEnumArgumentException>());
+			Assert.That(() => new Money(2, default(CurrencyIsoCode)), Throws.InstanceOf<InvalidEnumArgumentException>());
 		}
 
 		[Test]
@@ -1592,7 +1594,7 @@ namespace NMoneys.Tests
 		public void Moneycontainer_CanHaveUnitializedMembers()
 		{
 			var p = new MoneyContainer();
-			var someMoney = new Money(500, Currency.Dkk);
+			var someMoney = new Money(0m, Currency.Dkk);
 
 			Assert.That(p.Money, Is.Not.EqualTo(someMoney));
 		}
@@ -1602,6 +1604,163 @@ namespace NMoneys.Tests
 			public Money Money { get; set; }
 		}
 
+		[Test]
+		public void BinarySerialization_OfDefaultInstance_StoresAndDeserializesNoCurrency()
+		{
+			var @default = new Money();
+
+			var serializer = new OneGoBinarySerializer<Money>();
+			serializer.Serialize(@default);
+
+			Money deserialized = serializer.Deserialize();
+
+			Assert.That(deserialized, Must.Be.MoneyWith(0m, Currency.Xxx));
+		}
+
+		[Test]
+		public void XmlSerialization_OfDefaultInstance_StoresAndDeserializesNoCurrency()
+		{
+			var @default = new Money();
+
+			var serializer = new OneGoXmlSerializer<Money>();
+			serializer.Serialize(@default);
+
+			Money deserialized = serializer.Deserialize();
+
+			Assert.That(deserialized, Must.Be.MoneyWith(0m, Currency.Xxx));
+		}
+
+		[Test]
+		public void DatacontractSerialization_OfDefaultInstance_StoresAndDeserializesNoCurrency()
+		{
+			var @default = new Money();
+
+			var serializer = new OneGoDataContractSerializer<Money>();
+			serializer.Serialize(@default);
+
+			Money deserialized = serializer.Deserialize();
+
+			Assert.That(deserialized, Must.Be.MoneyWith(0m, Currency.Xxx));
+		}
+
+		[Test]
+		public void JsonSerialization_OfDefaultInstance_StoresAndDeserializesNoCurrency()
+		{
+			var @default = new Money();
+
+			var serializer = new OneGoJsonSerializer<Money>();
+			serializer.Serialize(@default);
+
+			Money deserialized = serializer.Deserialize();
+
+			Assert.That(deserialized, Must.Be.MoneyWith(0m, Currency.Xxx));
+		}
+
 		#endregion
+
+		[Test]
+		public void ExploratoryTesting_OnPerformance()
+		{
+			Stopwatch watch = new Stopwatch();
+			ActionTimer.Time(watch, () =>
+			{
+				var c = new WithoutEnsure().NonZero;
+			},
+			1000000);
+			long withoutEnsure = watch.ElapsedTicks;
+			Debug.WriteLine("withoutEnsure: " + withoutEnsure);
+
+			watch.Reset();
+			ActionTimer.Time(watch, () =>
+			{
+				var c = new WithEnsure().NonZero;
+			},
+			1000000);
+			long withEnsure = watch.ElapsedTicks;
+			Debug.WriteLine("withEnsure: " + withEnsure);
+
+			watch.Reset();
+			ActionTimer.Time(watch, () =>
+			{
+				var c = new WithNullable().NonZero;
+			}, 1000000);
+			long withNullable = watch.ElapsedTicks;
+			Debug.WriteLine("withNullable: " + withNullable);
+
+			Assert.That(withoutEnsure, Is.LessThan(withEnsure).And.LessThan(withNullable),
+				"doing nothing is the fastest, but it does allow a undefined value in the enumeration. WARNING: THIS TEST MIGH FAIL. Rerun the test to solve it.");
+			Assert.That(withEnsure, Is.GreaterThan(withNullable),
+				"having a custom method to ensure the defined value is more expensive than using a nullable private field");
+		}
+
+		private enum NonZero
+		{
+			One = 1,
+			Two = 2
+		}
+
+		private struct WithoutEnsure
+		{
+			public WithoutEnsure(decimal number, NonZero nonZero)
+				: this()
+			{
+				Number = number;
+				NonZero = nonZero;
+			}
+
+			public NonZero NonZero { get; private set; }
+
+			public decimal Number { get; private set; }
+		}
+
+		private struct WithEnsure
+		{
+			public WithEnsure(decimal number, NonZero nonZero)
+				: this()
+			{
+				Number = number;
+				NonZero = nonZero;
+			}
+
+			private NonZero _nonZero;
+			public NonZero NonZero
+			{
+				get
+				{
+					ensureNoDefault();
+					return _nonZero;
+				}
+				private set { _nonZero = value; }
+			}
+
+			private void ensureNoDefault()
+			{
+				if (_nonZero.Equals(default(NonZero)))
+				{
+					_nonZero = NonZero.One;
+				}
+			}
+
+			private decimal Number { get; set; }
+		}
+
+		private struct WithNullable
+		{
+			public WithNullable(decimal number, NonZero nonZero)
+				: this()
+			{
+				Number = number;
+				NonZero = nonZero;
+			}
+
+			private NonZero? _nonZero;
+			public NonZero NonZero { get { return _nonZero.GetValueOrDefault(NonZero.One); } private set { _nonZero = value; } }
+
+			public decimal Number { get; private set; }
+
+			public decimal Amount { get; private set; }
+		}
 	}
+
+	
 }

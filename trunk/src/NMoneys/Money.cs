@@ -333,7 +333,7 @@ namespace NMoneys
 		/// DO NOT USE the field directly. Use <see cref="CurrencyCode"/>.
 		/// </summary>
 		[Obsolete]
-		private CurrencyIsoCode _currencyCode;
+		private CurrencyIsoCode? _currencyCode;
 
 #pragma warning disable 612,618
 		/// <summary>
@@ -343,24 +343,11 @@ namespace NMoneys
 		{
 			get
 			{
-				ensureNotDefault();
-				return _currencyCode;
+				return _currencyCode.GetValueOrDefault(CurrencyIsoCode.XXX);
 			} 
 			private set
 			{
 				_currencyCode = value;
-			}
-		}
-
-		/// <summary>
-		/// As <see cref="CurrencyIsoCode"/> is a non-zero based enumeration, we have to protect against default instances
-		/// by setting the code to a defined currency if it is the default one.
-		/// </summary>
-		private void ensureNotDefault()
-		{
-			if (Enumeration.CheckDefault(_currencyCode))
-			{
-				_currencyCode = CurrencyIsoCode.XXX;
 			}
 		}
 #pragma warning restore 612,618
