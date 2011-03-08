@@ -89,7 +89,7 @@ namespace NMoneys.Tools
 
 					currencies.Add(
 						ds.Tables[0].AsEnumerable()
-						.Skip(2) // first two row do not contain any info
+						.Skip(3) // first 3 rows do not contain any info
 						.Select(r =>
 						{
 							string code = r[2].ToString(), numericCode = r[3].ToString(), name = r[1].ToString();
