@@ -1,20 +1,23 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Net;
-using HtmlAgilityPack;
+using System.Reflection;
+using Excel;
 
 namespace NMoneys.Tools
 {
 	internal class ScrapeWebsite : Command
 	{
-		public static readonly Uri IsoCurrenciesUrl = new Uri("http://www.iso.org/iso/support/currency_codes_list-1.htm");
+		public static readonly Uri IsoCurrenciesUrl = new Uri("http://www.currency-iso.org/dl_iso_table_a1.xls");
 		protected override void DoExecute()
 		{
-			var doc = new CurrenciesDocument();
+			var doc = new CurrenciesSheet(IsoCurrenciesUrl);
 
-			if (doc.TryLoadFromWebSite(IsoCurrenciesUrl))
+			if (doc.TryLoadFromWebSite())
 			{
 				ScrappedCurrenciesCollection scrappedCurrencies = doc.SelectCurrencies();
 				Currency[] allCurrencies = Currency.FindAll().ToArray();
@@ -27,7 +30,7 @@ namespace NMoneys.Tools
 		{
 			WL("The following currencies are defined only in the implemented set:");
 			IEnumerable<Currency> implementedOnly = allCurrencies.Except(
-				scrappedCurrencies.Select(s => s.ToCurrency()).Where(c => c!= null));
+				scrappedCurrencies.Select(s => s.ToCurrency()).Where(c => c != null));
 			foreach (var implemented in implementedOnly)
 			{
 				WL(ScrappedCurrency.ToString(implemented));
@@ -46,17 +49,31 @@ namespace NMoneys.Tools
 		}
 	}
 
-	internal class CurrenciesDocument : HtmlDocument
+	internal class CurrenciesSheet
 	{
-		private bool _currenciesWereLoaded;
-		public bool TryLoadFromWebSite(Uri url)
+		private readonly string _cachedFile;
+		private readonly Uri _url;
+
+		public CurrenciesSheet(Uri url)
 		{
-			HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-			HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-			bool canBeLoaded = response.StatusCode == HttpStatusCode.OK;
-			if (canBeLoaded) Load(response.GetResponseStream(), true);
-			_currenciesWereLoaded = canBeLoaded;
-			return canBeLoaded;
+			_url = url;
+			DirectoryInfo binDirectory = Directory.GetParent(Assembly.GetExecutingAssembly().Location);
+			_cachedFile = Path.Combine(binDirectory.FullName, Path.GetFileName(url.PathAndQuery));
+		}
+
+		private bool _currenciesWereLoaded;
+		public bool TryLoadFromWebSite()
+		{
+			try
+			{
+				WebClient client = new WebClient();
+				client.DownloadFile(_url, _cachedFile);
+			}
+			catch
+			{
+				return false;
+			}
+			return _currenciesWereLoaded = true;
 		}
 
 		public ScrappedCurrenciesCollection SelectCurrencies()
@@ -64,95 +81,35 @@ namespace NMoneys.Tools
 			ScrappedCurrenciesCollection currencies = new ScrappedCurrenciesCollection();
 			if (_currenciesWereLoaded)
 			{
-				HtmlNodeCollection currencyNodes = DocumentNode.SelectNodes("//div[@class='colGroup']/div/table/tbody/tr");
-				// start with one as headers are not important
-				for (int i = 1; i < currencyNodes.Count; i++)
+				IExcelDataReader dr = null;
+				try
 				{
-					HtmlNode currencyNode = currencyNodes[i];
-					var created = parse(currencyNode);
-					currencies.Add(created);
+					dr = ExcelReaderFactory.CreateBinaryReader(File.OpenRead(_cachedFile));
+					var ds = dr.AsDataSet();
+
+					currencies.Add(
+						ds.Tables[0].AsEnumerable()
+						.Skip(2) // first two row do not contain any info
+						.Select(r =>
+						{
+							string code = r[2].ToString(), numericCode = r[3].ToString(), name = r[1].ToString();
+							return ScrappedCurrency.IsCode(code) && ScrappedCurrency.IsNumericCode(numericCode) ?
+								new ScrappedCurrency(code, numericCode, name) :
+								null;
+						})
+						.ToArray());
+				}
+
+				finally
+				{
+					if (dr != null)
+					{
+						dr.Close();
+						dr.Dispose();
+					}
 				}
 			}
 			return currencies;
-		}
-
-		private static ScrappedCurrency[] parse(HtmlNode currencyNode)
-		{
-			List<ScrappedCurrency> built = new List<ScrappedCurrency>(3);
-			var breaks = currencyNode.SelectNodes("td/br");
-			if (containsOneCurrency(breaks))
-			{
-				built.Add(parseOneCurrecy(currencyNode));
-			}
-			else if (containsTwoCurrencies(breaks))
-			{
-				built.AddRange(parseTwoCurrencies(breaks));
-			}
-
-			else if (containsThreeCurrencies(breaks))
-			{
-				built.AddRange(parseThreeCurrencies(breaks));
-			}
-			return built.ToArray();
-		}
-
-		private static bool containsOneCurrency(HtmlNodeCollection breaks)
-		{
-			return breaks == null || breaks.Count == 0;
-		}
-
-		private static ScrappedCurrency parseOneCurrecy(HtmlNode currencyNode)
-		{
-			string code = currencyNode.SelectSingleNode("td[3]").InnerText;
-			string numericCode = currencyNode.SelectSingleNode("td[4]").InnerText;
-
-			return ScrappedCurrency.IsCode(code) && ScrappedCurrency.IsNumericCode(numericCode) ?
-				new ScrappedCurrency(code, numericCode, currencyNode.SelectSingleNode("td[2]").InnerText) :
-				null;
-		}
-
-		private static bool containsTwoCurrencies(HtmlNodeCollection breaks)
-		{
-			return breaks.Count == 6;
-		}
-
-		private static IEnumerable<ScrappedCurrency> parseTwoCurrencies(HtmlNodeCollection breaks)
-		{
-			return new[]
-			{
-				new ScrappedCurrency(
-					breaks[2].PreviousSibling.InnerText,
-					breaks[4].PreviousSibling.InnerText,
-					breaks[0].PreviousSibling.InnerText),
-				new ScrappedCurrency(
-					breaks[3].NextSibling.InnerText,
-					breaks[5].NextSibling.InnerText,
-					breaks[1].NextSibling.InnerText)
-			};
-		}
-
-		private static bool containsThreeCurrencies(HtmlNodeCollection breaks)
-		{
-			return breaks.Count == 12;
-		}
-
-		private static IEnumerable<ScrappedCurrency> parseThreeCurrencies(HtmlNodeCollection breaks)
-		{
-			return new[]
-			{
-			    new ScrappedCurrency(
-					breaks[4].PreviousSibling.InnerText,
-			       	breaks[8].PreviousSibling.InnerText,
-			       	breaks[0].PreviousSibling.InnerText),
-			    new ScrappedCurrency(
-			       	breaks[5].NextSibling.InnerText,
-			       	breaks[10].PreviousSibling.InnerText,
-			       	breaks[2].PreviousSibling.InnerText),
-			    new ScrappedCurrency(
-			       	breaks[7].NextSibling.InnerText,
-			       	breaks[11].NextSibling.InnerText,
-			       	breaks[3].NextSibling.InnerText)
-			};
 		}
 	}
 
@@ -192,10 +149,11 @@ namespace NMoneys.Tools
 
 	internal class ScrappedCurrency : IEquatable<ScrappedCurrency>
 	{
-		public ScrappedCurrency(string code, string numericCode, string name) : this(
-			stripSpecialCharacters(code),
-			short.Parse(stripSpecialCharacters(numericCode)), 
-			stripSpecialCharacters(name)) { }
+		public ScrappedCurrency(string code, string numericCode, string name)
+			: this(
+				stripSpecialCharacters(code),
+				short.Parse(stripSpecialCharacters(numericCode)),
+				stripSpecialCharacters(name)) { }
 
 		private ScrappedCurrency(string code, short numericCode, string name)
 		{
@@ -249,7 +207,7 @@ namespace NMoneys.Tools
 			return short.TryParse(stripSpecialCharacters(numericCode), out s);
 		}
 
-		internal  static ScrappedCurrency Create(Currency currency)
+		internal static ScrappedCurrency Create(Currency currency)
 		{
 			return new ScrappedCurrency(currency.IsoSymbol, currency.NumericCode, currency.EnglishName);
 		}

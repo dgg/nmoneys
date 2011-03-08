@@ -24,7 +24,9 @@ namespace NMoneys.Tools.Support
 			nf.CurrencyGroupSeparator,
 			GroupSizes.FromSizes(nf.CurrencyGroupSizes).TokenizedSizes,
 			nf.CurrencyPositivePattern,
-			nf.CurrencyNegativePattern);
+			nf.CurrencyNegativePattern,
+			false,
+			CharacterReference.Empty);
 		}
 
 		public static CultureCurrencyInfo TryBuild(CultureInfo ci)
