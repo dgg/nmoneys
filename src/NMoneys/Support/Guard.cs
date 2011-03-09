@@ -9,6 +9,12 @@ namespace NMoneys.Support
 			if (value == null) throw new ArgumentNullException(paramName);
 		}
 
+		public static U AgainstNullArgument<T, U>(string paramName, T value, Func<T, U> member) where T : class
+		{
+			AgainstNullArgument(paramName, value);
+			return member(value);
+		}
+
 		public static void AgainstArgument(string paramName, bool clause)
 		{
 			if (clause) throw new ArgumentException(null, paramName);

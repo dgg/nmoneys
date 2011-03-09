@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 
 namespace NMoneys.Support
@@ -28,7 +29,7 @@ namespace NMoneys.Support
 		private UnicodeSymbol(int[] codePoints, string symbol)
 		{
 			CodePoints = codePoints;
-			TokenizedCodePoints = join(codePoints.Select(cp => cp.ToString()).ToArray());
+			TokenizedCodePoints = join(codePoints.Select(cp => cp.ToString(CultureInfo.InvariantCulture)).ToArray());
 			Symbol = symbol;
 		}
 
@@ -38,13 +39,14 @@ namespace NMoneys.Support
 		/// </summary>
 		/// <param name="tokenizedCodePoints">Space-tokenized collection of code points (as strings) for each character of the symbol.</param>
 		/// <returns>Instace with the different representations of a complex Unicode symbol.</returns>
+		/// <exception cref="ArgumentNullException"><paramref name="tokenizedCodePoints"/> is null.</exception>
 		public static UnicodeSymbol FromTokenizedCodePoints(string tokenizedCodePoints)
 		{
 			Guard.AgainstNullArgument("tokenizedCodePoints", tokenizedCodePoints);
 
 			int[] codePoints = 
 				split(tokenizedCodePoints)
-				.Select(cp => Convert.ToInt32(cp.Trim()))
+				.Select(cp => Convert.ToInt32(cp.Trim(), CultureInfo.InvariantCulture))
 				.ToArray();
 			string symbol = string.Empty;
 			Array.ForEach(codePoints, cp => symbol += char.ConvertFromUtf32(cp));
@@ -56,6 +58,7 @@ namespace NMoneys.Support
 		/// </summary>
 		/// <param name="symbol">Complex unicode symbol.</param>
 		/// <returns>Instace with the different representations of a complex Unicode symbol.</returns>
+		/// <exception cref="ArgumentNullException"><paramref name="symbol"/> is null.</exception>
 		public static UnicodeSymbol FromSymbol(string symbol)
 		{
 			Guard.AgainstNullArgument("symbol", symbol);

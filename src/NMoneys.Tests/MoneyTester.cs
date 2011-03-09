@@ -95,7 +95,7 @@ namespace NMoneys.Tests
 		[Test]
 		public void Ctor_NullCurrency_Exception()
 		{
-			Assert.Throws<NullReferenceException>(() => new Money(decimal.Zero, (Currency)null));
+			Assert.That(() => new Money(decimal.Zero, (Currency)null), Throws.InstanceOf<ArgumentNullException>());
 		}
 
 		[Test]
@@ -210,7 +210,7 @@ namespace NMoneys.Tests
 		[Test]
 		public void Zero_NullCurrency_Exception()
 		{
-			Assert.Throws<NullReferenceException>(() => Money.Zero((Currency)null));
+			Assert.That(() => Money.Zero((Currency)null), Throws.InstanceOf<ArgumentNullException>());
 		}
 
 		[Test]
@@ -1762,5 +1762,5 @@ namespace NMoneys.Tests
 		}
 	}
 
-	
+
 }
