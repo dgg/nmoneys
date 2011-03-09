@@ -7,40 +7,40 @@ namespace NMoneys
 	/// The exception that is thrown when a currency has not been properly configured.
 	/// </summary>
 	[Serializable]
-	public class MissconfiguredCurrencyException : Exception
+	public class MisconfiguredCurrencyException : Exception
 	{
 		/// <summary>
-		/// Initializes a new instance of <see cref="MissconfiguredCurrencyException"/>.
+		/// Initializes a new instance of <see cref="MisconfiguredCurrencyException"/>.
 		/// </summary>
 		/// <param name="isoCode">The currency which is missconfigured.</param>
-		public MissconfiguredCurrencyException(CurrencyIsoCode isoCode) :
+		public MisconfiguredCurrencyException(CurrencyIsoCode isoCode) :
 			this(string.Format("Currency with code {0} was not properly configured", isoCode)) { }
 
 		/// <summary>
-		/// Initializes a new instance of <see cref="MissconfiguredCurrencyException"/>.
+		/// Initializes a new instance of <see cref="MisconfiguredCurrencyException"/>.
 		/// </summary>
 		[Obsolete("Serialization")]
-		public MissconfiguredCurrencyException() { }
+		public MisconfiguredCurrencyException() { }
 
 		/// <summary>
-		/// Initializes a new instance of <see cref="MissconfiguredCurrencyException"/>.
+		/// Initializes a new instance of <see cref="MisconfiguredCurrencyException"/>.
 		/// </summary>
 		/// <param name="message">A message that describes why this exception was thrown.</param>
-		public MissconfiguredCurrencyException(string message) : base(message) { }
+		public MisconfiguredCurrencyException(string message) : base(message) { }
 
 		/// <summary>
-		/// Initializes a new instance of <see cref="MissconfiguredCurrencyException"/>.
+		/// Initializes a new instance of <see cref="MisconfiguredCurrencyException"/>.
 		/// </summary>
 		/// <param name="message">A message that describes why this exception was thrown.</param>
 		/// <param name="inner">The exception that caused this exception to be thrown.</param>
-		public MissconfiguredCurrencyException(string message, Exception inner) : base(message, inner) { }
+		public MisconfiguredCurrencyException(string message, Exception inner) : base(message, inner) { }
 
 		/// <summary>
-		/// Initializes a new instace of <see cref="MissconfiguredCurrencyException"/> with serialized data
+		/// Initializes a new instace of <see cref="MisconfiguredCurrencyException"/> with serialized data
 		/// </summary>
-		/// <param name="info">The <see cref="SerializationInfo"/> that holds the serialized object data about the <see cref="MissconfiguredCurrencyException"/>.</param>
+		/// <param name="info">The <see cref="SerializationInfo"/> that holds the serialized object data about the <see cref="MisconfiguredCurrencyException"/>.</param>
 		/// <param name="context">The <see cref="StreamingContext"/> that contains contextual information about the source or destination.</param>
-		protected MissconfiguredCurrencyException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+		protected MisconfiguredCurrencyException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 	}
 
 	/// <summary>

@@ -7,7 +7,7 @@ namespace NMoneys
 	///<summary>
 	/// Represents all reserved currency characters in an HTML/XML document.
 	///</summary>
-	public class CurrencyCharacterReferences
+	public static class CurrencyCharacterReferences
 	{
 		/// <summary>
 		/// Gets a <see cref="CharacterReference"/> instance from its simple name.

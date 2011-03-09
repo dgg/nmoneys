@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Globalization;
 
 namespace NMoneys
 {
@@ -223,7 +224,7 @@ namespace NMoneys
 		/// <summary>
 		/// Estonian Kroon
 		/// </summary>
-		[CanonicalCulture("et-EE"), Obsolete]
+		[CanonicalCulture("et-EE"), Obsolete("deprecated")]
 		EEK = 233,
 		/// <summary>
 		/// Egyptian Pound
@@ -872,7 +873,7 @@ namespace NMoneys
 		/// </summary>
 		public static string PaddedNumericCode(this CurrencyIsoCode isoCode)
 		{
-			return isoCode.NumericCode().ToString("000");
+			return isoCode.NumericCode().ToString("000", CultureInfo.InvariantCulture);
 		}
 	}
 }

@@ -586,6 +586,34 @@ namespace NMoneys.Tests
 		}
 
 		[Test]
+		public void GreaterThan_Generic_AccordingToSpec()
+		{
+			Currency to = null;
+			Assert.That(Currency.Xts > to, Is.True);
+
+			to = Currency.Xts;
+			Assert.That(Currency.Xts > to, Is.False);
+			to = Currency.Xxx;
+			Assert.That(Currency.Xts > to, Is.False);
+			to = Currency.Aud;
+			Assert.That(Currency.Xts > to, Is.True);
+		}
+
+		[Test]
+		public void LessThan_Generic_AccordingToSpec()
+		{
+			Currency to = null;
+			Assert.That(Currency.Xts< to, Is.False);
+
+			to = Currency.Xts;
+			Assert.That(Currency.Xts < to, Is.False);
+			to = Currency.Xxx;
+			Assert.That(Currency.Xts< to, Is.True);
+			to = Currency.Aud;
+			Assert.That(Currency.Xts < to, Is.False);
+		}
+
+		[Test]
 		public void ObsoleteCurrencies_AreConsistent()
 		{
 			Currency[] obsoleteCurrencies = Currency.FindAll().Where(c => c.IsObsolete).ToArray();

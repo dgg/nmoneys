@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using System.Xml.XPath;
 
@@ -52,7 +53,7 @@ namespace NMoneys.Support.Ext
 		{
 			string str = string.Empty;
 			Array.ForEach(unicodes.emptyIfNull(),
-				item => str += char.ConvertFromUtf32(Convert.ToInt32(item.Trim())));
+				item => str += char.ConvertFromUtf32(Convert.ToInt32(item.Trim(), CultureInfo.InvariantCulture)));
 			return str;
 		}
 

@@ -30,6 +30,7 @@ namespace NMoneys.Support
 		/// </summary>
 		/// <param name="tokenizedSizes">Space-tokenized representation of the number of digits in each group to the left of the decimal in a number.</param>
 		/// <returns>Instance with all representations of the number of digits in each group.</returns>
+		/// /// <exception cref="ArgumentNullException"><paramref name="tokenizedSizes"/> is null.</exception>
 		public static GroupSizes FromTokenizedSizes(string tokenizedSizes)
 		{
 			Guard.AgainstNullArgument("tokenizedSizes", tokenizedSizes);
@@ -37,7 +38,7 @@ namespace NMoneys.Support
 			int[] sizes = new int[0];
 			if (!string.IsNullOrEmpty(tokenizedSizes))
 			{
-				sizes = split(tokenizedSizes).Select(s => Convert.ToInt32(s)).ToArray();
+				sizes = split(tokenizedSizes).Select(s => Convert.ToInt32(s, CultureInfo.InvariantCulture)).ToArray();
 			}
 			assertCorrectSizes(sizes);
 			return new GroupSizes(sizes, tokenizedSizes);
@@ -53,7 +54,7 @@ namespace NMoneys.Support
 		{
 			//Guard.AgainstNullArgument("sizes", sizes);
 			assertCorrectSizes(sizes);
-			return new GroupSizes(sizes, join(sizes.Select(s => s.ToString()).ToArray()));
+			return new GroupSizes(sizes, join(sizes.Select(s => s.ToString(CultureInfo.InvariantCulture)).ToArray()));
 		}
 
 		private static void assertCorrectSizes(int[] sizes)
