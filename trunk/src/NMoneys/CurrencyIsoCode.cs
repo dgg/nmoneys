@@ -820,6 +820,10 @@ namespace NMoneys
 		[Description("Test currency")]
 		XTS = 963,
 		/// <summary>
+		/// ADB Unit of Account
+		/// </summary>
+		XUA = 965,
+		/// <summary>
 		/// No currency
 		/// </summary>
 		[Description("No currency")]
