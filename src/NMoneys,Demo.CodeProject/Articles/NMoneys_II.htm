@@ -1,0 +1,336 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--------------------------------------------------------------------------->  
+<!--                           INTRODUCTION                                
+
+ The Code Project article submission template (HTML version)
+
+Using this template will help us post your article sooner. To use, just 
+follow the 3 easy steps below:
+ 
+     1. Fill in the article description details
+     2. Add links to your images and downloads
+     3. Include the main article text
+
+That's all there is to it! All formatting will be done by our submission
+scripts and style sheets. 
+
+-->  
+<!--------------------------------------------------------------------------->  
+<!--                        IGNORE THIS SECTION                            -->
+<html>
+<head>
+<title>The Code Project</title>
+<Style>
+BODY, P, TD { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt }
+H2,H3,H4,H5 { color: #ff9900; font-weight: bold; }
+H2 { font-size: 13pt; }
+H3 { font-size: 12pt; }
+H4 { font-size: 10pt; color: black; }
+PRE { BACKGROUND-COLOR: #FBEDBB; FONT-FAMILY: "Courier New", Courier, mono; WHITE-SPACE: pre; }
+CODE { COLOR: #990000; FONT-FAMILY: "Courier New", Courier, mono; }
+</style>
+<link rel="stylesheet" type="text/css" href="http://www.codeproject.com/App_Themes/NetCommunity/CodeProject.css">
+</head>
+<body bgcolor="#FFFFFF" color=#000000>
+<!--------------------------------------------------------------------------->  
+
+
+<!-------------------------------     STEP 1      --------------------------->
+<!--  Fill in the details (CodeProject will reformat this section for you) -->
+
+<pre>
+Title:       NMoneys Part II, Currencies, Currencies Everywhere
+Author:      dgon
+Email:       dgon_rena@hotmail.com
+Language:    C#
+Platform:    .NET Framework
+Technology:  Libraries
+Level:       Intermediate
+Description: NMoneys is an implementation of the Money Value Object to support representing moneys in the currencies defined in the ISO 4417 standard
+for the .NET platform. In this part, we'll see the role of the Currency class.
+Section      Platforms, Frameworks & Libraries
+SubSection   .NET Framework
+License:     CPOL
+</pre>
+
+<!-------------------------------     STEP 2      --------------------------->
+<!--  Include download and sample image information.                       --> 
+
+<ul class=download>
+<li><a href="NMoneys_II_src.zip">Download source - XXX Kb</a></li>
+<li><a href="NMoneys_demo.zip">Download demo project - XXX Kb </a></li>
+</ul>
+
+<p><img src="NMoneys_long.png" alt="Sample Image - maximum width is 600 pixels"></p>
+
+
+<!-------------------------------     STEP 3      --------------------------->
+
+<!--  Add the article text. Please use simple formatting (<h2>, <p> etc)   -->
+
+<h2>Introduction</h2>
+
+<p>In the previous part we analysed he motivations for the existence of <a href="http://code.google.com/p/nmoneys/">NMoneys</a> and explained
+how the ISO standard for currency codes is implemented.</p>
+
+<h2>Using the code</h2>
+
+<p>I am a strong believer that expressive unit tests are the best for of documentation that exists. I also think they are as good as any other way of
+driving this series of articles. Hence, all the code I will be showing are unit tests that show off the abilities of
+<a href="http://code.google.com/p/nmoneys/">NMoneys</a>. Those unit tests are <a href="http://www.nunit.com/">NUnit</a> tests and can be executed by
+your favourite test runner.</p>
+<p>Each snippet will be included in the source code download for the part.</p>
+<p>Besides the code for each part of the series a "demo" project that contains the Visual Studio 2010 project (.NET 4.0) with all the tests will be included.</p>
+
+<h2>Currencies</h2>
+<p>We have already seen the <code>CurrencyIsoCode</code> as a way to represent a code for a given currency present in the ISO standard. But the amount of interesting
+behaviors that a value of an enumeration can offer is very limited. Clearly we need another type to do that job for us. Entering the <code>Currency</code> type.
+</p>
+<h3>Obtain an instance</h3>
+<p>Only a limited amount of currencies is possible. With codes, being the <code>CurrencyIsoCode</code> and enumeration, limiting the number of "instances" is provided
+by the framework itself, but with <code>Currency</code> a flyweight pattern-like interface is provided. 
+</p>
+<p>"Popular" currencies get a direct static accessor</p>
+<pre lang="C#">
+[Test]
+public void popular_currency_instances_can_be_obtained_from_static_accessors()
+{
+    Assert.That(Currency.Usd, Is.Not.Null.And.InstanceOf&lt;Currency&gt;());
+    Assert.That(Currency.Eur, Is.Not.Null.And.InstanceOf&lt;Currency&gt;());
+    Assert.That(Currency.Dkk, Is.Not.Null.And.InstanceOf&lt;Currency&gt;());
+    Assert.That(Currency.Xxx, Is.Not.Null.And.InstanceOf&lt;Currency&gt;());
+}
+</pre>
+<p>And even more "popular" currency instances can be accessed by static aliases</p>
+<pre lang="C#">
+[Test]
+public void very_popular_currency_instances_can_be_obtained_from_static_aliases()
+{
+    Assert.That(Currency.Usd, Is.SameAs(Currency.Dollar));
+    Assert.That(Currency.Eur, Is.SameAs(Currency.Euro));
+    Assert.That(Currency.Gbp, Is.SameAs(Currency.Pound));
+}</pre>
+<p>But there are no acccessors for all currencies. Instead, a factory method <code>Currency.Get()</code> accepts a variety of inputs to obtain the instance
+of the currency.</p>
+<pre lang="C#">
+[Test]
+public void currency_instances_can_be_obtained_from_its_code_enum()
+{
+    Assert.That(Currency.Get(CurrencyIsoCode.ZAR), Is.InstanceOf&lt;Currency&gt;());
+}
+
+[Test]
+public void currency_instances_can_be_obtained_from_its_code_string()
+{
+    Assert.That(Currency.Get(&quot;eur&quot;), Is.Not.Null);
+    Assert.That(Currency.Get(&quot;EUR&quot;), Is.Not.Null);
+}
+
+[Test]
+public void currency_instances_can_be_obtained_from_a_CultureInfo_instance()
+{
+    CultureInfo swedish = CultureInfo.GetCultureInfo(&quot;sv-SE&quot;);
+    Assert.That(Currency.Get(swedish), Is.EqualTo(Currency.Sek));
+}
+
+[Test]
+public void currency_instances_can_be_obtained_from_a_RegionInfo_instance()
+{
+    RegionInfo spain = new RegionInfo(&quot;es&quot;);
+    Assert.That(Currency.Get(spain), Is.EqualTo(Currency.Eur));
+}
+</pre>
+<p><code>Get()</code> is a method that expects a correct input and throws if it cannot find a currency for the input.</p>
+<pre lang="C#">
+[Test]
+public void Get_throws_if_currency_cannot_be_found()
+{
+    CurrencyIsoCode notDefined = (CurrencyIsoCode)0;
+    Assert.That(()=&gt; Currency.Get(notDefined), Throws.InstanceOf&lt;InvalidEnumArgumentException&gt;());
+    Assert.That(()=&gt; Currency.Get(&quot;notAnIsoCode&quot;), Throws.InstanceOf&lt;InvalidEnumArgumentException&gt;());
+    CultureInfo neutralCulture = CultureInfo.GetCultureInfo(&quot;da&quot;);
+    Assert.That(() =&gt; Currency.Get(neutralCulture), Throws.InstanceOf&lt;ArgumentException&gt;());
+}
+</pre>
+<p>If the input is somehow unsafe, exceptions can be saved using another factory method <code>Currency.TryGet()</code> that follows the well-known <i>TryParse</i> pattern.</p>
+<pre lang="C#">
+[Test]
+public void currency_instances_can_be_obtained_with_a_try_do_pattern()
+{
+    Currency currency;
+    Assert.That(Currency.TryGet(CurrencyIsoCode.ZAR, out currency), Is.True);
+    Assert.That(currency, Is.Not.Null.And.InstanceOf&lt;Currency&gt;());
+
+    Assert.That(Currency.TryGet(&quot;zar&quot;, out currency), Is.True);
+    Assert.That(currency, Is.Not.Null.And.InstanceOf&lt;Currency&gt;());
+    Assert.That(Currency.TryGet(CultureInfo.GetCultureInfo(&quot;en-ZA&quot;), out currency), Is.True);
+    Assert.That(currency, Is.Not.Null.And.InstanceOf&lt;Currency&gt;());
+
+    Assert.That(Currency.TryGet(new RegionInfo(&quot;ZA&quot;), out currency), Is.True);
+    Assert.That(currency, Is.Not.Null.And.InstanceOf&lt;Currency&gt;());
+}
+
+[Test]
+public void TryGet_does_not_throw_if_currency_cannot_be_found()
+{
+    Currency currency;
+    CurrencyIsoCode notDefined = (CurrencyIsoCode)0;
+    Assert.That(Currency.TryGet(notDefined, out currency), Is.False);
+    Assert.That(currency, Is.Null);
+    Assert.That(Currency.TryGet(&quot;notAnIsoCode&quot;, out currency), Is.False);
+    Assert.That(currency, Is.Null);
+
+    CultureInfo neutralCulture = CultureInfo.GetCultureInfo(&quot;da&quot;);
+    Assert.That(Currency.TryGet(neutralCulture, out currency), Is.False);
+    Assert.That(currency, Is.Null);
+}
+</pre>
+<p>As previously mentioned, the <code>Currency</code> uses a flyweight-like pattern and, as asuch, exhibits some of its behaviors, mainly that no new instances
+are created once an instance of the same currency has already been served.</p>
+<pre lang="C#">
+[Test]
+public void Currency_instances_follow_a_flightweight_like_pattern_being_exactly_equal()
+{
+    Assert.That(Currency.Dkk, Is.SameAs(Currency.Get(&quot;dkk&quot;)));
+    Currency pesoUruguayo;
+    Currency.TryGet(&quot;UYU&quot;, out pesoUruguayo);
+    RegionInfo uruguay = new RegionInfo(&quot;UY&quot;);
+    Assert.That(Currency.Get(uruguay), Is.SameAs(pesoUruguayo));
+}</pre>
+<h3>What's with deprecated currencies</h3>
+<p>Yes, currencies come and go. New currencies are used and some become deprecated. But that does not mean we cannot use them anymore. Data from when
+those currencies were not deprecated may exist adn we need to live woith those.</p>
+<pre lang="C#">
+[Test]
+public void instances_of_deprecated_currencies_can_still_be_obtained()
+{
+    Currency deprecated = Currency.Get(&quot;EEK&quot;);
+    Assert.That(deprecated, Is.Not.Null.And.InstanceOf&lt;Currency&gt;());
+    Assert.That(deprecated.IsObsolete, Is.True);
+}
+</pre>
+<p>And yet there are some domains in which the use of deprecated currencies does not apply. In which case a notificatino system in the shape
+of static events is provided.</p>
+<pre lang="C#">
+[Test]
+public void whenever_a_deprecated_currency_is_obtained_an_event_is_raised()
+{
+    bool called = false;
+    CurrencyIsoCode obsolete = CurrencyIsoCode.XXX;
+    EventHandler&lt;ObsoleteCurrencyEventArgs&gt; callback = (sender, e) =&gt;
+    {
+        called = true;
+        obsolete = e.Code;
+    };
+
+    try
+    {
+        Currency.ObsoleteCurrency += callback;
+        Currency.Get(&quot;EEK&quot;);
+        Assert.That(called, Is.True);
+        Assert.That(obsolete.ToString(), Is.EqualTo(&quot;EEK&quot;));
+        Assert.That(obsolete.AsAttributeProvider(), Has.Attribute&lt;ObsoleteAttribute&gt;());
+    }
+    // DO unsubscribe from global events whenever listening isnot needed anymore
+    finally
+    {
+        Currency.ObsoleteCurrency -= callback;
+    }
+}
+</pre>
+<p>Yes, the snippet is very clear about the issue. <strong>BE AWARE</strong> that <u>static event handlers are one of the most common source of <strong>memory leaks</strong></u>.
+Please, do unsubscribe from them when no more notifications are needed. You have been warned</p>
+<h3>Much Ado about LINQ</h3>
+<p>Of course we do love LINQ. It has made our lives so much... happier? Well, it has been a great addition to the languages. Our contribution to the cause comes
+in a way to retrieve all currencies in the shape of an enumerable collection. Have fun reducing, mapping and aggregating on all the currencies of the world...</p>
+<pre lang="C#">
+[Test]
+public void all_currencies_can_be_obtained_and_linq_operators_applied()
+{
+    Assert.That(Currency.FindAll(), Is.Not.Null.And.All.InstanceOf&lt;Currency&gt;());
+    var allCurrenciesWithoutMinorUnits = Currency.FindAll().Where(c =&gt; c.SignificantDecimalDigits == 0);
+    Assert.That(allCurrenciesWithoutMinorUnits, Is.Not.Empty.And.Contains(Currency.Jpy));
+}</pre>
+<h3>What's in a currency</h3>
+<p>We have seen how a <code>Currency</code> instance can be obtained. But what's inside it that makes it appealing?</p>
+<pre lang="C#">
+[Test]
+public void whats_in_a_currency_anyway()
+{
+    Currency euro = Currency.Eur;
+
+    Assert.That(euro.IsObsolete, Is.False);
+    Assert.That(euro.IsoCode, Is.EqualTo(CurrencyIsoCode.EUR));
+    Assert.That(euro.IsoSymbol, Is.EqualTo(&quot;EUR&quot;));
+    Assert.That(euro.NativeName, Is.EqualTo(&quot;Euro&quot;), &quot;capitalized in the default instance&quot;);
+    Assert.That(euro.NumericCode, Is.EqualTo(978));
+    Assert.That(euro.PaddedNumericCode, Is.EqualTo(&quot;978&quot;), &quot;a string of 3 characters containing the numeric code and zeros if needed&quot;);
+    Assert.That(euro.Symbol, Is.EqualTo(&quot;&#8364;&quot;));
+}</pre>
+<p>And living in a world in which "angly bracket" languages of all kinds play a role, there are some chosen currencies that have the privilege to be represented
+in those languages in a peculiar way. That peculiar way of being displayed is provided by a <code>CharacterReference</code> property.</p>
+<pre lang="C#">
+[Test]
+public void some_currencies_have_an_character_reference_for_angly_bracket_languages()
+{
+    Currency qatariRial = Currency.Get(CurrencyIsoCode.QAR);
+    CharacterReference reference = qatariRial.Entity;
+    Assert.That(reference, Is.Not.Null.And.Property(&quot;IsEmpty&quot;).True,
+        &quot;the Rial does not have an reference, but a 'null' object&quot;);
+
+    Currency euro = Currency.Euro;
+    reference = euro.Entity;
+    Assert.That(reference, Is.Not.Null.And.Property(&quot;IsEmpty&quot;).False, &quot;the euro, does&quot;);
+    Assert.That(reference.Character, Is.EqualTo(&quot;&#8364;&quot;));
+    Assert.That(reference.CodePoint, Is.EqualTo(8364));
+    Assert.That(reference.EntityName, Is.EqualTo(&quot;&amp;euro;&quot;));
+    Assert.That(reference.EntityNumber, Is.EqualTo(&quot;&amp;#8364;&quot;));
+    Assert.That(reference.SimpleName, Is.EqualTo(&quot;euro&quot;));
+}</pre>
+<p>As can be seen, not all currencies have taht special representation, but all currencies have a not-null <code>Entity</code> property.
+As someone very clever once said "nature abhors null"...</p>
+<h3>What to do with a Currency?</h3>
+<p>So instances can be obtained. And those instances have some (interesting?) information. But an object would not be an object if it had no behavior at all.
+Which behaviors were implemetned for <code>Currency</code>?</p>
+<p>to begin with (and not very interestingly), currencies can be compared against each other.</p>
+<pre lang="C#">
+[Test]
+public void currencies_can_be_compared()
+{
+    Assert.That(Currency.Usd.Equals(Currency.Gbp), Is.False);
+
+    Assert.That(Currency.Eur.CompareTo(Currency.Usd), Is.LessThan(0), &quot;symbol comparison is used&quot;);
+
+    Assert.That(Currency.None &gt; Currency.Dollar, Is.True, &quot;again, only symbols involved&quot;);
+}</pre>
+<p>But, by far, the most interesting and key behavior of a currency is formatting numerical quantities.</p>
+<pre lang="C#">
+[Test]
+public void currencies_have_behavior_that_is_formatting_numbers_as_numbers()
+{
+    Assert.That(2.535m.ToString(Currency.Eur), Is.EqualTo(&quot;2,535&quot;));
+    Assert.That(2.535m.ToString(Currency.Usd), Is.EqualTo(&quot;2.535&quot;));
+}
+
+[Test]
+public void currencies_have_behavior_that_is_formatting_numbers_as_currencies()
+{
+    Assert.That(2.535m.ToString(&quot;C&quot;, Currency.Eur), Is.EqualTo(&quot;2,54 &#8364;&quot;));
+    Assert.That(2.535m.ToString(&quot;C&quot;, Currency.Usd), Is.EqualTo(&quot;$2.54&quot;));
+}</pre>
+<p>This single responsibility is main reason the whole project exists: displaying monetary quantities. But not a single artifact that can represent one
+has been presented yet... It will. In the next (and last) part of the series.</p>
+
+<h2>Wrap-up</h2>
+
+<p>In this second part of the series, we have seen what NMoneys offers to model currencies. How to create instances and which data and behavior makes it useful.</p>
+
+<h2>History</h2>
+
+<p>05-May-2011 - Initial version</p>
+
+<!-------------------------------    That's it!   --------------------------->
+</body>
+
+</html>
+
