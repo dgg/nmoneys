@@ -58,6 +58,7 @@
     <Content Include="Articles\NMoneys_long.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Articles\NMoneys_demo.zip" />
     <None Include="Articles\NMoneys_III_src.zip" />
     <None Include="Articles\NMoneys_II_src.zip" />
     <None Include="Articles\NMoneys_I_src.zip" />
