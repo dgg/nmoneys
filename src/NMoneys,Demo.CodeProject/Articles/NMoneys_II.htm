@@ -47,7 +47,7 @@ Platform:    .NET Framework
 Technology:  Libraries
 Level:       Intermediate
 Description: NMoneys is an implementation of the Money Value Object to support representing moneys in the currencies defined in the ISO 4417 standard
-for the .NET platform. In this part, we'll see the role of the Currency class.
+for the .NET platform. In this part, the role of the Currency class is analyzed.
 Section      Platforms, Frameworks & Libraries
 SubSection   .NET Framework
 License:     CPOL
@@ -70,27 +70,28 @@ License:     CPOL
 
 <h2>Introduction</h2>
 
-<p>In the previous part we analysed he motivations for the existence of <a href="http://code.google.com/p/nmoneys/">NMoneys</a> and explained
-how the ISO standard for currency codes is implemented.</p>
+<p>In the previous part motivations for the existence of <a href="http://code.google.com/p/nmoneys/">NMoneys</a> were discussed and how the ISO standard for
+currency codes is implemented was shown.</p>
 
 <h2>Using the code</h2>
 
 <p>I am a strong believer that expressive unit tests are the best for of documentation that exists. I also think they are as good as any other way of
 driving this series of articles. Hence, all the code I will be showing are unit tests that show off the abilities of
 <a href="http://code.google.com/p/nmoneys/">NMoneys</a>. Those unit tests are <a href="http://www.nunit.com/">NUnit</a> tests and can be executed by
-your favourite test runner.</p>
+your favorite test runner.</p>
 <p>Each snippet will be included in the source code download for the part.</p>
-<p>Besides the code for each part of the series a "demo" project that contains the Visual Studio 2010 project (.NET 4.0) with all the tests will be included.</p>
+<p>On top of the code for each part of the series a "demo" project that contains the Visual Studio 2010 project (.NET 4.0) with all the tests will be included.</p>
 
 <h2>Currencies</h2>
-<p>We have already seen the <code>CurrencyIsoCode</code> as a way to represent a code for a given currency present in the ISO standard. But the amount of interesting
-behaviors that a value of an enumeration can offer is very limited. Clearly we need another type to do that job for us. Entering the <code>Currency</code> type.
+<p>The <code>CurrencyIsoCode</code> is the way to represent a code for a given currency present in the ISO standard. But the amount of interesting
+behaviors that a value of an enumeration can offer is very limited. Clearly another type to do that job for us 
+	is needed. Entering the <code>Currency</code> type.
 </p>
 <h3>Obtain an instance</h3>
-<p>Only a limited amount of currencies is possible. With codes, being the <code>CurrencyIsoCode</code> and enumeration, limiting the number of "instances" is provided
+<p>Only a limited amount of currencies is possible. With codes, being the <code>CurrencyIsoCode</code> an enumeration, limiting the number of "instances" is provided
 by the framework itself, but with <code>Currency</code> a flyweight pattern-like interface is provided. 
 </p>
-<p>"Popular" currencies get a direct static accessor</p>
+<p>&quot;Popular&quot; currencies get a direct static access.</p>
 <pre lang="C#">
 [Test]
 public void popular_currency_instances_can_be_obtained_from_static_accessors()
@@ -101,7 +102,7 @@ public void popular_currency_instances_can_be_obtained_from_static_accessors()
     Assert.That(Currency.Xxx, Is.Not.Null.And.InstanceOf&lt;Currency&gt;());
 }
 </pre>
-<p>And even more "popular" currency instances can be accessed by static aliases</p>
+<p>And even more "popular" currency instances can be accessed by static aliases.</p>
 <pre lang="C#">
 [Test]
 public void very_popular_currency_instances_can_be_obtained_from_static_aliases()
@@ -110,7 +111,7 @@ public void very_popular_currency_instances_can_be_obtained_from_static_aliases(
     Assert.That(Currency.Eur, Is.SameAs(Currency.Euro));
     Assert.That(Currency.Gbp, Is.SameAs(Currency.Pound));
 }</pre>
-<p>But there are no acccessors for all currencies. Instead, a factory method <code>Currency.Get()</code> accepts a variety of inputs to obtain the instance
+<p>There is no static access for all currencies. Instead, a factory method <code>Currency.Get()</code> accepts a variety of inputs to obtain the instance
 of the currency.</p>
 <pre lang="C#">
 [Test]
@@ -185,7 +186,8 @@ public void TryGet_does_not_throw_if_currency_cannot_be_found()
     Assert.That(currency, Is.Null);
 }
 </pre>
-<p>As previously mentioned, the <code>Currency</code> uses a flyweight-like pattern and, as asuch, exhibits some of its behaviors, mainly that no new instances
+<p>As previously mentioned, the <code>Currency</code> uses a flyweight-like pattern and, as 
+	such, exhibits some of its behaviors, mainly that no new instances
 are created once an instance of the same currency has already been served.</p>
 <pre lang="C#">
 [Test]
@@ -198,8 +200,8 @@ public void Currency_instances_follow_a_flightweight_like_pattern_being_exactly_
     Assert.That(Currency.Get(uruguay), Is.SameAs(pesoUruguayo));
 }</pre>
 <h3>What's with deprecated currencies</h3>
-<p>Yes, currencies come and go. New currencies are used and some become deprecated. But that does not mean we cannot use them anymore. Data from when
-those currencies were not deprecated may exist adn we need to live woith those.</p>
+<p>Yes, currencies come and go. New currencies become mainstream and some become deprecated. But that does not mean we cannot use them anymore. Data from when
+those currencies were not deprecated may exist and that common scenario needs to be supported.</p>
 <pre lang="C#">
 [Test]
 public void instances_of_deprecated_currencies_can_still_be_obtained()
@@ -209,7 +211,7 @@ public void instances_of_deprecated_currencies_can_still_be_obtained()
     Assert.That(deprecated.IsObsolete, Is.True);
 }
 </pre>
-<p>And yet there are some domains in which the use of deprecated currencies does not apply. In which case a notificatino system in the shape
+<p>And yet there are some problem domains in which the use of deprecated currencies is not acceptable. For those scenarios a notification system in the shape
 of static events is provided.</p>
 <pre lang="C#">
 [Test]
@@ -238,8 +240,8 @@ public void whenever_a_deprecated_currency_is_obtained_an_event_is_raised()
     }
 }
 </pre>
-<p>Yes, the snippet is very clear about the issue. <strong>BE AWARE</strong> that <u>static event handlers are one of the most common source of <strong>memory leaks</strong></u>.
-Please, do unsubscribe from them when no more notifications are needed. You have been warned</p>
+<p>Note tha the snippet is very clear about the issue. <strong>BE AWARE</strong> that <u>static event handlers are one of the most common source of <strong>memory leaks</strong></u>.
+Please, do unsubscribe from them when no more notifications are needed. You have been warned.</p>
 <h3>Much Ado about LINQ</h3>
 <p>Of course we do love LINQ. It has made our lives so much... happier? Well, it has been a great addition to the languages. Our contribution to the cause comes
 in a way to retrieve all currencies in the shape of an enumerable collection. Have fun reducing, mapping and aggregating on all the currencies of the world...</p>
@@ -287,12 +289,12 @@ public void some_currencies_have_an_character_reference_for_angly_bracket_langua
     Assert.That(reference.EntityNumber, Is.EqualTo(&quot;&amp;#8364;&quot;));
     Assert.That(reference.SimpleName, Is.EqualTo(&quot;euro&quot;));
 }</pre>
-<p>As can be seen, not all currencies have taht special representation, but all currencies have a not-null <code>Entity</code> property.
+<p>As can be seen, not all currencies have that special representation, but all currencies have a not-null <code>Entity</code> property.
 As someone very clever once said "nature abhors null"...</p>
 <h3>What to do with a Currency?</h3>
 <p>So instances can be obtained. And those instances have some (interesting?) information. But an object would not be an object if it had no behavior at all.
-Which behaviors were implemetned for <code>Currency</code>?</p>
-<p>to begin with (and not very interestingly), currencies can be compared against each other.</p>
+Which behaviors are implemented for <code>Currency</code>?</p>
+<p>To begin with (and not very interestingly), currencies can be compared against each other.</p>
 <pre lang="C#">
 [Test]
 public void currencies_can_be_compared()
@@ -303,7 +305,8 @@ public void currencies_can_be_compared()
 
     Assert.That(Currency.None &gt; Currency.Dollar, Is.True, &quot;again, only symbols involved&quot;);
 }</pre>
-<p>But, by far, the most interesting and key behavior of a currency is formatting numerical quantities.</p>
+<p>But, by far, the most interesting and key behavior of a currency is formatting numerical quantities. This ability to display monetary quantities is main
+reason the whole project exists. </p>
 <pre lang="C#">
 [Test]
 public void currencies_have_behavior_that_is_formatting_numbers_as_numbers()
@@ -318,16 +321,15 @@ public void currencies_have_behavior_that_is_formatting_numbers_as_currencies()
     Assert.That(2.535m.ToString(&quot;C&quot;, Currency.Eur), Is.EqualTo(&quot;2,54 &#8364;&quot;));
     Assert.That(2.535m.ToString(&quot;C&quot;, Currency.Usd), Is.EqualTo(&quot;$2.54&quot;));
 }</pre>
-<p>This single responsibility is main reason the whole project exists: displaying monetary quantities. But not a single artifact that can represent one
-has been presented yet... It will. In the next (and last) part of the series.</p>
 
 <h2>Wrap-up</h2>
 
-<p>In this second part of the series, we have seen what NMoneys offers to model currencies. How to create instances and which data and behavior makes it useful.</p>
+<p>In this second part of the series, we have seen what NMoneys offers to model currencies. How to create instances and which data and behavior makes it useful.
+But not a single artifact that can represent a monetary quantity has been presented yet... It will be... In the next (and last) part of the series.</p>
 
 <h2>History</h2>
 
-<p>05-May-2011 - Initial version</p>
+<p>07-May-2011 - Initial version</p>
 
 <!-------------------------------    That's it!   --------------------------->
 </body>
