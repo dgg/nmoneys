@@ -57,6 +57,11 @@
     <Content Include="Articles\NMoneys_II.htm" />
     <Content Include="Articles\NMoneys_long.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Articles\NMoneys_III_src.zip" />
+    <None Include="Articles\NMoneys_II_src.zip" />
+    <None Include="Articles\NMoneys_I_src.zip" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
