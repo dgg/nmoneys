@@ -47,7 +47,7 @@ Platform:    .NET Framework
 Technology:  Libraries
 Level:       Intermediate
 Description: NMoneys is an implementation of the Money Value Object to support representing moneys in the currencies defined in the ISO 4417 standard
-for the .NET platform. In this part, we'll analyze the CurrencyIsoCode enumeration.
+for the .NET platform. In this part, motivations and the CurrencyIsoCode enumeration are analyzed.
 Section      Platforms, Frameworks & Libraries
 SubSection   .NET Framework
 License:     CPOL
@@ -68,50 +68,48 @@ License:     CPOL
 
 <!--  Add the article text. Please use simple formatting (<h2>, <p> etc)   -->
 
-<h2>Introduction</h2>
-
-<p>What the article/code snippet does, why it's useful, the problem it solves etc. </p>
-
 <h2>Background</h2>
 
-<p>Although the .NET Framework Base Class Library (BCL) offers a great deal of artifacts, it does not offer a good way of reperesenting monetary quantities 
-in different currencies. It does offer, instead , numeric types and a way to format numeric values according to different formats.
-Problem lies in that those formatting rules are mixed with concepts like cultures, languages, dates, calendars and so on, to the extent to become 
-difficult and, in some cases, impossible to represent a simple concept such as "one Canadian dollar" or "ten-and-the-half Zambian kwacha".</p>
+<p>Although the .NET Framework Base Class Library (BCL) offers a great deal of artifacts, it does not offer a good way of representing monetary quantities in
+different currencies. It does offer, instead, numeric types and a way to format numeric values according to different formats. Problem lies in that those
+formatting rules are mixed with concepts like cultures, languages, dates, calendars and so on, to the extent to become difficult and, in some cases,
+impossible to represent a simple concept such as "one Canadian dollar" or "ten-and-the-half Zambian kwacha".</p>
 <p>On top of the confusing mix of concepts, it happens that, sometimes, regional or formatting information is wrong: incorrect currency for a given country,
-outdated information, missing countries and so on. The .NET Framework, being as big an widely used, has a rate of releasing fixes that is not very dynamic (cough, cough)
-and if one's application relies on the Framework information for displaying monetary quantities for missing or incorrect currencies, one is pretty much out of luck.</p>
+outdated information, missing countries and so on. The .NET Framework, being as big an widely used, has a rate of releasing fixes that is not very dynamic
+(cough, cough) and if one's application relies on the Framework information for displaying monetary quantities for missing or incorrect currencies, one is
+pretty much out of luck.</p>
 <p>Furthermore, not only the implementation does not follow the ISO standard for currencies, but that formatting information can be changed by the user, making
-consistency accross versions, machines and updates a very challenging task.</p>
+consistency across versions, machines and updates a very challenging task.</p>
 
 <p>Some other libraries might exist and one might go with hand-rolled classes, but in some cases the API is not as nice to work with as it could be or they are
 pretty much not maintained at all.</p>
 
-<p>Lack of support and consistency, having a need and a pair of hands to type, I created the <a href="http://code.google.com/p/nmoneys/">NMoneys</a> library to solve my problems and the problems of some
-of the .NET developers out there. It is Open Source because it is neither rocket science, nor the single most valuable asset in a company's utility belt. Besides,
-surprise, surprise, I do not know everything about currencies and monetary quantities. But with the support of the community that can be solved, given that
-contributions are made to the project.</p>
+<p>Lack of support and consistency, having a need and a pair of hands to type, I created the <a href="http://code.google.com/p/nmoneys/">NMoneys</a> library to solve
+my problems and the problems of some of the .NET developers out there. It is Open Source because it is neither rocket science, nor the single most valuable asset in
+a company's utility belt. Besides, surprise, surprise, I do not know everything about currencies and monetary quantities. But with the support of the community that
+can be solved, given that contributions are made to the project.</p>
 
-<p>I, some of my colleagues and, hopefully, someone else who I do not know yet, have already used the library before this article was puslished, meaning that its usefulness is
-proved,</p>
+<p>Some of my colleagues, myself and, hopefully, someone else who I do not know yet, have already used the library before this article was published, meaning that,
+at least is useful to solve somebody's problems.</p>
 
 <h2>Using the code</h2>
 
 <p>I am a strong believer that expressive unit tests are the best for of documentation that exists. I also think they are as good as any other way of
 driving this series of articles. Hence, all the code I will be showing are unit tests that show off the abilities of
 <a href="http://code.google.com/p/nmoneys/">NMoneys</a>. Those unit tests are <a href="http://www.nunit.com/">NUnit</a> tests and can be executed by
-your favourite test runner.</p>
+your favorite test runner.</p>
 <p>Each snippet will be included in the source code download for the part.</p>
-<p>Besides the code for each part of the series a "demo" project that contains the Visual Studio 2010 project (.NET 4.0) with all the tests will be included.</p>
+<p>On top of the code for each part of the series a "demo" project that contains the Visual Studio 2010 project (.NET 4.0) with all the tests will be included.</p>
 
 <h2>ISO Currency codes</h2>
-<p>From the <a href="http://www.iso.org/iso/support/faqs/faqs_widely_used_standards/widely_used_standards_other/currency_codes.htm">The International Organization for Standardization (ISO)</a>: 
-<cite>"This International Standard specifies the structure for a three-letter alphabetic code and an equivalent three-digit numeric code for the representation of currencies and funds"</cite>.
-Maintenance of the standard is carried out by the <a href="http://www.currency-iso.org/">ISO 4217 Maintenance Agency</a>.</p>
-<p>What all this bureocracy talk means is that there is an international organism that standarizes the currencies and their alphabetic and numeric codes.
-That is, they reflect the changes in legal tender used by a number of <i>entities</i> (as they call them) or countries/institutions (so that every one can understand).</p>
+<p>From <a href="http://www.iso.org/iso/support/faqs/faqs_widely_used_standards/widely_used_standards_other/currency_codes.htm">The International Organization for
+Standardization (ISO)</a>: <cite>"This International Standard specifies the structure for a three-letter alphabetic code and an equivalent three-digit numeric code
+for the representation of currencies and funds"</cite>. Maintenance of the standard is carried out by the <a href="http://www.currency-iso.org/">ISO 4217 Maintenance
+Agency</a>.</p>
+<p>What all this bureaucracy talk means is that there is an international organism that standardizes the currencies and their alphabetic and numeric codes.
+That is, they reflect the changes in legal tender used by a number of <i>entities</i> (as they call them) or countries/institutions (so that everyone can understand).</p>
 <p>NMoneys is not focused on the list of entities (countries) at all, but in the list of valid currencies at this current moment in time. This list establishes which
-currencies are valid, and which are not recognised. Yes, I know, it is a standard, that involves a lot of politics and yadiyadidah, but it is the most reliable list
+currencies are valid, and which are not recognized. Yes, I know, it is a standard, that involves a lot of politics and yadi yadi dah, but it is the most reliable list
 of currencies at hand.</p>
 <p>Bottom line is: there are a lot of currencies, currencies are dynamic (new ones are used and old ones are deprecated) and the .NET Framework does not support
 all of them or it is simply wrong in some other cases.</p>
@@ -154,13 +152,13 @@ recently deprecated ones, but those are marked with the <code>ObsoleteAttribute<
 
 <h2>Wrap-up</h2>
 
-<p>In this first part of the series, we have seen what is NMoneys, why it is "needed" in the first place and what is the simplest ingredient for the whole recipe.</p>
+<p>In this first part of the series, we have seen what NMoneys is, why it is "needed" in the first place and we've met the simplest ingredient for the whole recipe.</p>
 <p>So far we have seen nothing but a quite long enumeration, but this is less than useful. For those more useful bits, one would need to refer to
 further parts of the series.</p>
 
 <h2>History</h2>
 
-<p>05-May-2011 - Initial version</p>
+<p>07-May-2011 - Initial version</p>
 
 <!-------------------------------    That's it!   --------------------------->
 </body>

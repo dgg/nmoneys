@@ -16,6 +16,7 @@ namespace NMoneys_Demo.CodeProject
 			new Money(10m, Currency.Dollar);		// Money --> tenDollars
 			new Money(2.5m, CurrencyIsoCode.EUR);	// Money --> twoFiftyEuros
 			new Money(10m, "JPY");					// Money --> tenYen
+			new Money();							// Money --> zeroWithNoCurrency
 		}
 
 		[Test, SetCulture("da-DK")]
@@ -278,7 +279,7 @@ namespace NMoneys_Demo.CodeProject
 		}
 
 		[Test]
-		public void curencies_have_to_be_compatible_for_parsing()
+		public void currencies_have_to_be_compatible_for_parsing()
 		{
 			Assert.That(() => Money.Parse("($1.5)", Currency.Eur), Throws.InstanceOf<FormatException>(), "currency not compatible");
 			Assert.That(() => Money.Parse("notAMonetaryQuantity", Currency.Eur), Throws.InstanceOf<FormatException>());
