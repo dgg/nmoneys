@@ -53,6 +53,7 @@
     <Compile Include="CurrencyInfo.cs" />
     <Compile Include="CurrencyIsoCode.cs" />
     <Compile Include="CanonicalCultureAttribute.cs" />
+    <Compile Include="CurrencyIsoCode.Extensions.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="Extensions\Money.Extensions.cs" />
     <Compile Include="CharacterReference.cs" />

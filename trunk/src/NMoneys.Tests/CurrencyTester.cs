@@ -18,6 +18,7 @@ namespace NMoneys.Tests
 		{
 			Assert.That(shortcut.IsoCode, Is.EqualTo(isoCode));
 			Assert.That(shortcut.IsoSymbol, Is.EqualTo(isoSymbol));
+			Assert.That(shortcut.AlphabeticCode, Is.EqualTo(isoSymbol));
 			Assert.That(shortcut.Symbol, Is.EqualTo(symbol));
 			Assert.That(shortcut.EnglishName, Is.EqualTo(englishName));
 		}
