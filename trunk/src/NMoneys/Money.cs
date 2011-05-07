@@ -62,7 +62,7 @@ namespace NMoneys
 		/// </summary>
 		/// <param name="amount">The <see cref="Amount"/> of the monetary quantity.</param>
 		/// <param name="threeLetterIsoCode">Textual representation of the ISO 4217 <see cref="CurrencyCode"/>.</param>
-		public Money(decimal amount, string threeLetterIsoCode) : this(amount, Enumeration.Parse<CurrencyIsoCode>(threeLetterIsoCode)) { }
+		public Money(decimal amount, string threeLetterIsoCode) : this(amount, IsoCodeExtensions.CaseInsensitiveParse(threeLetterIsoCode, "threeLetterIsoCode")) { }
 
 		/// <summary>
 		/// Creates an instance of <see cref="Money"/> based on the information provided by <paramref name="money"/>.
