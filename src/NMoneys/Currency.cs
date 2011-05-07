@@ -157,7 +157,9 @@ namespace NMoneys
 		/// <param name="context">The <see cref="StreamingContext"/> that contains contextual information about the source or destination.</param>
 		private Currency(SerializationInfo info, StreamingContext context)
 		{
-			CurrencyIsoCode isoCode = Enumeration.Parse<CurrencyIsoCode>((string)info.GetValue(Serialization.Data.Currency.ISO_CODE, typeof(string)));
+			CurrencyIsoCode isoCode = IsoCodeExtensions.CaseInsensitiveParse(
+				(string)info.GetValue(Serialization.Data.Currency.ISO_CODE, typeof(string)),
+				Serialization.Data.Currency.ISO_CODE);
 			// get a paradigm with the most current values
 			Currency paradigm = Get(isoCode);
 			setAllFields(paradigm.IsoCode, paradigm.EnglishName, paradigm.NativeName, paradigm.Symbol,
@@ -690,7 +692,7 @@ namespace NMoneys
 			Currency currency;
 			if (!_byIsoSymbol.TryGet(threeLetterIsoCode, out currency))
 			{
-				var isoCode = Enumeration.Parse<CurrencyIsoCode>(threeLetterIsoCode);
+				var isoCode = IsoCodeExtensions.CaseInsensitiveParse(threeLetterIsoCode, "threeLetterIsoCode");
 				currency = init(isoCode, _provider.Get);
 				if (currency == null) throw new MisconfiguredCurrencyException(isoCode);
 				fillCaches(currency);
@@ -804,12 +806,13 @@ namespace NMoneys
 		public static bool TryGet(string threeLetterIsoSymbol, out Currency currency)
 		{
 			currency = null;
-			bool tryGet = threeLetterIsoSymbol == null ? false : _byIsoSymbol.TryGet(threeLetterIsoSymbol, out currency);
+			if (threeLetterIsoSymbol == null) return false;
+			bool tryGet = _byIsoSymbol.TryGet(threeLetterIsoSymbol, out currency);
 
 			if (!tryGet)
 			{
 				CurrencyIsoCode? isoCode;
-				if (Enumeration.TryParse(threeLetterIsoSymbol, out isoCode))
+				if (Enumeration.TryParse(threeLetterIsoSymbol.ToUpperInvariant(), out isoCode))
 				{
 					currency = init(isoCode.Value, _provider.Get);
 					if (currency != null)
@@ -1014,7 +1017,9 @@ namespace NMoneys
 		internal static CurrencyIsoCode ReadXmlData(XmlReader reader)
 		{
 			reader.ReadStartElement();
-			CurrencyIsoCode isoCode = Enumeration.Parse<CurrencyIsoCode>(reader.ReadElementContentAsString(Serialization.Data.Currency.ISO_CODE, Serialization.Data.NAMESPACE));
+			CurrencyIsoCode isoCode = IsoCodeExtensions.CaseInsensitiveParse(
+				reader.ReadElementContentAsString(Serialization.Data.Currency.ISO_CODE, Serialization.Data.NAMESPACE),
+				Serialization.Data.Currency.ISO_CODE);
 			reader.ReadEndElement();
 			return isoCode;
 		}

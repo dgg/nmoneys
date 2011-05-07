@@ -197,6 +197,25 @@ namespace NMoneys.Tests.Support
 			Test1[] values = Enumeration.GetValues<Test1>();
 			Assert.That(values, Is.EqualTo(new[] { Test1.Value1, Test1.Value2, Test1.Value3 }));
 		}
+
+		#region Issue 16. Case sensitivity. Parsing methods are case sensitive
+
+		[Test]
+		public void Parse_IsCaseSensitive()
+		{
+			Assert.That(() => Enumeration.Parse<PlatformID>("UNIX"), Throws.InstanceOf<InvalidEnumArgumentException>());
+			Assert.That(Enumeration.Parse<PlatformID>("Unix"), Is.EqualTo(PlatformID.Unix));
+		}
+
+		[Test]
+		public void TryParse_IsCaseSensitive()
+		{
+			PlatformID? notParsed;
+			Assert.That(Enumeration.TryParse("UNIX", out notParsed), Is.False);
+			Assert.That(notParsed, Is.Null);
+		}
+
+		#endregion
 	}
 
 	[AttributeUsage(AttributeTargets.Field)]

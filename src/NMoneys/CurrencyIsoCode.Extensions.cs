@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using NMoneys.Support;
 
 namespace NMoneys
 {
@@ -39,6 +40,12 @@ namespace NMoneys
 		public static string AlphabeticCode(this CurrencyIsoCode isoCode)
 		{
 			return isoCode.ToString();
+		}
+
+		internal static CurrencyIsoCode CaseInsensitiveParse(string isoCode, string argumentName)
+		{
+			Guard.AgainstNullArgument(argumentName, isoCode); 
+			return Enumeration.Parse<CurrencyIsoCode>(isoCode.ToUpperInvariant());
 		}
 	}
 }

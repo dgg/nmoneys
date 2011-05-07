@@ -1658,7 +1658,7 @@ namespace NMoneys.Tests
 
 		#endregion
 
-		[Test]
+		[Test, Explicit("WARNING: THIS TEST MIGH FAIL. Rerun the test to solve it.")]
 		public void ExploratoryTesting_OnPerformance()
 		{
 			Stopwatch watch = new Stopwatch();
@@ -1688,7 +1688,7 @@ namespace NMoneys.Tests
 			Debug.WriteLine("withNullable: " + withNullable);
 
 			Assert.That(withoutEnsure, Is.LessThan(withEnsure).And.LessThan(withNullable),
-				"doing nothing is the fastest, but it does allow a undefined value in the enumeration. WARNING: THIS TEST MIGH FAIL. Rerun the test to solve it.");
+				"doing nothing is the fastest, but it does allow a undefined value in the enumeration.");
 			Assert.That(withEnsure, Is.GreaterThan(withNullable),
 				"having a custom method to ensure the defined value is more expensive than using a nullable private field");
 		}
@@ -1760,7 +1760,47 @@ namespace NMoneys.Tests
 
 			public decimal Amount { get; private set; }
 		}
+
+		#region Issue 16. Case sensitivity. Money instances can be obtained by any casing of the IsoCode (Alphbetic code)
+
+		[Test]
+		public void ctor_IsoCode_IsCaseInsensitive()
+		{
+			Money upper = new Money(100, "EUR");
+			Money mixed = new Money(100, "eUr");
+
+			Assert.That(upper, Is.EqualTo(mixed));
+		}
+
+		[Test]
+		public void XmlDeserialization_IsCaseInsensitive()
+		{
+			string serializedMoney =
+				"<money xmlns=\"urn:nmoneys\">" +
+				"<amount>3.757</amount>" +
+				"<currency><isoCode>xXx</isoCode></currency>" +
+				"</money>";
+			Assert.That(serializedMoney, Must.Be.XmlDeserializableInto(new Money(3.757m)));
+		}
+
+		[Test]
+		public void DataContractDeserialization_IsCaseInsensitive()
+		{
+			string serializedMoney =
+				"<money xmlns=\"urn:nmoneys\">" +
+				"<amount>3.757</amount>" +
+				"<currency><isoCode>xXx</isoCode></currency>" +
+				"</money>";
+			Assert.That(serializedMoney, Must.Be.DataContractDeserializableInto(new Money(3.757m)));
+		}
+
+		[Test]
+		public void JsonDeserialization_IsCaseInsensitive()
+		{
+			string serializedMoney = "{\"amount\":3.757,\"currency\":{\"isoCode\":\"xXx\"}}";
+			Assert.That(serializedMoney, Must.Be.JsonDeserializableInto(new Money(3.757m)));
+		}
+
+		#endregion
 	}
-
-
 }
