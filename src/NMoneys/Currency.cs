@@ -53,6 +53,11 @@ namespace NMoneys
 		/// <summary>
 		/// Textual representation of the ISO 4217 code
 		/// </summary>
+		public string AlphabeticCode { get; private set; }
+
+		/// <summary>
+		/// Textual representation of the ISO 4217 code
+		/// </summary>
 		[XmlIgnore]
 		public string IsoSymbol { get; private set; }
 
@@ -168,7 +173,7 @@ namespace NMoneys
 			IsoCode = isoCode;
 			EnglishName = englishName;
 			Symbol = symbol;
-			IsoSymbol = isoCode.ToString();
+			AlphabeticCode = IsoSymbol = isoCode.ToString();
 			SignificantDecimalDigits = significantDecimalDigits;
 			NativeName = nativeName;
 			DecimalSeparator = decimalSeparator;
