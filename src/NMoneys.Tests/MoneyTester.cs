@@ -347,19 +347,23 @@ namespace NMoneys.Tests
 		[Test]
 		public void Total_NullMoneys_Exception()
 		{
+			IEnumerable<Money> nullMoneys = null;
 
+			Assert.That(() => Money.Total(nullMoneys), Throws.InstanceOf<ArgumentNullException>()
+				.With.Message.StringContaining("moneys"));
 		}
 
 		[Test]
 		public void Total_EmptyMoneys_Exception()
 		{
-
+			Assert.That(() => Money.Total(), Throws.ArgumentException.With.Message.StringContaining("empty"));
+			Assert.That(() => Money.Total(new Money[0]), Throws.ArgumentException.With.Message.StringContaining("empty"));
 		}
 
 		[Test]
 		public void Total_OnlyOneMoney_AnotherMoneyInstanceWithSameInformation()
 		{
-
+			Assert.That(Money.Total(10m.Usd()), Is.EqualTo(10m.Usd()));
 		}
 
 		#endregion
