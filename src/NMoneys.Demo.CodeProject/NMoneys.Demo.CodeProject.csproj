@@ -52,6 +52,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Articles\NMoneys.htm" />
     <Content Include="Articles\NMoneys_III.htm" />
     <Content Include="Articles\NMoneys_I.htm" />
     <Content Include="Articles\NMoneys_II.htm" />
