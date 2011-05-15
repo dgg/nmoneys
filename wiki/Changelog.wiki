@@ -1,6 +1,13 @@
 #summary Summary of changes.
 #labels Phase-Support
 
+= 1.5.1.0 =
+2011/05/15 @revision 72
+   * Included source code for [http://www.codeproject.com/KB/dotnet/NMoneys.aspx CodeProject] article
+   * Solved Issue 16. Now, currencies can be obtained from case-insensitive three-letter codes
+   * Added `AlphabeticCode()` to `Currency` and `CurrencyIsoCode` to reflect terms used by ISO
+   * Updated `Money.Total()` tests to exemplify its usage
+
 = 1.5.0.0 =
 2011/05/03 @revision 53
    * ADB Unit of Account (XUA) has been added
