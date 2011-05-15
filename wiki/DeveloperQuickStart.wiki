@@ -15,6 +15,11 @@ msbuild path_to_source_code\NMoneys.build
 and the built binary and XML documentation can be copied from
 `path_to_source_code\build` into the folder that contains dependencies for your solution.
 
+= Get the binaries =
+Latest binaries can be downloaded from the [http://code.google.com/p/nmoneys/downloads/list Downloads] section within the project's website.
+For [http://nuget.org/ NuGet] users, the [http://nuget.org/List/Packages/NMoneys NMoneys package] is available in the official live feed.
+For .NET developers that make use of Ruby tools, they can also get a [https://rubygems.org/gems/nmoneys NMoneys gem] from RubyGems.org
+
 = Use the Library =
 
 == Currencies ==
