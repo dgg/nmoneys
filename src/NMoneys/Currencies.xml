@@ -1947,18 +1947,6 @@
 		<negativePattern>0</negativePattern>
 		<entity>curren</entity>
 	</currency>
-	<currency code="XUA">
-		<englishName>ADB Unit of Account</englishName>
-		<nativeName>ADB Unit of Account</nativeName>
-		<symbol>164</symbol>
-		<significantDecimalDigits>2</significantDecimalDigits>
-		<decimalSeparator>.</decimalSeparator>
-		<groupSeparator>,</groupSeparator>
-		<groupSizes>3</groupSizes>
-		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
-		<entity>curren</entity>
-	</currency>
 	<currency code="XXX">
 		<englishName>No currency</englishName>
 		<nativeName>No currency</nativeName>

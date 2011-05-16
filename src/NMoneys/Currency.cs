@@ -53,11 +53,6 @@ namespace NMoneys
 		/// <summary>
 		/// Textual representation of the ISO 4217 code
 		/// </summary>
-		public string AlphabeticCode { get; private set; }
-
-		/// <summary>
-		/// Textual representation of the ISO 4217 code
-		/// </summary>
 		[XmlIgnore]
 		public string IsoSymbol { get; private set; }
 
@@ -157,9 +152,7 @@ namespace NMoneys
 		/// <param name="context">The <see cref="StreamingContext"/> that contains contextual information about the source or destination.</param>
 		private Currency(SerializationInfo info, StreamingContext context)
 		{
-			CurrencyIsoCode isoCode = IsoCodeExtensions.CaseInsensitiveParse(
-				(string)info.GetValue(Serialization.Data.Currency.ISO_CODE, typeof(string)),
-				Serialization.Data.Currency.ISO_CODE);
+			CurrencyIsoCode isoCode = Enumeration.Parse<CurrencyIsoCode>((string)info.GetValue(Serialization.Data.Currency.ISO_CODE, typeof(string)));
 			// get a paradigm with the most current values
 			Currency paradigm = Get(isoCode);
 			setAllFields(paradigm.IsoCode, paradigm.EnglishName, paradigm.NativeName, paradigm.Symbol,
@@ -175,7 +168,7 @@ namespace NMoneys
 			IsoCode = isoCode;
 			EnglishName = englishName;
 			Symbol = symbol;
-			AlphabeticCode = IsoSymbol = isoCode.ToString();
+			IsoSymbol = isoCode.ToString();
 			SignificantDecimalDigits = significantDecimalDigits;
 			NativeName = nativeName;
 			DecimalSeparator = decimalSeparator;
@@ -692,7 +685,7 @@ namespace NMoneys
 			Currency currency;
 			if (!_byIsoSymbol.TryGet(threeLetterIsoCode, out currency))
 			{
-				var isoCode = IsoCodeExtensions.CaseInsensitiveParse(threeLetterIsoCode, "threeLetterIsoCode");
+				var isoCode = Enumeration.Parse<CurrencyIsoCode>(threeLetterIsoCode);
 				currency = init(isoCode, _provider.Get);
 				if (currency == null) throw new MisconfiguredCurrencyException(isoCode);
 				fillCaches(currency);
@@ -806,13 +799,12 @@ namespace NMoneys
 		public static bool TryGet(string threeLetterIsoSymbol, out Currency currency)
 		{
 			currency = null;
-			if (threeLetterIsoSymbol == null) return false;
-			bool tryGet = _byIsoSymbol.TryGet(threeLetterIsoSymbol, out currency);
+			bool tryGet = threeLetterIsoSymbol == null ? false : _byIsoSymbol.TryGet(threeLetterIsoSymbol, out currency);
 
 			if (!tryGet)
 			{
 				CurrencyIsoCode? isoCode;
-				if (Enumeration.TryParse(threeLetterIsoSymbol.ToUpperInvariant(), out isoCode))
+				if (Enumeration.TryParse(threeLetterIsoSymbol, out isoCode))
 				{
 					currency = init(isoCode.Value, _provider.Get);
 					if (currency != null)
@@ -1017,9 +1009,7 @@ namespace NMoneys
 		internal static CurrencyIsoCode ReadXmlData(XmlReader reader)
 		{
 			reader.ReadStartElement();
-			CurrencyIsoCode isoCode = IsoCodeExtensions.CaseInsensitiveParse(
-				reader.ReadElementContentAsString(Serialization.Data.Currency.ISO_CODE, Serialization.Data.NAMESPACE),
-				Serialization.Data.Currency.ISO_CODE);
+			CurrencyIsoCode isoCode = Enumeration.Parse<CurrencyIsoCode>(reader.ReadElementContentAsString(Serialization.Data.Currency.ISO_CODE, Serialization.Data.NAMESPACE));
 			reader.ReadEndElement();
 			return isoCode;
 		}
