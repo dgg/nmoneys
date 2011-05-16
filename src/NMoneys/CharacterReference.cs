@@ -33,7 +33,6 @@ namespace NMoneys
 		/// or in its "simple name" form (e.g. <code>name</code>).
 		/// <para>Names (<see cref="EntityName"/> and <see cref="SimpleName"/>) are stored as lower-case, independently of the casing they were provided.</para></remarks>
 		/// <param name="entityName">The name of the reference.</param>
-		/// <exception cref="ArgumentNullException"><paramref name="entityName"/> is null.</exception>
 		internal CharacterReference(string entityName)
 		{
 			Guard.AgainstNullArgument("entityName", entityName);
@@ -50,23 +49,23 @@ namespace NMoneys
 			}
 			Character = HttpUtility.HtmlDecode(EntityName);
 			CodePoint = char.ConvertToUtf32(Character, 0);
-			EntityNumber = string.Concat(AMP, SHARP, CodePoint.ToString(CultureInfo.InvariantCulture), SEMICOLON);
+			EntityNumber = string.Concat(AMP, SHARP, CodePoint.ToString(), SEMICOLON);
 			IsEmpty = false;
 		}
 
-		private static string toEntityName(string simpleEntityName)
+		private string toEntityName(string simpleEntityName)
 		{
 			return AMP + lower(simpleEntityName) + SEMICOLON;
 		}
 
-		private static string toSimpleName(string complexEntityName)
+		private string toSimpleName(string complexEntityName)
 		{
 			return lower(complexEntityName.Substring(1, complexEntityName.Length - 2));
 		}
 
-		private static string lower(string s)
+		private string lower(string s)
 		{
-			return s.ToLowerInvariant();
+			return s.ToLower(CultureInfo.InvariantCulture);
 		}
 
 		/// <summary>
@@ -125,11 +124,8 @@ namespace NMoneys
 		/// <param name="entityName">Name of the entity.</param>
 		/// <returns>true if <paramref name="entityName"/> does starts with <code>'&amp;'</code> and ends with <code>';'</code>;
 		/// otherwise, false</returns>
-		/// <exception cref="ArgumentNullException"><paramref name="entityName"/> is null.</exception>
 		public static bool IsEntityName(string entityName)
 		{
-			Guard.AgainstNullArgument("entityName", entityName);
-
 			return entityName.StartsWith(AMP, StringComparison.Ordinal) &&
 				entityName.EndsWith(SEMICOLON, StringComparison.Ordinal);
 		}

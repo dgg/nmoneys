@@ -26,7 +26,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -53,7 +52,6 @@
     <Compile Include="CurrencyInfo.cs" />
     <Compile Include="CurrencyIsoCode.cs" />
     <Compile Include="CanonicalCultureAttribute.cs" />
-    <Compile Include="CurrencyIsoCode.Extensions.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="Extensions\Money.Extensions.cs" />
     <Compile Include="CharacterReference.cs" />

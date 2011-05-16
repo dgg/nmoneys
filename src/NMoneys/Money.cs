@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
-using System.Security.Permissions;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
@@ -35,8 +34,7 @@ namespace NMoneys
 		/// </summary>
 		/// <param name="amount">The <see cref="Amount"/> of the monetary quantity.</param>
 		/// <param name="currency">The <see cref="CurrencyCode"/> of the monetary quantity.</param>
-		public Money(decimal amount, CurrencyIsoCode currency)
-			: this()
+		public Money(decimal amount, CurrencyIsoCode currency) : this()
 		{
 			setAllFields(amount, currency);
 		}
@@ -53,8 +51,7 @@ namespace NMoneys
 		/// </summary>
 		/// <param name="amount">The <see cref="Amount"/> of the monetary quantity.</param>
 		/// <param name="currency">The incarnation of the <see cref="CurrencyCode"/>.</param>
-		/// <exception cref="ArgumentNullException">If <paramref name="currency"/> is null.</exception>
-		public Money(decimal amount, Currency currency) : this(amount, Guard.AgainstNullArgument("currency", currency, c => c.IsoCode)) { }
+		public Money(decimal amount, Currency currency) : this(amount, currency.IsoCode) { }
 
 		/// <summary>
 		/// Creates an instance of <see cref="Money"/> with the <paramref name="amount"/> provided
@@ -62,14 +59,13 @@ namespace NMoneys
 		/// </summary>
 		/// <param name="amount">The <see cref="Amount"/> of the monetary quantity.</param>
 		/// <param name="threeLetterIsoCode">Textual representation of the ISO 4217 <see cref="CurrencyCode"/>.</param>
-		public Money(decimal amount, string threeLetterIsoCode) : this(amount, IsoCodeExtensions.CaseInsensitiveParse(threeLetterIsoCode, "threeLetterIsoCode")) { }
+		public Money(decimal amount, string threeLetterIsoCode) : this(amount, Enumeration.Parse<CurrencyIsoCode>(threeLetterIsoCode)) { }
 
 		/// <summary>
 		/// Creates an instance of <see cref="Money"/> based on the information provided by <paramref name="money"/>.
 		/// </summary>
 		/// <param name="money">A <see cref="Money"/> instance from which capture the values from.</param>
-		public Money(Money money)
-			: this()
+		public Money(Money money) : this()
 		{
 			setAllFields(money.Amount, money.CurrencyCode);
 		}
@@ -113,7 +109,7 @@ namespace NMoneys
 		/// <returns>An instance of <see cref="Money"/> with the <paramref name="amount"/> specified and the currency associated to the current culture.</returns>
 		/// /// <exception cref="ArgumentException">The current is either an invariant or custom, or a <see cref="RegionInfo"/> cannot be instantiated from it.</exception>
 		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The ISO symbol associated to the current culture does not exist in the <see cref="CurrencyIsoCode"/> enumeration.</exception>
-		/// <exception cref="MisconfiguredCurrencyException">The currency associated to the current culture has not been properly configured by the library implementor. Please, log a issue.</exception>
+		/// <exception cref="MissconfiguredCurrencyException">The currency associated to the current culture has not been properly configured by the library implementor. Please, log a issue.</exception>
 		public static Money ForCurrentCulture(decimal amount)
 		{
 			return ForCulture(amount, CultureInfo.CurrentCulture);
@@ -129,10 +125,10 @@ namespace NMoneys
 		/// <param name="amount">The <see cref="Amount"/> of the monetary quantity.</param>
 		/// <param name="culture">A <see cref="CultureInfo"/> from which retrieve the associated currency.</param>
 		/// <returns>An instance of <see cref="Money"/> with the <paramref name="amount"/> specified and the currency associated to the specified <paramref name="culture"/>.</returns>
-		/// <exception cref="ArgumentNullException"><paramref name="culture"/> is null.</exception>
-		/// <exception cref="ArgumentException"><paramref name="culture"/> is either an invariant, custom or neutral culture, or a <see cref="RegionInfo"/> cannot be instantiated from it.</exception>
+		/// <exception cref="ArgumentNullException">The <paramref name="culture"/> is null.</exception>
+		/// <exception cref="ArgumentException">The <paramref name="culture"/> is either an invariant, custom or neutral culture, or a <see cref="RegionInfo"/> cannot be instantiated from it.</exception>
 		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The ISO symbol associated to the <paramref name="culture"/> does not exist in the <see cref="CurrencyIsoCode"/> enumeration.</exception>
-		/// <exception cref="MisconfiguredCurrencyException">The currency associated to the <paramref name="culture"/> has not been properly configured by the library implementor. Please, log a issue.</exception>
+		/// <exception cref="MissconfiguredCurrencyException">The currency associated to the <paramref name="culture"/> has not been properly configured by the library implementor. Please, log a issue.</exception>
 		public static Money ForCulture(decimal amount, CultureInfo culture)
 		{
 			Guard.AgainstNullArgument("culture", culture);
@@ -216,10 +212,10 @@ namespace NMoneys
 		/// <param name="amountMajor">The <see cref="Amount"/> in the major division of the currency.</param>
 		/// <param name="currency">The incarnation of the <see cref="CurrencyCode"/>.</param>
 		/// <returns>A <see cref="Money"/> with the specified <paramref name="amountMajor"/> and <paramref name="currency"/>.</returns>
-		/// <exception cref="ArgumentNullException"><paramref name="currency"/> is null.</exception>
+		/// <exception cref="ArgumentNullException">If <paramref name="currency"/> is null.</exception>
 		public static Money ForMajor(long amountMajor, Currency currency)
 		{
-			Guard.AgainstNullArgument("currency", currency);
+			Guard.AgainstNullArgument("currency", currency); 
 			return new Money(decimal.Truncate(amountMajor), currency);
 		}
 
@@ -274,7 +270,7 @@ namespace NMoneys
 		/// <param name="amountMinor">The <see cref="Amount"/> in the minor division of the currency.</param>
 		/// <param name="currency">The incarnation of the <see cref="CurrencyCode"/>.</param>
 		/// <returns>A <see cref="Money"/> with the specified <paramref name="amountMinor"/> and <paramref name="currency"/>.</returns>
-		/// <exception cref="ArgumentNullException"><paramref name="currency"/> is null.</exception>
+		/// <exception cref="ArgumentNullException">if <paramref name="currency"/> is null.</exception>
 		public static Money ForMinor(long amountMinor, Currency currency)
 		{
 			Guard.AgainstNullArgument("currency", currency);
@@ -310,7 +306,7 @@ namespace NMoneys
 		/// <exception cref="DifferentCurrencyException">If any of the currencies of <paramref name="moneys"/> differ.</exception>
 		public static Money Total(params Money[] moneys)
 		{
-			return Total((IEnumerable<Money>)moneys);
+			return Total((IEnumerable<Money>) moneys);
 		}
 
 		/// <summary>
@@ -320,8 +316,8 @@ namespace NMoneys
 		/// <param name="moneys">A not null and not empty collection of moneys.</param>
 		/// <returns>An <see cref="Money"/> instance which <see cref="Amount"/> is the sum of all amounts of the moneys in the collection,
 		/// and <see cref="Currency"/> the same as all the moneys in the collection.</returns>
-		/// <exception cref="ArgumentNullException"><paramref name="moneys"/> is null.</exception>
-		/// <exception cref="ArgumentException"><paramref name="moneys"/> is empty.</exception>
+		/// /// <exception cref="ArgumentNullException">If <paramref name="moneys"/> is null.</exception>
+		/// <exception cref="ArgumentException">If <paramref name="moneys"/> is empty.</exception>
 		/// <exception cref="DifferentCurrencyException">If any of the currencies of <paramref name="moneys"/> differ.</exception>
 		public static Money Total(IEnumerable<Money> moneys)
 		{
@@ -337,7 +333,7 @@ namespace NMoneys
 		/// DO NOT USE the field directly. Use <see cref="CurrencyCode"/>.
 		/// </summary>
 		[Obsolete]
-		private CurrencyIsoCode? _currencyCode;
+		private CurrencyIsoCode _currencyCode;
 
 #pragma warning disable 612,618
 		/// <summary>
@@ -347,11 +343,24 @@ namespace NMoneys
 		{
 			get
 			{
-				return _currencyCode.GetValueOrDefault(CurrencyIsoCode.XXX);
-			}
+				ensureNotDefault();
+				return _currencyCode;
+			} 
 			private set
 			{
 				_currencyCode = value;
+			}
+		}
+
+		/// <summary>
+		/// As <see cref="CurrencyIsoCode"/> is a non-zero based enumeration, we have to protect against default instances
+		/// by setting the code to a defined currency if it is the default one.
+		/// </summary>
+		private void ensureNotDefault()
+		{
+			if (Enumeration.CheckDefault(_currencyCode))
+			{
+				_currencyCode = CurrencyIsoCode.XXX;
 			}
 		}
 #pragma warning restore 612,618
@@ -868,23 +877,6 @@ namespace NMoneys
 		}
 
 		/// <summary>
-		/// Adds two specified <see cref="Money"/> values.
-		/// </summary>
-		/// <remarks>Both instances must have the same <see cref="CurrencyCode"/> in order to be added, otherwise an exception will be thrown.</remarks>
-		/// <param name="first">The first value to add.</param>
-		/// <param name="second">The second value to add.</param>
-		/// <returns>A <see cref="Money"/> with <see cref="Amount"/> as the sum of <paramref name="first"/> and <paramref name="second"/> amounts
-		/// and the same <see cref="CurrencyCode"/> as any of the arguments.</returns>
-		/// <exception cref="DifferentCurrencyException">If <paramref name="first"/> does not have the same <see cref="CurrencyCode"/>
-		/// as <paramref name="second"/>.</exception>
-		/// <exception cref="OverflowException">The <see cref="Amount"/> of the result is less than
-		/// <see cref="decimal.MinValue"/> or greater than <see cref="decimal.MaxValue"/>.</exception>
-		public static  Money Add(Money first, Money second)
-		{
-			return first + second;
-		}
-
-		/// <summary>
 		/// Substracts one specified <see cref="Money"/> from another.
 		/// </summary>
 		/// <remarks>Both instances must have the same <see cref="CurrencyCode"/> in order to be substracted, otherwise an exception will be thrown.</remarks>
@@ -900,23 +892,6 @@ namespace NMoneys
 		{
 			assertSameCurrency(first, second);
 			return new Money(first.Amount - second.Amount, first.CurrencyCode);
-		}
-
-		/// <summary>
-		/// Substracts one specified <see cref="Money"/> from another.
-		/// </summary>
-		/// <remarks>Both instances must have the same <see cref="CurrencyCode"/> in order to be substracted, otherwise an exception will be thrown.</remarks>
-		/// <param name="first">The minuend.</param>
-		/// <param name="second">The subtrahend.</param>
-		/// <returns>A <see cref="Money"/> with <see cref="Amount"/> as the result of substracting <paramref name="second"/> from <paramref name="first"/> amounts
-		/// and the same <see cref="CurrencyCode"/> as any of the arguments.</returns>
-		/// <exception cref="DifferentCurrencyException">If <paramref name="first"/> does not have the same <see cref="CurrencyCode"/>
-		/// as <paramref name="second"/>.</exception>
-		/// <exception cref="OverflowException">The <see cref="Amount"/> of the result is less than
-		/// <see cref="decimal.MinValue"/> or greater than <see cref="decimal.MaxValue"/>.</exception>
-		public static Money Subtract(Money first, Money second)
-		{
-			return first - second;
 		}
 
 		#endregion
@@ -987,7 +962,7 @@ namespace NMoneys
 		/// </summary>
 		/// <param name="numberFormat">Specifies the number of significant decimal digits.</param>
 		/// <returns>A <see cref="Money"/> with the <see cref="Amount"/> truncated to the significant number of decimal digits of <paramref name="numberFormat"/>.</returns>
-		/// <exception cref="ArgumentNullException"><paramref name="numberFormat"/> is null.</exception>
+		/// <exception cref="ArgumentNullException">If <paramref name="numberFormat"/> is null.</exception>
 		public Money TruncateToSignificantDecimalDigits(NumberFormatInfo numberFormat)
 		{
 			Guard.AgainstNullArgument("numberFormat", numberFormat);
@@ -1133,7 +1108,7 @@ namespace NMoneys
 		/// <param name="binaryOperation">Arithmetical operation to perform.</param>
 		/// <returns>A <see cref="Money"/> with <see cref="Amount"/> as the result of applying <paramref name="binaryOperation"/> to he old amount and
 		/// <paramref name="operand"/>'s amount.</returns>
-		/// <exception cref="ArgumentNullException"><paramref name="binaryOperation"/> is null.</exception>
+		/// <exception cref="ArgumentNullException">The <paramref name="binaryOperation"/> is null.</exception>
 		public Money Perform(Money operand, Func<decimal, decimal, decimal> binaryOperation)
 		{
 			Guard.AgainstNullArgument("binaryOperation", binaryOperation);
@@ -1147,7 +1122,7 @@ namespace NMoneys
 		/// </summary>
 		/// <param name="unaryOperation">Arithmetical operation to perform.</param>
 		/// <returns>a <see cref="Money"/> with <see cref="Amount"/> as the result of applying <paramref name="unaryOperation"/> to the previous <see cref="Amount"/>.</returns>
-		/// <exception cref="ArgumentNullException"><paramref name="unaryOperation"/> is null.</exception>
+		/// <exception cref="ArgumentNullException">The <paramref name="unaryOperation"/> is null.</exception>
 		public Money Perform(Func<decimal, decimal> unaryOperation)
 		{
 			Guard.AgainstNullArgument("unaryOperation", unaryOperation);
@@ -1177,7 +1152,6 @@ namespace NMoneys
 		/// <param name="info">The <see cref="System.Runtime.Serialization.SerializationInfo"/> to populate with data.</param>
 		/// <param name="context">The destination (see <see cref="T:System.Runtime.Serialization.StreamingContext"/>) for this serialization.</param>
 		/// <exception cref="T:System.Security.SecurityException">The caller does not have the required permission.</exception>
-		[SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
 		public void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
 			info.AddValue(Serialization.Data.Money.AMOUNT, Amount);
@@ -1200,21 +1174,25 @@ namespace NMoneys
 		/// </summary>
 		/// <param name="xs">A cache of XML Schema definition language (XSD) schemas.</param>
 		/// <returns>Represents the complexType element from XML Schema as specified by the <paramref name="xs"/>.</returns>
-		/// <exception cref="ArgumentNullException"><paramref name="xs"/> is null.</exception>
 		public static XmlSchemaComplexType GetSchema(XmlSchemaSet xs)
 		{
-			Guard.AgainstNullArgument("xs", xs);
-
 			XmlSchemaComplexType complex = null;
 			XmlSerializer schemaSerializer = new XmlSerializer(typeof(XmlSchema));
 			using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(Serialization.Data.ResourceName))
 			{
 				if (stream != null)
 				{
-					XmlSchema schema = (XmlSchema)schemaSerializer.Deserialize(new XmlTextReader(stream));
-					xs.Add(schema);
-					XmlQualifiedName name = new XmlQualifiedName(Serialization.Data.Money.DATA_TYPE, Serialization.Data.NAMESPACE);
-					complex = (XmlSchemaComplexType)schema.SchemaTypes[name];
+					try
+					{
+						XmlSchema schema = (XmlSchema)schemaSerializer.Deserialize(new XmlTextReader(stream));
+						xs.Add(schema);
+						XmlQualifiedName name = new XmlQualifiedName(Serialization.Data.Money.DATA_TYPE, Serialization.Data.NAMESPACE);
+						complex = (XmlSchemaComplexType)schema.SchemaTypes[name];
+					}
+					finally
+					{
+						stream.Close();
+					}
 				}
 			}
 			return complex;
@@ -1224,11 +1202,8 @@ namespace NMoneys
 		/// Generates an object from its XML representation.
 		/// </summary>
 		/// <param name="reader">The <see cref="XmlReader"/> stream from which the object is deserialized.</param>
-		/// <exception cref="ArgumentNullException"><paramref name="reader"/> is null.</exception>
 		public void ReadXml(XmlReader reader)
 		{
-			Guard.AgainstNullArgument("reader", reader);
-
 			reader.ReadStartElement();
 			setAllFields(reader.ReadElementContentAsDecimal(Serialization.Data.Money.AMOUNT, Serialization.Data.NAMESPACE),
 				Currency.ReadXmlData(reader));
@@ -1239,11 +1214,8 @@ namespace NMoneys
 		/// Converts an object into its XML representation.
 		/// </summary>
 		/// <param name="writer">The <see cref="XmlWriter"/> stream to which the object is serialized.</param>
-		/// <exception cref="ArgumentNullException"><paramref name="writer"/> is null.</exception>
 		public void WriteXml(XmlWriter writer)
 		{
-			Guard.AgainstNullArgument("writer", writer); 
-
 			writer.WriteStartElement(Serialization.Data.Money.AMOUNT, Serialization.Data.NAMESPACE);
 			writer.WriteValue(Amount);
 			writer.WriteEndElement();

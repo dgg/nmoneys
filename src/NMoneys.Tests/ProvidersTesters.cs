@@ -52,7 +52,7 @@ namespace NMoneys.Tests
 		{
 			CurrencyIsoCode notDefined = (CurrencyIsoCode)(-1);
 			Assert.That(() => new EmbeddedXmlProvider().Get(notDefined),
-				Throws.InstanceOf<MisconfiguredCurrencyException>().With.Message.StringContaining("-1"));
+				Throws.InstanceOf<MissconfiguredCurrencyException>().With.Message.StringContaining("-1"));
 		}
 	}
 
@@ -106,7 +106,7 @@ namespace NMoneys.Tests
 			using (var subject = new EmbeddedXmlInitializer())
 			{
 				Assert.That(() => subject.Get(notDefined),
-					Throws.InstanceOf<MisconfiguredCurrencyException>().With.Message.StringContaining("-1"));
+					Throws.InstanceOf<MissconfiguredCurrencyException>().With.Message.StringContaining("-1"));
 			}
 		}
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Resources;
@@ -28,8 +27,8 @@ namespace NMoneys
 
 		internal static CurrencyInfo ReadInfo(XPathNavigator navigator, CurrencyIsoCode code)
 		{
-			XPathNavigator node = navigator.SelectSingleNode(string.Format(CultureInfo.InvariantCulture, "/currencies/currency[@code='{0}']", code));
-			if (node == null) throw new MisconfiguredCurrencyException(code);
+			XPathNavigator node = navigator.SelectSingleNode(string.Format("/currencies/currency[@code='{0}']", code));
+			if (node == null) throw new MissconfiguredCurrencyException(code);
 
 			CurrencyInfo info = new CurrencyInfo(
 				code,
@@ -87,6 +86,8 @@ namespace NMoneys
 				XPathDocument doc = new XPathDocument(stream);
 
 				CurrencyInfo info = EmbeddedXml.ReadInfo(doc.CreateNavigator(), code);
+
+				stream.Close();
 
 				return info;
 			}

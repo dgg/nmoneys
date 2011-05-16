@@ -54,7 +54,6 @@
   <ItemGroup>
     <Compile Include="CharacterReferenceTester.cs" />
     <Compile Include="CurrencyEqualityComparerTester.cs" />
-    <Compile Include="CurrencyIsoCodeTester.cs" />
     <Compile Include="CurrencyTester.cs" />
     <Compile Include="CustomConstraints\CurrencyInfoConstraint.cs" />
     <Compile Include="CustomConstraints\CustomConstraint.cs" />

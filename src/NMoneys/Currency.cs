@@ -4,7 +4,6 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Runtime.Serialization;
-using System.Security.Permissions;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
@@ -49,11 +48,6 @@ namespace NMoneys
 		/// </summary>
 		[XmlIgnore]
 		public string Symbol { get; private set; }
-
-		/// <summary>
-		/// Textual representation of the ISO 4217 code
-		/// </summary>
-		public string AlphabeticCode { get; private set; }
 
 		/// <summary>
 		/// Textual representation of the ISO 4217 code
@@ -157,9 +151,7 @@ namespace NMoneys
 		/// <param name="context">The <see cref="StreamingContext"/> that contains contextual information about the source or destination.</param>
 		private Currency(SerializationInfo info, StreamingContext context)
 		{
-			CurrencyIsoCode isoCode = IsoCodeExtensions.CaseInsensitiveParse(
-				(string)info.GetValue(Serialization.Data.Currency.ISO_CODE, typeof(string)),
-				Serialization.Data.Currency.ISO_CODE);
+			CurrencyIsoCode isoCode = Enumeration.Parse<CurrencyIsoCode>((string)info.GetValue(Serialization.Data.Currency.ISO_CODE, typeof(string)));
 			// get a paradigm with the most current values
 			Currency paradigm = Get(isoCode);
 			setAllFields(paradigm.IsoCode, paradigm.EnglishName, paradigm.NativeName, paradigm.Symbol,
@@ -175,7 +167,7 @@ namespace NMoneys
 			IsoCode = isoCode;
 			EnglishName = englishName;
 			Symbol = symbol;
-			AlphabeticCode = IsoSymbol = isoCode.ToString();
+			IsoSymbol = isoCode.ToString();
 			SignificantDecimalDigits = significantDecimalDigits;
 			NativeName = nativeName;
 			DecimalSeparator = decimalSeparator;
@@ -600,32 +592,6 @@ namespace NMoneys
 			return string.Compare(IsoSymbol, other.IsoSymbol, StringComparison.Ordinal);
 		}
 
-		/// <summary>
-		/// Returns a value indicating whether a specified <see cref=" Currency"/> is less than another specified <see cref="Currency"/>.
-		/// </summary>
-		/// <param name="left">The first value to compare.</param>
-		/// <param name="right">The second value to compare.</param>
-		/// <returns>true if <paramref name="left"/> is less than <paramref name="right"/>; otherwise, false.</returns>
-		/// <exception cref="ArgumentNullException"><paramref name="left"/> is null.</exception>
-		public static bool operator <(Currency left, Currency right)
-		{
-			Guard.AgainstNullArgument("left", left);
-			return left.CompareTo(right) < 0;
-		}
-
-		/// <summary>
-		/// Returns a value indicating whether a specified <see cref="Currency"/> is greater than or equal to another specified <see cref="Currency"/>.
-		/// </summary>
-		/// <param name="left">The first value to compare.</param>
-		/// <param name="right">The second value to compare.</param>
-		/// <returns>true if <paramref name="left"/> is greater than or equal to <paramref name="right"/>; otherwise, false.</returns>
-		/// <exception cref="ArgumentNullException"><paramref name="left"/> is null.</exception>
-		public static bool operator >(Currency left, Currency right)
-		{
-			Guard.AgainstNullArgument("left", left); 
-			return left.CompareTo(right) > 0;
-		}
-
 		#endregion
 
 		/// <summary>
@@ -656,7 +622,7 @@ namespace NMoneys
 		/// <param name="isoCode">ISO 4217 code.</param>
 		/// <returns>The instance of <see cref="Currency"/> represented by the <paramref name="isoCode"/>.</returns>
 		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The <paramref name="isoCode"/> does not exist in the <see cref="CurrencyIsoCode"/> enumeration.</exception>
-		/// <exception cref="MisconfiguredCurrencyException">The currency represented by <paramref name="isoCode"/> has not been properly configured by the library implementor. Please, log a issue.</exception>
+		/// <exception cref="MissconfiguredCurrencyException">The currency represented by <paramref name="isoCode"/> has not been properly configured by the library implementor. Please, log a issue.</exception>
 		public static Currency Get(CurrencyIsoCode isoCode)
 		{
 			Enumeration.AssertDefined(isoCode);
@@ -666,7 +632,7 @@ namespace NMoneys
 			if (!_byIsoCode.TryGet(isoCode, out currency))
 			{
 				currency = init(isoCode, _provider.Get);
-				if (currency == null) throw new MisconfiguredCurrencyException(isoCode);
+				if (currency == null) throw new MissconfiguredCurrencyException(isoCode);
 				fillCaches(currency);
 			}
 
@@ -686,15 +652,15 @@ namespace NMoneys
 		/// <param name="threeLetterIsoCode">A string representing a three-letter ISO 4217 code.</param>
 		/// <returns>The instance of <see cref="Currency"/> represented by the <paramref name="threeLetterIsoCode"/>.</returns>
 		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The <paramref name="threeLetterIsoCode"/> does not exist in the <see cref="CurrencyIsoCode"/> enumeration.</exception>
-		/// <exception cref="MisconfiguredCurrencyException">The currency represented by <paramref name="threeLetterIsoCode"/> has not been properly configured by the library implementor. Please, log a issue.</exception>
+		/// <exception cref="MissconfiguredCurrencyException">The currency represented by <paramref name="threeLetterIsoCode"/> has not been properly configured by the library implementor. Please, log a issue.</exception>
 		public static Currency Get(string threeLetterIsoCode)
 		{
 			Currency currency;
 			if (!_byIsoSymbol.TryGet(threeLetterIsoCode, out currency))
 			{
-				var isoCode = IsoCodeExtensions.CaseInsensitiveParse(threeLetterIsoCode, "threeLetterIsoCode");
+				var isoCode = Enumeration.Parse<CurrencyIsoCode>(threeLetterIsoCode);
 				currency = init(isoCode, _provider.Get);
-				if (currency == null) throw new MisconfiguredCurrencyException(isoCode);
+				if (currency == null) throw new MissconfiguredCurrencyException(isoCode);
 				fillCaches(currency);
 			}
 			RaiseIfObsolete(currency);
@@ -717,10 +683,10 @@ namespace NMoneys
 		/// </remarks>
 		/// <param name="culture">A <see cref="CultureInfo"/> from which retrieve the associated currency.</param>
 		/// <returns>The instance of <see cref="Currency"/> from to the region associated to the <paramref name="culture"/>.</returns>
-		/// <exception cref="ArgumentNullException"><paramref name="culture"/> is null.</exception>
-		/// <exception cref="ArgumentException"><paramref name="culture"/> is either an invariant, custom or neutral culture, or a <see cref="RegionInfo"/> cannot be instantiated from it.</exception>
+		/// <exception cref="ArgumentNullException">The <paramref name="culture"/> is null.</exception>
+		/// <exception cref="ArgumentException">The <paramref name="culture"/> is either an invariant, custom or neutral culture, or a <see cref="RegionInfo"/> cannot be instantiated from it.</exception>
 		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The ISO symbol associated to the <paramref name="culture"/> does not exist in the <see cref="CurrencyIsoCode"/> enumeration.</exception>
-		/// <exception cref="MisconfiguredCurrencyException">The currency associated to the <paramref name="culture"/> has not been properly configured by the library implementor. Please, log a issue.</exception>
+		/// <exception cref="MissconfiguredCurrencyException">The currency associated to the <paramref name="culture"/> has not been properly configured by the library implementor. Please, log a issue.</exception>
 		public static Currency Get(CultureInfo culture)
 		{
 			Guard.AgainstNullArgument("culture", culture);
@@ -742,9 +708,9 @@ namespace NMoneys
 		/// </remarks>
 		/// <param name="region">A <see cref="RegionInfo"/> from which retrieve the associated currency.</param>
 		/// <returns>The instance of <see cref="Currency"/> corresponding to the region.</returns>
-		/// <exception cref="ArgumentNullException"><paramref name="region"/> is null.</exception>
+		/// <exception cref="ArgumentNullException">The <paramref name="region"/> is null.</exception>
 		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The ISO symbol associated to the <paramref name="region"/> does not exist in the <see cref="CurrencyIsoCode"/> enumeration.</exception>
-		/// <exception cref="MisconfiguredCurrencyException">The currency associated to the <paramref name="region"/> has not been properly configured by the library implementor. Please, log a issue.</exception>
+		/// <exception cref="MissconfiguredCurrencyException">The currency associated to the <paramref name="region"/> has not been properly configured by the library implementor. Please, log a issue.</exception>
 		public static Currency Get(RegionInfo region)
 		{
 			Guard.AgainstNullArgument("region", region);
@@ -806,13 +772,12 @@ namespace NMoneys
 		public static bool TryGet(string threeLetterIsoSymbol, out Currency currency)
 		{
 			currency = null;
-			if (threeLetterIsoSymbol == null) return false;
-			bool tryGet = _byIsoSymbol.TryGet(threeLetterIsoSymbol, out currency);
+			bool tryGet = threeLetterIsoSymbol == null ? false : _byIsoSymbol.TryGet(threeLetterIsoSymbol, out currency);
 
 			if (!tryGet)
 			{
 				CurrencyIsoCode? isoCode;
-				if (Enumeration.TryParse(threeLetterIsoSymbol.ToUpperInvariant(), out isoCode))
+				if (Enumeration.TryParse(threeLetterIsoSymbol, out isoCode))
 				{
 					currency = init(isoCode.Value, _provider.Get);
 					if (currency != null)
@@ -937,7 +902,6 @@ namespace NMoneys
 		/// </remarks>
 		/// <param name="info">The <see cref="SerializationInfo"/> that holds the serialized object data about the <see cref="Currency"/>.</param>
 		/// <param name="context">The <see cref="StreamingContext"/> that contains contextual information about the source or destination.</param>
-		[SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
 		public void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
 			info.AddValue(Serialization.Data.Currency.ISO_CODE, IsoSymbol);
@@ -960,21 +924,25 @@ namespace NMoneys
 		/// </summary>
 		/// <param name="xs">A cache of XML Schema definition language (XSD) schemas.</param>
 		/// <returns>Represents the complexType element from XML Schema as specified by the <paramref name="xs"/>.</returns>
-		/// <exception cref="ArgumentNullException"><paramref name="xs"/> is null.</exception>
 		public static XmlSchemaComplexType GetSchema(XmlSchemaSet xs)
 		{
-			Guard.AgainstNullArgument("xs", xs);
-
 			XmlSchemaComplexType complex = null;
 			XmlSerializer schemaSerializer = new XmlSerializer(typeof(XmlSchema));
 			using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(Serialization.Data.ResourceName))
 			{
 				if (stream != null)
 				{
-					XmlSchema schema = (XmlSchema)schemaSerializer.Deserialize(new XmlTextReader(stream));
-					xs.Add(schema);
-					XmlQualifiedName name = new XmlQualifiedName(Serialization.Data.Currency.DATA_TYPE, Serialization.Data.NAMESPACE);
-					complex = (XmlSchemaComplexType)schema.SchemaTypes[name];
+					try
+					{
+						XmlSchema schema = (XmlSchema)schemaSerializer.Deserialize(new XmlTextReader(stream));
+						xs.Add(schema);
+						XmlQualifiedName name = new XmlQualifiedName(Serialization.Data.Currency.DATA_TYPE, Serialization.Data.NAMESPACE);
+						complex = (XmlSchemaComplexType)schema.SchemaTypes[name];
+					}
+					finally
+					{
+						stream.Close();
+					}
 				}
 			}
 			return complex;
@@ -1007,19 +975,15 @@ namespace NMoneys
 		/// Converts an object into its XML representation.
 		/// </summary>
 		/// <param name="writer">The <see cref="XmlWriter"/> stream to which the object is serialized.</param>
-		/// <exception cref="ArgumentNullException"><paramref name="writer"/> is null.</exception>
 		public void WriteXml(XmlWriter writer)
 		{
-			Guard.AgainstNullArgument("writer", writer);
 			writer.WriteElementString(Serialization.Data.Currency.ISO_CODE, Serialization.Data.NAMESPACE, IsoSymbol);
 		}
 
 		internal static CurrencyIsoCode ReadXmlData(XmlReader reader)
 		{
 			reader.ReadStartElement();
-			CurrencyIsoCode isoCode = IsoCodeExtensions.CaseInsensitiveParse(
-				reader.ReadElementContentAsString(Serialization.Data.Currency.ISO_CODE, Serialization.Data.NAMESPACE),
-				Serialization.Data.Currency.ISO_CODE);
+			CurrencyIsoCode isoCode = Enumeration.Parse<CurrencyIsoCode>(reader.ReadElementContentAsString(Serialization.Data.Currency.ISO_CODE, Serialization.Data.NAMESPACE));
 			reader.ReadEndElement();
 			return isoCode;
 		}
@@ -1054,7 +1018,7 @@ namespace NMoneys
 		/// <seealso cref="TryGet(string, out Currency)"/>
 		/// <seealso cref="TryGet(CultureInfo, out Currency)"/>
 		/// <seealso cref="TryGet(RegionInfo, out Currency)"/>
-		public static event EventHandler<ObsoleteCurrencyEventArgs> ObsoleteCurrency;
+		public static EventHandler<ObsoleteCurrencyEventArgs> ObsoleteCurrency;
 
 		internal static void RaiseIfObsolete(CurrencyIsoCode code)
 		{

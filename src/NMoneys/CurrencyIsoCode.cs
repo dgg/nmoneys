@@ -223,7 +223,7 @@ namespace NMoneys
 		/// <summary>
 		/// Estonian Kroon
 		/// </summary>
-		[CanonicalCulture("et-EE"), Obsolete("deprecated")]
+		[CanonicalCulture("et-EE"), Obsolete]
 		EEK = 233,
 		/// <summary>
 		/// Egyptian Pound
@@ -718,11 +718,11 @@ namespace NMoneys
 		/// <summary>
 		/// US Dollar (Next day)
 		/// </summary>
-		USN = 997,
+        USN= 997,
 		/// <summary>
 		/// US Dollar (Same day)
 		/// </summary>
-		USS = 998,
+        USS = 998,
 		/// <summary>
 		/// Peso Uruguayo
 		/// </summary>
@@ -810,18 +810,10 @@ namespace NMoneys
 		/// </summary>
 		XPT = 962,
 		/// <summary>
-		/// Sucre
-		/// </summary>
-		XSU = 994,
-		/// <summary>
 		/// Test currency
 		/// </summary>
 		[Description("Test currency")]
 		XTS = 963,
-		/// <summary>
-		/// ADB Unit of Account
-		/// </summary>
-		XUA = 965,
 		/// <summary>
 		/// No currency
 		/// </summary>
@@ -846,5 +838,37 @@ namespace NMoneys
 		/// </summary>
 		[CanonicalCulture("en-ZW")]
 		ZWL = 932
+	}
+
+	/// <summary>
+	/// Contains extension to the type <see cref="CurrencyIsoCode"/>
+	/// </summary>
+	public static class IsoCodeExtensions
+	{
+		private const string EQUAL = " = ";
+
+		/// <summary>
+		/// Returns a combination of the ISO 4217 code and its numeric value, separated by the equals sign '<code>=</code>'.
+		/// </summary>
+		public static string AsValuePair(this CurrencyIsoCode isoCode)
+		{
+			return isoCode + EQUAL + isoCode.NumericCode();
+		}
+
+		/// <summary>
+		/// The numeric ISO 4217 code of the <see cref="CurrencyIsoCode"/>
+		/// </summary>
+		public static short NumericCode(this CurrencyIsoCode isoCode)
+		{
+			return (short)isoCode;
+		}
+
+		/// <summary>
+		/// Returns a padded three digit string representation of the <see cref="NumericCode"/>.
+		/// </summary>
+		public static string PaddedNumericCode(this CurrencyIsoCode isoCode)
+		{
+			return isoCode.NumericCode().ToString("000");
+		}
 	}
 }
