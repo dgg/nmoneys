@@ -18,7 +18,6 @@ namespace NMoneys.Tests
 		{
 			Assert.That(shortcut.IsoCode, Is.EqualTo(isoCode));
 			Assert.That(shortcut.IsoSymbol, Is.EqualTo(isoSymbol));
-			Assert.That(shortcut.AlphabeticCode, Is.EqualTo(isoSymbol));
 			Assert.That(shortcut.Symbol, Is.EqualTo(symbol));
 			Assert.That(shortcut.EnglishName, Is.EqualTo(englishName));
 		}
@@ -678,52 +677,5 @@ namespace NMoneys.Tests
 			new object[]{"GHS", "&cent;", "&#162;" },
 		};
 #pragma warning restore 169
-
-		#region Issue 16. Case sensitivity. Currency instances can be obtained by any casing of the IsoCode (Alphbetic code)
-
-		[Test]
-		public void Get_ByIsoCode_IsCaseInsensitive()
-		{
-			Assert.That(Currency.Get("XBA"), Is.SameAs(Currency.Get("xBa")));
-		}
-
-		[Test]
-		public void TryGet_ByIsoCode_IsCaseInsensitive()
-		{
-			Currency upper, mixed;
-			Assert.That(Currency.TryGet("XBA", out upper), Is.True);
-			Assert.That(Currency.TryGet("xBa", out mixed), Is.True);
-
-			Assert.That(upper, Is.SameAs(mixed));
-		}
-
-		[Test]
-		public void XmlDeserialization_IsCaseInsentive()
-		{
-			string serializedDollar =
-				"<currency xmlns=\"urn:nmoneys\">" +
-				"<isoCode>uSd</isoCode>" +
-				"</currency>";
-			Assert.That(serializedDollar, Must.Be.XmlDeserializableInto(Currency.Dollar));
-		}
-
-		[Test]
-		public void DataContractDeserialization_IsCaseInsensitive()
-		{
-			string serializedDollar =
-				"<currency xmlns=\"urn:nmoneys\">" +
-				"<isoCode>uSd</isoCode>" +
-				"</currency>";
-			Assert.That(serializedDollar, Must.Be.DataContractDeserializableInto(Currency.Dollar));
-		}
-
-		[Test]
-		public void JsonDeserialization_IsCaseInsensitive()
-		{
-			string serializedDollar = "{\"isoCode\":\"uSd\"}";
-			Assert.That(serializedDollar, Must.Be.JsonDeserializableInto(Currency.Dollar));
-		}
-
-		#endregion
 	}
 }
