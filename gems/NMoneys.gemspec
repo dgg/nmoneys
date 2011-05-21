@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.files = Dir['lib/**/*'] + Dir['docs/**/*']
 
   spec.summary     = 'NMoneys - .Net implementation of Money Value Object'
-  spec.description = 'NMoneys is an implementation of the Money Value Object to support representing moneys in the currencies defined in the ISO 4417 standard'
+  spec.description = 'NMoneys is an implementation of the Money Value Object to support representing moneys in the currencies defined in the ISO 4217 standard'
   
   spec.authors           = ['Daniel Gonzalez Garcia']
   spec.email             = 'nmoneys@googlegroups.com'
