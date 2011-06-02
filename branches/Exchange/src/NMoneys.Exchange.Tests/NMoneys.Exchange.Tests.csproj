@@ -42,11 +42,10 @@
     <Compile Include="ComplexProviderData.cs" />
     <Compile Include="ComplexProviderTester.cs" />
     <Compile Include="DefaultConversionsTester.cs" />
+    <Compile Include="TabulatedExchangeProviderTester.cs" />
     <Compile Include="UsdEurGbpAs20110519.cs" />
-    <Compile Include="UsdEurGbpAs20110519Tester.cs" />
     <Compile Include="ExtendedConversionsTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UsdEurGbpAs20110519_Using5DecimalsArithmetic.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NMoneys.Exchange\NMoneys.Exchange.csproj">

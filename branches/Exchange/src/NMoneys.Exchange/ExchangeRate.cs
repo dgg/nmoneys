@@ -15,7 +15,7 @@ namespace NMoneys.Exchange
 		public CurrencyIsoCode To { get; private set; }
 		public decimal Rate { get; private set; }
 
-		public virtual ExchangeRate Inverse()
+		public virtual ExchangeRate Invert()
 		{
 			return new ExchangeRate(To, From, 1m / Rate);
 		}
