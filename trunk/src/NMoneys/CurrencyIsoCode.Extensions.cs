@@ -41,11 +41,5 @@ namespace NMoneys
 		{
 			return isoCode.ToString();
 		}
-
-		internal static CurrencyIsoCode CaseInsensitiveParse(string isoCode, string argumentName)
-		{
-			Guard.AgainstNullArgument(argumentName, isoCode); 
-			return Enumeration.Parse<CurrencyIsoCode>(isoCode.ToUpperInvariant());
-		}
 	}
 }

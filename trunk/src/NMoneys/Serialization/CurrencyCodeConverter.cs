@@ -22,7 +22,7 @@ namespace NMoneys.Serialization
 		public override object Deserialize(IDictionary<string, object> dictionary, Type type, JavaScriptSerializer serializer)
 		{
 			if (type != typeof(CurrencyIsoCode)) throw new NotSupportedException();
-			CurrencyIsoCode isoCode = IsoCodeExtensions.CaseInsensitiveParse((string)dictionary[Data.Currency.ISO_CODE], Data.Currency.ISO_CODE);
+			CurrencyIsoCode isoCode = Currency.ParseCodeArgument((string)dictionary[Data.Currency.ISO_CODE], Data.Currency.ISO_CODE);
 			return isoCode;
 		}
 

@@ -11,7 +11,7 @@ namespace NMoneys.Support
 	{
 		private static void assertEnum<TEnum>() where TEnum : struct, IComparable, IFormattable, IConvertible
 		{
-			Type tEnum = typeof (TEnum);
+			Type tEnum = typeof(TEnum);
 			if (!tEnum.IsEnum)
 			{
 				throw new ArgumentException(
@@ -22,12 +22,28 @@ namespace NMoneys.Support
 
 		public static void AssertDefined<TEnum>(string text) where TEnum : struct, IComparable, IFormattable, IConvertible
 		{
+			Guard.AgainstNullArgument("text", text);
 			assertEnum<TEnum>();
-			Type tEnum = typeof (TEnum);
-			if (!Enum.IsDefined(tEnum, text))
+			Type tEnum = typeof(TEnum);
+			Func<string> message = () => string.Format("Value {0} was not defined for type {1}", text, tEnum);
+			try
 			{
-				throw new InvalidEnumArgumentException(string.Format("Value {0} was not defined for type {1}", text, tEnum));
+				if (!Enum.IsDefined(tEnum, text))
+				{
+					//check whether text represents a value of TEnum
+					Type underlying = Enum.GetUnderlyingType(tEnum);
+					object converted = Convert.ChangeType(text, underlying);
+					if (converted == null || !Enum.IsDefined(tEnum, converted))
+					{
+						throw new InvalidEnumArgumentException(message());
+					}
+				}
 			}
+			catch (Exception ex)
+			{
+				throw new InvalidEnumArgumentException(message(), ex);
+			}
+
 		}
 
 		public static void AssertDefined<TEnum>(TEnum value) where TEnum : struct, IComparable, IFormattable, IConvertible
@@ -38,6 +54,34 @@ namespace NMoneys.Support
 			{
 				throw new InvalidEnumArgumentException(string.Format("Value {0} was not defined for type {1}", value, tEnum));
 			}
+		}
+
+		private static bool checkDefined<TEnum>(string text) where TEnum : struct, IComparable, IFormattable, IConvertible
+		{
+			bool defined = false;
+			if (!text.IsEmpty())
+			{
+				Type tEnum = typeof(TEnum);
+				try
+				{
+					if (Enum.IsDefined(tEnum, text))
+					{
+						defined = true;
+					}
+					//check whether text represents a value of TEnum
+					else
+					{
+						Type underlying = Enum.GetUnderlyingType(tEnum);
+						object converted = Convert.ChangeType(text, underlying);
+						defined = converted != null && Enum.IsDefined(tEnum, converted);
+					}
+				}
+				// swallow exceptions on purpose
+				catch { }
+			}
+
+			return defined;
+
 		}
 
 		public static bool CheckDefined<TEnum>(TEnum value) where TEnum : struct , IComparable, IFormattable, IConvertible
@@ -59,8 +103,7 @@ namespace NMoneys.Support
 			assertEnum<TEnum>();
 			Type enumType = typeof(TEnum);
 			result = null;
-			if (input.IsEmpty() || !Enum.IsDefined(enumType, input)) return false;
-
+			if (!checkDefined<TEnum>(input)) return false;
 			result = (TEnum)Enum.Parse(enumType, input);
 			return true;
 		}
@@ -71,7 +114,7 @@ namespace NMoneys.Support
 		{
 			assertEnum<TEnum>();
 			FieldInfo field = fieldOf(value);
-			return (TAttr)field.GetCustomAttributes(typeof (TAttr), false).Single();
+			return (TAttr)field.GetCustomAttributes(typeof(TAttr), false).Single();
 		}
 
 		public static bool HasAttribute<TEnum, TAttr>(TEnum value)
@@ -91,11 +134,11 @@ namespace NMoneys.Support
 			bool result = false;
 			attribute = null;
 			FieldInfo field = fieldOf(value);
-			object[] attributes= field.GetCustomAttributes(typeof (TAttr), false);
-			if (attributes.Length  == 1)
+			object[] attributes = field.GetCustomAttributes(typeof(TAttr), false);
+			if (attributes.Length == 1)
 			{
 				result = true;
-				attribute = (TAttr) attributes[0];
+				attribute = (TAttr)attributes[0];
 			}
 			return result;
 		}
@@ -111,10 +154,10 @@ namespace NMoneys.Support
 			return FastEnumComparer<TEnum>.Instance;
 		}
 
-		public static TEnum[] GetValues<TEnum>()where TEnum : struct, IComparable, IFormattable, IConvertible
+		public static TEnum[] GetValues<TEnum>() where TEnum : struct, IComparable, IFormattable, IConvertible
 		{
 			assertEnum<TEnum>();
-			return (TEnum[])Enum.GetValues(typeof (TEnum));
+			return (TEnum[])Enum.GetValues(typeof(TEnum));
 		}
 	}
 }

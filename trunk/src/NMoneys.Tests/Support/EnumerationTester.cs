@@ -46,11 +46,10 @@ namespace NMoneys.Tests.Support
 		}
 
 		[Test]
-		public void AssertDefined_NumericalValueInsteadOfRepresentation_Exception()
+		public void AssertDefined_NumericalValueInsteadOfRepresentation_NoException()
 		{
 			// for strings, use the representation
-			Assert.That(() => Enumeration.AssertDefined<Test1>("1"),
-				Throws.InstanceOf<InvalidEnumArgumentException>().With.Property("Message").StringContaining("1"));
+			Assert.That(() => Enumeration.AssertDefined<Test1>("1"), Throws.Nothing);
 		}
 
 		[Test]
@@ -91,12 +90,31 @@ namespace NMoneys.Tests.Support
 		}
 
 		[Test]
+		public void TryParse_ExistingNumericValue_True()
+		{
+			PlatformID? existing;
+			Assert.That(Enumeration.TryParse("1", out existing), Is.True);
+			Assert.That(existing, Is.EqualTo(PlatformID.Win32Windows));
+		}
+
+		[Test]
 		public void TryParse_NonExistingValue_False()
 		{
 			bool parsed = false;
 			PlatformID? nonExisting = null;
 
 			Assert.DoesNotThrow(() => parsed = Enumeration.TryParse("nonExisting", out nonExisting));
+			Assert.That(parsed, Is.False);
+			Assert.That(nonExisting, Is.Null);
+		}
+
+		[Test]
+		public void TryParse_NonExistingNumericValue_False()
+		{
+			bool parsed = false;
+			PlatformID? nonExisting = null;
+
+			Assert.DoesNotThrow(() => parsed = Enumeration.TryParse("9999", out nonExisting));
 			Assert.That(parsed, Is.False);
 			Assert.That(nonExisting, Is.Null);
 		}

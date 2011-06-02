@@ -1806,5 +1806,17 @@ namespace NMoneys.Tests
 		}
 
 		#endregion
+
+		[Test]
+		public void OperatingOnStrings_IsPossible_IfCurrenciesAreKnownUpfront()
+		{
+			Money poundQuantity = Money.Parse("£100.50", Currency.Gbp);
+			Money yenQuantity = Money.Parse("¥ 1,000", Currency.Jpy);
+
+			Func<decimal, decimal> halfDiscount = q => q * .5m;
+			
+			Assert.That(poundQuantity.Perform(halfDiscount), Must.Be.MoneyWith(50.25m, Currency.Gbp));
+			Assert.That(yenQuantity.Perform(halfDiscount), Must.Be.MoneyWith(500, Currency.Jpy));
+		}
 	}
 }
