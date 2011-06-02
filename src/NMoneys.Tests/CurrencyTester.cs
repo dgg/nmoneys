@@ -199,7 +199,7 @@ namespace NMoneys.Tests
 		[Test]
 		public void Get_ObsoleteCurrencyIsoCode_EventRaised()
 		{
-			Action getObsolete = ()=> Currency.Get(Enumeration.Parse<CurrencyIsoCode>("EEK")); 
+			Action getObsolete = () => Currency.Get(Enumeration.Parse<CurrencyIsoCode>("EEK"));
 			Assert.That(getObsolete, Must.RaiseObsoleteEvent.Once());
 		}
 
@@ -604,12 +604,12 @@ namespace NMoneys.Tests
 		public void LessThan_Generic_AccordingToSpec()
 		{
 			Currency to = null;
-			Assert.That(Currency.Xts< to, Is.False);
+			Assert.That(Currency.Xts < to, Is.False);
 
 			to = Currency.Xts;
 			Assert.That(Currency.Xts < to, Is.False);
 			to = Currency.Xxx;
-			Assert.That(Currency.Xts< to, Is.True);
+			Assert.That(Currency.Xts < to, Is.True);
 			to = Currency.Aud;
 			Assert.That(Currency.Xts < to, Is.False);
 		}
@@ -722,6 +722,129 @@ namespace NMoneys.Tests
 		{
 			string serializedDollar = "{\"isoCode\":\"uSd\"}";
 			Assert.That(serializedDollar, Must.Be.JsonDeserializableInto(Currency.Dollar));
+		}
+
+		#endregion
+
+		#region ParseCode
+
+		[Test]
+		public void ParseCode_Defined_UpperCased_AlphabeticCode_CodeParsed()
+		{
+			Assert.That(Currency.ParseCode("USD"), Is.EqualTo(CurrencyIsoCode.USD));
+		}
+
+		[Test]
+		public void ParseCode_Defined_LowerCased_AlphabeticCode_CodeParsed()
+		{
+			Assert.That(Currency.ParseCode("eur"), Is.EqualTo(CurrencyIsoCode.EUR));
+		}
+
+		[Test]
+		public void ParseCode_Defined_MixedCased_AlphabeticCode_CodeParsed()
+		{
+			Assert.That(Currency.ParseCode("NoK"), Is.EqualTo(CurrencyIsoCode.NOK));
+		}
+
+		[Test]
+		public void ParseCode_Defined_NumericCode_CodeParsed()
+		{
+			Assert.That(Currency.ParseCode("999"), Is.EqualTo(CurrencyIsoCode.XXX));
+		}
+
+		[Test]
+		public void ParseCode_Null_Exception()
+		{
+			Assert.That(() => Currency.ParseCode(null), Throws.InstanceOf<ArgumentNullException>());
+		}
+
+		[Test]
+		public void ParseCode_Undefined_AlphabeticCode_Exception()
+		{
+			Assert.That(() => Currency.ParseCode("notAnIsoCode"), Throws.InstanceOf<InvalidEnumArgumentException>());
+		}
+
+		[Test]
+		public void ParseCode_Undefined_NumericCode_Exception()
+		{
+			Assert.That(() => Currency.ParseCode("0"), Throws.InstanceOf<InvalidEnumArgumentException>());
+		}
+
+		[Test]
+		public void ParseCode_Overflowing_NumericCode_Exception()
+		{
+			long overflowingCode = short.MinValue + 1L;
+			Assert.That(() => Currency.ParseCode(overflowingCode.ToString()), Throws.InstanceOf<InvalidEnumArgumentException>());
+		}
+
+		#endregion
+
+		#region TryParseCode
+
+		[Test]
+		public void TryParseCode_Defined_UpperCased_AlphabeticCode_CodeParsed()
+		{
+			CurrencyIsoCode? parsed;
+			Assert.That(Currency.TryParseCode("USD", out parsed), Is.True);
+			Assert.That(parsed, Is.EqualTo(CurrencyIsoCode.USD));
+
+		}
+
+		[Test]
+		public void TryParseCode_Defined_LowerCased_AlphabeticCode_CodeParsed()
+		{
+			CurrencyIsoCode? parsed;
+			Assert.That(Currency.TryParseCode("eur", out parsed), Is.True);
+			Assert.That(parsed, Is.EqualTo(CurrencyIsoCode.EUR));
+		}
+
+		[Test]
+		public void TryParseCode_Defined_MixedCased_AlphabeticCode_CodeParsed()
+		{
+			CurrencyIsoCode? parsed;
+			Assert.That(Currency.TryParseCode("NoK", out parsed), Is.True);
+			Assert.That(parsed, Is.EqualTo(CurrencyIsoCode.NOK));
+		}
+
+		[Test]
+		public void TryParseCode_Defined_NumericCode_CodeParsed()
+		{
+			CurrencyIsoCode? parsed;
+			Assert.That(Currency.TryParseCode("999", out parsed), Is.True);
+			Assert.That(parsed, Is.EqualTo(CurrencyIsoCode.XXX));
+		}
+
+		[Test]
+		public void TryParseCode_Null_Exception()
+		{
+			CurrencyIsoCode? parsed;
+			Assert.That(Currency.TryParseCode(null, out parsed), Is.False);
+			Assert.That(parsed, Is.Null);
+		}
+
+		[Test]
+		public void TryParseCode_Undefined_AlphabeticCode_Exception()
+		{
+			CurrencyIsoCode? parsed;
+			Assert.That(Currency.TryParseCode("notAnIsoCode", out parsed), Is.False);
+			Assert.That(parsed, Is.Null);
+		}
+
+		[Test]
+		public void TryParseCode_Undefined_NumericCode_Exception()
+		{
+			CurrencyIsoCode? parsed;
+			Assert.That(Currency.TryParseCode("0", out parsed), Is.False);
+			Assert.That(parsed, Is.Null);
+		}
+
+		[Test]
+		public void TryParseCode_Overflowing_NumericCode_Exception()
+		{
+			CurrencyIsoCode? parsed;
+			long overflowingCode = short.MinValue + 1L;
+			Assert.That(Currency.TryParseCode(overflowingCode.ToString(), out parsed), Is.False);
+			Assert.That(parsed, Is.Null);
 		}
 
 		#endregion
