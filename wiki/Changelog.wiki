@@ -1,6 +1,10 @@
 #summary Summary of changes.
 #labels Phase-Support
 
+= 1.6.0.0 =
+2011/06/02 @revision 85
+   * Added methods `Currency.ParseCode()` and `Currency.TryParseCode()` that allow parsing `CurrencyIsoCode` strings
+
 = 1.5.1.0 =
 2011/05/15 @revision 72
    * Included source code for [http://www.codeproject.com/KB/dotnet/NMoneys.aspx CodeProject] article
