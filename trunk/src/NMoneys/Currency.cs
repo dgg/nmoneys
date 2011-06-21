@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
@@ -917,7 +918,9 @@ namespace NMoneys
 
 		#region code manipulation
 
-
+		/// <summary>
+		/// Contains factory methods that create a <see cref="CurrencyIsoCode"/>
+		/// </summary>
 		public static class Code
 		{
 			/// <summary>
@@ -964,11 +967,26 @@ namespace NMoneys
 				return Enumeration.Parse<CurrencyIsoCode>(isoCode.ToUpperInvariant());
 			}
 
+			/// <summary>
+			/// Converts the specified 16-bit signed integer to a <see cref="CurrencyIsoCode"/>.
+			/// </summary>
+			/// <para>The conversion is safe, in the sense that the value has to be defined within the values of the enumeration to be converted, but throws an exception when it cannot.</para>
+			/// <param name="numericCode">The value to be converted.</param>
+			/// <returns>An instance of the enumeration set to <paramref name="numericCode"/>.</returns>
+			/// <exception cref="InvalidEnumArgumentException"><paramref name="numericCode"/> is not defined within the values of <see cref="CurrencyIsoCode"/>.</exception>
 			public static CurrencyIsoCode Cast(short numericCode)
 			{
 				return Enumeration.Cast<CurrencyIsoCode>(numericCode);
 			}
 
+			/// <summary>
+			/// Converts the the specified 16-bit signed integer to an equivalent <see cref="CurrencyIsoCode"/>. The return value indicates whether the conversion succeeded.
+			/// </summary>
+			/// <remarks>When the conversion is successful, the returned value is guaranteed to contain a value.</remarks>
+			/// <param name="numericCode">The value to be converted.</param>
+			/// <param name="converted">When this method returns, contains an object of type <see cref="Nullable{CurrencyIsoCode}"/> whose value is represented by <paramref name="numericCode"/>; otherwise, false.
+			/// This parameter is passed uninitialized.</param>
+			/// <returns>true if the <paramref name="numericCode"/> parameter was converted successfully; otherwise, false.</returns>
 			public static bool TryCast(short numericCode, out CurrencyIsoCode? converted)
 			{
 				return Enumeration.TryCast(numericCode, out converted);

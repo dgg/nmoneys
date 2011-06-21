@@ -1,5 +1,9 @@
 ﻿namespace NMoneys.Exchange
 {
+	/// <summary>
+	/// Implements the conversions of monetary quantities into other monetary quantities with different currencies.
+	/// </summary>
+	/// <remarks>Does not throw if the rate cannot be found.</remarks>
 	internal class ExchangeSafeConversion : IExchangeSafeConversion
 	{
 		private readonly IExchangeRateProvider _provider;
