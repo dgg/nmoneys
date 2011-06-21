@@ -44,7 +44,7 @@
     <Compile Include="IExchangeSafeConversion.cs" />
     <Compile Include="ExchangeConversion.cs" />
     <Compile Include="Money.Extensions.cs" />
-    <Compile Include="NoOpProvider.cs" />
+    <Compile Include="IdentityProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

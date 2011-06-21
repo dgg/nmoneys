@@ -2,6 +2,10 @@
 
 namespace NMoneys.Exchange
 {
+	/// <summary>
+	/// Implements the conversions of monetary quantities into other monetary quantities with different currencies.
+	/// </summary>
+	/// <remarks>Throws if the rate cannot be found.</remarks>
 	internal class ExchangeConversion : IExchangeConversion
 	{
 		private readonly IExchangeRateProvider _provider;
