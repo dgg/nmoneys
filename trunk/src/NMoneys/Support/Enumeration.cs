@@ -91,6 +91,12 @@ namespace NMoneys.Support
 			return Enum.IsDefined(tEnum, value);
 		}
 
+		public static bool CheckDefined<TEnum, U>(U value) where TEnum : struct, IComparable, IFormattable, IConvertible
+		{
+			assertEnum<TEnum>();
+			return Enum.IsDefined(typeof(TEnum), value);
+		}
+
 		public static TEnum Parse<TEnum>(string text) where TEnum : struct, IComparable, IFormattable, IConvertible
 		{
 			assertEnum<TEnum>();
@@ -158,6 +164,25 @@ namespace NMoneys.Support
 		{
 			assertEnum<TEnum>();
 			return (TEnum[])Enum.GetValues(typeof(TEnum));
+		}
+
+		public static TEnum Cast<TEnum>(short value) where TEnum : struct, IComparable, IFormattable, IConvertible
+		{
+			TEnum? casted;
+			bool result = TryCast(value, out casted);
+			if (!result)
+			{
+				throw new InvalidEnumArgumentException(string.Format("'{0}' is not defined within type {1}.", value, typeof(TEnum).Name));
+			}
+			return casted.Value;
+		}
+
+		public static bool TryCast<TEnum>(short value, out TEnum? casted) where TEnum : struct, IComparable, IFormattable, IConvertible
+		{
+			casted = null;
+			bool success = CheckDefined<TEnum, short>(value);
+			if (success) casted = (TEnum)Enum.ToObject(typeof(TEnum), value);
+			return success;
 		}
 	}
 }
