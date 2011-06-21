@@ -157,7 +157,7 @@ namespace NMoneys
 		/// <param name="context">The <see cref="StreamingContext"/> that contains contextual information about the source or destination.</param>
 		private Currency(SerializationInfo info, StreamingContext context)
 		{
-			CurrencyIsoCode isoCode = ParseCodeArgument(
+			CurrencyIsoCode isoCode = Code.ParseArgument(
 				(string)info.GetValue(Serialization.Data.Currency.ISO_CODE, typeof(string)),
 				Serialization.Data.Currency.ISO_CODE);
 			// get a paradigm with the most current values
@@ -692,7 +692,7 @@ namespace NMoneys
 			Currency currency;
 			if (!_byIsoSymbol.TryGet(threeLetterIsoCode, out currency))
 			{
-				var isoCode = ParseCodeArgument(threeLetterIsoCode, "threeLetterIsoCode");
+				var isoCode = Code.ParseArgument(threeLetterIsoCode, "threeLetterIsoCode");
 				currency = init(isoCode, _provider.Get);
 				if (currency == null) throw new MisconfiguredCurrencyException(isoCode);
 				fillCaches(currency);
@@ -915,52 +915,66 @@ namespace NMoneys
 
 		#endregion
 
-		#region code parsing
+		#region code manipulation
 
-		/// <summary>
-		/// Converts the string representation of the name or numeric value of one or more enumerated constants to an equivalent <see cref="CurrencyIsoCode"/>.
-		/// </summary>
-		/// <remarks>The <paramref name="isoCode"/> can represent an alphabetic or a numeric currency code.
-		/// <para>In the case of alphabetic codes, parsing is case-insensitive.</para>
-		/// <para>Only defined numeric codes can be parsed.</para></remarks>
-		/// <param name="isoCode">A string containing the name or value to convert.</param>
-		/// <returns>An object of type <see cref="CurrencyIsoCode"/> whose value is represented by value.</returns>
-		/// <exception cref="ArgumentNullException"><paramref name="isoCode"/> is null.</exception>
-		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException"><paramref name="isoCode"/> does not represent a defined alphabetic or numeric code.</exception>
-		/// <seealso cref="IsoCodeExtensions.AlphabeticCode"/>
-		/// <seealso cref="IsoCodeExtensions.NumericCode"/>
-		public static CurrencyIsoCode ParseCode(string isoCode)
+
+		public static class Code
 		{
-			return ParseCodeArgument(isoCode, "isoCode");
-		}
+			/// <summary>
+			/// Converts the string representation of the name or numeric value of one or more enumerated constants to an equivalent <see cref="CurrencyIsoCode"/>.
+			/// </summary>
+			/// <remarks>The <paramref name="isoCode"/> can represent an alphabetic or a numeric currency code.
+			/// <para>In the case of alphabetic codes, parsing is case-insensitive.</para>
+			/// <para>Only defined numeric codes can be parsed.</para></remarks>
+			/// <param name="isoCode">A string containing the name or value to convert.</param>
+			/// <returns>An object of type <see cref="CurrencyIsoCode"/> whose value is represented by value.</returns>
+			/// <exception cref="ArgumentNullException"><paramref name="isoCode"/> is null.</exception>
+			/// <exception cref="System.ComponentModel.InvalidEnumArgumentException"><paramref name="isoCode"/> does not represent a defined alphabetic or numeric code.</exception>
+			/// <seealso cref="IsoCodeExtensions.AlphabeticCode"/>
+			/// <seealso cref="IsoCodeExtensions.NumericCode"/>
+			public static CurrencyIsoCode Parse(string isoCode)
+			{
+				return ParseArgument(isoCode, "isoCode");
+			}
 
-		/// <summary>
-		/// Converts the string representation of the name or numeric value of one or more enumerated constants to an equivalent <see cref="CurrencyIsoCode"/>.
-		/// The return value indicates whether the conversion succeeded.
-		/// </summary>
-		/// <remarks>The <paramref name="isoCode"/> can represent an alphabetic or a numeric currency code.
-		/// <para>In the case of alphabetic codes, parsing is case-insensitive.</para>
-		/// <para>Only defined numeric codes can be parsed.</para></remarks>
-		/// <param name="isoCode">A string containing the name or value to convert.</param>
-		/// <param name="parsed">When this method returns, contains the parsed <see cref="CurrencyIsoCode"/> if the parsing succeeded, or is null if the parsing failed.</param>
-		/// <returns>true if the value <paramref name="isoCode"/> was parsed successfully; otherwise, false.</returns>
-		public static bool TryParseCode(string isoCode, out CurrencyIsoCode? parsed)
-		{
-			parsed = null;
-			bool result = isoCode != null ? Enumeration.TryParse(isoCode.ToUpperInvariant(), out parsed) : false;
-			return result;
-		}
+			/// <summary>
+			/// Converts the string representation of the name or numeric value of one or more enumerated constants to an equivalent <see cref="CurrencyIsoCode"/>.
+			/// The return value indicates whether the conversion succeeded.
+			/// </summary>
+			/// <remarks>The <paramref name="isoCode"/> can represent an alphabetic or a numeric currency code.
+			/// <para>In the case of alphabetic codes, parsing is case-insensitive.</para>
+			/// <para>Only defined numeric codes can be parsed.</para></remarks>
+			/// <param name="isoCode">A string containing the name or value to convert.</param>
+			/// <param name="parsed">When this method returns, contains the parsed <see cref="CurrencyIsoCode"/> if the parsing succeeded, or is null if the parsing failed.</param>
+			/// <returns>true if the value <paramref name="isoCode"/> was parsed successfully; otherwise, false.</returns>
+			public static bool TryParse(string isoCode, out CurrencyIsoCode? parsed)
+			{
+				parsed = null;
+				bool result = isoCode != null ? Enumeration.TryParse(isoCode.ToUpperInvariant(), out parsed) : false;
+				return result;
+			}
 
-		/// <summary>
-		/// Used to parse the ISO codes arguments.
-		/// </summary>
-		/// <remarks>Is case-insensitive.</remarks>
-		internal static CurrencyIsoCode ParseCodeArgument(string isoCode, string argumentName)
-		{
-			Guard.AgainstNullArgument(argumentName, isoCode);
-			return Enumeration.Parse<CurrencyIsoCode>(isoCode.ToUpperInvariant());
-		}
+			/// <summary>
+			/// Used to parse the ISO codes arguments.
+			/// </summary>
+			/// <remarks>Is case-insensitive.</remarks>
+			internal static CurrencyIsoCode ParseArgument(string isoCode, string argumentName)
+			{
+				Guard.AgainstNullArgument(argumentName, isoCode);
+				return Enumeration.Parse<CurrencyIsoCode>(isoCode.ToUpperInvariant());
+			}
 
+			public static CurrencyIsoCode Cast(short numericCode)
+			{
+				return Enumeration.Cast<CurrencyIsoCode>(numericCode);
+			}
+
+			public static bool TryCast(short numericCode, out CurrencyIsoCode? converted)
+			{
+				return Enumeration.TryCast(numericCode, out converted);
+			}
+		}
+		
 		#endregion
 
 		/// <summary>
@@ -1065,7 +1079,7 @@ namespace NMoneys
 		internal static CurrencyIsoCode ReadXmlData(XmlReader reader)
 		{
 			reader.ReadStartElement();
-			CurrencyIsoCode isoCode = ParseCodeArgument(
+			CurrencyIsoCode isoCode = Code.ParseArgument(
 				reader.ReadElementContentAsString(Serialization.Data.Currency.ISO_CODE, Serialization.Data.NAMESPACE),
 				Serialization.Data.Currency.ISO_CODE);
 			reader.ReadEndElement();
