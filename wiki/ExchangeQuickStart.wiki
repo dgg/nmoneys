@@ -6,10 +6,10 @@ NMoneys.Exchnge targets the same platforms as NMoneys, that is the .Net framewor
 
 = Build sources =
 
-Building the library is as simple as for NMoneys. In fact the same build creates the deployable artifacts for both projects. For more details refer to [DeveloperQuickStart#Build_sources developer quickstart section].
+Building the library is as simple as for NMoneys. In fact the same build creates the deployable artifacts for both projects. For more details refer to the corresponding [DeveloperQuickStart#Build_sources developer quickstart section].
 
 = Get the binaries =
-Latest binaries can be downloaded from the [http://code.google.com/p/nmoneys/downloads/list Downloads] section within the project's website.
+As with NMoneys, latest binaries can be downloaded from the [downloads/list Downloads] section within the project's website.
 For [http://nuget.org/ NuGet] users, the [http://nuget.org/List/Packages/NMoneys NMoneys package] is available in the official live feed.
 For .NET developers that make use of Ruby tools, they can also get a [https://rubygems.org/gems/nmoneys NMoneys gem] from RubyGems.org
 
