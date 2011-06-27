@@ -6,7 +6,7 @@ NMoneys.Exchnge targets the same platforms as NMoneys, that is the .Net framewor
 
 = Build sources =
 
-Building the library is as simple as for NMoneys. In fact the same build creates the deployable artifacts for both projects. For more details refer to [DeveloperQuickstart#BuildSources].
+Building the library is as simple as for NMoneys. In fact the same build creates the deployable artifacts for both projects. For more details refer to [NMoneys Quickstart]DeveloperQuickstart#Build_Sources.
 
 = Get the binaries =
 Latest binaries can be downloaded from the [http://code.google.com/p/nmoneys/downloads/list Downloads] section within the project's website.
