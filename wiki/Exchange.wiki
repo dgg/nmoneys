@@ -12,4 +12,4 @@ Not to disappoint anyone, NMoneys.Exchange is a framework. It is not a currency 
 Instead, you can use the extensibility points provided by NMoneys.Exchange to plug in your favorite provider of data, but out-of-the-box it is an unisteresting: a most than likely incorrect one to one exchange rate is applied in order to convert whichever pair of monetary quantities.
 
 == How do I Use it Then? ==
-Being a framework, being some sort of .Net developer is a must. You are likely to be interested in [Exchange_QuickStart] 
+Being a framework, being some sort of .Net developer is a must. You are likely to be interested in [ExchangeQuickStart] 
