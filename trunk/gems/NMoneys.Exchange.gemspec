@@ -4,7 +4,7 @@ Gem::Specification.new do |spec|
   spec.platform    = Gem::Platform::RUBY
   spec.name        = 'nmoneys-exchange'
   spec.version     = version
-  spec.files = Dir['lib/**/*'] + Dir['docs/**/*']
+  spec.files = Dir['lib/NMoneys.Exchange.dll'] + Dir['lib/NMoneys.Exchange.xml']
 
   spec.summary     = 'NMoneys Exchange- Extension to NMoneys to support exchange operations'
   spec.description = '
