@@ -32,7 +32,7 @@ Currency euro = Currency.Eur;
 
 Or one of the static creation methods:
 {{{
-Currency cad = Currency.Get(CurrencyIsoCodes.Cad);
+Currency cad = Currency.Get(CurrencyIsoCode.CAD);
 Currency australianDollar = Currency.Get("AUD");
 Currency euro = Currency.Get(CultureInfo.GetCultureInfo("es-ES"));
 
