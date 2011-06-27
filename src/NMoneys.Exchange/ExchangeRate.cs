@@ -120,6 +120,29 @@ namespace NMoneys.Exchange
 			}
 		}
 
+		/// <summary>
+		/// Creates an instance of an identity exchange rate with the parameters provided.
+		/// </summary>
+		/// <remarks>An identity exchange rate is one which rate is 1, as such applying it to some monetary quantity merely changes the currency while leaving its amount unchanged.</remarks>
+		/// <param name="from">Base currency, the currency from which the conversion is performed.</param>
+		/// <param name="to">Quote currency, the currency which the conversion is performed to.</param>
+		/// <returns>An identity exchange rate for the currencies provided.</returns>
+		public static ExchangeRate Identity(CurrencyIsoCode from, CurrencyIsoCode to)
+		{
+			return new ExchangeRate(from, to, decimal.One);
+		}
+
+		/// <summary>
+		/// Creates an instance of an identity exchange rate with the parameters provided.
+		/// </summary>
+		/// <remarks>An identity exchange rate is one which rate is 1, as such applying it to some monetary quantity merely changes the currency while leaving its amount unchanged.</remarks>
+		/// <param name="single">This currency will become  both the base currency, and the quote currency.</param>
+		/// <returns>An identity exchange rate for the currency provided.</returns>
+		public static ExchangeRate Identity(CurrencyIsoCode single)
+		{
+			return new ExchangeRate(single, single, decimal.One);
+		}
+
 		#region equality
 
 		/// <summary>
