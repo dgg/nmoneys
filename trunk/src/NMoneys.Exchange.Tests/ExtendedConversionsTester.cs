@@ -8,11 +8,11 @@ namespace NMoneys.Exchange.Tests
 	public class ExtendedConversionsTester
 	{
 		// Implement alternative provider
-		class NegatedProvider : IExchangeRateProvider
+		class RateOfTwoProvider : IExchangeRateProvider
 		{
 			public ExchangeRate Get(CurrencyIsoCode from, CurrencyIsoCode to)
 			{
-				return new ExchangeRate(from, to, -1);
+				return new ExchangeRate(from, to, 2);
 			}
 
 			public bool TryGet(CurrencyIsoCode from, CurrencyIsoCode to, out ExchangeRate rate)
@@ -23,9 +23,9 @@ namespace NMoneys.Exchange.Tests
 		}
 
 		[TestFixtureSetUp]
-		public void setupNegatedProvider()
+		public void setupRateOfTwoProvider()
 		{
-			ExchangeRateProvider.Factory = () => new NegatedProvider();
+			ExchangeRateProvider.Factory = () => new RateOfTwoProvider();
 		}
 
 		[TestFixtureTearDown]
@@ -35,20 +35,20 @@ namespace NMoneys.Exchange.Tests
 		}
 
 		[Test]
-		public void Convert_To_CurrencyCode_NegatedConversion()
+		public void Convert_To_CurrencyCode_DoubledConversion()
 		{
 			Money oewMeThirteenEuro = 13m.Usd().Convert().To(CurrencyIsoCode.EUR);
 
-			Assert.That(oewMeThirteenEuro.Amount, Is.EqualTo(-13m), "the negated exchange provider negates the amount and changes the currency");
+			Assert.That(oewMeThirteenEuro.Amount, Is.EqualTo(26m), "the rate of two exchange provider multiplies the amount by two and changes the currency");
 			Assert.That(oewMeThirteenEuro.CurrencyCode, Is.EqualTo(CurrencyIsoCode.EUR));
 		}
 
 		[Test]
-		public void Convert_To_Currency_NegatedConversion()
+		public void Convert_To_Currency_DoubledConversion()
 		{
 			Money oewMeThirteenEuro = 13m.Usd().Convert().To(Currency.Euro);
 
-			Assert.That(oewMeThirteenEuro.Amount, Is.EqualTo(-13m), "the negated exchange provider negates the amount and changes the currency");
+			Assert.That(oewMeThirteenEuro.Amount, Is.EqualTo(26m), "the rate of two exchange provider multiplies the amount by two and changes the currency");
 			Assert.That(oewMeThirteenEuro.CurrencyCode, Is.EqualTo(CurrencyIsoCode.EUR));
 		}
 
@@ -59,22 +59,22 @@ namespace NMoneys.Exchange.Tests
 		}
 
 		[Test]
-		public void TryConvert_To_CurrencyCode_NegatedConversion()
+		public void TryConvert_To_CurrencyCode_DoubledConversion()
 		{
 			Money? oewMeThirteenEuro = 13m.Usd().TryConvert().To(CurrencyIsoCode.EUR);
 
 			Assert.That(oewMeThirteenEuro.HasValue, Is.True);
-			Assert.That(oewMeThirteenEuro.GetValueOrDefault().Amount, Is.EqualTo(-13m), "the negated exchange provider negates the amount and changes the currency");
+			Assert.That(oewMeThirteenEuro.GetValueOrDefault().Amount, Is.EqualTo(26m), "the rate of two exchange provider multiplies the amount by two and changes the currency");
 			Assert.That(oewMeThirteenEuro.GetValueOrDefault().CurrencyCode, Is.EqualTo(CurrencyIsoCode.EUR));
 		}
 
 		[Test]
-		public void TryConvert_To_Currency_NegatedConversion()
+		public void TryConvert_To_Currency_DoubledConversion()
 		{
 			Money? oewMeThirteenEuro = 13m.Usd().TryConvert().To(Currency.Euro);
 
 			Assert.That(oewMeThirteenEuro.HasValue, Is.True);
-			Assert.That(oewMeThirteenEuro.GetValueOrDefault().Amount, Is.EqualTo(-13m), "the negated exchange provider negates the amount and changes the currency");
+			Assert.That(oewMeThirteenEuro.GetValueOrDefault().Amount, Is.EqualTo(26m), "the rate of two exchange provider multiplies the amount by two and changes the currency");
 			Assert.That(oewMeThirteenEuro.GetValueOrDefault().CurrencyCode, Is.EqualTo(CurrencyIsoCode.EUR));
 		}
 
