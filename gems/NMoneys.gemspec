@@ -4,7 +4,7 @@ Gem::Specification.new do |spec|
   spec.platform    = Gem::Platform::RUBY
   spec.name        = 'nmoneys'
   spec.version     = version
-  spec.files = Dir['lib/**/*'] + Dir['docs/**/*']
+  spec.files = Dir['lib/NMoneys.dll'] + Dir['lib/NMoneys.xml']
 
   spec.summary     = 'NMoneys - .Net implementation of Money Value Object'
   spec.description = 'NMoneys is an implementation of the Money Value Object to support representing moneys in the currencies defined in the ISO 4217 standard'
