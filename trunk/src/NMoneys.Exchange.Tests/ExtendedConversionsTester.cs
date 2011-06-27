@@ -25,13 +25,13 @@ namespace NMoneys.Exchange.Tests
 		[TestFixtureSetUp]
 		public void setupRateOfTwoProvider()
 		{
-			ExchangeRateProvider.Factory = () => new RateOfTwoProvider();
+			ExchangeRateProvider.Provider = () => new RateOfTwoProvider();
 		}
 
 		[TestFixtureTearDown]
 		public void resetProvider()
 		{
-			ExchangeRateProvider.Factory = ExchangeRateProvider.Default;
+			ExchangeRateProvider.Provider = ExchangeRateProvider.Default;
 		}
 
 		[Test]
