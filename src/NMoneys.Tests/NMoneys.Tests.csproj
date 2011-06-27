@@ -75,6 +75,7 @@
     <Compile Include="MoneyTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProvidersTesters.cs" />
+    <Compile Include="Quickstart.cs" />
     <Compile Include="Support\ActionTimer.cs" />
     <Compile Include="Support\OneGoSerializers.cs" />
     <Compile Include="Support\CultureReseter.cs" />

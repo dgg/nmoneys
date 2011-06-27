@@ -43,6 +43,7 @@
     <Compile Include="ComplexProviderTester.cs" />
     <Compile Include="DefaultConversionsTester.cs" />
     <Compile Include="ExchangeRateTester.cs" />
+    <Compile Include="Quickstart.cs" />
     <Compile Include="TabulatedExchangeProviderTester.cs" />
     <Compile Include="UsdEurGbpAs20110519.cs" />
     <Compile Include="ExtendedConversionsTester.cs" />
