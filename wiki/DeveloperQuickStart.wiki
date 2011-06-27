@@ -102,6 +102,5 @@ Extension methods are provided as shortcuts for creation of money and currency i
 {{{
 3m.Gbp();
 1000m.Pounds();
-Currency.Dkk.ToMoney(.25m);
 CurrencyIsoCode.NOK.ToMoney(3m);
 }}}
