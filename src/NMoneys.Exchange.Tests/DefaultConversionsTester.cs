@@ -59,31 +59,5 @@ namespace NMoneys.Exchange.Tests
 			Assert.That(thirteenEuro.HasValue, Is.False, "the default safe converter ignores null currency instances");
 			Assert.That(thirteenEuro.GetValueOrDefault(), Is.EqualTo(default(Money)));
 		}
-
-		[Test]
-		public void METHOD_BEHAVIOR_2()
-		{
-			ExchangeRateProvider.Factory = () => new InverseProvider();
-
-			Money thirteenEur = 13m.Usd().Convert().To(CurrencyIsoCode.EUR);
-			Assert.That(thirteenEur.Amount, Is.EqualTo(-13m));
-			Assert.That(thirteenEur.CurrencyCode, Is.EqualTo(CurrencyIsoCode.EUR));
-
-			ExchangeRateProvider.Factory = ExchangeRateProvider.Default;
-		}
-
-		class InverseProvider : IExchangeRateProvider
-		{
-			public ExchangeRate Get(CurrencyIsoCode from, CurrencyIsoCode to)
-			{
-				return new ExchangeRate(from, to, -1);
-			}
-
-			public bool TryGet(CurrencyIsoCode from, CurrencyIsoCode to, out ExchangeRate rate)
-			{
-				rate = Get(from, to);
-				return true;
-			}
-		}
 	}
 }

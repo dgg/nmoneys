@@ -1,7 +1,189 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
+using NUnit.Framework;
 
 namespace NMoneys.Exchange.Tests
 {
+
+	[TestFixture]
+	public class TabulatedExchangeRateProviderTester
+	{
+		[Test]
+		public void Ctor_DefaultRateFactory_AddInstancesOfExchangeRate()
+		{
+			var subject = new TabulatedExchangeRateProvider();
+			ExchangeRate added = subject.Add(CurrencyIsoCode.AED, CurrencyIsoCode.AFN, 1);
+
+			Assert.That(added.GetType(), Is.SameAs(typeof(ExchangeRate)));
+		}
+
+		[Test]
+		public void Ctor_CustomRateFactory_AddInstancesOfCustomExchangeRate()
+		{
+			var subject = new TabulatedExchangeRateProvider((from, to, rate) => new CustomExchangeRate(from, to, rate));
+			ExchangeRate added = subject.Add(CurrencyIsoCode.AED, CurrencyIsoCode.AFN, 1);
+
+			Assert.That(added.GetType(), Is.SameAs(typeof(CustomExchangeRate)));
+		}
+
+		class CustomExchangeRate : ExchangeRate
+		{
+			public CustomExchangeRate(CurrencyIsoCode from, CurrencyIsoCode to, decimal rate) : base(from, to, rate) { }
+		}
+
+		[Test]
+		public void Add_AddsTheRate_WithTheData()
+		{
+			var subject = new TabulatedExchangeRateProvider();
+			ExchangeRate added = subject.Add(CurrencyIsoCode.AED, CurrencyIsoCode.AFN, 1.5m);
+
+			Assert.That(added.From, Is.EqualTo(CurrencyIsoCode.AED));
+			Assert.That(added.To, Is.EqualTo(CurrencyIsoCode.AFN));
+			Assert.That(added.Rate, Is.EqualTo(1.5m));
+		}
+
+		[Test]
+		public void Get_ExistingRate_RateReturned()
+		{
+			var subject = new TabulatedExchangeRateProvider();
+			subject.Add(CurrencyIsoCode.AED, CurrencyIsoCode.AFN, 1.5m);
+
+			ExchangeRate existing = subject.Get(CurrencyIsoCode.AED, CurrencyIsoCode.AFN);
+			Assert.That(existing.From, Is.EqualTo(CurrencyIsoCode.AED));
+			Assert.That(existing.To, Is.EqualTo(CurrencyIsoCode.AFN));
+			Assert.That(existing.Rate, Is.EqualTo(1.5m));
+		}
+
+		[Test]
+		public void Get_NonExistingRate_Exception()
+		{
+			var subject = new TabulatedExchangeRateProvider();
+			subject.Add(CurrencyIsoCode.AED, CurrencyIsoCode.AFN, 1.5m);
+
+			Assert.That(() => subject.Get(CurrencyIsoCode.USD, CurrencyIsoCode.AFN), Throws.InstanceOf<KeyNotFoundException>());
+		}
+
+		[Test]
+		public void Add_ExistingRates_AreOverwritten()
+		{
+			var subject = new TabulatedExchangeRateProvider();
+			subject.Add(CurrencyIsoCode.AED, CurrencyIsoCode.AFN, 1.5m);
+			subject.Add(CurrencyIsoCode.AED, CurrencyIsoCode.AFN, 2m);
+
+			ExchangeRate overwritten = subject.Get(CurrencyIsoCode.AED, CurrencyIsoCode.AFN);
+			Assert.That(overwritten.Rate, Is.EqualTo(2m));
+		}
+
+		[Test]
+		public void Add_InverseRate_NotAdded()
+		{
+			var subject = new TabulatedExchangeRateProvider();
+			subject.Add(CurrencyIsoCode.AED, CurrencyIsoCode.AFN, 1.5m);
+
+			Assert.That(() => subject.Get(CurrencyIsoCode.AFN, CurrencyIsoCode.AED), Throws.InstanceOf<KeyNotFoundException>());
+		}
+
+		[Test]
+		public void Add_IdentityRatesForBaseCurrency_NotAdded()
+		{
+			var subject = new TabulatedExchangeRateProvider();
+			subject.Add(CurrencyIsoCode.AED, CurrencyIsoCode.AFN, 1.5m);
+
+			Assert.That(() => subject.Get(CurrencyIsoCode.AED, CurrencyIsoCode.AED), Throws.InstanceOf<KeyNotFoundException>());
+		}
+
+		[Test]
+		public void Add_IdentityRatesForQuoteCurrency_NotAdded()
+		{
+			var subject = new TabulatedExchangeRateProvider();
+			subject.Add(CurrencyIsoCode.AED, CurrencyIsoCode.AFN, 1.5m);
+
+			Assert.That(() => subject.Get(CurrencyIsoCode.AFN, CurrencyIsoCode.AFN), Throws.InstanceOf<KeyNotFoundException>());
+		}
+
+		[Test]
+		public void TryGet_ExistingRate_RateReturned()
+		{
+			var subject = new TabulatedExchangeRateProvider();
+			subject.Add(CurrencyIsoCode.AED, CurrencyIsoCode.AFN, 1.5m);
+
+			ExchangeRate existing;
+			Assert.That(subject.TryGet(CurrencyIsoCode.AED, CurrencyIsoCode.AFN, out existing), Is.True);
+			Assert.That(existing.From, Is.EqualTo(CurrencyIsoCode.AED));
+			Assert.That(existing.To, Is.EqualTo(CurrencyIsoCode.AFN));
+			Assert.That(existing.Rate, Is.EqualTo(1.5m));
+		}
+
+		[Test]
+		public void TryGet_NonExistingRate_NoException()
+		{
+			var subject = new TabulatedExchangeRateProvider();
+
+			ExchangeRate existing = new ExchangeRate(CurrencyIsoCode.AED, CurrencyIsoCode.AED, 1);
+
+			Assert.That(subject.TryGet(CurrencyIsoCode.AED, CurrencyIsoCode.AFN, out existing), Is.False);
+			Assert.That(existing, Is.Null);
+		}
+
+		[Test]
+		public void MultiAdd_ExistingRates_AreOverwritten()
+		{
+			var subject = new TabulatedExchangeRateProvider();
+			subject.Add(CurrencyIsoCode.AED, CurrencyIsoCode.AFN, 1.5m);
+			subject.MultiAdd(CurrencyIsoCode.AED, CurrencyIsoCode.AFN, 2m);
+
+			ExchangeRate overwritten = subject.Get(CurrencyIsoCode.AED, CurrencyIsoCode.AFN);
+			Assert.That(overwritten.Rate, Is.EqualTo(2m));
+		}
+
+		[Test]
+		public void MultiAdd_ExistingInverseRates_AreOverwritten()
+		{
+			var subject = new TabulatedExchangeRateProvider();
+			subject.Add(CurrencyIsoCode.AFN, CurrencyIsoCode.AED, 1.5m);
+			subject.MultiAdd(CurrencyIsoCode.AED, CurrencyIsoCode.AFN, 2m);
+
+			ExchangeRate overwritten = subject.Get(CurrencyIsoCode.AFN, CurrencyIsoCode.AED);
+			Assert.That(overwritten.Rate, Is.EqualTo(.5m));
+		}
+
+		[Test]
+		public void MultiAdd_InverseRate_Added()
+		{
+			var subject = new TabulatedExchangeRateProvider();
+			subject.MultiAdd(CurrencyIsoCode.AED, CurrencyIsoCode.AFN, 1.5m);
+
+			var inverse = subject.Get(CurrencyIsoCode.AFN, CurrencyIsoCode.AED);
+			Assert.That(inverse.From, Is.EqualTo(CurrencyIsoCode.AFN));
+			Assert.That(inverse.To, Is.EqualTo(CurrencyIsoCode.AED));
+			Assert.That(inverse.Rate, Is.EqualTo(0.66m).Within(0.0067m));
+		}
+
+		[Test]
+		public void MultiAdd_IdentityRatesForBaseCurrency_Added()
+		{
+			var subject = new TabulatedExchangeRateProvider();
+			subject.MultiAdd(CurrencyIsoCode.AED, CurrencyIsoCode.AFN, 1.5m);
+
+			var identity = subject.Get(CurrencyIsoCode.AED, CurrencyIsoCode.AED);
+			Assert.That(identity.From, Is.EqualTo(CurrencyIsoCode.AED));
+			Assert.That(identity.To, Is.EqualTo(CurrencyIsoCode.AED));
+			Assert.That(identity.Rate, Is.EqualTo(1m));
+		}
+
+		[Test]
+		public void MultiAdd_IdentityRatesForQuoteCurrency_Added()
+		{
+			var subject = new TabulatedExchangeRateProvider();
+			subject.MultiAdd(CurrencyIsoCode.AED, CurrencyIsoCode.AFN, 1.5m);
+
+			var identity = subject.Get(CurrencyIsoCode.AFN, CurrencyIsoCode.AFN);
+			Assert.That(identity.From, Is.EqualTo(CurrencyIsoCode.AFN));
+			Assert.That(identity.To, Is.EqualTo(CurrencyIsoCode.AFN));
+			Assert.That(identity.Rate, Is.EqualTo(1m));
+		}
+	}
+
+
 	[TestFixture]
 	public class TabulatedExchangeProviderTester_DirectBuild_DefaultConversionArithmetic
 	{

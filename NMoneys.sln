@@ -8,6 +8,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{775196FF-CC47-4AF3-890E-53BFBC923D78}"
 	ProjectSection(SolutionItems) = preProject
 		NMoneys.build = NMoneys.build
+		gems\NMoneys.Exchange.gemspec = gems\NMoneys.Exchange.gemspec
+		NMoneys.Exchange.nuspec = NMoneys.Exchange.nuspec
 		gems\NMoneys.gemspec = gems\NMoneys.gemspec
 		NMoneys.nuspec = NMoneys.nuspec
 		gems\VERSION = gems\VERSION
