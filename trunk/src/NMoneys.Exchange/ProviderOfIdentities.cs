@@ -3,12 +3,12 @@
 	/// <summary>
 	/// Null object pattern implementor of <see cref="IExchangeRateProvider"/>
 	/// </summary>
-	internal class IdentityProvider : IExchangeRateProvider
+	internal class ProviderOfIdentities : IExchangeRateProvider
 	{
 		/// <returns>Returns an identity rate: a rate of one.</returns>
 		public ExchangeRate Get(CurrencyIsoCode from, CurrencyIsoCode to)
 		{
-			return new ExchangeRate(from, to, 1m);
+			return ExchangeRate.Identity(from, to);
 		}
 
 		/// <returns>Returns an identity rate: a rate of one.</returns>

@@ -7,7 +7,7 @@ namespace NMoneys.Exchange
 	/// </summary>
 	public static class ExchangeRateProvider
 	{
-		private static readonly Func<IExchangeRateProvider> _default = () => new IdentityProvider();
+		private static readonly Func<IExchangeRateProvider> _default = () => new ProviderOfIdentities();
 
 		/// <summary>
 		/// Default rate provider.

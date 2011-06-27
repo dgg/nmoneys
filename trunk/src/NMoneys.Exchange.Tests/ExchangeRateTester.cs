@@ -268,5 +268,25 @@ namespace NMoneys.Exchange.Tests
 		}
 
 		#endregion
+
+		[Test]
+		public void Identity_TwoCurrencies_BuildsAnIdentityRate()
+		{
+			var identity = ExchangeRate.Identity(CurrencyIsoCode.EUR, CurrencyIsoCode.USD);
+
+			Assert.That(identity.From, Is.EqualTo(CurrencyIsoCode.EUR));
+			Assert.That(identity.To, Is.EqualTo(CurrencyIsoCode.USD));
+			Assert.That(identity.Rate, Is.EqualTo(1m));
+		}
+
+		[Test]
+		public void Identity_SingleCurrency_BuildsAnIdentityRateForItself()
+		{
+			var identity = ExchangeRate.Identity(CurrencyIsoCode.EUR);
+
+			Assert.That(identity.From, Is.EqualTo(CurrencyIsoCode.EUR));
+			Assert.That(identity.To, Is.EqualTo(CurrencyIsoCode.EUR));
+			Assert.That(identity.Rate, Is.EqualTo(1m));
+		}
 	}
 }
