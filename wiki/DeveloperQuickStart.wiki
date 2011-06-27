@@ -64,7 +64,7 @@ var thousandWithMissingCurrency = new Money(1000m);
 === Comparisons ===
 Moneys of the same currency can be compared and its value equality asserted:
 {{{
-int isPositive = new Money(3m, Currency.Nok).CompareTo(new Money(2m, CurrencyIsoCode.NOK);
+int isPositive = new Money(3m, Currency.Nok).CompareTo(new Money(2m, CurrencyIsoCode.NOK));
 bool isFalse = new Money(2m) > new Money(3m);
 bool areEqual = new Money(1m, Currency.Xxx).Equals(new Money(1m, Currency.Xxx));
 bool areNotEqual = new Money(2m) != new Money(5m);
