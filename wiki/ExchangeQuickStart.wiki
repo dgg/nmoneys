@@ -1,4 +1,5 @@
 #summary Quick-Start for a developer using the library
+#labels Phase-Implementation
 
 = Target Platforms =
 
@@ -15,86 +16,60 @@ For .NET developers that make use of Ruby tools, they can also get a [https://ru
 
 = Use the Library =
 
-== Currencies ==
-
-=== Obtain an instance ===
-_Currencies_ cannot be instantiated through a constructor. An instance has to be retrieved using either one of the static fields:
+== Converting moneys ==
+Performing conversion operations is really easy. Once the project has a reference to `NMoneys.dll` and to `NMoneys.Exchange.dll` assemblies one can convert from one currency to another using the `.Convert()` and `.TryConvert()` extensions methods on any _Money_ instance. By default, that is without any further configuration, conversions are pretty useless as the ratewe get is alway one:
 {{{
-Currency euro = Currency.Eur;
+var tenEuro = new Money(10m, CurrencyIsoCode.EUR);
+
+var tenDollar = tenEuro.Convert().To(CurrencyIsoCode.USD);
+var tenPounds = tenEuro.Convert().To(Currency.Gbp);
 }}}
 
-Or one of the static creation methods:
+== Configure a provider ==
+As stated, in order to use meaningful rates, one has to implement the `IExchangeRateProvider` interface, or use the already provided _TabulatedExchangeRateProvider_ that eases the set up of conversion tables. Once implemented, the provider can be easily configured:
 {{{
-Currency cad = Currency.Get(CurrencyIsoCodes.Cad);
-Currency australianDollar = Currency.Get("AUD");
-Currency euro = Currency.Get(CultureInfo.GetCultureInfo("es-ES"));
+var customProvider = new TabulatedExchangeRateProvider();
+customProvider.Add(CurrencyIsoCode.EUR, CurrencyIsoCode.USD, 0);
 
-Currency itMightNotBe;
-string isoSymbol;
-CurrencyIsoCode isoCode;
-CultureInfo culture;
-bool wasFound = Currency.TryGet(isoSymbol, out itMightNotBe);
-wasFound = Currency.TryGet(isoCode, out itMightNotBe);
-wasFound = Currency.TryGet(culture, out itMightNotBe);
+ExchangeRateProvider.Provider = () => customProvider;
+
+var tenEuro = new Money(10m, CurrencyIsoCode.EUR);
+var zeroDollars = tenEuro.Convert().To(CurrencyIsoCode.USD);
+
+// go back to default
+ExchangeRateProvider.Provider = ExchangeRateProvider.Default;
 }}}
 
-The Get() creation method may throw if an invalid currency identifier is supplied. To prevent exceptions use the TryGet() methods.
+Being a static provider, all conversions will use the same configured provider. It is up to the developer to decide the life style of the provider instance to be used.
 
-=== Using a currency ===
-There is little to do with the type, it only contain properties such as symbol, ISO code , ISO symbol and properties that drive how a monetary quantity with this currency might look like.
-
-== Moneys ==
-
-=== Get an instance ===
-_Money_, unlike _currencies_, can be directly instantiated.
+== Custom arithmetic ==
+One of tbe reasons for not implementing conversion between quantities of different currencies was the lack of knowledge on the internals of such operations.
+Unfortunately this has not changed and the default conversion arithmetics is coded inside the _ExchangeRate_ class, which uses standard `decimal` product.
+Fortunately, that default behavior can be changed easily by overriding some methods in that class:
 {{{
-var threeDollars = new Money(3m, Currency.Usd);
-var twoandAHalfPounds = new Money(2.5m, CurrencyIsoCode.GBP);
-var tenEuro = new Money(10m, "EUR");
-var thousandWithMissingCurrency = new Money(1000m);
+public class CustomRateArithmetic : ExchangeRate
+{
+	public CustomRateArithmetic(CurrencyIsoCode from, CurrencyIsoCode to, decimal rate) : base(from, to, rate) { }
+
+	public override Money Apply(Money from)
+	{
+		return new Money(0m, To);
+	}
+}
 }}}
-
-=== Comparisons ===
-Moneys of the same currency can be compared and its value equality asserted:
+Configure a provider that uses that custom implementation and your conversions can be as accurate as needed:
 {{{
-int isPositive = new Money(3m, Currency.Nok).CompareTo(new Money(2m, CurrencyIsoCode.NOK);
-bool isFalse = new Money(2m) > new Money(3m);
-bool areEqual = new Money(1m, Currency.Xxx).Equals(new Money(1m, Currency.Xxx));
-bool areNotEqual = new Money(2m) != new Money(5m);
-}}}
+public class CustomArithmeticProvider : IExchangeRateProvider
+{
+	public ExchangeRate Get(CurrencyIsoCode from, CurrencyIsoCode to)
+	{
+		return new CustomRateArithmetic(from, to, 1m);
+	}
 
-=== Arithmetic Operations ===
-Simple arithmetic operations can be performed on _Money_ instances:
-{{{
-var three = new Money(3m);
-var two = new Money(2m);
-Money five = three.Plus(two);
-Money oneOwed = two - three;
-Money one = oneOwed.Abs();
-}}}
-
-Arihtmetic operations between instances of the same currency are open to the user via Perform() methods:
-{{{
-Money alsoTwo = two.Perform(ten, (amt1, amt2) => amt1 % amt2);
-Money three = new Money(3.9m).Perform(amt => Math.Floor(amt));
-}}}
-
-=== Formatting ===
-Of course a _Money_ instance can be formatted in several ways:
-{{{
-string s = tenEuro.ToString(); // default formatting "10,00 €"
-s = threeDollars.ToString("N"); // format applied to currency "3.00"
-s = threeDollars.ToString(CultureInfo.GetCultureInfo("es-ES")); // format provider used "3,00 €", better suited for countries with same currency and different number formatting
-s = threeDollars.Format("{1} {0:00.00}"); // formatting with placeholders for currency symbol and amount "$ 03.00"
-s = new Money(1500, Currency.Eur).Format("{1} {0:#,#.00}"); // rich formatting "€ 1.500,00"
-}}}
-
-=== Extensions ===
-Extension methods are provided as shortcuts for creation of money and currency instances:
-
-{{{
-3m.Gbp();
-1000m.Pounds();
-Currency.Dkk.ToMoney(.25m);
-CurrencyIsoCode.NOK.ToMoney(3m);
+	public bool TryGet(CurrencyIsoCode from, CurrencyIsoCode to, out ExchangeRate rate)
+	{
+		rate = new CustomRateArithmetic(from, to, 1m);
+		return true;
+	}
+}
 }}}
