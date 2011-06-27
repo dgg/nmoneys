@@ -1,0 +1,100 @@
+#summary Quick-Start for a developer using the library
+
+= Target Platforms =
+
+NMoneys.Exchnge targets the same platforms as NMoneys, that is the .Net framework 3.5. As a matter of fact, it is just another project in the same solution although its lifecycle as a project is likely to be completely different.
+
+= Build sources =
+
+Building the library is as simple as for NMoneys. In fact the same build creates the deployable artifacts for both projects. For more details refer to [DeveloperQuickstart#BuildSources].
+
+= Get the binaries =
+Latest binaries can be downloaded from the [http://code.google.com/p/nmoneys/downloads/list Downloads] section within the project's website.
+For [http://nuget.org/ NuGet] users, the [http://nuget.org/List/Packages/NMoneys NMoneys package] is available in the official live feed.
+For .NET developers that make use of Ruby tools, they can also get a [https://rubygems.org/gems/nmoneys NMoneys gem] from RubyGems.org
+
+= Use the Library =
+
+== Currencies ==
+
+=== Obtain an instance ===
+_Currencies_ cannot be instantiated through a constructor. An instance has to be retrieved using either one of the static fields:
+{{{
+Currency euro = Currency.Eur;
+}}}
+
+Or one of the static creation methods:
+{{{
+Currency cad = Currency.Get(CurrencyIsoCodes.Cad);
+Currency australianDollar = Currency.Get("AUD");
+Currency euro = Currency.Get(CultureInfo.GetCultureInfo("es-ES"));
+
+Currency itMightNotBe;
+string isoSymbol;
+CurrencyIsoCode isoCode;
+CultureInfo culture;
+bool wasFound = Currency.TryGet(isoSymbol, out itMightNotBe);
+wasFound = Currency.TryGet(isoCode, out itMightNotBe);
+wasFound = Currency.TryGet(culture, out itMightNotBe);
+}}}
+
+The Get() creation method may throw if an invalid currency identifier is supplied. To prevent exceptions use the TryGet() methods.
+
+=== Using a currency ===
+There is little to do with the type, it only contain properties such as symbol, ISO code , ISO symbol and properties that drive how a monetary quantity with this currency might look like.
+
+== Moneys ==
+
+=== Get an instance ===
+_Money_, unlike _currencies_, can be directly instantiated.
+{{{
+var threeDollars = new Money(3m, Currency.Usd);
+var twoandAHalfPounds = new Money(2.5m, CurrencyIsoCode.GBP);
+var tenEuro = new Money(10m, "EUR");
+var thousandWithMissingCurrency = new Money(1000m);
+}}}
+
+=== Comparisons ===
+Moneys of the same currency can be compared and its value equality asserted:
+{{{
+int isPositive = new Money(3m, Currency.Nok).CompareTo(new Money(2m, CurrencyIsoCode.NOK);
+bool isFalse = new Money(2m) > new Money(3m);
+bool areEqual = new Money(1m, Currency.Xxx).Equals(new Money(1m, Currency.Xxx));
+bool areNotEqual = new Money(2m) != new Money(5m);
+}}}
+
+=== Arithmetic Operations ===
+Simple arithmetic operations can be performed on _Money_ instances:
+{{{
+var three = new Money(3m);
+var two = new Money(2m);
+Money five = three.Plus(two);
+Money oneOwed = two - three;
+Money one = oneOwed.Abs();
+}}}
+
+Arihtmetic operations between instances of the same currency are open to the user via Perform() methods:
+{{{
+Money alsoTwo = two.Perform(ten, (amt1, amt2) => amt1 % amt2);
+Money three = new Money(3.9m).Perform(amt => Math.Floor(amt));
+}}}
+
+=== Formatting ===
+Of course a _Money_ instance can be formatted in several ways:
+{{{
+string s = tenEuro.ToString(); // default formatting "10,00 €"
+s = threeDollars.ToString("N"); // format applied to currency "3.00"
+s = threeDollars.ToString(CultureInfo.GetCultureInfo("es-ES")); // format provider used "3,00 €", better suited for countries with same currency and different number formatting
+s = threeDollars.Format("{1} {0:00.00}"); // formatting with placeholders for currency symbol and amount "$ 03.00"
+s = new Money(1500, Currency.Eur).Format("{1} {0:#,#.00}"); // rich formatting "€ 1.500,00"
+}}}
+
+=== Extensions ===
+Extension methods are provided as shortcuts for creation of money and currency instances:
+
+{{{
+3m.Gbp();
+1000m.Pounds();
+Currency.Dkk.ToMoney(.25m);
+CurrencyIsoCode.NOK.ToMoney(3m);
+}}}
