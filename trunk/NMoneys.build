@@ -34,9 +34,9 @@
 		<MSBuild Projects="$(solutionFile)" Properties="configuration=$(Configuration)" />
 	</Target>
 	<Target Name="runTests" DependsOnTargets="compile">
-		<!--Exec Command="$(nunitPath)nunit-console.exe $(testProjectPath)bin\$(Configuration)\$(testAssemblyFile) $(exchange_testProjectPath)bin\$(Configuration)\$(exchange_testAssemblyFile)" />
+		<Exec Command="$(nunitPath)nunit-console.exe $(testProjectPath)bin\$(Configuration)\$(testAssemblyFile) $(exchange_testProjectPath)bin\$(Configuration)\$(exchange_testAssemblyFile)" />
 		<Exec Command="$(nunitSummaryPath)nunit-summary.exe -html -o=TestSummary.htm " />
-		<Exec Command="$(nunitSummaryPath)nunit-summary.exe -xsl=$(nunitSummaryPath)AlternativeNUnitDetails.xsl -o=TestDetails.htm " /-->
+		<Exec Command="$(nunitSummaryPath)nunit-summary.exe -xsl=$(nunitSummaryPath)AlternativeNUnitDetails.xsl -o=TestDetails.htm " />
 	</Target>
 	<Target Name="build" DependsOnTargets="runTests">
 		<RemoveDir Directories="$(releasePath)" />
