@@ -10,13 +10,13 @@ namespace NMoneys.Exchange.Tests
 		public void setupNegatedProvider()
 		{
 			IExchangeRateProvider provider = new UsdEurGbpAs20110519();
-			ExchangeRateProvider.Provider = () => provider;
+			ExchangeRateProvider.Factory = () => provider;
 		}
 
 		[TestFixtureTearDown]
 		public void resetProvider()
 		{
-			ExchangeRateProvider.Provider = ExchangeRateProvider.Default;
+			ExchangeRateProvider.Factory = ExchangeRateProvider.Default;
 		}
 
 		[Test]

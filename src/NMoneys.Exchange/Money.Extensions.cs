@@ -18,7 +18,7 @@ namespace NMoneys.Exchange
 		/// <summary>
 		/// Gets or sets the provider to be used when performing exchange conversions.
 		/// </summary>
-		public static Func<IExchangeRateProvider> Provider = Default;
+		public static Func<IExchangeRateProvider> Factory = Default;
 
 		/// <summary>
 		/// Gives acccess to exchange operations of <see cref="Money"/> instances.
@@ -28,7 +28,7 @@ namespace NMoneys.Exchange
 		/// <returns>A <see cref="IExchangeConversion"/> that allows performing exchange operations.</returns>
 		public static IExchangeConversion Convert(this Money from)
 		{
-			return new ExchangeConversion(Provider(), from);
+			return new ExchangeConversion(Factory(), from);
 		}
 
 		/// <summary>
@@ -39,7 +39,7 @@ namespace NMoneys.Exchange
 		/// <returns>A <see cref="IExchangeSafeConversion"/> that allows performing exchange operations.</returns>
 		public static IExchangeSafeConversion TryConvert(this Money from)
 		{
-			return new ExchangeSafeConversion(Provider(), from);
+			return new ExchangeSafeConversion(Factory(), from);
 		}
 	}
 }
