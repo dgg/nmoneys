@@ -22,5 +22,10 @@
 		/// <returns>A <see cref="Money"/> instance with the <see cref="Money.CurrencyCode"/> specified by <paramref name="to"/> 
 		/// and the <see cref="Money.Amount"/> corresponding to the conversion; or null of the conversion could not be performed.</returns>
 		Money? To(Currency to);
+
+		/// <summary>
+		/// Allows access to the instance the extensions method was invoked on.
+		/// </summary>
+		Money From { get; }
 	}
 }

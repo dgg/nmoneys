@@ -36,5 +36,7 @@
 			}
 			return converted;
 		}
+
+		public Money From { get { return _from; } }
 	}
 }
