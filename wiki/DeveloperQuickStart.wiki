@@ -3,7 +3,7 @@
 
 = Target Platform =
 
-NMoneys is a .Net library. It is developed in C# in Visual Studio 2010 targeting the 3.5 version of the framework.
+_NMoneys_ is a .Net library. It is developed in C# in Visual Studio 2010 targeting the 3.5 version of the framework.
 In theory, it should run in every platform that supports the .Net Framework as it is "pure" .Net (no explicit Interop, P/Invoke or OS function calls). But we expect the community of users to tell us in which platform they use the library and whether they are experiencing problems or not.
 
 = Build sources =
@@ -25,7 +25,7 @@ For .NET developers that make use of Ruby tools, they can also get a [https://ru
 == Currencies ==
 
 === Obtain an instance ===
-_Currencies_ cannot be instantiated through a constructor. An instance has to be retrieved using either one of the static fields:
+`Currency` cannot be instantiated through a constructor. An instance has to be retrieved using either one of the static fields:
 {{{
 Currency euro = Currency.Eur;
 }}}
@@ -45,15 +45,31 @@ wasFound = Currency.TryGet(isoCode, out itMightNotBe);
 wasFound = Currency.TryGet(culture, out itMightNotBe);
 }}}
 
-The Get() creation method may throw if an invalid currency identifier is supplied. To prevent exceptions use the TryGet() methods.
+The `Get()` creation method may throw if an invalid currency identifier is supplied. To prevent exceptions use the `TryGet()` methods.
 
 === Using a currency ===
 There is little to do with the type, it only contain properties such as symbol, ISO code , ISO symbol and properties that drive how a monetary quantity with this currency might look like.
 
+=== Dealing with codes ==
+ISO 4417 codes are implemented as enumeration values. That means that the standard class `Enum` can be used. But the behaviors of this class can be "surprising" sometimes. In order to be consistent, we can use the `Currency.Code` class to obtain `CurrencyIsoCode` instances:
+{{{
+CurrencyIsoCode usd = Currency.Code.Cast(840);
+CurrencyIsoCode eur = Currency.Code.Parse("eur");
+
+CurrencyIsoCode? maybeAud;
+Currency.Code.TryCast(36, out maybeAud);
+Currency.Code.TryParse("036", out maybeAud);
+}}}
+A number of extension methods are also provided to get more information from `CurrencyIsoCode`:
+{{{
+short thirtySix = CurrencyIsoCode.AUD.NumericCode();
+string USD = CurrencyIsoCode.USD.AlphabeticCode();
+string zeroThreeSix = CurrencyIsoCode.AUD.PaddedNumericCode();
+}}}
 == Moneys ==
 
 === Get an instance ===
-_Money_, unlike _currencies_, can be directly instantiated.
+`Money`, unlike _currencies_, can be directly instantiated.
 {{{
 var threeDollars = new Money(3m, Currency.Usd);
 var twoandAHalfPounds = new Money(2.5m, CurrencyIsoCode.GBP);
@@ -71,7 +87,7 @@ bool areNotEqual = new Money(2m) != new Money(5m);
 }}}
 
 === Arithmetic Operations ===
-Simple arithmetic operations can be performed on _Money_ instances:
+Simple arithmetic operations can be performed on `Money` instances:
 {{{
 var three = new Money(3m);
 var two = new Money(2m);
@@ -80,14 +96,14 @@ Money oneOwed = two - three;
 Money one = oneOwed.Abs();
 }}}
 
-Arihtmetic operations between instances of the same currency are open to the user via Perform() methods:
+Arihtmetic operations between instances of the same currency are open to the user via `Perform()` methods:
 {{{
 Money alsoTwo = two.Perform(ten, (amt1, amt2) => amt1 % amt2);
 Money three = new Money(3.9m).Perform(amt => Math.Floor(amt));
 }}}
 
 === Formatting ===
-Of course a _Money_ instance can be formatted in several ways:
+Of course a `Money` instance can be formatted in several ways:
 {{{
 string s = tenEuro.ToString(); // default formatting "10,00 €"
 s = threeDollars.ToString("N"); // format applied to currency "3.00"
