@@ -6,12 +6,16 @@
 This section will contain questions and answers
 
 == Why DO I Needed IT? ==
-As stated in the home page, the .NET framework does not have a separate concept for _currency_ or _money_. Instead, cultural and formatting concerns get mixed and the ISO 4217 is not implemented to its entirety.
+As stated in the home page, the .NET framework does not have a separate concept for "_currency_" or "_money_". Instead, cultural and formatting concerns get mixed and the ISO 4217 is not implemented to its entirety.
 
 == Will NMoneys help me to manage Exchange Rates? ==
 No and a bit of Yes.
-NMoneys won't help you transform a monetary amount into another monetary amount with different currencies. Nor will it update any sort of internal exchange rate table from external sources.
+_NMoneys_ won't help you transform a monetary amount into another monetary amount with different currencies. Nor will it update any sort of internal exchange rate table from external sources.
 It could help you to represent those amounts correctly according to their currency, though.
+
+== How about NMoneys.Exchange? ==
+_NMoneys.Exchange_ will help you to provide exchange operations to monetary quantities. It has several extensibility points that will help in terms of flexibility and accuracy.
+But _NMoneys.Exchange_ is NOT a currency exchange service, nor it provides updates rates, but you can use your favorite rate feed to provide current data to _NMoneys.Exchange_.
 
 == My Money instance is not Displayed Correctly! ==
 This can be due to two reasons:
