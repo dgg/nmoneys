@@ -1,6 +1,13 @@
 #summary Summary of changes.
 #labels Phase-Support
 
+= 2.0.0.0 =
+2011/06/30 @revision
+   * Breaking change: all currency code parsing/conversion methods are accessed through `Currency.Code`
+   * Breaking change: all currency code parsing/conversion methods are accessed through `Currency.Code`
+   * Updated _NuGet_ to v1.4.20615.182
+   * Added project _NMoneys.Exchange_ which follows a parallel distribution method (different binaries and packages)
+
 = 1.6.0.0 =
 2011/06/02 @revision 85
    * Added methods `Currency.ParseCode()` and `Currency.TryParseCode()` that allow parsing `CurrencyIsoCode` strings
