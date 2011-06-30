@@ -88,5 +88,13 @@ namespace NMoneys.Tests
 			Currency.Code.TryCast(36, out maybeAud);
 			Currency.Code.TryParse("036", out maybeAud);
 		}
+
+		[Test]
+		public void CurrencyCode_ObtainInformation()
+		{
+			short thirtySix = CurrencyIsoCode.AUD.NumericCode();
+			string USD = CurrencyIsoCode.USD.AlphabeticCode();
+			string zeroThreeSix = CurrencyIsoCode.AUD.PaddedNumericCode();
+		}
 	}
 }
