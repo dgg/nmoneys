@@ -73,3 +73,35 @@ public class CustomArithmeticProvider : IExchangeRateProvider
 	}
 }
 }}}
+==Overpassing the Provider==
+If one does not want to use the whole provider architecture, one can go completely custom, implementing its own set of extension methods, which can have ax simple or as complex semantics as we want to. In this case we want to chain two calls so that it "reads":
+{{{
+public static UsingImplementor Using(this IExchangeConversion conversion, decimal rate)
+{
+	return new UsingImplementor(conversion.From, rate);
+}
+
+public class UsingImplementor
+{
+	private readonly Money _from;
+	private readonly decimal _rate;
+
+	public UsingImplementor(Money from, decimal rate)
+	{
+		_from = from;
+		_rate = rate;
+	}
+
+	public Money To(CurrencyIsoCode to)
+	{
+		var rateCalculator = new ExchangeRate(_from.CurrencyCode, to, _rate);
+		return rateCalculator.Apply(_from);	
+	}
+}
+}}}
+And those custom extensions can be used on _Money_ instances:
+{{{
+var hundredDollars = new Money(100m, CurrencyIsoCode.USD);
+
+var hundredEuros = hundredDollars.Convert().Using(1m).To(CurrencyIsoCode.EUR);
+}}}
