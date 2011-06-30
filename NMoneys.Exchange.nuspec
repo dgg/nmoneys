@@ -5,7 +5,6 @@
         <title>NMoneys Exchange</title>
         <version>1.0.0.0</version>
         <authors>Daniel González García</authors>
-		<iconUrl>http://code.google.com/p/nmoneys/source/browse/wiki/NMoneys_logo.png</iconUrl>
         <licenseUrl>http://www.opensource.org/licenses/bsd-license.php</licenseUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Extensions to the implementation of the Money Value Object to support exchange operations between moneys in different currencies.</description>
