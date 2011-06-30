@@ -23,5 +23,10 @@
 		/// and the <see cref="Money.Amount"/> corresponding to the conversion.</returns>
 		Money To(Currency to);
 
+		/// <summary>
+		/// Allows access to the instance the extensions method was invoked on.
+		/// </summary>
+		Money From { get; }
+
 	}
 }
