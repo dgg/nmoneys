@@ -1,0 +1,111 @@
+﻿
+<ul class="Download">
+<a href="NMoneys/NMoneys.Exchange_demo.zip">Download NMoneys_demo.zip - 110.15 KB</a>
+</ul>
+
+<p><img alt="NMoneys Logo" src="NMoneys/NMoneys_long.png" complete="true" /></p>
+
+<h2>Background&nbsp;</h2>
+
+<p>I have already written about <a href="http://code.google.com/p/nmoneys/">NMoneys</a> in this <a href="http://www.codeproject.com/KB/dotnet/NMoneys.aspx">article</a>," but I will do a tiny recap for those in a rush.</p>
+
+<p><a href="http://code.google.com/p/nmoneys/">NMoneys</a> is a "Money Value Object" implementation for the .NET platform that supports the
+<a href="http://www.iso.org/iso/support/faqs/faqs_widely_used_standards/widely_used_standards_other/currency_codes.htm">ISO 4217 standard</a>.</p>
+<p>That definition means that with that library we are able to represent and operate with monetary quantities in a variety of currencies.</p>
+<p>The informal <a href="http://code.google.com/p/nmoneys/#What_not">scope of the project</a> establishes that <a href="http://code.google.com/p/nmoneys/">NMoneys</a> does not provide any support
+for exchanging monetary quantities in different currencies. In fact, all the operations are defined in terms of quantities with the same curency.</p>
+<p>Surprisingly enough (or maybe not), most of the feedback I received was on the line of adding those capabilities. Reluctant as I was at first, I could not but listen to the voices and give it a shot.
+And this is what I came up with.</p>
+
+<p>Do not get false impressions: IT IS NOT a currency exchange service. It is just a mean to allow exchange operations to happen between the monetary quantities. One still needs to feed and/or retrieve real, current
+financial data from a reliable third party in order for the operations to be accurate.</p>
+
+<h2>Using the code</h2>
+
+<p>All code for snippets (and more that is not pubished for brevity) will be included in the demo project (Visual Studio 2010, .NET 4.0).</p>
+
+<p>The code for the demo project can also be browsed from the horse's mouth in the
+<a href="http://code.google.com/p/nmoneys/source/browse/#svn%2Ftrunk%2Fsrc%2FNMoneys.Exchange.Demo.CodeProject">project web site.</a>
+Likewise, the latest version of the code for NMoneys and NMoneys.Exchange libraries can be easily acccessed 
+<a href="http://code.google.com/p/nmoneys/source/browse/#svn%2Ftrunk%2Fsrc%2FNMoneys">here</a> and <a href="http://code.google.com/p/nmoneys/source/browse/#svn%2Ftrunk%2Fsrc%2FNMoneys.Exchange">here</a>.</p>
+
+<h2>Extend and Conquer</h2>
+<h3>Independence</h3>
+<p>One thing I was determined from the very begining: whichever features were to be added, would be added to another project and would not "polute" the simplicity and focus of the original project.</p>
+<p>After some thinking I cam to the conclusion that extension methods on the <code>Money</code> class should become the API for the new features. And a new library would host them.
+That model would allow different release cycles for each projectand would allow clients that do not need the new capabilities remain "bloat"-free.</p>
+<h3>Simplicity</h3>
+<p>After independence, simplicity is the theme to guide the design of the library.</p>
+<p>One of the reasons exchange operations were not even considered for the library in the first place was its complexity. Operations such as conversions on fractional quantities are not trivial;
+there are roundings, losses and all sorts of pitfalls that, when it comes to money, one cannot obviate. I do not posses the knowledge of the rules that command such operations and yet I am decided to implement them.
+How dare! Well, not much. Since amounts are modeled as <code>System.Decimal</code> quantities, the simplest that can posibly work was used as a meaningful default: use the existing product and division operations.
+</p>
+<h3>Extensibility</h3>
+<p>I am well aware that the simplest, default operations might not be suitable for everyone (they might even be incorrect). What has been done to protect correctness and integrity is provide multiple extensibility
+points that would allow those "in the know" to do the right thing. It would be equally awesome that those enlightened ones contributed with the rest of the world those extensions ;-p
+</p>
+<h2>Conversions</h2>
+<p>Once the .NET project references the <code>NMoneys.dll</code> and the <code>NMoneys.Exchange.dll</code> assemblies, conversion operations can be brought to the code by just using the <code>NMoneys.Exchange</code>
+namespace. That action would enable the <code>.Convert()</code> extension method on <code>Money</code> instances.</p>
+<h3>Meaningless Defaults</h3>
+<p>The simplest (and probably the most useless) of conversions one can perform is a direct conversion, meaning that one monetary quantity, let's say 3 euros, would be converted to 3 US dollars or 3 pounds
+if all defaults were used. Clearly, a pretty big mess.</p>
+<pre lang="CS">[Test]
+public void Default_Conversions()
+{
+	var tenEuro = new Money(10m, CurrencyIsoCode.EUR);
+
+	var tenDollar = tenEuro.Convert().To(CurrencyIsoCode.USD);
+	var tenPounds = tenEuro.Convert().To(Currency.Gbp);
+}</pre>
+<p>Defaults are easy to change, just by using an overload of the <code>.Convert()</code> method, the one that receives the exchange rate between the two currencies involved.</p>
+<pre lang="CS">[Test]
+public void Creating_New_ConversionOperations()
+{
+	var hundredDollars = new Money(100m, CurrencyIsoCode.USD);
+
+	var twoHundredEuros = hundredDollars.Convert().Using(2m).To(CurrencyIsoCode.EUR);
+
+	Assert.That(hundredEuros.Amount, Is.EqualTo(200m));
+	Assert.That(hundredEuros.CurrencyCode, Is.EqualTo(CurrencyIsoCode.EUR));
+}</pre>
+<p>Does that mean that a decimal exchange rate needs to be passed to every conversion operation unless 1 is used as the rate? That would be pretty ugly, wouldn't it? And so other ways to change
+the exhange rate are in place.</p>
+<h3>X will provide</h3>
+<p>A straightforward provider model is used to override the default rates. An implementation of <code>IExchangeRateProvider</code> that allows more correct conversions needs to be configured. That is done by
+setting a delegate into the property <code>ExchangeRateProvider.Factory</code>. A completely from scratch implementation is welcome and so is the already tagged as useless <code>ExchangeRateProvider.Default</code>.
+<pre lang="CS">[Test]
+public void Configuring_Provider()
+{
+	var customProvider = new TabulatedExchangeRateProvider();
+	customProvider.Add(CurrencyIsoCode.EUR, CurrencyIsoCode.USD, 0);
+
+	ExchangeRateProvider.Factory = () => customProvider;
+
+	var tenEuro = new Money(10m, CurrencyIsoCode.EUR);
+	var zeroDollars = tenEuro.Convert().To(CurrencyIsoCode.USD);
+
+	// go back to default
+	ExchangeRateProvider.Factory = ExchangeRateProvider.Default;
+}</pre>
+<p>From the example, one can guess another implementation of the <code>IExchangeRateProvider</code>, the <code>TabulatedExchangeRateProvider</code>. This provider aims to ease the creation of exchange rates tables.
+A more complete set of capabilities of the class is showcased in its <a href="http://code.google.com/p/nmoneys/source/browse/trunk/src/NMoneys.Exchange.Tests/TabulatedExchangeProviderTester.cs">unit tests.</a>.</p>
+<h3>Highly rated</h3>
+
+<h2>Wrapping it up</h2>
+
+<p>I had several goals with this article.</p>
+
+<p>The main one was to raise the awareness of the <a href="http://code.google.com/p/nmoneys/">NMoneys</a> library, so that more people can benefit from its usage, and more importantly, more people can <a href="http://code.google.com/p/nmoneys/wiki/Contribute">contribute</a>.</p>
+
+<p>Contributions can come in several shapes, but mainly in two ways: new features for the library and more accurate information for the currency information. Both will be more than welcome.</p>
+
+<p>The other goal was to show some scenarios that make the library compelling to use. Helping the potential user to become a real one.</p>
+
+<p>I hope any (or all) of the goals is achieved. If not, I, for one, had lots of fun sharing this with you, guys.</p>
+
+<h2>History</h2>
+
+<p>08-May-2011 - Initial version</p>
+<p>10-May-2011 - Added external links to source code</p>
+<p>11-May-2011 - Included library code within demo project</p>
