@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("NMoneys")]
-[assembly: AssemblyDescription("Implementation of the Money Value Object in .Net")]
+[assembly: AssemblyDescription("Implementation of the Money Value Object to support representing moneys in the currencies defined in the ISO 4217 standard.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("NMoneys")]
@@ -33,8 +33,8 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.0.0.0")]
+[assembly: AssemblyVersion("2.1.0.0")]
+[assembly: AssemblyFileVersion("2.1.0.0")]
 
 [assembly: InternalsVisibleTo("NMoneys.Tests")]
 [assembly: InternalsVisibleTo("NMoneys.Tools")]

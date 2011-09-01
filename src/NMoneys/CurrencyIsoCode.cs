@@ -48,7 +48,7 @@ namespace NMoneys
 		[CanonicalCulture("en-AU")]
 		AUD = 036,
 		/// <summary>
-		/// Aruban Guilder
+		/// Aruban Florin
 		/// </summary>
 		AWG = 533,
 		/// <summary>
@@ -640,6 +640,10 @@ namespace NMoneys
 		/// Surinam Dollar
 		/// </summary>
 		SRD = 968,
+		/// <summary>
+		/// South Sudanese Pound
+		/// </summary>
+		SSP = 728,
 		/// <summary>
 		/// Dobra
 		/// </summary>
