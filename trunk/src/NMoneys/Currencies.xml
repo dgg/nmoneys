@@ -92,8 +92,8 @@
 		<negativePattern>1</negativePattern>
 	</currency>
 	<currency code="AWG">
-		<englishName>Aruban Guilder</englishName>
-		<nativeName>Aruban Guilder</nativeName>
+		<englishName>Aruban Florin</englishName>
+		<nativeName>Aruban Florin</nativeName>
 		<symbol>402</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>.</decimalSeparator>
@@ -1431,6 +1431,7 @@
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
 		<negativePattern>0</negativePattern>
+		<entity>pound</entity>
 	</currency>
 	<currency code="SEK">
 		<englishName>Swedish Krona</englishName>
@@ -1492,6 +1493,17 @@
 		<englishName>Surinam Dollar</englishName>
 		<nativeName>Surinam Dollar</nativeName>
 		<symbol>36</symbol>
+		<significantDecimalDigits>2</significantDecimalDigits>
+		<decimalSeparator>.</decimalSeparator>
+		<groupSeparator>,</groupSeparator>
+		<groupSizes>3</groupSizes>
+		<positivePattern>0</positivePattern>
+		<negativePattern>0</negativePattern>
+	</currency>
+	<currency code="SSP">
+		<englishName>South Sudanese Pound</englishName>
+		<nativeName>South Sudanese Pound</nativeName>
+		<symbol>164</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>.</decimalSeparator>
 		<groupSeparator>,</groupSeparator>
