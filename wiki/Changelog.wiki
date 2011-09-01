@@ -1,6 +1,13 @@
 #summary Summary of changes.
 #labels Phase-Support
 
+= 2.1.0.0 =
+2011/09/01 @revision 129
+   * South Sudanese Pound (SSP) has been added
+   * changed name of ARW to Aruban Florin
+   * updated assembly description to match the one in the NuGet package
+   * Updated _NuGet_ to v1.5.20830.9001
+
 = 2.0.0.0 =
 2011/06/30 @revision 123
    * Breaking change: all currency code parsing/conversion methods are accessed through `Currency.Code`
