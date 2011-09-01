@@ -13,6 +13,7 @@
 			b) simple but extensible operations with monetary quantities of the same currency. c) ways of formatting the representation of monetary quantities
         </summary>
         <projectUrl>http://code.google.com/p/nmoneys/</projectUrl>
+		<tags>.net currency money</tags>
     </metadata>
 	<files>
 		<file src="lib\**\NMoneys.dll" target="lib" />
