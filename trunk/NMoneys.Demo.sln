@@ -12,6 +12,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{69DC2B51-07F1-42EF-AF55-614DAF9BDC59}"
 	ProjectSection(SolutionItems) = preProject
 		src\NMoneys.Exchange.Demo.CodeProject\Articles\NMoneys.Exchange.htm = src\NMoneys.Exchange.Demo.CodeProject\Articles\NMoneys.Exchange.htm
+		src\NMoneys.Exchange.Demo.CodeProject\Articles\NMoneys.Exchange_demo.zip = src\NMoneys.Exchange.Demo.CodeProject\Articles\NMoneys.Exchange_demo.zip
 		src\NMoneys.Demo.CodeProject\Articles\NMoneys.htm = src\NMoneys.Demo.CodeProject\Articles\NMoneys.htm
 	EndProjectSection
 EndProject
