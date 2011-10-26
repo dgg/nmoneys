@@ -12,7 +12,12 @@ Building the library is as simple as building _NMoneys_. In fact the same build 
 = Get the binaries =
 As with _NMoneys_, latest binaries can be downloaded from the [Downloads] section within the project's website.
 For [http://nuget.org/ NuGet] users, the [http://nuget.org/List/Packages/NMoneys.Exchange NMoneys.Exchange package] is available in the official live feed.
+
+http://nmoneys.googlecode.com/svn/wiki/NMoneysExchange_NuGet.png
+
 For .NET developers that make use of Ruby tools, they can also get a [https://rubygems.org/gems/nmoneys-exchange nmoneys-exchange gem] from RubyGems.org
+
+http://nmoneys.googlecode.com/svn/wiki/NMoneysExchange_Gem.png
 
 = Use the Library =
 
