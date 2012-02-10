@@ -63,7 +63,7 @@ namespace NMoneys.Support.Ext
 		/// </summary>
 		internal static int TranslateNegativePattern(this int currencyNegativePattern)
 		{
-			int numberNegativePattern;
+			int numberNegativePattern = -1;
 			switch (currencyNegativePattern)
 			{
 				case (0):
@@ -93,7 +93,8 @@ namespace NMoneys.Support.Ext
 					numberNegativePattern = 4;
 					break;
 				default:
-					throw new ArgumentOutOfRangeException("currencyNegativePattern", currencyNegativePattern, "A valid currencyNegativePattern must be between 0 and 15, inclusive.");
+					new Range<int>(0.Close(), 15.Close()).AssertArgument("currencyNegativePattern", currencyNegativePattern);
+					break;
 			}
 			return numberNegativePattern;
 		}

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
+using NMoneys.Allocators;
 using NMoneys.Extensions;
 using NMoneys.Support;
 using NMoneys.Tests.CustomConstraints;
@@ -1814,9 +1816,89 @@ namespace NMoneys.Tests
 			Money yenQuantity = Money.Parse("¥ 1,000", Currency.Jpy);
 
 			Func<decimal, decimal> halfDiscount = q => q * .5m;
-			
+
 			Assert.That(poundQuantity.Perform(halfDiscount), Must.Be.MoneyWith(50.25m, Currency.Gbp));
 			Assert.That(yenQuantity.Perform(halfDiscount), Must.Be.MoneyWith(500, Currency.Jpy));
 		}
+
+		#region Allocate
+
+		[TestCaseSource("ProvidedAllocators")]
+		public void Allocate_FairAllocation_EveryoneGetTheSameQuantity(IRemainderAllocator allocator)
+		{
+			Money[] allocated = 8m.Usd().Allocate(4, allocator);
+
+			Assert.That(allocated, Is.EqualTo(new[] { 2m.Usd(), 2m.Usd(), 2m.Usd(), 2m.Usd() }));
+		}
+
+		internal IEnumerable<IRemainderAllocator> ProvidedAllocators
+		{
+			get
+			{
+				yield return RemainderAllocator.FirstToLast;
+				yield return RemainderAllocator.LastToFirst;
+				yield return RemainderAllocator.Random;
+			}
+		}
+
+		[Test]
+		public void Allocate_FairAllocation_RemainderNotAsked()
+		{
+			var spy = new RemainderAllocatorSpy();
+			8m.Gbp().Allocate(4, spy);
+
+			Assert.That(spy.AskedToAllocate, Is.False);
+		}
+
+		[Test]
+		public void Allocate_UnfairAllocation_FirstToLast_FirstAmountsAreBigger()
+		{
+			Money[] allocated = 8.3m.Usd().Allocate(4, RemainderAllocator.FirstToLast);
+
+			Assert.That(allocated, Is.EqualTo(new[] { 2.08m.Usd(), 2.08m.Usd(), 2.07m.Usd(), 2.07m.Usd() }));
+		}
+
+		[Test]
+		public void Allocate_UnfairAllocation_LastToFirst_LastAmountsAreBigger()
+		{
+			Money[] allocated = 8.3m.Usd().Allocate(4, RemainderAllocator.LastToFirst);
+
+			Assert.That(allocated, Is.EqualTo(new[] { 2.07m.Usd(), 2.07m.Usd(), 2.08m.Usd(), 2.08m.Usd() }));
+		}
+
+		[Test]
+		public void Allocate_UnfairAllocation_Random_SomeoneGetsMore()
+		{
+			Money[] allocated = 8.3m.Eur().Allocate(4, RemainderAllocator.Random);
+
+			Assert.That(allocated.Aggregate((a, b) => a + b), Is.EqualTo(8.3m.Eur()));
+		}
+
+		[TestCase(-1)]
+		[TestCase(0)]
+		public void Allocate_NotEnoughRecipients_Exception(int notEnoughRecipients)
+		{
+			Assert.That(() => 8m.Usd().Allocate(notEnoughRecipients, RemainderAllocator.Random),
+				Throws.InstanceOf<ArgumentOutOfRangeException>());
+		}
+
+		[TestCaseSource("ProvidedAllocators")]
+		public void Allocate_SingleAllocation_SameQuantity(IRemainderAllocator remainder)
+		{
+			Money[] allocated = 8.3m.Eur().Allocate(1, remainder);
+
+			Assert.That(allocated, Is.EqualTo(new[] { 8.3m.Eur() }));
+		}
+
+		[Test]
+		public void Allocate_RemainderAllocatorDidNotAllocateAllTheRemainder_Exception()
+		{
+			IRemainderAllocator rogue = new RogueRemainderAllocator();
+
+			Assert.That(() => 8.3m.Gbp().Allocate(4, rogue), Throws.InstanceOf<ArithmeticException>());
+
+		}
+
+		#endregion
 	}
 }

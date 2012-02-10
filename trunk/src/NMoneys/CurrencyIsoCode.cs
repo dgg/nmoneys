@@ -263,7 +263,7 @@ namespace NMoneys
 		[CanonicalCulture("ka-GE")]
 		GEL = 981,
 		/// <summary>
-		/// Cedi
+		/// Ghana Cedi
 		/// </summary>
 		GHS = 936,
 		/// <summary>
@@ -501,7 +501,7 @@ namespace NMoneys
 		[CanonicalCulture("ms-MY", Overwritten = true)]
 		MYR = 458,
 		/// <summary>
-		/// Metical
+		/// Mozambique Metical
 		/// </summary>
 		MZN = 943,
 		/// <summary>
@@ -578,7 +578,7 @@ namespace NMoneys
 		[CanonicalCulture("ar-QA")]
 		QAR = 634,
 		/// <summary>
-		/// Romanian Leu
+		/// New Romanian Leu
 		/// </summary>
 		[CanonicalCulture("ro-RO")]
 		RON = 946,
@@ -673,7 +673,7 @@ namespace NMoneys
 		[CanonicalCulture("tg-Cyrl-TJ")]
 		TJS = 972,
 		/// <summary>
-		/// Turkmen manat
+		/// Turkmenistan New Manat
 		/// </summary>
 		[CanonicalCulture("tk-TM")]
 		TMT = 934,
