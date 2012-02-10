@@ -69,6 +69,12 @@ namespace NMoneys
 		public int SignificantDecimalDigits { get; private set; }
 
 		/// <summary>
+		/// Represents the smalles amount that can be represented for the currency according to its <see cref="SignificantDecimalDigits"/>.
+		/// </summary>
+		[XmlIgnore]
+		public decimal MinAmount { get { return PowerOfTen.Negative(this); } }
+
+		/// <summary>
 		/// Gets the name of the currency formatted in the native language of the country/region where the currency is used. 
 		/// </summary>
 		[XmlIgnore]

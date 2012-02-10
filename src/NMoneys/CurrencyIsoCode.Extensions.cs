@@ -40,5 +40,16 @@ namespace NMoneys
 		{
 			return isoCode.ToString();
 		}
+
+		/// <summary>
+		/// Obtains the instance of Currency associated to the CurrencyIsoCode specified.
+		/// </summary>
+		/// <param name="isoCode">ISO 4217 code</param>
+		/// <returns>The instance of <see cref="Currency"/> represented by the <paramref name="isoCode"/>.</returns>
+		/// <seealso cref="Currency.Get(CurrencyIsoCode)"/>
+		public static Currency AsCurrency(this CurrencyIsoCode isoCode)
+		{
+			return Currency.Get(isoCode);
+		}
 	}
 }

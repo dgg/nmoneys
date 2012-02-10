@@ -47,6 +47,13 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Allocators\EvenAllocator.cs" />
+    <Compile Include="Allocators\FirstToLastAllocator.cs" />
+    <Compile Include="Allocators\IRemainderAllocator.cs" />
+    <Compile Include="Allocators\RandomAllocator.cs" />
+    <Compile Include="Allocators\RemainderAllocatorBase.cs" />
+    <Compile Include="Allocators\LastToFirstAllocator.cs" />
+    <Compile Include="PowerOfTen.cs" />
     <Compile Include="Currency.cs" />
     <Compile Include="CurrencyCharacterReferences.cs" />
     <Compile Include="CurrencyEqualityComparer.cs" />
@@ -61,6 +68,7 @@
     <Compile Include="ObsoleteCurrencyEventArgs.cs" />
     <Compile Include="ObsoleteCurrencyEventBehavior.cs" />
     <Compile Include="Providers.cs" />
+    <Compile Include="RemainderAllocator.cs" />
     <Compile Include="Serialization\CurrencyCodeConverter.cs" />
     <Compile Include="Serialization\CurrencyConverter.cs" />
     <Compile Include="Serialization\Data.cs" />
@@ -72,6 +80,7 @@
     <Compile Include="Support\Extensions.cs" />
     <Compile Include="Support\FastEnumComparer.cs" />
     <Compile Include="Support\Guard.cs" />
+    <Compile Include="Support\Range.cs" />
     <Compile Include="Support\ThreadSafeCache.cs" />
     <Compile Include="Support\TokenizedValue.cs" />
     <Compile Include="Support\UnicodeSymbol.cs" />

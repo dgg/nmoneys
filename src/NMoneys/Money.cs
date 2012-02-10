@@ -9,6 +9,8 @@ using System.Security.Permissions;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
+using NMoneys.Allocators;
+using NMoneys.Extensions;
 using NMoneys.Support;
 
 namespace NMoneys
@@ -278,8 +280,10 @@ namespace NMoneys
 		public static Money ForMinor(long amountMinor, Currency currency)
 		{
 			Guard.AgainstNullArgument("currency", currency);
-			int centFactor = _cents[currency.SignificantDecimalDigits];
-			return new Money(decimal.Divide(amountMinor, centFactor), currency);
+
+			return new Money(
+				decimal.Divide(amountMinor, PowerOfTen.Positive(currency)),
+currency);
 		}
 
 		/// <summary>
@@ -394,8 +398,7 @@ namespace NMoneys
 			get
 			{
 				Currency currency = Currency.Get(CurrencyCode);
-				int centFactor = _cents[currency.SignificantDecimalDigits];
-				return decimal.Truncate(decimal.Multiply(Amount, centFactor));
+				return decimal.Truncate(decimal.Multiply(Amount, PowerOfTen.Positive(currency)));
 			}
 		}
 
@@ -408,6 +411,20 @@ namespace NMoneys
 		public long MinorIntegralAmount
 		{
 			get { return Convert.ToInt64(MinorAmount); }
+		}
+
+		/// <summary>
+		/// Represents the smallest quantity that couldn be represented using the currency corresponding to <see cref="CurrencyCode"/>.
+		/// <seealso cref="Currency.MinAmount"/>
+		/// <seealso cref="Currency.SignificantDecimalDigits"/>
+		/// </summary>
+		public Money MinValue
+		{
+			get
+			{
+				Currency currency = Currency.Get(CurrencyCode);
+				return new Money(currency.MinAmount, currency);
+			}
 		}
 
 		#region formatting
@@ -879,7 +896,7 @@ namespace NMoneys
 		/// as <paramref name="second"/>.</exception>
 		/// <exception cref="OverflowException">The <see cref="Amount"/> of the result is less than
 		/// <see cref="decimal.MinValue"/> or greater than <see cref="decimal.MaxValue"/>.</exception>
-		public static  Money Add(Money first, Money second)
+		public static Money Add(Money first, Money second)
 		{
 			return first + second;
 		}
@@ -979,7 +996,7 @@ namespace NMoneys
 		public Money TruncateToSignificantDecimalDigits()
 		{
 			Currency currency = Currency.Get(CurrencyCode);
-			return new Money(truncateToSignificantDecimalDigits(currency.SignificantDecimalDigits), CurrencyCode);
+			return new Money(truncateAmountFor(currency.SignificantDecimalDigits), CurrencyCode);
 		}
 
 		/// <summary>
@@ -991,19 +1008,16 @@ namespace NMoneys
 		public Money TruncateToSignificantDecimalDigits(NumberFormatInfo numberFormat)
 		{
 			Guard.AgainstNullArgument("numberFormat", numberFormat);
-			return new Money(truncateToSignificantDecimalDigits(numberFormat.CurrencyDecimalDigits), CurrencyCode);
+
+			return new Money(truncateAmountFor(numberFormat.CurrencyDecimalDigits), CurrencyCode);
 		}
 
-		private static readonly int[] _cents = new[] { 1, 10, 100, 1000 };
-		private decimal truncateToSignificantDecimalDigits(int decimalDigits)
+		private decimal truncateAmountFor(int numberOfDecimals)
 		{
-			// 10^significantDecimalDigits
-			int centFactor = _cents[decimalDigits];
-
+			uint centFactor = PowerOfTen.Positive(numberOfDecimals);
 			decimal truncatedAmount = (decimal)((long)Math.Truncate(Amount * centFactor)) / centFactor;
 			return truncatedAmount;
 		}
-
 
 		/// <summary>
 		/// Returns the integral digits of this instance of <see cref="Money"/>; any fractional digits are discarded.
@@ -1167,6 +1181,55 @@ namespace NMoneys
 			}
 		}
 
+		/// <summary>
+		/// Allocates the sum of money fully and 'fairly', delegating the distribution of whichever remainder after
+		/// allocating the highest fair amount amongst the recipients to the provided <paramref name="allocator"/>.
+		/// </summary>
+		/// <remarks>
+		/// <para>
+		/// A sum of money that can be allocated to each recipient exactly evenly is inherently 'fair'. For example, a US
+		/// Dollar split four (4) ways leaves each recipient with 25 cents.</para>
+		/// <para>
+		/// A US Dollar split three (3) ways cannot be distributed evenly and is therefore inherently 'unfair'. The
+		/// best we can do is minimize the amount of the remainder (in this case a cent) and allocate it in a way
+		/// that seems random and thus fair to the recipients.</para>
+		/// <para>The precision to use for rounding will be the <see cref="Currency.SignificantDecimalDigits"/> 
+		/// of the currency represented by <see cref="CurrencyCode"/>.</para>
+		/// </remarks>
+		/// <param name="numberOfRecipients">The number of times to split up the total.</param>
+		/// <param name="allocator">The <see cref="IRemainderAllocator"/> that will distribute the remainder after an even split.</param>
+		/// <returns>The results of the allocation as an array with a length equal to <paramref name="numberOfRecipients"/>.</returns>
+		/// <exception cref="ArithmeticException">The <paramref name="allocator"/> did not distributed all the remainder.</exception>
+		/// <seealso cref="IRemainderAllocator"/>
+		public Money[] Allocate(int numberOfRecipients, IRemainderAllocator allocator)
+		{
+			new Range<int>(1.Close(), int.MaxValue.Close()).AssertArgument("numberOfRecipients", numberOfRecipients);
+
+			Money totalAllocated;
+			decimal[] allocated = new EvenAllocator(this)
+				.Allocate(numberOfRecipients, out totalAllocated);
+
+			allocateRemainderIfNeeded(ref totalAllocated, allocator, allocated);
+
+			assertAllocatedWhole(totalAllocated);
+			return allocated.ToMoney(CurrencyCode);
+		}
+
+		private void allocateRemainderIfNeeded(ref Money totalAllocated, IRemainderAllocator allocator, decimal[] results)
+		{
+			Money remainder = this - totalAllocated;
+			if (remainder.Amount > 0)
+			{
+				allocator.Allocate(remainder, results);
+				totalAllocated = new Money(results.Aggregate((a, b) => a + b), CurrencyCode);
+			}
+		}
+
+		private void assertAllocatedWhole(Money totalAllocated)
+		{
+			if (!totalAllocated.Equals(this)) throw new ArithmeticException("The total amount was not fully allocated");
+		}
+
 		#endregion
 
 		#region serialization
@@ -1206,14 +1269,14 @@ namespace NMoneys
 			Guard.AgainstNullArgument("xs", xs);
 
 			XmlSchemaComplexType complex = null;
-			XmlSerializer schemaSerializer = new XmlSerializer(typeof(XmlSchema));
+			var schemaSerializer = new XmlSerializer(typeof(XmlSchema));
 			using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(Serialization.Data.ResourceName))
 			{
 				if (stream != null)
 				{
-					XmlSchema schema = (XmlSchema)schemaSerializer.Deserialize(new XmlTextReader(stream));
+					var schema = (XmlSchema)schemaSerializer.Deserialize(new XmlTextReader(stream));
 					xs.Add(schema);
-					XmlQualifiedName name = new XmlQualifiedName(Serialization.Data.Money.DATA_TYPE, Serialization.Data.NAMESPACE);
+					var name = new XmlQualifiedName(Serialization.Data.Money.DATA_TYPE, Serialization.Data.NAMESPACE);
 					complex = (XmlSchemaComplexType)schema.SchemaTypes[name];
 				}
 			}
@@ -1242,7 +1305,7 @@ namespace NMoneys
 		/// <exception cref="ArgumentNullException"><paramref name="writer"/> is null.</exception>
 		public void WriteXml(XmlWriter writer)
 		{
-			Guard.AgainstNullArgument("writer", writer); 
+			Guard.AgainstNullArgument("writer", writer);
 
 			writer.WriteStartElement(Serialization.Data.Money.AMOUNT, Serialization.Data.NAMESPACE);
 			writer.WriteValue(Amount);
