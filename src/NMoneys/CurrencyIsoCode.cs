@@ -20,7 +20,7 @@ namespace NMoneys
 		[CanonicalCulture("ps-AF")]
 		AFN = 971,
 		/// <summary>
-		/// Albanian Lek
+		/// Lek
 		/// </summary>
 		[CanonicalCulture("sq-AL")]
 		ALL = 008,
@@ -30,7 +30,7 @@ namespace NMoneys
 		[CanonicalCulture("hy-AM")]
 		AMD = 051,
 		/// <summary>
-		/// Netherlands Antillian Guilder
+		/// Netherlands Antillean Guilder
 		/// </summary>
 		ANG = 532,
 		/// <summary>
@@ -57,7 +57,7 @@ namespace NMoneys
 		[CanonicalCulture("az-Latn-AZ")]
 		AZN = 944,
 		/// <summary>
-		/// Convertible Marks
+		/// Convertible Mark
 		/// </summary>
 		[CanonicalCulture("bs-Latn-BA")]
 		BAM = 977,
@@ -66,7 +66,7 @@ namespace NMoneys
 		/// </summary>
 		BBD = 052,
 		/// <summary>
-		/// Bangladeshi Taka
+		/// Taka
 		/// </summary>
 		[CanonicalCulture("bn-BD")]
 		BDT = 050,
@@ -99,12 +99,12 @@ namespace NMoneys
 		[CanonicalCulture("es-BO")]
 		BOB = 068,
 		/// <summary>
-		/// Boliviano
+		/// Mvdol
 		/// </summary>
 		[CanonicalCulture("es-BO")]
 		BOV = 984,
 		/// <summary>
-		/// Real
+		/// Brazilian Real
 		/// </summary>
 		[CanonicalCulture("pt-BR")]
 		BRL = 986,
@@ -121,7 +121,7 @@ namespace NMoneys
 		/// </summary>
 		BWP = 072,
 		/// <summary>
-		/// Belarusian Ruble
+		/// Belarussian Ruble
 		/// </summary>
 		[CanonicalCulture("be-BY")]
 		BYR = 974,
@@ -155,7 +155,7 @@ namespace NMoneys
 		[CanonicalCulture("de-CH")]
 		CHW = 948,
 		/// <summary>
-		/// Chilean Peso
+		/// Unidades de fomento
 		/// </summary>
 		[CanonicalCulture("es-CL")]
 		CLF = 990,
@@ -175,7 +175,7 @@ namespace NMoneys
 		[CanonicalCulture("es-CO")]
 		COP = 170,
 		/// <summary>
-		/// Colombian Peso
+		/// Unidad de Valor Real
 		/// </summary>
 		[CanonicalCulture("es-CO")]
 		COU = 970,
@@ -253,7 +253,7 @@ namespace NMoneys
 		/// </summary>
 		FKP = 238,
 		/// <summary>
-		/// UK Pound Sterling
+		/// Pound Sterling
 		/// </summary>
 		[CanonicalCulture("en-GB")]
 		GBP = 826,
@@ -279,7 +279,7 @@ namespace NMoneys
 		/// </summary>
 		GNF = 324,
 		/// <summary>
-		/// Guatemalan Quetzal
+		/// Quetzal
 		/// </summary>
 		[CanonicalCulture("es-GT")]
 		GTQ = 320,
@@ -293,7 +293,7 @@ namespace NMoneys
 		[CanonicalCulture("zh-HK")]
 		HKD = 344,
 		/// <summary>
-		/// Honduran Lempira
+		/// Lempira
 		/// </summary>
 		[CanonicalCulture("es-HN")]
 		HNL = 340,
@@ -307,17 +307,17 @@ namespace NMoneys
 		/// </summary>
 		HTG = 332,
 		/// <summary>
-		/// Hungarian Forint
+		/// Forint
 		/// </summary>
 		[CanonicalCulture("hu-HU")]
 		HUF = 348,
 		/// <summary>
-		/// Indonesian Rupiah
+		/// Rupiah
 		/// </summary>
 		[CanonicalCulture("id-ID")]
 		IDR = 360,
 		/// <summary>
-		/// Israeli New Shekel
+		/// New Israeli Sheqel
 		/// </summary>
 		[CanonicalCulture("he-IL")]
 		ILS = 376,
@@ -337,7 +337,7 @@ namespace NMoneys
 		[CanonicalCulture("fa-IR")]
 		IRR = 364,
 		/// <summary>
-		/// Icelandic Krona
+		/// Iceland Krona
 		/// </summary>
 		[CanonicalCulture("is-IS")]
 		ISK = 352,
@@ -352,7 +352,7 @@ namespace NMoneys
 		[CanonicalCulture("ar-JO")]
 		JOD = 400,
 		/// <summary>
-		/// Japanese Yen
+		/// Yen
 		/// </summary>
 		[CanonicalCulture("ja-JP")]
 		JPY = 392,
@@ -362,7 +362,7 @@ namespace NMoneys
 		[CanonicalCulture("sw-KE")]
 		KES = 404,
 		/// <summary>
-		/// som
+		/// Som
 		/// </summary>
 		[CanonicalCulture("ky-KG")]
 		KGS = 417,
@@ -380,7 +380,7 @@ namespace NMoneys
 		/// </summary>
 		KPW = 408,
 		/// <summary>
-		/// Korean Won
+		/// Won
 		/// </summary>
 		[CanonicalCulture("ko-KR")]
 		KRW = 410,
@@ -450,7 +450,7 @@ namespace NMoneys
 		/// </summary>
 		MGA = 969,
 		/// <summary>
-		/// Macedonian Denar
+		/// Denar
 		/// </summary>
 		[CanonicalCulture("mk-MK")]
 		MKD = 807,
@@ -464,7 +464,7 @@ namespace NMoneys
 		[CanonicalCulture("mn-MN")]
 		MNT = 496,
 		/// <summary>
-		/// Macao Pataca
+		/// Pataca
 		/// </summary>
 		[CanonicalCulture("zh-MO")]
 		MOP = 446,
@@ -491,7 +491,7 @@ namespace NMoneys
 		[CanonicalCulture("es-MX")]
 		MXN = 484,
 		/// <summary>
-		/// Mexican Peso
+		/// Mexican Unidad de Inversion (UDI)
 		/// </summary>
 		[CanonicalCulture("es-MX")]
 		MXV = 979,
@@ -505,16 +505,16 @@ namespace NMoneys
 		/// </summary>
 		MZN = 943,
 		/// <summary>
-		/// Namibian Dollar
+		/// Namibia Dollar
 		/// </summary>
 		NAD = 516,
 		/// <summary>
-		/// Nigerian Naira
+		/// Naira
 		/// </summary>
 		[CanonicalCulture("ha-Latn-NG")]
 		NGN = 566,
 		/// <summary>
-		/// Nicaraguan Cordoba Oro
+		/// Cordoba Oro
 		/// </summary>
 		[CanonicalCulture("es-NI")]
 		NIO = 558,
@@ -524,7 +524,7 @@ namespace NMoneys
 		[CanonicalCulture("nn-NO")]
 		NOK = 578,
 		/// <summary>
-		/// Nepalese Rupees
+		/// Nepalese Rupee
 		/// </summary>
 		[CanonicalCulture("ne-NP")]
 		NPR = 524,
@@ -534,17 +534,17 @@ namespace NMoneys
 		[CanonicalCulture("en-NZ")]
 		NZD = 554,
 		/// <summary>
-		/// Omani Rial
+		/// Rial Omani
 		/// </summary>
 		[CanonicalCulture("ar-OM")]
 		OMR = 512,
 		/// <summary>
-		/// Panamanian Balboa
+		/// Balboa
 		/// </summary>
 		[CanonicalCulture("es-PA")]
 		PAB = 590,
 		/// <summary>
-		/// Peruvian Nuevo Sol
+		/// Nuevo Sol
 		/// </summary>
 		[CanonicalCulture("es-PE")]
 		PEN = 604,
@@ -563,12 +563,12 @@ namespace NMoneys
 		[CanonicalCulture("ur-PK")]
 		PKR = 586,
 		/// <summary>
-		/// Polish Zloty
+		/// Zloty
 		/// </summary>
 		[CanonicalCulture("pl-PL")]
 		PLN = 985,
 		/// <summary>
-		/// Paraguay Guarani
+		/// Guarani
 		/// </summary>
 		[CanonicalCulture("es-PY")]
 		PYG = 600,
@@ -593,7 +593,7 @@ namespace NMoneys
 		[CanonicalCulture("ru-RU")]
 		RUB = 643,
 		/// <summary>
-		/// Rwandan Franc
+		/// Rwanda Franc
 		/// </summary>
 		[CanonicalCulture("rw-RW")]
 		RWF = 646,
@@ -649,7 +649,7 @@ namespace NMoneys
 		/// </summary>
 		STD = 678,
 		/// <summary>
-		/// US Dollar
+		/// El Salvador Colon
 		/// </summary>
 		[CanonicalCulture("es-SV")]
 		SVC = 222,
@@ -663,12 +663,12 @@ namespace NMoneys
 		/// </summary>
 		SZL = 748,
 		/// <summary>
-		/// Thai Baht
+		/// Baht
 		/// </summary>
 		[CanonicalCulture("th-TH")]
 		THB = 764,
 		/// <summary>
-		/// Ruble
+		/// Somoni
 		/// </summary>
 		[CanonicalCulture("tg-Cyrl-TJ")]
 		TJS = 972,
@@ -692,7 +692,7 @@ namespace NMoneys
 		[CanonicalCulture("tr-TR", Overwritten = true)]
 		TRY = 949,
 		/// <summary>
-		/// Trinidad Dollar
+		/// Trinidad and Tobago Dollar
 		/// </summary>
 		[CanonicalCulture("en-TT")]
 		TTD = 780,
@@ -706,7 +706,7 @@ namespace NMoneys
 		/// </summary>
 		TZS = 834,
 		/// <summary>
-		/// Ukrainian Grivna
+		/// Hryvnia
 		/// </summary>
 		[CanonicalCulture("uk-UA")]
 		UAH = 980,
@@ -728,7 +728,7 @@ namespace NMoneys
 		/// </summary>
 		USS = 998,
 		/// <summary>
-		/// Peso Uruguayo
+		/// >Uruguay Peso en Unidades Indexadas (URUIURUI)
 		/// </summary>
 		[CanonicalCulture("es-UY")]
 		UYI = 940,
@@ -738,17 +738,17 @@ namespace NMoneys
 		[CanonicalCulture("es-UY")]
 		UYU = 858,
 		/// <summary>
-		/// Uzbekistan Som
+		/// Uzbekistan Sum
 		/// </summary>
 		[CanonicalCulture("uz-Latn-UZ")]
 		UZS = 860,
 		/// <summary>
-		/// Venezuelan Bolivar
+		/// Bolivar Fuerte
 		/// </summary>
 		[CanonicalCulture("es-VE")]
 		VEF = 937,
 		/// <summary>
-		/// Vietnamese Dong
+		/// Dong
 		/// </summary>
 		[CanonicalCulture("vi-VN")]
 		VND = 704,
@@ -773,7 +773,7 @@ namespace NMoneys
 		/// </summary>
 		XAU = 959,
 		/// <summary>
-		/// Bond Markets Units European Composite Unit (EURCO)
+		/// European Composite Unit (EURCO)
 		/// </summary>
 		XBA = 955,
 		/// <summary>
@@ -793,7 +793,7 @@ namespace NMoneys
 		/// </summary>
 		XCD = 951,
 		/// <summary>
-		/// SDR
+		/// SDR (Special Drawing Right)
 		/// </summary>
 		XDR = 960,
 		/// <summary>
@@ -837,7 +837,7 @@ namespace NMoneys
 		[CanonicalCulture("ar-YE")]
 		YER = 886,
 		/// <summary>
-		/// South African Rand
+		/// Rand
 		/// </summary>
 		[CanonicalCulture("en-ZA")]
 		ZAR = 710,
