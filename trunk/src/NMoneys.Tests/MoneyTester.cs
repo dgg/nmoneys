@@ -1896,7 +1896,15 @@ namespace NMoneys.Tests
 			IRemainderAllocator rogue = new RogueRemainderAllocator();
 
 			Assert.That(() => 8.3m.Gbp().Allocate(4, rogue), Throws.InstanceOf<ArithmeticException>());
+		}
 
+		[Test]
+		public void Allocate_WholeCurrencies_WholeAllocationsAreMade()
+		{
+			// 1 yen is the minimal amount, there are no subdivisions
+			Money[] allocated = 34m.Jpy().Allocate(4, RemainderAllocator.FirstToLast);
+
+			Assert.That(allocated, Is.EqualTo(new[] { 9m.Jpy(), 9m.Jpy(), 8m.Jpy(), 8m.Jpy() }));
 		}
 
 		#endregion
