@@ -1,6 +1,15 @@
 #summary Summary of changes.
 #labels Phase-Support
 
+= 2.2.0.0 =
+2012/02/13 @revision 146
+   * Added `Money.Allocate()`. Thanks to Berryl Hesh for the contribution
+   * Added `Currency.MinAmount`, `CurrencyIsoCode.AsCurrency()` extension, `Money.Currency()` and `IEnumerable<decimal>.ToMoney()` extensions  
+   * updated currency definitions as per latest ISO amendment 153: GHS renamed to _Ghana Cedi_, MZN renamed to _Mozambique Metical_, RON renamed to _New Romanian Leu_ and TMT renamed to _Turkmenistan New Manat_
+   * All currencies have their English name as defined per the ISO. The following currencies have been renamed and their native names updated: ALL, ANG, BAM, BDT, BOV, BRL, BYR, CLF, COU, GBP, GHS, GTQ, HNL, HUF, IDR, ILS, ISK, JPY, KGS, KRW, MKD, MOP, MXV, MZN, NAD, NGN, NIO, NPR, OMR, PAB, PEN, PLN, PYG, RON, RWF, SVC, THB, TJS, TMT, TOP, TTD, UAH, UYI, UZS, VEF, VND, XBA, XDR, ZAR 
+   * All currencies have their `SignificantDecimalDigits` as defined per the ISO. The following currencies have been changed: BIF, BND, BYR, CLF, CLP, DJF, GNF, IDR, IQD, KMF, MYR, PYG, RWF, UYI, UZS, VND, VUV, XAF, XOF, XPF
+   * Updated _NuGet_ to v1.6.21205.9031
+
 = 2.1.0.0 =
 2011/09/01 @revision 129
    * South Sudanese Pound (SSP) has been added
