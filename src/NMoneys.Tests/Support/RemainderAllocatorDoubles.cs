@@ -10,7 +10,7 @@ namespace NMoneys.Tests.Support
 		{
 			AskedToAllocate = true;
 			// need to do the real thing to fulfill contract
-			RemainderAllocator.FirstToLast().Allocate(remainder, alreadyAllocated);
+			RemainderAllocator.FirstToLast.Allocate(remainder, alreadyAllocated);
 		}
 	}
 
