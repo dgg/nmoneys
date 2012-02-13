@@ -33,11 +33,11 @@ namespace NMoneys.Tests
 			// overriden for wrong symbol "kr."
 			new object[] {Currency.Dkk, CurrencyIsoCode.DKK, "DKK", "kr", "Danish Krone"},
 			new object[] {Currency.Eur, CurrencyIsoCode.EUR, "EUR", "€", "Euro"},
-			new object[] {Currency.Gbp, CurrencyIsoCode.GBP, "GBP", "£", "UK Pound Sterling"},
+			new object[] {Currency.Gbp, CurrencyIsoCode.GBP, "GBP", "£", "Pound Sterling"},
 			new object[] {Currency.Hkd, CurrencyIsoCode.HKD, "HKD", "HK$", "Hong Kong Dollar"},
-			new object[] {Currency.Huf, CurrencyIsoCode.HUF, "HUF", "Ft", "Hungarian Forint"},
+			new object[] {Currency.Huf, CurrencyIsoCode.HUF, "HUF", "Ft", "Forint"},
 			new object[] {Currency.Inr, CurrencyIsoCode.INR, "INR", "रु", "Indian Rupee"},
-			new object[] {Currency.Jpy, CurrencyIsoCode.JPY, "JPY", "¥", "Japanese Yen"},
+			new object[] {Currency.Jpy, CurrencyIsoCode.JPY, "JPY", "¥", "Yen"},
 			new object[] {Currency.Mxn, CurrencyIsoCode.MXN, "MXN", "$", "Mexican Peso"},
 			// overriden for 2.0 "R"
 			new object[] {Currency.Myr, CurrencyIsoCode.MYR, "MYR", "RM", "Malaysian Ringgit"},
@@ -46,11 +46,11 @@ namespace NMoneys.Tests
 			new object[] {Currency.Rub, CurrencyIsoCode.RUB, "RUB", "р.", "Russian Ruble"},
 			new object[] {Currency.Sek, CurrencyIsoCode.SEK, "SEK", "kr", "Swedish Krona"},
 			new object[] {Currency.Sgd, CurrencyIsoCode.SGD, "SGD", "$", "Singapore Dollar"},
-			new object[] {Currency.Thb, CurrencyIsoCode.THB, "THB", "฿", "Thai Baht"},
+			new object[] {Currency.Thb, CurrencyIsoCode.THB, "THB", "฿", "Baht"},
 			new object[] {Currency.Usd, CurrencyIsoCode.USD, "USD", "$", "US Dollar"},
 			new object[] {Currency.Xts, CurrencyIsoCode.XTS, "XTS", "¤", "Test currency"},
 			new object[] {Currency.Xxx, CurrencyIsoCode.XXX, "XXX", "¤", "No currency"},
-			new object[] {Currency.Zar, CurrencyIsoCode.ZAR, "ZAR", "R", "South African Rand"},
+			new object[] {Currency.Zar, CurrencyIsoCode.ZAR, "ZAR", "R", "Rand"},
 		};
 #pragma warning restore 169
 
@@ -193,7 +193,7 @@ namespace NMoneys.Tests
 			Assert.That(notAShortcut.IsoCode, Is.EqualTo(CurrencyIsoCode.NAD));
 			Assert.That(notAShortcut.IsoSymbol, Is.EqualTo("NAD"));
 			Assert.That(notAShortcut.Symbol, Is.EqualTo("$"));
-			Assert.That(notAShortcut.EnglishName, Is.EqualTo("Namibian Dollar"));
+			Assert.That(notAShortcut.EnglishName, Is.EqualTo("Namibia Dollar"));
 		}
 
 		[Test]
