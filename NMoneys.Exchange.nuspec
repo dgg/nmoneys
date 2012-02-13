@@ -13,6 +13,7 @@
 			It does so by providing a framework in which such operations can take place using some default implementations and multiple extensions points.
         </summary>
         <projectUrl>http://code.google.com/p/nmoneys/</projectUrl>
+		<iconUrl>https://nugetgallery.blob.core.windows.net/icons/NMoneys.Exchange.1.0.0.0.png</iconUrl>
 		<tags>.net currency money</tags>
 		<dependencies>
 			<dependency id="nmoneys" version="2.0.0.0" />
