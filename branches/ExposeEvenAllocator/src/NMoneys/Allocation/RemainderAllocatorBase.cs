@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace NMoneys.Allocators
+namespace NMoneys.Allocation
 {
 	internal abstract class RemainderAllocatorBase : IRemainderAllocator
 	{

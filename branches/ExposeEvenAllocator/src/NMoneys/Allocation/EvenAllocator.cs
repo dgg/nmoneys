@@ -1,7 +1,7 @@
 ﻿using System;
 using NMoneys.Extensions;
 
-namespace NMoneys.Allocators
+namespace NMoneys.Allocation
 {
 	internal class EvenAllocator
 	{

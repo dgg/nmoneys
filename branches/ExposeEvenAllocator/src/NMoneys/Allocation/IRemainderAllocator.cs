@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace NMoneys.Allocators
+namespace NMoneys.Allocation
 {
 	/// <summary>
 	/// Distributes the remainder after allocating the highest fair amount amongst all the recipients.

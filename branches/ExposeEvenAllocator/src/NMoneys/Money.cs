@@ -9,7 +9,7 @@ using System.Security.Permissions;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
-using NMoneys.Allocators;
+using NMoneys.Allocation;
 using NMoneys.Extensions;
 using NMoneys.Support;
 

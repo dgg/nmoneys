@@ -1,17 +1,18 @@
 using System.Collections.Generic;
 
-namespace NMoneys.Allocators
+namespace NMoneys.Allocation
 {
-	internal class FirstToLastAllocator : RemainderAllocatorBase
+	internal class LastToFirstAllocator : RemainderAllocatorBase
 	{
 		public override void Allocate(Money remainder, IList<decimal> alreadyAllocated)
 		{
-			int index = 0;
+			int index = alreadyAllocated.Count - 1;
 			while (!remainder.IsZero())
 			{
 				apply(ref remainder, alreadyAllocated, index);
-				index++;
+				index--;
 			}
 		}
 	}
 }
+ 

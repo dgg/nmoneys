@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using NMoneys.Allocators;
+using NMoneys.Allocation;
 using NMoneys.Extensions;
 using NMoneys.Support;
 using NMoneys.Tests.CustomConstraints;

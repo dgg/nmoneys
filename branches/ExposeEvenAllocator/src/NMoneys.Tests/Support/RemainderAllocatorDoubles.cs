@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using NMoneys.Allocators;
+using NMoneys.Allocation;
 
 namespace NMoneys.Tests.Support
 {
