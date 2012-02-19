@@ -1206,22 +1206,22 @@ currency);
 			new Range<int>(1.Close(), int.MaxValue.Close()).AssertArgument("numberOfRecipients", numberOfRecipients);
 
 			Money totalAllocated;
-			decimal[] allocated = new EvenAllocator(this)
+			Money[] allocated = new EvenAllocator(this)
 				.Allocate(numberOfRecipients, out totalAllocated);
 
 			allocateRemainderIfNeeded(ref totalAllocated, allocator, allocated);
 
 			assertAllocatedWhole(totalAllocated);
-			return allocated.ToMoney(CurrencyCode);
+			return allocated;
 		}
 
-		private void allocateRemainderIfNeeded(ref Money totalAllocated, IRemainderAllocator allocator, decimal[] results)
+		private void allocateRemainderIfNeeded(ref Money totalAllocated, IRemainderAllocator allocator, Money[] results)
 		{
 			Money remainder = this - totalAllocated;
 			if (remainder.Amount > 0)
 			{
 				allocator.Allocate(remainder, results);
-				totalAllocated = new Money(results.Aggregate((a, b) => a + b), CurrencyCode);
+				totalAllocated = Total(results);
 			}
 		}
 

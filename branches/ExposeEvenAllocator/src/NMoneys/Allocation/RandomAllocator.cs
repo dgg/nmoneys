@@ -6,7 +6,7 @@ namespace NMoneys.Allocation
 {
 	internal class RandomAllocator : RemainderAllocatorBase
 	{
-		public override void Allocate(Money remainder, IList<decimal> alreadyAllocated)
+		public override void Allocate(Money remainder, IList<Money> alreadyAllocated)
 		{
 			var rnd = new Random();
 

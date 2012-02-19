@@ -6,7 +6,7 @@ namespace NMoneys.Tests.Support
 	internal class RemainderAllocatorSpy : IRemainderAllocator
 	{
 		public bool AskedToAllocate { get; private set; }
-		public void Allocate(Money remainder, IList<decimal> alreadyAllocated)
+		public void Allocate(Money remainder, IList<Money> alreadyAllocated)
 		{
 			AskedToAllocate = true;
 			// need to do the real thing to fulfill contract
@@ -16,7 +16,7 @@ namespace NMoneys.Tests.Support
 
 	internal class RogueRemainderAllocator : IRemainderAllocator
 	{
-		public void Allocate(Money remainder, IList<decimal> alreadyAllocated)
+		public void Allocate(Money remainder, IList<Money> alreadyAllocated)
 		{
  			// does not touch the amounts already allocated, thus not doing its job
 		}

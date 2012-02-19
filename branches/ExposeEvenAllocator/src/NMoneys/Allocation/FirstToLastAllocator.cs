@@ -4,7 +4,7 @@ namespace NMoneys.Allocation
 {
 	internal class FirstToLastAllocator : RemainderAllocatorBase
 	{
-		public override void Allocate(Money remainder, IList<decimal> alreadyAllocated)
+		public override void Allocate(Money remainder, IList<Money> alreadyAllocated)
 		{
 			int index = 0;
 			while (!remainder.IsZero())
