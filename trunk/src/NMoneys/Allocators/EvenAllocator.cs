@@ -11,7 +11,7 @@ namespace NMoneys.Allocators
 		public EvenAllocator(Money toAllocate)
 		{
 			_toAllocate = toAllocate.Amount;
-			_currency = toAllocate.Currency();
+			_currency = toAllocate.GetCurrency();
 		}
 
 		public decimal[] Allocate(int numberOfRecipients, out Money allocated)
