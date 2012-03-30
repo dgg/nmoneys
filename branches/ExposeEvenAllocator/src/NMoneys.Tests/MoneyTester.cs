@@ -1907,6 +1907,32 @@ namespace NMoneys.Tests
 			Assert.That(allocated, Is.EqualTo(new[] { 9m.Jpy(), 9m.Jpy(), 8m.Jpy(), 8m.Jpy() }));
 		}
 
+		[Test]
+		public void Allocate_NotEnoughToEveryone_FirstToLast_LastOnesGetLess()
+		{
+			var threeYen = 3m.Jpy();
+			Money[] allocation = threeYen.Allocate(4, RemainderAllocator.FirstToLast);
+
+			Assert.That(allocation, Is.EqualTo(new[] { 1m.Jpy(), 1m.Jpy(), 1m.Jpy(), 0m.Jpy() }));
+		}
+
+		[Test]
+		public void Allocate_NotEnoughToEveryoneAfterEvenAllocation_LastToFirst_FirstOnesGetLess()
+		{
+			var threeYen = 3m.Jpy();
+			Money[] allocation = threeYen.Allocate(2, RemainderAllocator.LastToFirst);
+
+			Assert.That(allocation, Is.EqualTo(new[] { 1m.Jpy(), 2m.Jpy() }));
+		}
+
+		[Test]
+		public void Allocate_NotEvenTheMinimumForEveryone_Exception()
+		{
+			var notEvenAYen = 0.3m.Jpy();
+
+			var unrelatedException = Assert.Throws<ArgumentOutOfRangeException>(()=> notEvenAYen.Allocate(2, RemainderAllocator.FirstToLast));
+		}
+
 		#endregion
 	}
 }

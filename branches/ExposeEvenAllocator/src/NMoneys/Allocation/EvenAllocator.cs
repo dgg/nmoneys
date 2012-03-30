@@ -16,7 +16,7 @@ namespace NMoneys.Allocation
 
 		public Money[] Allocate(int numberOfRecipients, out Money allocated)
 		{
-			var results = new Money[numberOfRecipients];
+			var results = initResults(numberOfRecipients);
 			allocated = Money.Zero(_currency);
 			var each = _toAllocate.Amount / numberOfRecipients;
 			each = Math.Round(each - (0.5M * _currency.MinAmount), _currency.SignificantDecimalDigits, MidpointRounding.AwayFromZero);
@@ -30,6 +30,16 @@ namespace NMoneys.Allocation
 			{
 				results[i] = new Money(each, _currency);
 				allocated += results[i];
+			}
+			return results;
+		}
+
+		private Money[] initResults(int numberOfRecipients)
+		{
+			var results = new Money[numberOfRecipients];
+			for (int i = 0; i < results.Length; i++)
+			{
+				results[i] = Money.Zero(_currency);
 			}
 			return results;
 		}
