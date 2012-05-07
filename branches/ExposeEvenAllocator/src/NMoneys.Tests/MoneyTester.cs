@@ -1930,7 +1930,9 @@ namespace NMoneys.Tests
 		{
 			var notEvenAYen = 0.3m.Jpy();
 
-			var unrelatedException = Assert.Throws<ArgumentOutOfRangeException>(()=> notEvenAYen.Allocate(2, RemainderAllocator.FirstToLast));
+			Assert.That(()=> notEvenAYen.Allocate(2, RemainderAllocator.FirstToLast), Throws.InstanceOf<NoAllocationPossibleException>()
+				.With.Message.StringContaining("0.3 JPY")
+				.With.Message.StringContaining("1"));
 		}
 
 		#endregion

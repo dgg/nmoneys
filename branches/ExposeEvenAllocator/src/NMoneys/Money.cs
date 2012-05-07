@@ -1205,6 +1205,8 @@ currency);
 		{
 			new Range<int>(1.Close(), int.MaxValue.Close()).AssertArgument("numberOfRecipients", numberOfRecipients);
 
+			assertEnoughToAllocate();
+
 			Money totalAllocated;
 			Money[] allocated = new EvenAllocator(this)
 				.Allocate(numberOfRecipients, out totalAllocated);
@@ -1213,6 +1215,12 @@ currency);
 
 			assertAllocatedWhole(totalAllocated);
 			return allocated;
+		}
+
+		private void assertEnoughToAllocate()
+		{
+			decimal minimumToAllocate = this.GetCurrency().MinAmount;
+			if (Amount < minimumToAllocate) throw new NoAllocationPossibleException(this, minimumToAllocate);
 		}
 
 		private void allocateRemainderIfNeeded(ref Money totalAllocated, IRemainderAllocator allocator, Money[] results)
