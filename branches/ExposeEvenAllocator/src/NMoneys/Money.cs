@@ -1182,6 +1182,21 @@ currency);
 		}
 
 		/// <summary>
+		/// Allocates the sum of money fully and 'fairly', delegating the distribution to a default allocator
+		/// </summary>
+		/// <remarks>
+		/// The default remainder allocation will be performed according to <see cref="RemainderAllocator.FirstToLast"/>.
+		/// </remarks>
+		/// <param name="numberOfRecipients">The number of times to split up the total.</param>
+		/// <returns>The results of the allocation as an array with a length equal to <paramref name="numberOfRecipients"/>.</returns>
+		/// <exception cref="ArithmeticException">The default allocator did not distributed all the remainder.</exception>
+		/// <seealso cref="Allocate(int, IRemainderAllocator)"/>
+		public Money[] Allocate(int numberOfRecipients)
+		{
+			return Allocate(numberOfRecipients, RemainderAllocator.FirstToLast);
+		}
+
+		/// <summary>
 		/// Allocates the sum of money fully and 'fairly', delegating the distribution of whichever remainder after
 		/// allocating the highest fair amount amongst the recipients to the provided <paramref name="allocator"/>.
 		/// </summary>
@@ -1220,7 +1235,11 @@ currency);
 		private void assertEnoughToAllocate()
 		{
 			decimal minimumToAllocate = this.GetCurrency().MinAmount;
-			if (Amount < minimumToAllocate) throw new NoAllocationPossibleException(this, minimumToAllocate);
+			if (Amount < minimumToAllocate)
+			{
+				string msg = string.Format("'{0}' is not enough to be allocated. Only quantities above '{1}' can be allocated", this.Format("{0} {2}"), minimumToAllocate);
+				throw new NotSupportedException(msg);
+			}
 		}
 
 		private void allocateRemainderIfNeeded(ref Money totalAllocated, IRemainderAllocator allocator, Money[] results)
@@ -1236,6 +1255,40 @@ currency);
 		private void assertAllocatedWhole(Money totalAllocated)
 		{
 			if (!totalAllocated.Equals(this)) throw new ArithmeticException("The total amount was not fully allocated");
+		}
+
+		/// <summary>
+		/// Allocates the sum of money as fully and 'fairly' as possible given the collection of ratios passed.
+		/// </summary>
+		/// <param name="ratioBag">The ratio collection.</param>
+		/// <param name="allocator">The <see cref="IRemainderAllocator"/> that will distribute the remainder after the split.</param>
+		/// <returns>The results of the allocation as an array with a length equal to <paramref name="ratioBag"/>.</returns>
+		public Money[] Allocate(RatioBag ratioBag, IRemainderAllocator allocator)
+		{
+			Guard.AgainstNullArgument("ratioBag", ratioBag);
+
+			Money totalAllocated;
+			var allocated = new ProRataAllocator(this)
+				.Allocate(ratioBag, out totalAllocated);
+
+			allocateRemainderIfNeeded(ref totalAllocated, allocator, allocated);
+
+			assertAllocatedWhole(totalAllocated);
+			return allocated;
+		}
+
+		/// <summary>
+		/// Allocates the sum of money as fully and 'fairly' as possible given the collection of ratios passed.
+		/// </summary>
+		/// <remarks>
+		/// The default remainder allocation will be performed according to <see cref="RemainderAllocator.FirstToLast"/>.
+		/// </remarks>
+		/// <param name="ratioBag">The ratio collection.</param>
+		/// <returns>The results of the allocation as an array with a length equal to <paramref name="ratioBag"/>.</returns>
+		/// <seealso cref="Allocate(RatioBag, IRemainderAllocator)"/>
+		public Money[] Allocate(RatioBag ratioBag)
+		{
+			return Allocate(ratioBag, RemainderAllocator.FirstToLast);
 		}
 
 		#endregion

@@ -19,7 +19,7 @@ namespace NMoneys.Allocation
 			var results = initResults(numberOfRecipients);
 			allocated = Money.Zero(_currency);
 			var each = _toAllocate.Amount / numberOfRecipients;
-			each = Math.Round(each - (0.5M * _currency.MinAmount), _currency.SignificantDecimalDigits, MidpointRounding.AwayFromZero);
+			each = _currency.Round(each);
 
 			// if amount to allocate is too 'scarce' to allocate something to all
 			// then effectively go into remainder allocation mode

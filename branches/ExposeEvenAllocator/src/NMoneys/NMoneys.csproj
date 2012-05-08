@@ -47,11 +47,13 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Allocation\AllocationOrdering.cs" />
     <Compile Include="Allocation\EvenAllocator.cs" />
     <Compile Include="Allocation\FirstToLastAllocator.cs" />
     <Compile Include="Allocation\IRemainderAllocator.cs" />
-    <Compile Include="Allocation\NoAllocationPossibleException.cs" />
+    <Compile Include="Allocation\ProRataAllocator.cs" />
     <Compile Include="Allocation\RandomAllocator.cs" />
+    <Compile Include="Allocation\RatioBag.cs" />
     <Compile Include="Allocation\RemainderAllocatorBase.cs" />
     <Compile Include="Allocation\LastToFirstAllocator.cs" />
     <Compile Include="PowerOfTen.cs" />

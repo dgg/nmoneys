@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Allocation\EvenAllocatorTester.cs" />
+    <Compile Include="Allocation\RatioBagTester.cs" />
     <Compile Include="CharacterReferenceTester.cs" />
     <Compile Include="CurrencyEqualityComparerTester.cs" />
     <Compile Include="CurrencyIsoCodeTester.cs" />

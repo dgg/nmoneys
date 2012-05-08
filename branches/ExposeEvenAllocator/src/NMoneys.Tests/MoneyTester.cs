@@ -1823,6 +1823,8 @@ namespace NMoneys.Tests
 
 		#region Allocate
 
+		#region fair allocation
+
 		[TestCaseSource("ProvidedAllocators")]
 		public void Allocate_FairAllocation_EveryoneGetTheSameQuantity(IRemainderAllocator allocator)
 		{
@@ -1930,10 +1932,259 @@ namespace NMoneys.Tests
 		{
 			var notEvenAYen = 0.3m.Jpy();
 
-			Assert.That(()=> notEvenAYen.Allocate(2, RemainderAllocator.FirstToLast), Throws.InstanceOf<NoAllocationPossibleException>()
+			Assert.That(()=> notEvenAYen.Allocate(2, RemainderAllocator.FirstToLast), Throws.InstanceOf<NotSupportedException>()
 				.With.Message.StringContaining("0.3 JPY")
 				.With.Message.StringContaining("1"));
 		}
+
+		#endregion
+
+		/*
+
+		#region ratios
+
+		/// <summary>
+        /// These are all scenarios where the sum to allocate can be split exactly even.
+        /// </summary>
+        internal IEnumerable<AllocateRatiosBundle> ratioSplits_NoRemainder
+        {
+            get
+            {
+                yield return new AllocateRatiosBundle
+                {
+                    StartAmount = 10m.Usd(),
+                    Bag = new RatioBag { .5m, .2m, .3m },
+                    Results = new[] { 5m.Usd(), 2m.Usd(), 3m.Usd() }
+                };
+                yield return new AllocateRatiosBundle
+                {
+                    StartAmount = 6000000m.Usd(),
+                    Bag = new RatioBag { .5725m, .4275m },
+                    Results = new[] { 3435000m.Usd(), 2565000m.Usd() }
+                };
+                yield return new AllocateRatiosBundle
+                {
+                    StartAmount = 100m.Usd(),
+                    Bag = new RatioBag { .412m, .495m, .093m },
+                    Results = new[] { 41.2m.Usd(), 49.5m.Usd(), 9.3m.Usd() }
+                };
+            }
+        }
+
+        /// <summary>
+        /// These are all scenarios where there is not enough of the sum to allocate to go around.
+        /// </summary>
+        internal IEnumerable<AllocateRatiosBundle> noRemainder_DifferentOrderings
+        {
+            get
+            {
+                yield return new AllocateRatiosBundle
+                {
+                    StartAmount = 100m.Usd(),
+                    Bag = new RatioBag(RatioBag.AllocationOrdering.AsIs) { .412m, .093m, .495m },
+                    Results = new[] { 41.2m.Usd(), 9.3m.Usd(), 49.5m.Usd(), }
+                };
+                yield return new AllocateRatiosBundle
+                {
+                    StartAmount = 100m.Usd(),
+                    Bag = new RatioBag(RatioBag.AllocationOrdering.LowToHigh) { .412m, .093m, .495m },
+                    Results = new[] { 9.3m.Usd(), 41.2m.Usd(), 49.5m.Usd(), }
+                };
+                yield return new AllocateRatiosBundle
+                {
+                    StartAmount = 100m.Usd(),
+                    Bag = new RatioBag(RatioBag.AllocationOrdering.HighToLow) { .412m, .093m, .495m },
+                    Results = new[] { 49.5m.Usd(), 41.2m.Usd(), 9.3m.Usd(), }
+                };
+                yield return new AllocateRatiosBundle
+                {
+                    StartAmount = 100m.Usd(),
+                    Bag = new RatioBag(RatioBag.AllocationOrdering.Random) { .412m, .093m, .495m },
+                    Results = new[] { 49.5m.Usd(), 41.2m.Usd(), 9.3m.Usd(), }
+                };
+            }
+        }
+
+        /// <summary>
+        /// These are all scenarios where there is not enough of the sum to allocate to go around.
+        /// </summary>
+        internal IEnumerable<AllocateRatiosBundle> scarceResourceRatios
+        {
+            get
+            {
+                yield return new AllocateRatiosBundle
+                {
+                    StartAmount = .05m.Usd(),
+                    Allocator = RemainderAllocator.FirstToLast,
+                    Bag = new RatioBag(RatioBag.AllocationOrdering.AsIs) { .3m, .7m },
+                    Results = new[] { .02m.Usd(), .03m.Usd() }
+                };
+                yield return new AllocateRatiosBundle
+                {
+                    StartAmount = .05m.Usd(),
+                    Allocator = RemainderAllocator.LastToFirst,
+                    Bag = new RatioBag(RatioBag.AllocationOrdering.AsIs) { .3m, .7m },
+                    Results = new[] { .01m.Usd(), .04m.Usd() }
+                };
+                yield return new AllocateRatiosBundle
+                {
+                    StartAmount = .05m.Usd(),
+                    Allocator = RemainderAllocator.FirstToLast,
+                    Bag = new RatioBag(RatioBag.AllocationOrdering.HighToLow) { .3m, .7m },
+                    Results = new[] { .04m.Usd(), .01m.Usd() }
+                };
+                yield return new AllocateRatiosBundle
+                {
+                    StartAmount = .05m.Usd(),
+                    Allocator = RemainderAllocator.Random,
+                    Bag = new RatioBag(RatioBag.AllocationOrdering.AsIs) { .3m, .7m },
+                };
+                yield return new AllocateRatiosBundle
+                {
+                    StartAmount = .05m.Usd(),
+                    Allocator = RemainderAllocator.FirstToLast,
+                    Bag = new RatioBag(RatioBag.AllocationOrdering.Random) { .3m, .7m },
+                };
+                yield return new AllocateRatiosBundle
+                {
+                    StartAmount = 17m.Usd(),
+                    Allocator = RemainderAllocator.FirstToLast,
+                    Bag = new RatioBag(RatioBag.AllocationOrdering.AsIs) { .412m, .093m, .495m },
+                    Results = new[] { 7.01m.Usd(), 1.58m.Usd(), 8.41m.Usd(), }
+                };
+            }
+        }
+
+        /// <summary>
+        /// These are all scenarios where there is not enough of the sum to allocate to go around.
+        /// </summary>
+        internal IEnumerable<AllocateRatiosBundle> scarceResourceRatios_ForOverloadWithooutAllocator
+        {
+            get
+            {
+                yield return new AllocateRatiosBundle
+                {
+                    StartAmount = .05m.Usd(),
+                    Bag = new RatioBag(RatioBag.AllocationOrdering.AsIs) { .3m, .7m },
+                    Results = new[] { .02m.Usd(), .03m.Usd() }
+                };
+                yield return new AllocateRatiosBundle
+                {
+                    StartAmount = .05m.Usd(),
+                    Bag = new RatioBag(RatioBag.AllocationOrdering.AsIs) { .7m, .3m },
+                    Results = new[] { .04m.Usd(), .01m.Usd() }
+                };
+                yield return new AllocateRatiosBundle
+                {
+                    StartAmount = .05m.Usd(),
+                    Bag = new RatioBag(RatioBag.AllocationOrdering.LowToHigh) { .3m, .7m },
+                    Results = new[] { .02m.Usd(), .03m.Usd() }
+                };
+                yield return new AllocateRatiosBundle
+                {
+                    StartAmount = .05m.Usd(),
+                    Bag = new RatioBag(RatioBag.AllocationOrdering.HighToLow) { .3m, .7m },
+                    Results = new[] { .04m.Usd(), .01m.Usd() }
+                };
+                yield return new AllocateRatiosBundle
+                {
+                    StartAmount = .05m.Usd(),
+                    Allocator = RemainderAllocator.FirstToLast,
+                    Bag = new RatioBag(RatioBag.AllocationOrdering.Random) { .3m, .7m },
+                };
+            }
+        }
+
+        #endregion
+
+        #region Fair Allocations
+
+        [TestCaseSource("ratioSplits_NoRemainder")]
+        public void Allocate_RatioSplits_NoRemainder(AllocateRatiosBundle bundle)
+        {
+            var startAmount = bundle.StartAmount;
+            var ratioBag = bundle.Bag;
+
+            var allocated = startAmount.Allocate(ratioBag, MockRepository.GenerateStub<IRemainderAllocator>());
+
+            Assert.That(allocated.Length, Is.EqualTo(ratioBag.Count));
+            Assert.That(allocated, Is.EqualTo(bundle.Results));
+            Assert.That(allocated.Sum(x => x.Amount), Is.EqualTo(startAmount.Amount));
+        }
+
+        [TestCaseSource("noRemainder_DifferentOrderings")]
+        public void Allocate_RatioSplits_NoRemainder_DifferentOrderings(AllocateRatiosBundle bundle)
+        {
+            var startAmount = bundle.StartAmount;
+            var ratioBag = bundle.Bag;
+
+            var allocated = startAmount.Allocate(ratioBag, MockRepository.GenerateStub<IRemainderAllocator>());
+            ratioBag.Ordering.Look();
+            allocated.Look();
+            Assert.That(allocated.Length, Is.EqualTo(ratioBag.Count));
+            Assert.That(allocated.Sum(x => x.Amount), Is.EqualTo(startAmount.Amount));
+            if (ratioBag.Ordering != RatioBag.AllocationOrdering.Random) Assert.That(allocated, Is.EqualTo(bundle.Results));
+
+        }
+
+        #endregion
+
+        #region Unfair Allocations
+
+        [TestCaseSource("scarceResourceRatios_ForOverloadWithooutAllocator")]
+        public void Allocate_DefaultAllocator_WhenScarceResources_(AllocateRatiosBundle bundle)
+        {
+            var startAmount = bundle.StartAmount;
+            var ratioBag = bundle.Bag;
+
+            var allocated = startAmount.Allocate(ratioBag);
+            ratioBag.Ordering.Look();
+            allocated.Look();
+            Assert.That(allocated.Length, Is.EqualTo(ratioBag.Count));
+            Assert.That(allocated.Sum(x => x.Amount), Is.EqualTo(startAmount.Amount));
+            if (ratioBag.Ordering != RatioBag.AllocationOrdering.Random)
+                Assert.That(allocated, Is.EqualTo(bundle.Results));
+        }
+
+        #endregion
+
+        #region Invariants
+
+        [Test]
+        public void Allocate_ByRatioBag_IfBagIsNull_Error()
+        {
+            RatioBag noBag = null;
+            Assert.Throws<ArgumentNullException>(() => 8.3m.Usd().Allocate(noBag, MockRepository.GenerateStub<IRemainderAllocator>()));
+            Assert.Throws<ArgumentNullException>(() => 8.3m.Usd().Allocate(noBag));
+        }
+
+        [Test]
+        public void Allocate_ByRatioBag_IfBagIsNotAllocatable_Error()
+        {
+            var halfBag = new RatioBag { .5m };
+            Assert.Throws<ArgumentException>(() => 8.3m.Usd().Allocate(halfBag, MockRepository.GenerateStub<IRemainderAllocator>()));
+            var ex = Assert.Throws<ArgumentException>(() => 8.3m.Usd().Allocate(halfBag));
+            ex.Look();
+        }
+
+        [Test]
+        public void Allocate_ByRatioBag_IfNotFullyAllocated_Error()
+        {
+            var rogue = new RogueRemainderAllocator();
+            var bag = new RatioBag { .7m, .3m };
+            var ex = Assert.Throws<ArithmeticException>(() => .05m.Usd().Allocate(bag, rogue));
+            ex.Look();
+            foreach (DictionaryEntry entry in ex.Data)
+            {
+                string.Format("{0}={1}", entry.Key, entry.Value).Look();
+            }
+        }
+
+        #endregion
+
+		#endregion
+		 * 
+		 * */
 
 		#endregion
 	}
