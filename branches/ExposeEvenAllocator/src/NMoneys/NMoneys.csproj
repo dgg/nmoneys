@@ -53,6 +53,7 @@
     <Compile Include="Allocation\IRemainderAllocator.cs" />
     <Compile Include="Allocation\ProRataAllocator.cs" />
     <Compile Include="Allocation\RandomAllocator.cs" />
+    <Compile Include="Allocation\Ratio.cs" />
     <Compile Include="Allocation\RatioBag.cs" />
     <Compile Include="Allocation\RemainderAllocatorBase.cs" />
     <Compile Include="Allocation\LastToFirstAllocator.cs" />

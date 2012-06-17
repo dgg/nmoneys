@@ -1218,7 +1218,7 @@ currency);
 		/// <seealso cref="IRemainderAllocator"/>
 		public Money[] Allocate(int numberOfRecipients, IRemainderAllocator allocator)
 		{
-			new Range<int>(1.Close(), int.MaxValue.Close()).AssertArgument("numberOfRecipients", numberOfRecipients);
+			EvenAllocator.AssertNumberOfRecipients("numberOfRecipients", numberOfRecipients);
 
 			assertEnoughToAllocate();
 
@@ -1234,10 +1234,11 @@ currency);
 
 		private void assertEnoughToAllocate()
 		{
-			decimal minimumToAllocate = this.GetCurrency().MinAmount;
+			var currency = this.GetCurrency();
+			decimal minimumToAllocate = currency.MinAmount;
 			if (Amount < minimumToAllocate)
 			{
-				string msg = string.Format("'{0}' is not enough to be allocated. Only quantities above '{1}' can be allocated", this.Format("{0} {2}"), minimumToAllocate);
+				string msg = string.Format(currency, "'{0}' is not enough to be allocated. Only quantities above '{1}' can be allocated", this.Format("{0} {2}"), minimumToAllocate);
 				throw new NotSupportedException(msg);
 			}
 		}
@@ -1266,6 +1267,8 @@ currency);
 		public Money[] Allocate(RatioBag ratioBag, IRemainderAllocator allocator)
 		{
 			Guard.AgainstNullArgument("ratioBag", ratioBag);
+
+			assertEnoughToAllocate();
 
 			Money totalAllocated;
 			var allocated = new ProRataAllocator(this)

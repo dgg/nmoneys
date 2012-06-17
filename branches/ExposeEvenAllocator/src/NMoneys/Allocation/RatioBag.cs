@@ -2,74 +2,131 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using NMoneys.Support;
 
 namespace NMoneys.Allocation
 {
 	/// <summary>
 	/// Maintains a list of ratios suitable for use in an allocation when the
-	/// sum of all items is exactly equal to one (100%). No individual it may
-	/// be less than zero or greater than one.
+	/// sum of all items is exactly equal to one (100%).
 	/// </summary>
-	public class RatioBag : IEnumerable<decimal>
+	public class RatioBag : IEnumerable<Ratio>, IFormattable
 	{
+		private readonly Ratio[] _ratios;
+
 		#region Creation
 
-		private readonly decimal[] _ratios, _original;
+		/// <summary>
+		/// Initializes a new instance of <see cref="RatioBag"/> with the specified ratio values.
+		/// </summary>
+		/// <remarks>This is a helper constructor due to the verbosity of <see cref="Ratio"/> construction.</remarks>
+		/// <param name="ratioValues">A collection of ratio values.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="ratioValues"/> is null.</exception>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="ratioValues"/> do not sum up one
+		/// -or-
+		/// any of the values does not fall in the range [0..1].
+		/// .</exception>
+		public RatioBag(params decimal[] ratioValues) : this(toRatios(ratioValues)) { }
 
-		public RatioBag(AllocationOrdering ordering, params decimal[] ratios)
+		private static Ratio[] toRatios(decimal[] ratioValues)
 		{
-			Guard.AgainstNullArgument("ordering", ordering);
-			new Range<decimal>(0m.Close(), 1m.Close()).AssertArgument("ratios", ratios);
-			assertAllocatable(ratios);
-
-			Ordering = ordering;
-			_original = ratios;
-			_ratios = Ordering.Order(ratios).ToArray();
+			Guard.AgainstNullArgument("ratioValues", ratioValues);
+			return ratioValues.Select(r => new Ratio(r)).ToArray();
 		}
 
-		private void assertAllocatable(IEnumerable<decimal> ratios)
+		/// <summary>
+		/// Initializes a new instance of <see cref="RatioBag"/> with the specified <paramref name="ratios"/>.
+		/// </summary>
+		/// <param name="ratios">A collection of ratios</param>
+		/// <exception cref="ArgumentNullException"><paramref name="ratios"/> is null.</exception>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="ratios"/> do not sum up one.</exception>
+		public RatioBag(params Ratio[] ratios)
 		{
-			decimal sum = ratios.Sum();
-			if (!sum.Equals(1))
+			Guard.AgainstNullArgument("ratios", ratios);
+			assertAllocatable(ratios);
+
+			_ratios = ratios;
+		}
+
+		private void assertAllocatable(IEnumerable<Ratio> ratios)
+		{
+			decimal sum = ratios.Select(r => r.Value).Sum();
+			if (!sum.Equals(decimal.One))
 			{
 				throw new ArgumentOutOfRangeException("ratios", sum, "Ratios have to sum up 1.0.");
 			}
 		}
 
-		public RatioBag(params decimal[] ratios) : this(AllocationOrdering.AsIs, ratios) { }
-
 		#endregion
 
 		#region collection-like methods
 
-		public IEnumerator<decimal> GetEnumerator() { return ((IEnumerable<decimal>)_ratios).GetEnumerator(); }
+		/// <summary>
+		/// Returns an enumerator that iterates through the collection.
+		/// </summary>
+		/// <returns>A <see cref="IEnumerator{Ratio}"/> that can be used to iterate through the collection.</returns>
+		public IEnumerator<Ratio> GetEnumerator() { return ((IEnumerable<Ratio>)_ratios).GetEnumerator(); }
+
+
+		/// <summary>
+		/// Returns an enumerator that iterates through a collection.
+		/// </summary>
+		/// <returns>An <see cref="IEnumerator"/> object that can be used to iterate through the collection.</returns>
 		IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
 
+		/// <summary>
+		/// Gets a 32-bit integer that represents the total number of ratios in the <see cref="RatioBag"/>.
+		/// </summary>
+		/// <returns>A 32-bit integer that represents the total number of ratios in the <see cref="RatioBag"/>.</returns>
 		public int Count { get { return _ratios.Length; } }
 
-		public decimal this[int index]
+		/// <summary>
+		/// Gets the ratio at the specified index.
+		/// </summary>
+		/// <param name="index">The index of the ratio to get.</param>
+		/// <returns>The ratio at the specified index.</returns>
+		/// <exception cref="ArgumentOutOfRangeException">index is less than zero.
+		/// -or-
+		/// index is equal to or greater than <see cref="Count"/>.</exception>
+		public Ratio this[int index]
 		{
 			get { return _ratios[index]; }
 		}
 
 		#endregion
 
+		/// <summary>
+		/// Returns a <see cref="string"/> that represents the current <see cref="RatioBag"/>.
+		/// </summary>
+		/// <returns>
+		/// A <see cref="string"/> that represents the current <see cref="RatioBag"/>.
+		/// </returns>
 		public override string ToString()
 		{
-			return "<" + string.Join(", ", _ratios.Select(r => r.ToString()).ToArray()) + ">";
+			return toString(r => r.ToString());
 		}
 
-		#region Ordering
+		/// <summary>
+		/// Formats the value of the current instance using the specified format.
+		/// </summary>
+		/// <remarks><paramref name="format"/> and <paramref name="formatProvider"/> are used to format each ratio in the bag.</remarks>
+		/// <returns>A <see cref="string"/> containing the value of the current instance in the specified format.</returns>
+		/// <param name="format">The <see cref="string"/> specifying the format to use.                   
+		/// -or- 
+		/// null to use the default format defined for the type of the <see cref="IFormattable"/> implementation.
+		/// </param>
+		/// <param name="formatProvider">The <see cref="IFormatProvider"/> to use to format the value.
+		/// -or- 
+		/// null to obtain the numeric format information from the current locale setting of the operating system. 
+		/// </param>
+		public string ToString(string format, IFormatProvider formatProvider)
+		{
+			return toString(r => r.ToString(format, formatProvider));
+		}
 
-		public AllocationOrdering Ordering { get; private set; }
-
-		public decimal[] Original { get { return _original; } }
-
-		#endregion
-
-
-
+		private string toString(Func<Ratio, string> ratioString)
+		{
+			return "< " + string.Join(" | ", _ratios.Select(ratioString).ToArray()) + " >";
+		}
 	}
 }

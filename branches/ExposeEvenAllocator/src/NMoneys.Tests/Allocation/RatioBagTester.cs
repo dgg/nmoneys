@@ -1,58 +1,49 @@
 ﻿using System;
-using System.Linq;
 using NMoneys.Allocation;
 using NUnit.Framework;
 
 namespace NMoneys.Tests.Allocation
 {
 	[TestFixture]
-	public class RatioBagTester
+	public partial class RatioBagTester
 	{
 		[Test]
-		public void Ctor_Empty_Exception()
+		public void Ctor_EmptyRatios_Exception()
 		{
-			Assert.That(() => new RatioBag(), Throws.InstanceOf<ArgumentOutOfRangeException>()
+			Assert.That(() => new RatioBag(new Ratio[] { }), Throws.InstanceOf<ArgumentOutOfRangeException>()
 				.With.Property("ParamName").EqualTo("ratios").And
 				.With.Property("ActualValue").EqualTo(0m)
 				.With.Message.StringContaining("1.0"));
 		}
 
 		[Test]
-		public void Ctor_Ordering_Empty_Exception()
+		public void Ctor_EmptyValues_Exception()
 		{
-			Assert.That(() => new RatioBag(AllocationOrdering.HighToLow), Throws.InstanceOf<ArgumentOutOfRangeException>()
+			Assert.That(() => new RatioBag(new decimal[] { }), Throws.InstanceOf<ArgumentOutOfRangeException>()
 				.With.Property("ParamName").EqualTo("ratios").And
 				.With.Property("ActualValue").EqualTo(0m)
 				.With.Message.StringContaining("1.0"));
 		}
-		[Test]
-		public void ctor_NullOrdering_Exception()
-		{
-			AllocationOrdering @null = null;
-			Assert.That(() => new RatioBag(@null), Throws.InstanceOf<ArgumentNullException>()
-				.With.Property("ParamName").EqualTo("ordering"));
-		}
 
 		[Test]
-		public void Ctor_InvalidRatio_Exception()
+		public void Ctor_InvalidRatioValue_Exception()
 		{
-			Assert.That(() => new RatioBag(0m, -.5m, 1.5m), Throws.InstanceOf<ArgumentOutOfRangeException>()
-				.With.Property("ParamName").EqualTo("ratios").And
+			Assert.That(() => new RatioBag(-.5m), Throws.InstanceOf<ArgumentOutOfRangeException>()
 				.With.Property("ActualValue").EqualTo(-.5m).And
 				.With.Message.StringContaining("[0..1]"));
 		}
 
 		[Test]
-		public void Ctor_Ordering_InvalidRatio_Exception()
+		public void Ctor_RatiosDoNotSumOne_Exception()
 		{
-			Assert.That(() => new RatioBag(AllocationOrdering.LowToHigh, 0m, -.5m, 1.5m), Throws.InstanceOf<ArgumentOutOfRangeException>()
+			Assert.That(() => new RatioBag(new Ratio(.3m), new Ratio(.2m)), Throws.InstanceOf<ArgumentOutOfRangeException>()
 				.With.Property("ParamName").EqualTo("ratios").And
-				.With.Property("ActualValue").EqualTo(-.5m).And
-				.With.Message.StringContaining("[0..1]"));
+				.With.Property("ActualValue").EqualTo(.5m)
+				.With.Message.StringContaining("1.0"));
 		}
 
 		[Test]
-		public void Ctor_NotSummingOne_Exception()
+		public void Ctor_RatioValuesDoNotSumOne_Exception()
 		{
 			Assert.That(() => new RatioBag(.3m, .2m), Throws.InstanceOf<ArgumentOutOfRangeException>()
 				.With.Property("ParamName").EqualTo("ratios").And
@@ -61,94 +52,41 @@ namespace NMoneys.Tests.Allocation
 		}
 
 		[Test]
-		public void Ctor_Ordering_NotSummingOne_Exception()
+		public void Ctor_ValuesSummingOne_NoException()
 		{
-			Assert.That(() => new RatioBag(AllocationOrdering.Random, .3m, .2m), Throws.InstanceOf<ArgumentOutOfRangeException>()
-				.With.Property("ParamName").EqualTo("ratios").And
-				.With.Property("ActualValue").EqualTo(.5m)
-				.With.Message.StringContaining("1.0"));
+			Assert.That(() => new RatioBag(0.5m, .4m, .05m, .05m), Throws.Nothing);
 		}
 
 		[Test]
-		public void Ctor_SummingOne_CollectionOfRatios()
+		public void Ctor_RatiosSummingOne_NoException()
 		{
-			var bag = new RatioBag(0.5m, .4m, .05m, .05m);
-
-			Assert.That(bag, Has.Count.EqualTo(4).And.EqualTo(new[] { 0.5m, .4m, .05m, .05m }));
-			Assert.That(bag[0], Is.EqualTo(.5m));
-			Assert.That(bag[1], Is.EqualTo(.4m));
-			Assert.That(bag[2], Is.EqualTo(.05m));
-			Assert.That(bag[3], Is.EqualTo(.05m));
+			TestDelegate ratioCtor = () =>
+				new RatioBag(
+					new Ratio(0.5m),
+					new Ratio(.4m),
+					new Ratio(.05m),
+					new Ratio(.05m));
+			Assert.That(ratioCtor, Throws.Nothing);
 		}
 
 		[Test]
-		public void Ctor_AnArrayCanBeUsedToPassRatios()
+		public void Ctor_ArrayOfValues_InstanceCreated()
 		{
-			var bag = new RatioBag(new[] { 0.5m, .4m, .05m, .05m });
-
-			Assert.That(bag, Is.EqualTo(new[] { 0.5m, .4m, .05m, .05m }));
+			var arrayOfValues = new[] { 0.5m, .4m, .05m, .05m };
+			Assert.That(()=> new RatioBag(arrayOfValues), Throws.Nothing);
 		}
 
 		[Test]
-		public void AsIs_UnalteredCollectionOfRatios()
+		public void Ctor_ArrayOfRatios_InstanceCreated()
 		{
-			var bag = new RatioBag(AllocationOrdering.AsIs, 0.5m, .4m, .05m, .05m);
-
-			Assert.That(bag, Is.EqualTo(new[] { 0.5m, .4m, .05m, .05m }));
-			Assert.That(bag[0], Is.EqualTo(.5m));
-			Assert.That(bag[1], Is.EqualTo(.4m));
-			Assert.That(bag[2], Is.EqualTo(.05m));
-			Assert.That(bag[3], Is.EqualTo(.05m));
-		}
-
-		[Test]
-		public void HightToLow_OrderedCollectionOfRatios()
-		{
-			var bag = new RatioBag(AllocationOrdering.HighToLow, 0.4m, .05m, .5m, .05m);
-
-			Assert.That(bag, Is.EqualTo(new[] { 0.5m, .4m, .05m, .05m }));
-			Assert.That(bag[0], Is.EqualTo(.5m));
-			Assert.That(bag[1], Is.EqualTo(.4m));
-			Assert.That(bag[2], Is.EqualTo(.05m));
-			Assert.That(bag[3], Is.EqualTo(.05m));
-		}
-
-		[Test]
-		public void LowToHigh_InverseOrderedCollectionOfRatios()
-		{
-			var bag = new RatioBag(AllocationOrdering.LowToHigh, 0.4m, .05m, .5m, .05m);
-
-			Assert.That(bag, Is.EqualTo(new[] { .05m, .05m, .4m, 0.5m }));
-			Assert.That(bag[0], Is.EqualTo(.05m));
-			Assert.That(bag[1], Is.EqualTo(.05m));
-			Assert.That(bag[2], Is.EqualTo(.4m));
-			Assert.That(bag[3], Is.EqualTo(.5m));
-		}
-
-		[Test]
-		public void CustomOrdering_OrderedCollectionOfRatios()
-		{
-			AllocationOrdering reverse = AllocationOrdering.Custom(a => a.Reverse());
-
-			var bag = new RatioBag(reverse, 0.4m, .05m, .3m, .05m, .2m);
-
-			Assert.That(bag, Is.EqualTo(new[] { .2m, .05m, .3m, .05m, .4m }));
-			Assert.That(bag[0], Is.EqualTo(.2m));
-			Assert.That(bag[1], Is.EqualTo(.05m));
-			Assert.That(bag[2], Is.EqualTo(.3m));
-			Assert.That(bag[3], Is.EqualTo(.05m));
-			Assert.That(bag[4], Is.EqualTo(.4m));
-		}
-
-		[Test]
-		public void Original_ReturnsRatiosAsEntered()
-		{
-			AllocationOrdering reverse = AllocationOrdering.Custom(a => a.Reverse());
-
-			var bag = new RatioBag(reverse, 0.4m, .05m, .3m, .05m, .2m);
-
-			Assert.That(bag, Is.EqualTo(new[] { .2m, .05m, .3m, .05m, .4m }));
-			Assert.That(bag.Original, Is.EqualTo(new[] { 0.4m, .05m, .3m, .05m, .2m }));
+			var arrayOfRatios = new[]
+			{
+				new Ratio(0.5m),
+				new Ratio(.4m),
+				new Ratio(.05m),
+				new Ratio(.05m)
+			};
+			Assert.That(() => new RatioBag(arrayOfRatios), Throws.Nothing);
 		}
 	}
 }

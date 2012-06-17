@@ -21,7 +21,7 @@ namespace NMoneys.Allocation
 
 			for (var i = 0; i < ratios.Count; i++)
 			{
-				var share = ratios[i] * _toAllocate.Amount;
+				var share = ratios[i].ApplyTo(_toAllocate.Amount);
 				share = _currency.Round(share);
 				results[i] = new Money(share, _currency);
 				allocated += results[i];
