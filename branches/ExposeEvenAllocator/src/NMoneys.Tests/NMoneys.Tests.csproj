@@ -80,6 +80,7 @@
     <Compile Include="MoneyTester.cs" />
     <Compile Include="MoneyTester.ProRatedAllocations.cs" />
     <Compile Include="MoneyTester.SplitAllocations.cs" />
+    <Compile Include="MoneyTester.Zero.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProvidersTesters.cs" />
     <Compile Include="Quickstart.cs" />

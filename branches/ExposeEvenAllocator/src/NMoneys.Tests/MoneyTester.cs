@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
-using NMoneys.Allocation;
 using NMoneys.Extensions;
 using NMoneys.Support;
 using NMoneys.Tests.CustomConstraints;
@@ -173,61 +171,6 @@ namespace NMoneys.Tests
 		{
 			Action moneyWithObsoleteCurrency = () => Money.ForCurrentCulture(decimal.Zero);
 			Assert.That(moneyWithObsoleteCurrency, Must.RaiseObsoleteEvent.Once());
-		}
-
-		#endregion
-
-		#region Zero
-
-		[Test]
-		public void Zero_NoneCurrency()
-		{
-			Assert.That(Money.Zero(), Must.Be.MoneyWith(decimal.Zero, Currency.None));
-		}
-
-		[Test]
-		public void Zero_ExistingIsoCode_PropertiesSet()
-		{
-			Assert.That(Money.Zero(CurrencyIsoCode.USD), Must.Be.MoneyWith(decimal.Zero, Currency.Usd));
-		}
-
-		[Test]
-		public void Zero_ExistingIsoSymbol_PropertiesSet()
-		{
-			Assert.That(Money.Zero("EUR"), Must.Be.MoneyWith(decimal.Zero, Currency.Euro));
-		}
-
-		[Test]
-		public void Zero_NullSymbol_Exception()
-		{
-			Assert.That(() => Money.Zero((string)null), Throws.InstanceOf<ArgumentNullException>());
-		}
-
-		[Test]
-		public void Zero_Currency_PropertiesSet()
-		{
-			Assert.That(Money.Zero(Currency.Gbp), Must.Be.MoneyWith(decimal.Zero, Currency.Gbp));
-		}
-
-		[Test]
-		public void Zero_NullCurrency_Exception()
-		{
-			Assert.That(() => Money.Zero((Currency)null), Throws.InstanceOf<ArgumentNullException>());
-		}
-
-		[Test]
-		public void Zero_NonExistingIsoCode_Exception()
-		{
-			CurrencyIsoCode nonExistingCode = (CurrencyIsoCode)(-7);
-
-			Assert.That(() => Money.Zero(nonExistingCode), Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.StringContaining("-7"));
-		}
-
-		[Test]
-		public void Zero_NonExistingIsoSymbol_PropertiesSet()
-		{
-			string nonExistentIsoSymbol = "XYZ";
-			Assert.That(() => Money.Zero(nonExistentIsoSymbol), Throws.InstanceOf<InvalidEnumArgumentException>());
 		}
 
 		#endregion

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -157,6 +158,7 @@ namespace NMoneys
 		/// <param name="currency">The <see cref="CurrencyCode"/> of the monetary quantity.</param>
 		/// <returns>An <see cref="Money"/> instance with zero <see cref="Amount"/> and the specified <paramref name="currency"/>.</returns>
 		/// <seealso cref="Money(decimal, CurrencyIsoCode)"/>
+		/// <exception cref="InvalidEnumArgumentException"><paramref name="currency"/> is not defined.</exception>
 		public static Money Zero(CurrencyIsoCode currency)
 		{
 			return new Money(decimal.Zero, currency);
@@ -169,6 +171,8 @@ namespace NMoneys
 		/// <param name="numberOfElements">The number of elements in the array.</param>
 		/// <returns>An array of <see cref="Money"/> instances with zero <see cref="Amount"/> and the specified <paramref name="currency"/>.</returns>
 		/// <seealso cref="Money.Zero(CurrencyIsoCode)"/>
+		/// <exception cref="InvalidEnumArgumentException"><paramref name="currency"/> is not defined.</exception>
+		/// <exception cref="OverflowException"><paramref name="numberOfElements"/> is not a valid array length.</exception>
 		public static Money[] Zero(CurrencyIsoCode currency, int numberOfElements)
 		{
 			return initArray(numberOfElements, () => Zero(currency));
@@ -190,6 +194,7 @@ namespace NMoneys
 		/// <param name="currency">The incarnation of the <see cref="CurrencyCode"/>.</param>
 		/// <returns>An <see cref="Money"/> instance with zero <see cref="Amount"/> and the specified <paramref name="currency"/>.</returns>
 		/// <seealso cref="Money(decimal, Currency)"/>
+		/// <exception cref="ArgumentNullException"><paramref name="currency"/> is null.</exception>
 		public static Money Zero(Currency currency)
 		{
 			return new Money(decimal.Zero, currency);
@@ -202,6 +207,8 @@ namespace NMoneys
 		/// <param name="numberOfElements">The number of elements in the array.</param>
 		/// <returns>An array of <see cref="Money"/> instances with zero <see cref="Amount"/> and the specified <paramref name="currency"/>.</returns>
 		/// <seealso cref="Money.Zero(Currency)"/>
+		/// <exception cref="ArgumentNullException"><paramref name="currency"/> is null.</exception>
+		/// <exception cref="OverflowException"><paramref name="numberOfElements"/> is not a valid array length.</exception>
 		public static Money[] Zero(Currency currency, int numberOfElements)
 		{
 			return initArray(numberOfElements, () => Zero(currency));
@@ -213,6 +220,8 @@ namespace NMoneys
 		/// <param name="threeLetterIsoCode">Textual representation of the ISO 4217 <see cref="CurrencyCode"/>.</param>
 		/// <returns>An <see cref="Money"/> instance with zero <see cref="Amount"/> and the specified <paramref name="threeLetterIsoCode"/>.</returns>
 		/// <seealso cref="Money(decimal, string)"/>
+		/// <exception cref="ArgumentNullException"><paramref name="threeLetterIsoCode"/> is null.</exception>
+		/// <exception cref="InvalidEnumArgumentException"><paramref name="threeLetterIsoCode"/> is not defined.</exception>
 		public static Money Zero(string threeLetterIsoCode)
 		{
 			return new Money(decimal.Zero, threeLetterIsoCode);
@@ -225,6 +234,9 @@ namespace NMoneys
 		/// /// <param name="numberOfElements">The number of elements in the array.</param>
 		/// <returns>An array of <see cref="Money"/> instances with zero <see cref="Amount"/> and the specified <paramref name="threeLetterIsoCode"/>.</returns>
 		/// <seealso cref="Money.Zero(string)"/>
+		/// <exception cref="OverflowException"><paramref name="numberOfElements"/> is not a valid array length.</exception>
+		/// <exception cref="ArgumentNullException"><paramref name="threeLetterIsoCode"/> is null.</exception>
+		/// <exception cref="InvalidEnumArgumentException"><paramref name="threeLetterIsoCode"/> is not defined.</exception>
 		public static Money[] Zero(string threeLetterIsoCode, int numberOfElements)
 		{
 			return initArray(numberOfElements, ()=> Zero(threeLetterIsoCode));
@@ -1254,9 +1266,10 @@ currency);
 		/// </remarks>
 		/// <param name="numberOfRecipients">The number of times to split up the total.</param>
 		/// <returns>The results of the allocation as an array with a length equal to <paramref name="numberOfRecipients"/>.</returns>
-		/// <exception cref="ArithmeticException">The default allocator did not distributed all the remainder.</exception>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="numberOfRecipients"/> is less than 1 or more than <see cref="int.MaxValue"/>.</exception>
 		/// <seealso cref="Allocate(int, IRemainderAllocator)"/>
-		public Money[] Allocate(int numberOfRecipients)
+		/// <seealso cref="Allocation"/>
+		public Allocation.Allocation Allocate(int numberOfRecipients)
 		{
 			return Allocate(numberOfRecipients, RemainderAllocator.FirstToLast);
 		}
@@ -1278,26 +1291,11 @@ currency);
 		/// </remarks>
 		/// <param name="numberOfRecipients">The number of times to split up the total.</param>
 		/// <param name="allocator">The <see cref="IRemainderAllocator"/> that will distribute the remainder after an even split.</param>
-		/// <returns>The results of the allocation as an array with a length equal to <paramref name="numberOfRecipients"/>.</returns>
-		/// <exception cref="ArithmeticException">The <paramref name="allocator"/> did not distributed all the remainder.</exception>
+		/// <returns>The results of the allocation with a length equal to <paramref name="numberOfRecipients"/>.</returns>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="numberOfRecipients"/> is less than 1 or more than <see cref="int.MaxValue"/>.</exception>
 		/// <seealso cref="IRemainderAllocator"/>
-		public Money[] Allocate(int numberOfRecipients, IRemainderAllocator allocator)
-		{
-			EvenAllocator.AssertNumberOfRecipients("numberOfRecipients", numberOfRecipients);
-
-			assertEnoughToAllocate();
-
-			Money totalAllocated;
-			Money[] allocated = new EvenAllocator(this)
-				.Allocate(numberOfRecipients, out totalAllocated);
-
-			allocateRemainderIfNeeded(ref totalAllocated, allocator, allocated);
-
-			assertAllocatedWhole(totalAllocated);
-			return allocated;
-		}
-
-		public Allocation.Allocation DoAllocate(int numberOfRecipients, IRemainderAllocator allocator)
+		/// <seealso cref="Allocation"/>
+		public Allocation.Allocation Allocate(int numberOfRecipients, IRemainderAllocator allocator)
 		{
 			EvenAllocator.AssertNumberOfRecipients("numberOfRecipients", numberOfRecipients);
 
@@ -1318,27 +1316,6 @@ currency);
 			return (Amount < minimumToAllocate);
 		}
 
-		private void assertEnoughToAllocate()
-		{
-			var currency = this.GetCurrency();
-			decimal minimumToAllocate = currency.MinAmount;
-			if (Amount < minimumToAllocate)
-			{
-				string msg = string.Format(currency, "'{0}' is not enough to be allocated. Only quantities above '{1}' can be allocated", this.Format("{0} {2}"), minimumToAllocate);
-				throw new NotSupportedException(msg);
-			}
-		}
-
-		private void allocateRemainderIfNeeded(ref Money totalAllocated, IRemainderAllocator allocator, Money[] results)
-		{
-			Money remainder = this - totalAllocated;
-			if (remainder >= remainder.MinValue)
-			{
-				allocator.Allocate(remainder, results);
-				totalAllocated = Total(results);
-			}
-		}
-
 		private Allocation.Allocation allocateRemainderIfNeeded(IRemainderAllocator allocator, Allocation.Allocation allocatedSoFar)
 		{
 			Money remainder = this - allocatedSoFar.TotalAllocated;
@@ -1350,34 +1327,15 @@ currency);
 			return beingAllocated;
 		}
 
-		private void assertAllocatedWhole(Money totalAllocated)
-		{
-			if (!totalAllocated.Equals(this)) throw new ArithmeticException("The total amount was not fully allocated");
-		}
-
 		/// <summary>
 		/// Allocates the sum of money as fully and 'fairly' as possible given the collection of ratios passed.
 		/// </summary>
 		/// <param name="ratioBag">The ratio collection.</param>
 		/// <param name="allocator">The <see cref="IRemainderAllocator"/> that will distribute the remainder after the split.</param>
-		/// <returns>The results of the allocation as an array with a length equal to <paramref name="ratioBag"/>.</returns>
-		public Money[] Allocate(RatioBag ratioBag, IRemainderAllocator allocator)
-		{
-			Guard.AgainstNullArgument("ratioBag", ratioBag);
-
-			assertEnoughToAllocate();
-
-			Money totalAllocated;
-			var allocated = new ProRataAllocator(this)
-				.Allocate(ratioBag, out totalAllocated);
-
-			allocateRemainderIfNeeded(ref totalAllocated, allocator, allocated);
-
-			assertAllocatedWhole(totalAllocated);
-			return allocated;
-		}
-
-		public Allocation.Allocation DoAllocate(RatioBag ratioBag, IRemainderAllocator allocator)
+		/// <returns>The results of the allocation with a length equal to <paramref name="ratioBag"/>.</returns>
+		/// <seealso cref="Allocation"/>
+		/// <seealso cref="IRemainderAllocator"/>
+		public Allocation.Allocation Allocate(RatioBag ratioBag, IRemainderAllocator allocator)
 		{
 			Guard.AgainstNullArgument("ratioBag", ratioBag);
 
@@ -1398,9 +1356,10 @@ currency);
 		/// The default remainder allocation will be performed according to <see cref="RemainderAllocator.FirstToLast"/>.
 		/// </remarks>
 		/// <param name="ratioBag">The ratio collection.</param>
-		/// <returns>The results of the allocation as an array with a length equal to <paramref name="ratioBag"/>.</returns>
+		/// <returns>The results of the allocation with a length equal to <paramref name="ratioBag"/>.</returns>
 		/// <seealso cref="Allocate(RatioBag, IRemainderAllocator)"/>
-		public Money[] Allocate(RatioBag ratioBag)
+		/// <seealso cref="Allocation"/>
+		public Allocation.Allocation Allocate(RatioBag ratioBag)
 		{
 			return Allocate(ratioBag, RemainderAllocator.FirstToLast);
 		}
