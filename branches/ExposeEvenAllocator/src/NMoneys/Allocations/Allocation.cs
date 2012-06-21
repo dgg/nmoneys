@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using NMoneys.Support;
 
-namespace NMoneys.Allocation
+namespace NMoneys.Allocations
 {
 	public class Allocation : IEnumerable<Money>, IFormattable
 	{

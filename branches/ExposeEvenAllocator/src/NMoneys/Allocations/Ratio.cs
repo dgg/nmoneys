@@ -1,7 +1,7 @@
 using System;
 using NMoneys.Support;
 
-namespace NMoneys.Allocation
+namespace NMoneys.Allocations
 {
 	/// <summary>
 	/// Represents an allocation ratio, that is, a fraction.

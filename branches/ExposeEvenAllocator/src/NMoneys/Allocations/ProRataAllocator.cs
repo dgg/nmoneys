@@ -1,6 +1,6 @@
 ﻿using NMoneys.Extensions;
 
-namespace NMoneys.Allocation
+namespace NMoneys.Allocations
 {
 	internal class ProRataAllocator
 	{

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace NMoneys.Allocation
+namespace NMoneys.Allocations
 {
 	internal class LastToFirstAllocator : RemainderAllocatorBase
 	{

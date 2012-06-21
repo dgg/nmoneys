@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NMoneys.Support;
 
-namespace NMoneys.Allocation
+namespace NMoneys.Allocations
 {
 	/// <summary>
 	/// Maintains a list of ratios suitable for use in an allocation when the

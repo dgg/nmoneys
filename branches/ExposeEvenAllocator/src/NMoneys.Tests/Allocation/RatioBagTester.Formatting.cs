@@ -1,5 +1,5 @@
 ﻿using System.Globalization;
-using NMoneys.Allocation;
+using NMoneys.Allocations;
 using NMoneys.Tests.Support;
 using NUnit.Framework;
 

@@ -1,5 +1,5 @@
 using System;
-using NMoneys.Allocation;
+using NMoneys.Allocations;
 using NUnit.Framework;
 
 namespace NMoneys.Tests.Allocation

@@ -10,7 +10,7 @@ using System.Security.Permissions;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
-using NMoneys.Allocation;
+using NMoneys.Allocations;
 using NMoneys.Extensions;
 using NMoneys.Support;
 
@@ -1269,7 +1269,7 @@ currency);
 		/// <exception cref="ArgumentOutOfRangeException"><paramref name="numberOfRecipients"/> is less than 1 or more than <see cref="int.MaxValue"/>.</exception>
 		/// <seealso cref="Allocate(int, IRemainderAllocator)"/>
 		/// <seealso cref="Allocation"/>
-		public Allocation.Allocation Allocate(int numberOfRecipients)
+		public Allocation Allocate(int numberOfRecipients)
 		{
 			return Allocate(numberOfRecipients, RemainderAllocator.FirstToLast);
 		}
@@ -1295,13 +1295,13 @@ currency);
 		/// <exception cref="ArgumentOutOfRangeException"><paramref name="numberOfRecipients"/> is less than 1 or more than <see cref="int.MaxValue"/>.</exception>
 		/// <seealso cref="IRemainderAllocator"/>
 		/// <seealso cref="Allocation"/>
-		public Allocation.Allocation Allocate(int numberOfRecipients, IRemainderAllocator allocator)
+		public Allocation Allocate(int numberOfRecipients, IRemainderAllocator allocator)
 		{
 			EvenAllocator.AssertNumberOfRecipients("numberOfRecipients", numberOfRecipients);
 
-			if (notEnoughToAllocate()) return Allocation.Allocation.Zero(this, numberOfRecipients);
+			if (notEnoughToAllocate()) return Allocation.Zero(this, numberOfRecipients);
 
-			Allocation.Allocation allocated = new EvenAllocator(this)
+			Allocation allocated = new EvenAllocator(this)
 				.Allocate(numberOfRecipients);
 
 			allocated = allocateRemainderIfNeeded(allocator, allocated);
@@ -1316,10 +1316,10 @@ currency);
 			return (Amount < minimumToAllocate);
 		}
 
-		private Allocation.Allocation allocateRemainderIfNeeded(IRemainderAllocator allocator, Allocation.Allocation allocatedSoFar)
+		private Allocation allocateRemainderIfNeeded(IRemainderAllocator allocator, Allocation allocatedSoFar)
 		{
 			Money remainder = this - allocatedSoFar.TotalAllocated;
-			Allocation.Allocation beingAllocated = allocatedSoFar;
+			Allocation beingAllocated = allocatedSoFar;
 			if (remainder >= remainder.MinValue)
 			{
 				beingAllocated = allocator.Allocate(allocatedSoFar);
@@ -1335,13 +1335,13 @@ currency);
 		/// <returns>The results of the allocation with a length equal to <paramref name="ratioBag"/>.</returns>
 		/// <seealso cref="Allocation"/>
 		/// <seealso cref="IRemainderAllocator"/>
-		public Allocation.Allocation Allocate(RatioBag ratioBag, IRemainderAllocator allocator)
+		public Allocation Allocate(RatioBag ratioBag, IRemainderAllocator allocator)
 		{
 			Guard.AgainstNullArgument("ratioBag", ratioBag);
 
-			if (notEnoughToAllocate()) return Allocation.Allocation.Zero(this, ratioBag.Count);
+			if (notEnoughToAllocate()) return Allocation.Zero(this, ratioBag.Count);
 
-			Allocation.Allocation allocated = new ProRataAllocator(this)
+			Allocation allocated = new ProRataAllocator(this)
 				.Allocate(ratioBag);
 
 			allocated = allocateRemainderIfNeeded(allocator, allocated);
@@ -1359,7 +1359,7 @@ currency);
 		/// <returns>The results of the allocation with a length equal to <paramref name="ratioBag"/>.</returns>
 		/// <seealso cref="Allocate(RatioBag, IRemainderAllocator)"/>
 		/// <seealso cref="Allocation"/>
-		public Allocation.Allocation Allocate(RatioBag ratioBag)
+		public Allocation Allocate(RatioBag ratioBag)
 		{
 			return Allocate(ratioBag, RemainderAllocator.FirstToLast);
 		}

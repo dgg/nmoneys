@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using NMoneys.Allocation;
-using NMoneys.Tests.CustomConstraints;
+﻿using NMoneys.Allocations;
 using NUnit.Framework;
 
 namespace NMoneys.Tests.Allocation

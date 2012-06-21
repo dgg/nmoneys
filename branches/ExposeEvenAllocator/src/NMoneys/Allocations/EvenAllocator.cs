@@ -1,8 +1,7 @@
-﻿using System;
-using NMoneys.Extensions;
+﻿using NMoneys.Extensions;
 using NMoneys.Support;
 
-namespace NMoneys.Allocation
+namespace NMoneys.Allocations
 {
 	/// <summary>
 	/// Allows allocating an instance of <see cref="Money"/> evenly.

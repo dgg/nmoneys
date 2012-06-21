@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NMoneys.Allocation
+namespace NMoneys.Allocations
 {
 	internal class RandomAllocator : RemainderAllocatorBase
 	{

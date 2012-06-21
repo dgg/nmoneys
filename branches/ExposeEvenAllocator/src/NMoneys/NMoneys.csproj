@@ -48,7 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Allocations\Allocation.cs" />
-    <Compile Include="Allocations\AllocationOrdering.cs" />
     <Compile Include="Allocations\EvenAllocator.cs" />
     <Compile Include="Allocations\FirstToLastAllocator.cs" />
     <Compile Include="Allocations\IRemainderAllocator.cs" />

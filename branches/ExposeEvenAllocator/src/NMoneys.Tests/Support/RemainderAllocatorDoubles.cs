@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using NMoneys.Allocation;
+using NMoneys.Allocations;
 
 namespace NMoneys.Tests.Support
 {
@@ -13,7 +13,7 @@ namespace NMoneys.Tests.Support
 			RemainderAllocator.FirstToLast.Allocate(remainder, alreadyAllocated);
 		}
 
-		public NMoneys.Allocation.Allocation Allocate(NMoneys.Allocation.Allocation allocationSoFar)
+		public Allocations.Allocation Allocate(Allocations.Allocation allocationSoFar)
 		{
 			throw new System.NotImplementedException();
 		}
@@ -26,7 +26,7 @@ namespace NMoneys.Tests.Support
  			// does not touch the amounts already allocated, thus not doing its job
 		}
 
-		public NMoneys.Allocation.Allocation Allocate(NMoneys.Allocation.Allocation allocationSoFar)
+		public Allocations.Allocation Allocate(Allocations.Allocation allocationSoFar)
 		{
 			return allocationSoFar;
 		}
