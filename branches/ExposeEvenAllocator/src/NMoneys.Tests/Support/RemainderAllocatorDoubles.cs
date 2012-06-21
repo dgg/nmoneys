@@ -12,6 +12,11 @@ namespace NMoneys.Tests.Support
 			// need to do the real thing to fulfill contract
 			RemainderAllocator.FirstToLast.Allocate(remainder, alreadyAllocated);
 		}
+
+		public NMoneys.Allocation.Allocation Allocate(NMoneys.Allocation.Allocation allocationSoFar)
+		{
+			throw new System.NotImplementedException();
+		}
 	}
 
 	internal class RogueRemainderAllocator : IRemainderAllocator
@@ -19,6 +24,11 @@ namespace NMoneys.Tests.Support
 		public void Allocate(Money remainder, IList<Money> alreadyAllocated)
 		{
  			// does not touch the amounts already allocated, thus not doing its job
+		}
+
+		public NMoneys.Allocation.Allocation Allocate(NMoneys.Allocation.Allocation allocationSoFar)
+		{
+			return allocationSoFar;
 		}
 	}
 }

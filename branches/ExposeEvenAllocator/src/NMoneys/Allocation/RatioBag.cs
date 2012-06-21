@@ -103,7 +103,7 @@ namespace NMoneys.Allocation
 		/// </returns>
 		public override string ToString()
 		{
-			return toString(r => r.ToString());
+			return new Stringifier().Stringify(_ratios);
 		}
 
 		/// <summary>
@@ -121,12 +121,7 @@ namespace NMoneys.Allocation
 		/// </param>
 		public string ToString(string format, IFormatProvider formatProvider)
 		{
-			return toString(r => r.ToString(format, formatProvider));
-		}
-
-		private string toString(Func<Ratio, string> ratioString)
-		{
-			return "< " + string.Join(" | ", _ratios.Select(ratioString).ToArray()) + " >";
+			return new Stringifier().Stringify(_ratios, r => r.ToString(format, formatProvider));
 		}
 	}
 }

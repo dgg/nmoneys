@@ -163,6 +163,28 @@ namespace NMoneys
 		}
 
 		/// <summary>
+		/// Creates and initializes an array of <see cref="Money"/> with <see cref="decimal.Zero"/> quantity and the specified currency.
+		/// </summary>
+		/// <param name="currency">The <see cref="CurrencyCode"/> of the monetary quantity.</param>
+		/// <param name="numberOfElements">The number of elements in the array.</param>
+		/// <returns>An array of <see cref="Money"/> instances with zero <see cref="Amount"/> and the specified <paramref name="currency"/>.</returns>
+		/// <seealso cref="Money.Zero(CurrencyIsoCode)"/>
+		public static Money[] Zero(CurrencyIsoCode currency, int numberOfElements)
+		{
+			return initArray(numberOfElements, () => Zero(currency));
+		}
+
+		private static Money[] initArray(int length, Func<Money> zero)
+		{
+			var results = new Money[length];
+			for (int i = 0; i < results.Length; i++)
+			{
+				results[i] = zero();
+			}
+			return results;
+		}
+
+		/// <summary>
 		/// Creates an instance of <see cref="Money"/> with <see cref="decimal.Zero"/> quantity and the specified currency.
 		/// </summary>
 		/// <param name="currency">The incarnation of the <see cref="CurrencyCode"/>.</param>
@@ -174,6 +196,18 @@ namespace NMoneys
 		}
 
 		/// <summary>
+		/// Creates an array of <see cref="Money"/> with <see cref="decimal.Zero"/> quantity and the specified currency.
+		/// </summary>
+		/// <param name="currency">The incarnation of the <see cref="CurrencyCode"/>.</param>
+		/// <param name="numberOfElements">The number of elements in the array.</param>
+		/// <returns>An array of <see cref="Money"/> instances with zero <see cref="Amount"/> and the specified <paramref name="currency"/>.</returns>
+		/// <seealso cref="Money.Zero(Currency)"/>
+		public static Money[] Zero(Currency currency, int numberOfElements)
+		{
+			return initArray(numberOfElements, () => Zero(currency));
+		}
+
+		/// <summary>
 		/// Creates an instance of <see cref="Money"/> with <see cref="decimal.Zero"/> quantity and the specified currency.
 		/// </summary>
 		/// <param name="threeLetterIsoCode">Textual representation of the ISO 4217 <see cref="CurrencyCode"/>.</param>
@@ -182,6 +216,18 @@ namespace NMoneys
 		public static Money Zero(string threeLetterIsoCode)
 		{
 			return new Money(decimal.Zero, threeLetterIsoCode);
+		}
+
+		/// <summary>
+		/// Creates an array of see cref="Money"/> with <see cref="decimal.Zero"/> quantity and the specified currency.
+		/// </summary>
+		/// <param name="threeLetterIsoCode">Textual representation of the ISO 4217 <see cref="CurrencyCode"/>.</param>
+		/// /// <param name="numberOfElements">The number of elements in the array.</param>
+		/// <returns>An array of <see cref="Money"/> instances with zero <see cref="Amount"/> and the specified <paramref name="threeLetterIsoCode"/>.</returns>
+		/// <seealso cref="Money.Zero(string)"/>
+		public static Money[] Zero(string threeLetterIsoCode, int numberOfElements)
+		{
+			return initArray(numberOfElements, ()=> Zero(threeLetterIsoCode));
 		}
 
 		/// <summary>
@@ -835,20 +881,39 @@ currency);
 		}
 
 		/// <summary>
+		/// Returns a value indicating whether each of the <paramref name="moneys"/> has the same currency as the instance.
+		/// </summary>
+		/// <param name="moneys">Collection of <see cref="Money"/> instances to check against.</param>
+		/// <returns>true if <see cref="CurrencyCode"/> is equal to each of <paramref name="moneys"/>'s; otherwise, false.</returns>
+		/// <exception cref="ArgumentNullException"><paramref name="moneys"/> is null.</exception>
+		public bool HasSameCurrencyAs(IEnumerable<Money> moneys)
+		{
+			Guard.AgainstNullArgument("moneys", moneys);
+			var self = this;
+			return moneys.All(self.HasSameCurrencyAs);
+		}
+
+		/// <summary>
 		/// Checks whether the <paramref name="money"/> has the same currency as the instance, throwing an exception if that is not the case.
 		/// </summary>
 		/// <param name="money"><see cref="Money"/> instance to check against.</param>
-		/// <exception cref="DifferentCurrencyException"></exception>
+		/// <exception cref="DifferentCurrencyException"><paramref name="money"/> has a different currency from the instance's.</exception>
 		public void AssertSameCurrency(Money money)
 		{
 			if (!HasSameCurrencyAs(money)) throw new DifferentCurrencyException(CurrencyCode.ToString(), money.CurrencyCode.ToString());
 		}
 
-		private static void assertSameCurrency(Money first, Money second)
+		/// <summary>
+		/// Checks whether each of the <paramref name="moneys"/> has the same currency as the instance, throwing an exception if that is not the case.
+		/// </summary>
+		/// <param name="moneys">Collection of <see cref="Money"/> instance to check against.</param>
+		/// <exception cref="DifferentCurrencyException">At least one of the <paramref name="moneys"/> has a different currency from the instance's.</exception>
+		public void AssertSameCurrency(IEnumerable<Money> moneys)
 		{
-			if (!first.HasSameCurrencyAs(second))
+			Guard.AgainstNullArgument("arg", moneys);
+			foreach (var money in moneys)
 			{
-				throw new DifferentCurrencyException(first.CurrencyCode.ToString(), second.CurrencyCode.ToString());
+				if (!HasSameCurrencyAs(money)) throw new DifferentCurrencyException(CurrencyCode.ToString(), money.CurrencyCode.ToString());	
 			}
 		}
 
@@ -880,7 +945,7 @@ currency);
 		/// <see cref="decimal.MinValue"/> or greater than <see cref="decimal.MaxValue"/>.</exception>
 		public static Money operator +(Money first, Money second)
 		{
-			assertSameCurrency(first, second);
+			first.AssertSameCurrency(second);
 			return new Money(first.Amount + second.Amount, first.CurrencyCode);
 		}
 
@@ -915,7 +980,7 @@ currency);
 		/// <see cref="decimal.MinValue"/> or greater than <see cref="decimal.MaxValue"/>.</exception>
 		public static Money operator -(Money first, Money second)
 		{
-			assertSameCurrency(first, second);
+			first.AssertSameCurrency(second);
 			return new Money(first.Amount - second.Amount, first.CurrencyCode);
 		}
 
@@ -1232,6 +1297,27 @@ currency);
 			return allocated;
 		}
 
+		public Allocation.Allocation DoAllocate(int numberOfRecipients, IRemainderAllocator allocator)
+		{
+			EvenAllocator.AssertNumberOfRecipients("numberOfRecipients", numberOfRecipients);
+
+			if (notEnoughToAllocate()) return Allocation.Allocation.Zero(this, numberOfRecipients);
+
+			Allocation.Allocation allocated = new EvenAllocator(this)
+				.Allocate(numberOfRecipients);
+
+			allocated = allocateRemainderIfNeeded(allocator, allocated);
+
+			return allocated;
+		}
+
+		private bool notEnoughToAllocate()
+		{
+			var currency = this.GetCurrency();
+			decimal minimumToAllocate = currency.MinAmount;
+			return (Amount < minimumToAllocate);
+		}
+
 		private void assertEnoughToAllocate()
 		{
 			var currency = this.GetCurrency();
@@ -1246,11 +1332,22 @@ currency);
 		private void allocateRemainderIfNeeded(ref Money totalAllocated, IRemainderAllocator allocator, Money[] results)
 		{
 			Money remainder = this - totalAllocated;
-			if (remainder.Amount > 0)
+			if (remainder >= remainder.MinValue)
 			{
 				allocator.Allocate(remainder, results);
 				totalAllocated = Total(results);
 			}
+		}
+
+		private Allocation.Allocation allocateRemainderIfNeeded(IRemainderAllocator allocator, Allocation.Allocation allocatedSoFar)
+		{
+			Money remainder = this - allocatedSoFar.TotalAllocated;
+			Allocation.Allocation beingAllocated = allocatedSoFar;
+			if (remainder >= remainder.MinValue)
+			{
+				beingAllocated = allocator.Allocate(allocatedSoFar);
+			}
+			return beingAllocated;
 		}
 
 		private void assertAllocatedWhole(Money totalAllocated)

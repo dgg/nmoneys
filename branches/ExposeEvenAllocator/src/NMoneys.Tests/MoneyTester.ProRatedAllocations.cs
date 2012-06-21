@@ -211,5 +211,13 @@ namespace NMoneys.Tests
 				.With.Message.StringContaining("0.001 USD")
 				.With.Message.StringContaining("0.01"));
 		}
+
+		[Test]
+		public void Allocate_ProRated_ResidualRemainders_Exception()
+		{
+			var residualRemainder = 100.001m.Usd();
+
+			residualRemainder.Allocate(new RatioBag(.7m, .3m));
+		}
 	}
 }

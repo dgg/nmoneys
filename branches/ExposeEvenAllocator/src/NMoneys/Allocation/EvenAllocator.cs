@@ -37,9 +37,9 @@ namespace NMoneys.Allocation
 		/// <returns>The results of the even allocation as an array with a length equal to <paramref name="numberOfRecipients"/>.</returns>
 		public Money[] Allocate(int numberOfRecipients, out Money allocated)
 		{
-			var results = initResults(numberOfRecipients);
+			Money[] results = Money.Zero(_currency, numberOfRecipients);
 			allocated = Money.Zero(_currency);
-			var each = _toAllocate.Amount / numberOfRecipients;
+			decimal each = _toAllocate.Amount / numberOfRecipients;
 			each = _currency.Round(each);
 
 			// if amount to allocate is too 'scarce' to allocate something to all
@@ -55,14 +55,22 @@ namespace NMoneys.Allocation
 			return results;
 		}
 
-		private Money[] initResults(int numberOfRecipients)
+		public Allocation Allocate(int numberOfRecipients)
 		{
-			var results = new Money[numberOfRecipients];
-			for (int i = 0; i < results.Length; i++)
+			Money[] results = Money.Zero(_currency, numberOfRecipients);
+			decimal each = _toAllocate.Amount / numberOfRecipients;
+			each = _currency.Round(each);
+
+			// if amount to allocate is too 'scarce' to allocate something to all
+			// then effectively go into remainder allocation mode
+			var notEnough = (numberOfRecipients * (_toAllocate.MinValue.Amount)) > _toAllocate.Amount;
+			if (notEnough) return Allocation.Zero(_toAllocate, numberOfRecipients);
+
+			for (var i = 0; i < numberOfRecipients; i++)
 			{
-				results[i] = Money.Zero(_currency);
+				results[i] = new Money(each, _currency);
 			}
-			return results;
+			return new Allocation(_toAllocate, results);
 		}
 
 		private static readonly Range<int> _validityRange = new Range<int>(1.Close(), int.MaxValue.Close());

@@ -32,5 +32,7 @@ namespace NMoneys.Allocation
 		/// <param name="alreadyAllocated">An array representing the evenly allocated amounts.
 		/// Its amounts will be modified according to the strategy chosen to allocate the <paramref name="remainder"/>.</param>
 		void Allocate(Money remainder, IList<Money> alreadyAllocated);
+
+		Allocation Allocate(Allocation allocationSoFar);
 	}
 }
