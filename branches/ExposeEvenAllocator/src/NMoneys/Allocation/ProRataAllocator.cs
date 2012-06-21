@@ -15,7 +15,6 @@ namespace NMoneys.Allocation
 
 		public Money[] Allocate(RatioBag ratios, out Money allocated)
 		{
-			//var ordered = ratios.AsOrdered();
 			var results = initResults(ratios.Count);
 			allocated = Money.Zero(_currency);
 
@@ -27,6 +26,20 @@ namespace NMoneys.Allocation
 				allocated += results[i];
 			}
 			return results;
+		}
+
+		public Allocation Allocate(RatioBag ratios)
+		{
+			Money[] results = Money.Zero(_currency, ratios.Count);
+			//allocated = Money.Zero(_currency);
+
+			for (var i = 0; i < ratios.Count; i++)
+			{
+				var share = ratios[i].ApplyTo(_toAllocate.Amount);
+				share = _currency.Round(share);
+				results[i] = new Money(share, _currency);
+			}
+			return new Allocation(_toAllocate, results);
 		}
 
 		private Money[] initResults(int numberOfRecipients)

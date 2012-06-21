@@ -1377,6 +1377,20 @@ currency);
 			return allocated;
 		}
 
+		public Allocation.Allocation DoAllocate(RatioBag ratioBag, IRemainderAllocator allocator)
+		{
+			Guard.AgainstNullArgument("ratioBag", ratioBag);
+
+			if (notEnoughToAllocate()) return Allocation.Allocation.Zero(this, ratioBag.Count);
+
+			Allocation.Allocation allocated = new ProRataAllocator(this)
+				.Allocate(ratioBag);
+
+			allocated = allocateRemainderIfNeeded(allocator, allocated);
+
+			return allocated;
+		}
+
 		/// <summary>
 		/// Allocates the sum of money as fully and 'fairly' as possible given the collection of ratios passed.
 		/// </summary>
