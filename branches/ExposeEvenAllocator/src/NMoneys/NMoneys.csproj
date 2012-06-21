@@ -47,17 +47,17 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Allocation\Allocation.cs" />
-    <Compile Include="Allocation\AllocationOrdering.cs" />
-    <Compile Include="Allocation\EvenAllocator.cs" />
-    <Compile Include="Allocation\FirstToLastAllocator.cs" />
-    <Compile Include="Allocation\IRemainderAllocator.cs" />
-    <Compile Include="Allocation\ProRataAllocator.cs" />
-    <Compile Include="Allocation\RandomAllocator.cs" />
-    <Compile Include="Allocation\Ratio.cs" />
-    <Compile Include="Allocation\RatioBag.cs" />
-    <Compile Include="Allocation\RemainderAllocatorBase.cs" />
-    <Compile Include="Allocation\LastToFirstAllocator.cs" />
+    <Compile Include="Allocations\Allocation.cs" />
+    <Compile Include="Allocations\AllocationOrdering.cs" />
+    <Compile Include="Allocations\EvenAllocator.cs" />
+    <Compile Include="Allocations\FirstToLastAllocator.cs" />
+    <Compile Include="Allocations\IRemainderAllocator.cs" />
+    <Compile Include="Allocations\ProRataAllocator.cs" />
+    <Compile Include="Allocations\RandomAllocator.cs" />
+    <Compile Include="Allocations\Ratio.cs" />
+    <Compile Include="Allocations\RatioBag.cs" />
+    <Compile Include="Allocations\RemainderAllocatorBase.cs" />
+    <Compile Include="Allocations\LastToFirstAllocator.cs" />
     <Compile Include="PowerOfTen.cs" />
     <Compile Include="Currency.cs" />
     <Compile Include="CurrencyCharacterReferences.cs" />
