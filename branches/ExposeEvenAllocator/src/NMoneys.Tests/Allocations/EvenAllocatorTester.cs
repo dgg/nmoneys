@@ -2,7 +2,7 @@
 using NMoneys.Extensions;
 using NUnit.Framework;
 
-namespace NMoneys.Tests.Allocation
+namespace NMoneys.Tests.Allocations
 {
 	[TestFixture]
 	public class EvenAllocatorTester

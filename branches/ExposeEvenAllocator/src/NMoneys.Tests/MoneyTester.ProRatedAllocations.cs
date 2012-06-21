@@ -23,7 +23,7 @@ namespace NMoneys.Tests
 			var easyEven = 10m.Usd();
 
 			var ratios = new RatioBag(.5m, .2m, .3m);
-			Allocations.Allocation allocated = easyEven.Allocate(ratios);
+			Allocation allocated = easyEven.Allocate(ratios);
 			Assert.That(allocated, Is.EqualTo(new[]
 			{
 				5m.Usd(),
@@ -38,7 +38,7 @@ namespace NMoneys.Tests
 			var bigEven = 6000000m.Usd();
 
 			var ratios = new RatioBag(.5725m, .4275m);
-			Allocations.Allocation allocated = bigEven.Allocate(ratios);
+			Allocation allocated = bigEven.Allocate(ratios);
 			Assert.That(allocated, Is.EqualTo(new[]
 			{
 				3435000m.Usd(),
@@ -52,7 +52,7 @@ namespace NMoneys.Tests
 			var stillEasy = 100m.Usd();
 
 			var ratios = new RatioBag(.412m, .495m, .093m);
-			Allocations.Allocation allocated = stillEasy.Allocate(ratios);
+			Allocation allocated = stillEasy.Allocate(ratios);
 			Assert.That(allocated, Is.EqualTo(new[]
 			{
 				41.2m.Usd(),
@@ -86,7 +86,7 @@ namespace NMoneys.Tests
 			var scarce = .05m.Usd();
 			var ratios = new RatioBag(.412m, .093m, .495m);
 
-			Allocations.Allocation allocated = scarce.Allocate(ratios);
+			Allocation allocated = scarce.Allocate(ratios);
 			Assert.That(allocated, Is.EqualTo(new[]
 			{
 				.03m.Usd(),
@@ -101,7 +101,7 @@ namespace NMoneys.Tests
 			var scarce = .05m.Usd();
 			var ratios = new RatioBag(.093m, .412m, .495m);
 
-			Allocations.Allocation allocated = scarce.Allocate(ratios);
+			Allocation allocated = scarce.Allocate(ratios);
 			Assert.That(allocated, Is.EqualTo(new[]
 			{
 				.01m.Usd(),

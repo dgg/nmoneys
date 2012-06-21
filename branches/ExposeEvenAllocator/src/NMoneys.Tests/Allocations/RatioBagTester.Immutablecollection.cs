@@ -1,7 +1,7 @@
 ﻿using NMoneys.Allocations;
 using NUnit.Framework;
 
-namespace NMoneys.Tests.Allocation
+namespace NMoneys.Tests.Allocations
 {
 	[TestFixture]
 	public partial class RatioBagTester

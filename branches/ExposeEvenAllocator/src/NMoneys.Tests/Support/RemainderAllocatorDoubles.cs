@@ -13,7 +13,7 @@ namespace NMoneys.Tests.Support
 			RemainderAllocator.FirstToLast.Allocate(remainder, alreadyAllocated);
 		}
 
-		public Allocations.Allocation Allocate(Allocations.Allocation allocationSoFar)
+		public Allocation Allocate(Allocation allocationSoFar)
 		{
 			throw new System.NotImplementedException();
 		}
@@ -26,7 +26,7 @@ namespace NMoneys.Tests.Support
  			// does not touch the amounts already allocated, thus not doing its job
 		}
 
-		public Allocations.Allocation Allocate(Allocations.Allocation allocationSoFar)
+		public Allocation Allocate(Allocation allocationSoFar)
 		{
 			return allocationSoFar;
 		}

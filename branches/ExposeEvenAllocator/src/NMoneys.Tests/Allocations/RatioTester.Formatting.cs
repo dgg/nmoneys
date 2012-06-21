@@ -3,7 +3,7 @@ using NMoneys.Allocations;
 using NMoneys.Tests.Support;
 using NUnit.Framework;
 
-namespace NMoneys.Tests.Allocation
+namespace NMoneys.Tests.Allocations
 {
 	[TestFixture]
 	public partial class RatioTester
