@@ -29,47 +29,33 @@ namespace NMoneys.Allocations
 		/// is allocate the maximum fair amount and leave the remainding amount for the caller to decide.</para>
 		/// </remarks>
 		/// <param name="numberOfRecipients">The number of times to split up the total.</param>
-		/// <param name="allocated">The sum of money evenly allocated.
-		/// <para>In the case of an even allocation, that sum would equal the quantity passed to the constructor <see cref="EvenAllocator(Money)"/>.</para>
-		/// <para>In the case of an uneven allocation, that sum would be less than the quantity amount passed to the constructor <see cref="EvenAllocator(Money)"/>.</para>
-		/// </param>
-		/// <returns>The results of the even allocation as an array with a length equal to <paramref name="numberOfRecipients"/>.</returns>
-		public Money[] Allocate(int numberOfRecipients, out Money allocated)
-		{
-			Money[] results = Money.Zero(_currency, numberOfRecipients);
-			allocated = Money.Zero(_currency);
-			decimal each = _toAllocate.Amount / numberOfRecipients;
-			each = _currency.Round(each);
-
-			// if amount to allocate is too 'scarce' to allocate something to all
-			// then effectively go into remainder allocation mode
-			var notEnough = (numberOfRecipients * (_toAllocate.MinValue.Amount)) > _toAllocate.Amount;
-			if (notEnough) return results;
-
-			for (var i = 0; i < numberOfRecipients; i++)
-			{
-				results[i] = new Money(each, _currency);
-				allocated += results[i];
-			}
-			return results;
-		}
-
+		/// <returns>
+		/// The results of the even allocation with a length equal to <paramref name="numberOfRecipients"/>.
+		/// <para>In the case of an even allocation, the allocation will be complete.<see cref="Allocation.IsComplete"/>, having a zero <see cref="Allocation.Remainder"/>.</para>
+		/// <para>In the case of an uneven allocation, the allocation will not be complete <see cref="EvenAllocator(Money)"/>, having a non-zero <see cref="Allocation.Remainder"/>.</para>
+		/// </returns>
+		/// <seealso cref="EvenAllocator(Money)"/>
 		public Allocation Allocate(int numberOfRecipients)
 		{
-			Money[] results = Money.Zero(_currency, numberOfRecipients);
-			decimal each = _toAllocate.Amount / numberOfRecipients;
-			each = _currency.Round(each);
-
 			// if amount to allocate is too 'scarce' to allocate something to all
 			// then effectively go into remainder allocation mode
-			var notEnough = (numberOfRecipients * (_toAllocate.MinValue.Amount)) > _toAllocate.Amount;
-			if (notEnough) return Allocation.Zero(_toAllocate, numberOfRecipients);
+			if (notEnoughToAllocateEvenly(numberOfRecipients)) return Allocation.Zero(_toAllocate, numberOfRecipients);
 
-			for (var i = 0; i < numberOfRecipients; i++)
-			{
-				results[i] = new Money(each, _currency);
-			}
+			decimal each = amountforEachRecipient(numberOfRecipients);
+			Money[] results = Money.Some(each, _currency, numberOfRecipients);
 			return new Allocation(_toAllocate, results);
+		}
+
+		private bool notEnoughToAllocateEvenly(int numberOfRecipients)
+		{
+			return (numberOfRecipients*(_toAllocate.MinValue.Amount)) > _toAllocate.Amount;
+		}
+
+		private decimal amountforEachRecipient(int numberOfRecipients)
+		{
+			decimal each = _toAllocate.Amount / numberOfRecipients;
+			each = _currency.Round(each);
+			return each;
 		}
 
 		private static readonly Range<int> _validityRange = new Range<int>(1.Close(), int.MaxValue.Close());

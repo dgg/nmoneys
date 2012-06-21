@@ -69,5 +69,33 @@ namespace NMoneys.Tests.CustomConstraints
 		{
 			return new CharacterReferenceConstraint(entityName, entityNumber);
 		}
+
+		internal static Constraint Incomplete(this Must.BeEntryPoint entry, Action<IncompleteAllocationConstraint> setup)
+		{
+			var incomplete = new IncompleteAllocationConstraint();
+			setup(incomplete);
+			return incomplete;
+		}
+
+		internal static Constraint Complete(this Must.BeEntryPoint entry, Action<CompleteAllocationConstraint> setup)
+		{
+			var complete = new CompleteAllocationConstraint();
+			setup(complete);
+			return complete;
+		}
+
+		internal static Constraint NoAllocation(this Must.BeEntryPoint entry, Action<NoAllocationConstraint> setup)
+		{
+			var no = new NoAllocationConstraint();
+			setup(no);
+			return no;
+		}
+
+		internal static Constraint QuasiComplete(this Must.BeEntryPoint entry, Action<QuasiCompleteAllocationConstraint> setup)
+		{
+			var quasiComplete = new QuasiCompleteAllocationConstraint();
+			setup(quasiComplete);
+			return quasiComplete;
+		}
 	}
 }

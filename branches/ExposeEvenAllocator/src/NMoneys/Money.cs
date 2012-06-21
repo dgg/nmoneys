@@ -167,7 +167,7 @@ namespace NMoneys
 		/// <summary>
 		/// Creates and initializes an array of <see cref="Money"/> with <see cref="decimal.Zero"/> quantity and the specified currency.
 		/// </summary>
-		/// <param name="currency">The <see cref="CurrencyCode"/> of the monetary quantity.</param>
+		/// <param name="currency">The <see cref="CurrencyCode"/> of each monetary quantity.</param>
 		/// <param name="numberOfElements">The number of elements in the array.</param>
 		/// <returns>An array of <see cref="Money"/> instances with zero <see cref="Amount"/> and the specified <paramref name="currency"/>.</returns>
 		/// <seealso cref="Money.Zero(CurrencyIsoCode)"/>
@@ -178,12 +178,15 @@ namespace NMoneys
 			return initArray(numberOfElements, () => Zero(currency));
 		}
 
-		private static Money[] initArray(int length, Func<Money> zero)
+		private static Money[] initArray(int length, Func<Money> aMoney)
 		{
 			var results = new Money[length];
+			// instead of execute the delegate once per iteration, we execute it once and assign it multiple times as
+			// it is a value object
+			var instance = aMoney();
 			for (int i = 0; i < results.Length; i++)
 			{
-				results[i] = zero();
+				results[i] = instance;
 			}
 			return results;
 		}
@@ -201,9 +204,9 @@ namespace NMoneys
 		}
 
 		/// <summary>
-		/// Creates an array of <see cref="Money"/> with <see cref="decimal.Zero"/> quantity and the specified currency.
+		/// Creates and initializes an array of <see cref="Money"/> with <see cref="decimal.Zero"/> quantity and the specified currency.
 		/// </summary>
-		/// <param name="currency">The incarnation of the <see cref="CurrencyCode"/>.</param>
+		/// <param name="currency">The incarnation of the <see cref="CurrencyCode"/> for each monetary quantity.</param>
 		/// <param name="numberOfElements">The number of elements in the array.</param>
 		/// <returns>An array of <see cref="Money"/> instances with zero <see cref="Amount"/> and the specified <paramref name="currency"/>.</returns>
 		/// <seealso cref="Money.Zero(Currency)"/>
@@ -228,10 +231,10 @@ namespace NMoneys
 		}
 
 		/// <summary>
-		/// Creates an array of see cref="Money"/> with <see cref="decimal.Zero"/> quantity and the specified currency.
+		/// Creates and initializes an array of <see cref="Money"/> with <see cref="decimal.Zero"/> quantity and the specified currency.
 		/// </summary>
-		/// <param name="threeLetterIsoCode">Textual representation of the ISO 4217 <see cref="CurrencyCode"/>.</param>
-		/// /// <param name="numberOfElements">The number of elements in the array.</param>
+		/// <param name="threeLetterIsoCode">Textual representation of the ISO 4217 <see cref="CurrencyCode"/> for each monetary quantity.</param>
+		/// <param name="numberOfElements">The number of elements in the array.</param>
 		/// <returns>An array of <see cref="Money"/> instances with zero <see cref="Amount"/> and the specified <paramref name="threeLetterIsoCode"/>.</returns>
 		/// <seealso cref="Money.Zero(string)"/>
 		/// <exception cref="OverflowException"><paramref name="numberOfElements"/> is not a valid array length.</exception>
@@ -391,6 +394,52 @@ currency);
 			Guard.AgainstArgument("moneys", !moneys.Any(), "The collection of moneys cannot be empty.");
 
 			return moneys.Aggregate((a, b) => a + b);
+		}
+
+		/// <summary>
+		/// Creates and initializes an array of <see cref="Money"/> with <paramref name="amount"/> quantity and the specified currency.
+		/// </summary>
+		/// <param name="amount">The <see cref="Amount"/> of each monetary quantity.</param>
+		/// <param name="currency">The <see cref="CurrencyCode"/> of each monetary quantity.</param>
+		/// <param name="numberOfElements">The number of elements in the array.</param>
+		/// <returns>An array of <see cref="Money"/> instances with <paramref name="amount"/> and the specified <paramref name="currency"/>.</returns>
+		/// <seealso cref="Money(decimal, CurrencyIsoCode)"/>
+		/// <exception cref="InvalidEnumArgumentException"><paramref name="currency"/> is not defined.</exception>
+		/// <exception cref="OverflowException"><paramref name="numberOfElements"/> is not a valid array length.</exception>
+		public static Money[] Some(decimal amount, CurrencyIsoCode currency, int numberOfElements)
+		{
+			return initArray(numberOfElements, () => new Money(amount, currency));
+		}
+
+		/// <summary>
+		/// Creates and initializes an array of <see cref="Money"/> with <paramref name="amount"/> quantity and the specified currency.
+		/// </summary>
+		/// <param name="amount">The <see cref="Amount"/> of each monetary quantity.</param>
+		/// <param name="currency">The incarnation of the <see cref="CurrencyCode"/> for each monetary quantity.</param>
+		/// <param name="numberOfElements">The number of elements in the array.</param>
+		/// <returns>An array of <see cref="Money"/> instances with <paramref name="amount"/> and the specified <paramref name="currency"/>.</returns>
+		/// <seealso cref="Money(decimal, Currency)"/>
+		/// <exception cref="InvalidEnumArgumentException"><paramref name="currency"/> is not defined.</exception>
+		/// <exception cref="OverflowException"><paramref name="numberOfElements"/> is not a valid array length.</exception>
+		public static Money[] Some(decimal amount, Currency currency, int numberOfElements)
+		{
+			return initArray(numberOfElements, () => new Money(amount, currency));
+		}
+
+		/// <summary>
+		/// Creates and initializes an array of <see cref="Money"/> with <paramref name="amount"/> quantity and the specified currency.
+		/// </summary>
+		/// <param name="amount">The <see cref="Amount"/> of each monetary quantity.</param>
+		/// <param name="threeLetterIsoCode">Textual representation of the ISO 4217 <see cref="CurrencyCode"/> for each monetary quantity.</param>
+		/// <param name="numberOfElements">The number of elements in the array.</param>
+		/// <returns>An array of <see cref="Money"/> instances with <paramref name="amount"/> and the specified <paramref name="threeLetterIsoCode"/>.</returns>
+		/// <seealso cref="Money(decimal, string)"/>
+		/// <exception cref="OverflowException"><paramref name="numberOfElements"/> is not a valid array length.</exception>
+		/// <exception cref="ArgumentNullException"><paramref name="threeLetterIsoCode"/> is null.</exception>
+		/// <exception cref="InvalidEnumArgumentException"><paramref name="threeLetterIsoCode"/> is not defined.</exception>
+		public static Money[] Some(decimal amount, string threeLetterIsoCode, int numberOfElements)
+		{
+			return initArray(numberOfElements, () => new Money(amount, threeLetterIsoCode));
 		}
 
 		#endregion

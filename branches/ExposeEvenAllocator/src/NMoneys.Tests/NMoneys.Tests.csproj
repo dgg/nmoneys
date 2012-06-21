@@ -52,6 +52,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Allocations\AllocationTester.cs" />
     <Compile Include="Allocations\RatioTester.Formatting.cs" />
     <Compile Include="Allocations\EvenAllocatorTester.cs" />
     <Compile Include="Allocations\RatioBagTester.cs" />
@@ -61,24 +62,29 @@
     <Compile Include="CurrencyEqualityComparerTester.cs" />
     <Compile Include="CurrencyIsoCodeTester.cs" />
     <Compile Include="CurrencyTester.cs" />
+    <Compile Include="CustomConstraints\CompleteAllocationConstraint.cs" />
     <Compile Include="CustomConstraints\CurrencyInfoConstraint.cs" />
     <Compile Include="CustomConstraints\CustomConstraint.cs" />
     <Compile Include="CustomConstraints\DataContractDeserializationConstraint.cs" />
     <Compile Include="CustomConstraints\DataContractSerializationConstraint.cs" />
     <Compile Include="CustomConstraints\DataContractJsonSerializationConstraint.cs" />
     <Compile Include="CustomConstraints\CharacterReferenceConstraint.cs" />
+    <Compile Include="CustomConstraints\IncompleteAllocationConstraint.cs" />
     <Compile Include="CustomConstraints\JsonDeserializationConstraint.cs" />
     <Compile Include="CustomConstraints\JsonSerializationConstraint.cs" />
     <Compile Include="CustomConstraints\MoneyConstraintTester.cs" />
     <Compile Include="CustomConstraints\EventRaisedConstraint.cs" />
+    <Compile Include="CustomConstraints\NoAllocationConstraint.cs" />
     <Compile Include="CustomConstraints\PropertyConstraintTester.cs" />
     <Compile Include="CustomConstraints\BinarySerializationConstraint.cs" />
+    <Compile Include="CustomConstraints\QuasiCompleteAllocationConstraint.cs" />
     <Compile Include="CustomConstraints\SerializationContraintTester.cs" />
     <Compile Include="CustomConstraints\XmlDeserializationConstraint.cs" />
     <Compile Include="CustomConstraints\XmlSerializationConstraint.cs" />
     <Compile Include="ExtensionsTester.cs" />
     <Compile Include="MoneyTester.cs" />
     <Compile Include="MoneyTester.ProRatedAllocations.cs" />
+    <Compile Include="MoneyTester.Some.cs" />
     <Compile Include="MoneyTester.SplitAllocations.cs" />
     <Compile Include="MoneyTester.Zero.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

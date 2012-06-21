@@ -5,11 +5,25 @@ using NMoneys.Support;
 
 namespace NMoneys.Allocations
 {
+	/// <summary>
+	/// Represents the results of an allocation operation.
+	/// </summary>
+	/// <seealso cref="Money.Allocate(int, IRemainderAllocator)"/>
+	/// <seealso cref="Money.Allocate(RatioBag, IRemainderAllocator)"/>
+	/// <seealso cref="EvenAllocator.Allocate(int)"/>
+	/// <seealso cref="ProRataAllocator.Allocate(RatioBag)"/>
 	public class Allocation : IEnumerable<Money>, IFormattable
 	{
 		private readonly Money[] _results;
 		private readonly Money _allocatable, _allocated, _remainder;
 
+		/// <summary>
+		/// Initializes an instance of <see cref="Allocation"/>.
+		/// </summary>
+		/// <param name="allocatable">The monetary quantity subject of the allocation operation.</param>
+		/// <param name="results">The raw results of an allocation (the quantities allocated).</param>
+		/// <exception cref="ArgumentNullException"><paramref name="results"/> is null.</exception>
+		/// <exception cref="DifferentCurrencyException">At least one of the <paramref name="results"/> has a different currency from <paramref name="allocatable"/>'s.</exception>
 		public Allocation(Money allocatable, Money[] results)
 		{
 			Guard.AgainstNullArgument("results", results);
@@ -22,15 +36,31 @@ namespace NMoneys.Allocations
 			_remainder = _allocatable - _allocated;
 		}
 
+		/// <summary>
+		/// The monetary quantity being allocated.
+		/// </summary>
 		public Money Allocatable { get { return _allocatable; } }
 		
+		/// <summary>
+		/// All the money from <see cref="Allocatable"/> that has been allocated.
+		/// </summary>
 		public Money TotalAllocated { get { return _allocated; } }
 
+		/// <summary>
+		/// All the money from <see cref="Allocatable"/> that has not been allocated.
+		/// </summary>
 		public Money Remainder { get { return _remainder; } }
 
+		/// <summary>
+		/// true if all the money from <see cref="Allocatable"/> has been allocated; otherwise, false.
+		/// </summary>
 		public bool IsComplete { get { return _allocatable.Equals(_allocated); } }
 
-		public bool IsQuasiComplete { get { return _remainder < _allocatable.MinValue; } }
+		/// <summary>
+		/// true if almost all the money from <see cref="Allocatable"/> has been allocated; otherwise, false.
+		/// </summary>
+		/// <remarks>"Almost" is defined by the minimum quantity that can be represented by the currency of <see cref="Allocatable"/>. <see cref="Currency.MinAmount"/></remarks>
+		public bool IsQuasiComplete { get { return !IsComplete && _remainder < _allocatable.MinValue; } }
 
 		#region collection-like
 
@@ -100,14 +130,15 @@ namespace NMoneys.Allocations
 
 		#endregion
 
+		/// <summary>
+		/// Initializes an "empty" allocation where money could be allocated.
+		/// </summary>
+		/// <param name="allocatable">The monetary quantity subject of the allocation operation.</param>
+		/// <param name="numberOfRecipients">The number of times to split up the total.</param>
+		/// <returns>An allocation of <see cref="Length"/> equal to <paramref name="numberOfRecipients"/> and zero <see cref="TotalAllocated"/>.</returns>
 		public static Allocation Zero(Money allocatable, int numberOfRecipients)
 		{
-			var results = new Money[numberOfRecipients];
-			for (int i = 0; i < results.Length; i++)
-			{
-				results[i] = Money.Zero(allocatable.CurrencyCode);
-			}
-			return new Allocation(allocatable, results);
+			return new Allocation(allocatable, Money.Zero(allocatable.CurrencyCode, numberOfRecipients));
 		}
 	}
 }
