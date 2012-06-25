@@ -55,7 +55,7 @@
     <Compile Include="Allocations\ProRataAllocator.cs" />
     <Compile Include="Allocations\RandomAllocator.cs" />
     <Compile Include="Allocations\Ratio.cs" />
-    <Compile Include="Allocations\RatioBag.cs" />
+    <Compile Include="Allocations\RatioCollection.cs" />
     <Compile Include="Allocations\RemainderAllocatorBase.cs" />
     <Compile Include="Allocations\LastToFirstAllocator.cs" />
     <Compile Include="PowerOfTen.cs" />

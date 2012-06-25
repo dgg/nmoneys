@@ -4,12 +4,12 @@ using NUnit.Framework;
 namespace NMoneys.Tests.Allocations
 {
 	[TestFixture]
-	public partial class RatioBagTester
+	public partial class RatioCollectionTester
 	{
 		[Test]
 		public void Count_NumberOfRatiosInTheBag()
 		{
-			var bag = new RatioBag(0.5m, .4m, .05m, .05m);
+			var bag = new RatioCollection(0.5m, .4m, .05m, .05m);
 
 			Assert.That(bag, Has.Count.EqualTo(4));
 		}
@@ -17,7 +17,7 @@ namespace NMoneys.Tests.Allocations
 		[Test]
 		public void RatiosCanBeEnumerated()
 		{
-			var bag = new RatioBag(0.5m, .4m, .05m, .05m);
+			var bag = new RatioCollection(0.5m, .4m, .05m, .05m);
 
 			Assert.That(bag, Is.EqualTo(new[]
 			{
@@ -37,7 +37,7 @@ namespace NMoneys.Tests.Allocations
 		[Test]
 		public void RatiosCanIndexed()
 		{
-			var bag = new RatioBag(0.5m, .4m, .05m, .05m);
+			var bag = new RatioCollection(0.5m, .4m, .05m, .05m);
 
 			Assert.That(bag[0], Is.InstanceOf<Ratio>().With.Property("Value").EqualTo(.5m));
 			Assert.That(bag[1], Is.InstanceOf<Ratio>().With.Property("Value").EqualTo(.4m));

@@ -10,14 +10,14 @@ namespace NMoneys.Allocations
 	/// Maintains a list of ratios suitable for use in an allocation when the
 	/// sum of all items is exactly equal to one (100%).
 	/// </summary>
-	public class RatioBag : IEnumerable<Ratio>, IFormattable
+	public class RatioCollection : IEnumerable<Ratio>, IFormattable
 	{
 		private readonly Ratio[] _ratios;
 
 		#region Creation
 
 		/// <summary>
-		/// Initializes a new instance of <see cref="RatioBag"/> with the specified ratio values.
+		/// Initializes a new instance of <see cref="RatioCollection"/> with the specified ratio values.
 		/// </summary>
 		/// <remarks>This is a helper constructor due to the verbosity of <see cref="Ratio"/> construction.</remarks>
 		/// <param name="ratioValues">A collection of ratio values.</param>
@@ -26,7 +26,7 @@ namespace NMoneys.Allocations
 		/// -or-
 		/// any of the values does not fall in the range [0..1].
 		/// .</exception>
-		public RatioBag(params decimal[] ratioValues) : this(toRatios(ratioValues)) { }
+		public RatioCollection(params decimal[] ratioValues) : this(toRatios(ratioValues)) { }
 
 		private static Ratio[] toRatios(decimal[] ratioValues)
 		{
@@ -35,12 +35,12 @@ namespace NMoneys.Allocations
 		}
 
 		/// <summary>
-		/// Initializes a new instance of <see cref="RatioBag"/> with the specified <paramref name="ratios"/>.
+		/// Initializes a new instance of <see cref="RatioCollection"/> with the specified <paramref name="ratios"/>.
 		/// </summary>
 		/// <param name="ratios">A collection of ratios</param>
 		/// <exception cref="ArgumentNullException"><paramref name="ratios"/> is null.</exception>
 		/// <exception cref="ArgumentOutOfRangeException"><paramref name="ratios"/> do not sum up one.</exception>
-		public RatioBag(params Ratio[] ratios)
+		public RatioCollection(params Ratio[] ratios)
 		{
 			Guard.AgainstNullArgument("ratios", ratios);
 			assertAllocatable(ratios);
@@ -75,9 +75,9 @@ namespace NMoneys.Allocations
 		IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
 
 		/// <summary>
-		/// Gets a 32-bit integer that represents the total number of ratios in the <see cref="RatioBag"/>.
+		/// Gets a 32-bit integer that represents the total number of ratios in the <see cref="RatioCollection"/>.
 		/// </summary>
-		/// <returns>A 32-bit integer that represents the total number of ratios in the <see cref="RatioBag"/>.</returns>
+		/// <returns>A 32-bit integer that represents the total number of ratios in the <see cref="RatioCollection"/>.</returns>
 		public int Count { get { return _ratios.Length; } }
 
 		/// <summary>
@@ -96,10 +96,10 @@ namespace NMoneys.Allocations
 		#endregion
 
 		/// <summary>
-		/// Returns a <see cref="string"/> that represents the current <see cref="RatioBag"/>.
+		/// Returns a <see cref="string"/> that represents the current <see cref="RatioCollection"/>.
 		/// </summary>
 		/// <returns>
-		/// A <see cref="string"/> that represents the current <see cref="RatioBag"/>.
+		/// A <see cref="string"/> that represents the current <see cref="RatioCollection"/>.
 		/// </returns>
 		public override string ToString()
 		{

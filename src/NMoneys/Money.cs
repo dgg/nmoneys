@@ -1379,19 +1379,19 @@ currency);
 		/// <summary>
 		/// Allocates the sum of money as fully and 'fairly' as possible given the collection of ratios passed.
 		/// </summary>
-		/// <param name="ratioBag">The ratio collection.</param>
+		/// <param name="ratios">The ratio collection.</param>
 		/// <param name="allocator">The <see cref="IRemainderAllocator"/> that will distribute the remainder after the split.</param>
-		/// <returns>The results of the allocation with a length equal to <paramref name="ratioBag"/>.</returns>
+		/// <returns>The results of the allocation with a length equal to <paramref name="ratios"/>.</returns>
 		/// <seealso cref="Allocation"/>
 		/// <seealso cref="IRemainderAllocator"/>
-		public Allocation Allocate(RatioBag ratioBag, IRemainderAllocator allocator)
+		public Allocation Allocate(RatioCollection ratios, IRemainderAllocator allocator)
 		{
-			Guard.AgainstNullArgument("ratioBag", ratioBag);
+			Guard.AgainstNullArgument("ratios", ratios);
 
-			if (notEnoughToAllocate()) return Allocation.Zero(this, ratioBag.Count);
+			if (notEnoughToAllocate()) return Allocation.Zero(this, ratios.Count);
 
 			Allocation allocated = new ProRataAllocator(this)
-				.Allocate(ratioBag);
+				.Allocate(ratios);
 
 			allocated = allocateRemainderIfNeeded(allocator, allocated);
 
@@ -1404,13 +1404,13 @@ currency);
 		/// <remarks>
 		/// The default remainder allocation will be performed according to <see cref="RemainderAllocator.FirstToLast"/>.
 		/// </remarks>
-		/// <param name="ratioBag">The ratio collection.</param>
-		/// <returns>The results of the allocation with a length equal to <paramref name="ratioBag"/>.</returns>
-		/// <seealso cref="Allocate(RatioBag, IRemainderAllocator)"/>
+		/// <param name="ratios">The ratio collection.</param>
+		/// <returns>The results of the allocation with a length equal to <paramref name="ratios"/>.</returns>
+		/// <seealso cref="Allocate(RatioCollection, IRemainderAllocator)"/>
 		/// <seealso cref="Allocation"/>
-		public Allocation Allocate(RatioBag ratioBag)
+		public Allocation Allocate(RatioCollection ratios)
 		{
-			return Allocate(ratioBag, RemainderAllocator.FirstToLast);
+			return Allocate(ratios, RemainderAllocator.FirstToLast);
 		}
 
 		#endregion

@@ -9,9 +9,9 @@ namespace NMoneys.Allocations
 	/// Represents the allocated of an allocation operation.
 	/// </summary>
 	/// <seealso cref="Money.Allocate(int, IRemainderAllocator)"/>
-	/// <seealso cref="Money.Allocate(RatioBag, IRemainderAllocator)"/>
+	/// <seealso cref="Money.Allocate(RatioCollection, IRemainderAllocator)"/>
 	/// <seealso cref="EvenAllocator.Allocate(int)"/>
-	/// <seealso cref="ProRataAllocator.Allocate(RatioBag)"/>
+	/// <seealso cref="ProRataAllocator.Allocate(RatioCollection)"/>
 	public class Allocation : IEnumerable<Money>, IFormattable
 	{
 		private readonly Money[] _allocated;

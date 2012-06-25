@@ -22,7 +22,7 @@ namespace NMoneys.Tests
 		{
 			var easyEven = 10m.Usd();
 
-			var ratios = new RatioBag(.5m, .2m, .3m);
+			var ratios = new RatioCollection(.5m, .2m, .3m);
 			Allocation allocated = easyEven.Allocate(ratios);
 			Assert.That(allocated, Is.EqualTo(new[]
 			{
@@ -37,7 +37,7 @@ namespace NMoneys.Tests
 		{
 			var bigEven = 6000000m.Usd();
 
-			var ratios = new RatioBag(.5725m, .4275m);
+			var ratios = new RatioCollection(.5725m, .4275m);
 			Allocation allocated = bigEven.Allocate(ratios);
 			Assert.That(allocated, Is.EqualTo(new[]
 			{
@@ -51,7 +51,7 @@ namespace NMoneys.Tests
 		{
 			var stillEasy = 100m.Usd();
 
-			var ratios = new RatioBag(.412m, .495m, .093m);
+			var ratios = new RatioCollection(.412m, .495m, .093m);
 			Allocation allocated = stillEasy.Allocate(ratios);
 			Assert.That(allocated, Is.EqualTo(new[]
 			{
@@ -66,7 +66,7 @@ namespace NMoneys.Tests
 		{
 			var stillEasy = 100m.Usd();
 
-			var ratios = new RatioBag(.495m, .412m, .093m);
+			var ratios = new RatioCollection(.495m, .412m, .093m);
 			var allocated = stillEasy.Allocate(ratios);
 			Assert.That(allocated, Is.EqualTo(new[]
 			{
@@ -84,7 +84,7 @@ namespace NMoneys.Tests
 		public void Allocate_ProRated_ScarceResources()
 		{
 			var scarce = .05m.Usd();
-			var ratios = new RatioBag(.412m, .093m, .495m);
+			var ratios = new RatioCollection(.412m, .093m, .495m);
 
 			Allocation allocated = scarce.Allocate(ratios);
 			Assert.That(allocated, Is.EqualTo(new[]
@@ -99,7 +99,7 @@ namespace NMoneys.Tests
 		public void Allocate_ProRated_ScarceResources_LowToHigh()
 		{
 			var scarce = .05m.Usd();
-			var ratios = new RatioBag(.093m, .412m, .495m);
+			var ratios = new RatioCollection(.093m, .412m, .495m);
 
 			Allocation allocated = scarce.Allocate(ratios);
 			Assert.That(allocated, Is.EqualTo(new[]
@@ -114,7 +114,7 @@ namespace NMoneys.Tests
 		public void Allocate_ProRated_DefaultRemainder_LowToHighScarceResources()
 		{
 			var scarce = .05m.Usd();
-			var ratios = new RatioBag(.3m, .7m);
+			var ratios = new RatioCollection(.3m, .7m);
 
 			var allocated = scarce.Allocate(ratios);
 			Assert.That(allocated, Is.EqualTo(new[]
@@ -128,7 +128,7 @@ namespace NMoneys.Tests
 		public void Allocate_ProRated_DefaultRemainder_HighToLowScarceResources()
 		{
 			var scarce = .05m.Usd();
-			var ratios = new RatioBag(.7m, .3m);
+			var ratios = new RatioCollection(.7m, .3m);
 
 			var allocated = scarce.Allocate(ratios);
 			Assert.That(allocated, Is.EqualTo(new[]
@@ -146,7 +146,7 @@ namespace NMoneys.Tests
 		public void Allocate_ProRated_FirstToLast_LowToHighScarceResources()
 		{
 			var scarce = .05m.Usd();
-			var ratios = new RatioBag(.3m, .7m);
+			var ratios = new RatioCollection(.3m, .7m);
 
 			var allocated = scarce.Allocate(ratios, RemainderAllocator.FirstToLast);
 			Assert.That(allocated, Is.EqualTo(new[]
@@ -160,7 +160,7 @@ namespace NMoneys.Tests
 		public void Allocate_ProRated_LastToFirst_LowToHighScarceResources()
 		{
 			var scarce = .05m.Usd();
-			var ratios = new RatioBag(.3m, .7m);
+			var ratios = new RatioCollection(.3m, .7m);
 
 			var allocated = scarce.Allocate(ratios, RemainderAllocator.LastToFirst);
 			Assert.That(allocated, Is.EqualTo(new[]
@@ -174,7 +174,7 @@ namespace NMoneys.Tests
 		public void Allocate_ProRated_FirstToLast_HighToLowScarceResources()
 		{
 			var scarce = .05m.Usd();
-			var ratios = new RatioBag(.7m, .3m);
+			var ratios = new RatioCollection(.7m, .3m);
 
 			var allocated = scarce.Allocate(ratios, RemainderAllocator.FirstToLast);
 			Assert.That(allocated, Is.EqualTo(new[]
@@ -188,7 +188,7 @@ namespace NMoneys.Tests
 		public void Allocate_ProRated_FirstToLast_HighToLowNotSoScarceResources()
 		{
 			var notSoScarce = 17m.Usd();
-			var ratios = new RatioBag(.412m, .093m, .495m);
+			var ratios = new RatioCollection(.412m, .093m, .495m);
 
 			var allocated = notSoScarce.Allocate(ratios, RemainderAllocator.FirstToLast);
 			Assert.That(allocated, Is.EqualTo(new[]
@@ -206,7 +206,7 @@ namespace NMoneys.Tests
 		{
 			var notAllocatable = 0.001m.Usd();
 
-			var result = notAllocatable.Allocate(new RatioBag(.7m, .3m), RemainderAllocator.FirstToLast);
+			var result = notAllocatable.Allocate(new RatioCollection(.7m, .3m), RemainderAllocator.FirstToLast);
 
 			Assert.That(result.IsComplete, Is.False);
 			Assert.That(result.IsQuasiComplete, Is.True);
@@ -218,7 +218,7 @@ namespace NMoneys.Tests
 		{
 			var residualRemainder = 100.001m.Usd();
 
-			var result = residualRemainder.Allocate(new RatioBag(.7m, .3m), RemainderAllocator.FirstToLast);
+			var result = residualRemainder.Allocate(new RatioCollection(.7m, .3m), RemainderAllocator.FirstToLast);
 			Assert.That(result.IsComplete, Is.False);
 			Assert.That(result.IsQuasiComplete, Is.True);
 			Assert.That(result.TotalAllocated, Is.EqualTo(100m.Usd()));

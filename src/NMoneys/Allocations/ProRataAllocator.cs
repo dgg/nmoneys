@@ -13,7 +13,7 @@ namespace NMoneys.Allocations
 			_currency = toAllocate.GetCurrency();
 		}
 
-		public Money[] Allocate(RatioBag ratios, out Money allocated)
+		public Money[] Allocate(RatioCollection ratios, out Money allocated)
 		{
 			var results = initResults(ratios.Count);
 			allocated = Money.Zero(_currency);
@@ -28,7 +28,7 @@ namespace NMoneys.Allocations
 			return results;
 		}
 
-		public Allocation Allocate(RatioBag ratios)
+		public Allocation Allocate(RatioCollection ratios)
 		{
 			Money[] results = Money.Zero(_currency, ratios.Count);
 			//allocated = Money.Zero(_currency);
