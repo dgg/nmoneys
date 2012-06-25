@@ -6,7 +6,7 @@ using NMoneys.Support;
 namespace NMoneys.Allocations
 {
 	/// <summary>
-	/// Represents the results of an allocation operation.
+	/// Represents the allocated of an allocation operation.
 	/// </summary>
 	/// <seealso cref="Money.Allocate(int, IRemainderAllocator)"/>
 	/// <seealso cref="Money.Allocate(RatioBag, IRemainderAllocator)"/>
@@ -14,26 +14,38 @@ namespace NMoneys.Allocations
 	/// <seealso cref="ProRataAllocator.Allocate(RatioBag)"/>
 	public class Allocation : IEnumerable<Money>, IFormattable
 	{
-		private readonly Money[] _results;
-		private readonly Money _allocatable, _allocated, _remainder;
+		private readonly Money[] _allocated;
+		private readonly Money _allocatable, _totalAllocated, _remainder;
 
 		/// <summary>
 		/// Initializes an instance of <see cref="Allocation"/>.
 		/// </summary>
 		/// <param name="allocatable">The monetary quantity subject of the allocation operation.</param>
-		/// <param name="results">The raw results of an allocation (the quantities allocated).</param>
-		/// <exception cref="ArgumentNullException"><paramref name="results"/> is null.</exception>
-		/// <exception cref="DifferentCurrencyException">At least one of the <paramref name="results"/> has a different currency from <paramref name="allocatable"/>'s.</exception>
-		public Allocation(Money allocatable, Money[] results)
+		/// <param name="allocated">The raw allocated of an allocation (the quantities allocated).</param>
+		/// <exception cref="ArgumentNullException"><paramref name="allocated"/> is null.</exception>
+		/// <exception cref="DifferentCurrencyException">At least one of the <paramref name="allocated"/> has a different currency from <paramref name="allocatable"/>'s.</exception>
+		public Allocation(Money allocatable, Money[] allocated)
 		{
-			Guard.AgainstNullArgument("results", results);
-			allocatable.AssertSameCurrency(results);
+			Guard.AgainstNullArgument("allocated", allocated);
+			allocatable.AssertSameCurrency(allocated);
 
 			_allocatable = allocatable;
-			_results = results;
+			_totalAllocated = Money.Total(allocated);
+			
+			assertSensibleAllocation("allocated");
+			_allocated = allocated;
+			
+			_remainder = _allocatable - _totalAllocated;
+		}
 
-			_allocated = Money.Total(results);
-			_remainder = _allocatable - _allocated;
+		// asserts that the allocated amount can be allocated from the allocatable amount
+		private void assertSensibleAllocation(string paramName)
+		{
+			// absolute values is used to simplify the support the case of debt allocation
+			var allocatable =_allocatable.Abs();
+			var allocated = _totalAllocated.Abs();
+
+			Guard.AgainstArgument(paramName, allocated > allocatable, "One cannot allocate more than the allocatable amount.");
 		}
 
 		/// <summary>
@@ -44,7 +56,7 @@ namespace NMoneys.Allocations
 		/// <summary>
 		/// All the money from <see cref="Allocatable"/> that has been allocated.
 		/// </summary>
-		public Money TotalAllocated { get { return _allocated; } }
+		public Money TotalAllocated { get { return _totalAllocated; } }
 
 		/// <summary>
 		/// All the money from <see cref="Allocatable"/> that has not been allocated.
@@ -54,13 +66,13 @@ namespace NMoneys.Allocations
 		/// <summary>
 		/// true if all the money from <see cref="Allocatable"/> has been allocated; otherwise, false.
 		/// </summary>
-		public bool IsComplete { get { return _allocatable.Equals(_allocated); } }
+		public bool IsComplete { get { return _allocatable.Equals(_totalAllocated); } }
 
 		/// <summary>
 		/// true if almost all the money from <see cref="Allocatable"/> has been allocated; otherwise, false.
 		/// </summary>
 		/// <remarks>"Almost" is defined by the minimum quantity that can be represented by the currency of <see cref="Allocatable"/>. <see cref="Currency.MinAmount"/></remarks>
-		public bool IsQuasiComplete { get { return !IsComplete && _remainder < _allocatable.MinValue; } }
+		public bool IsQuasiComplete { get { return !IsComplete && _remainder.Abs() < _allocatable.MinValue.Abs(); } }
 
 		#region collection-like
 
@@ -70,7 +82,7 @@ namespace NMoneys.Allocations
 		/// <returns>A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.</returns>
 		public IEnumerator<Money> GetEnumerator()
 		{
-			return ((ICollection<Money>)_results).GetEnumerator();
+			return ((ICollection<Money>)_allocated).GetEnumerator();
 		}
 
 		/// <summary>
@@ -87,13 +99,13 @@ namespace NMoneys.Allocations
 		/// </summary>
 		/// <param name="index">The index of the element to get.</param>
 		/// <returns>The element at the specified index.</returns>
-		public Money this[int index] { get { return _results[index]; } }
+		public Money this[int index] { get { return _allocated[index]; } }
 
 		/// <summary>
 		/// Gets a 32-bit integer that represents the total number of elements of the <see cref="Allocation"/>. 
 		/// </summary>
 		/// <returns>A 32-bit integer that represents the total number of elements of the <see cref="Allocation"/>.</returns>
-		public int Length { get { return _results.Length; } }
+		public int Length { get { return _allocated.Length; } }
 
 		#endregion
 
@@ -107,7 +119,7 @@ namespace NMoneys.Allocations
 		/// </returns>
 		public override string ToString()
 		{
-			return new Stringifier().Stringify(_results);
+			return new Stringifier().Stringify(_allocated);
 		}
 
 		/// <summary>
@@ -125,7 +137,7 @@ namespace NMoneys.Allocations
 		/// </param>
 		public string ToString(string format, IFormatProvider formatProvider)
 		{
-			return new Stringifier().Stringify(_results, m => m.ToString(format, formatProvider));
+			return new Stringifier().Stringify(_allocated, m => m.ToString(format, formatProvider));
 		}
 
 		#endregion
