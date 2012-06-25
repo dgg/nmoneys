@@ -11,6 +11,10 @@ namespace NMoneys.Allocations
 		private readonly Money _toAllocate;
 		private readonly Currency _currency;
 
+		/// <summary>
+		/// Initializes an instance of <see cref="EvenAllocator"/>
+		/// </summary>
+		/// <param name="toAllocate">Instance to be allocated evenly.</param>
 		public EvenAllocator(Money toAllocate)
 		{
 			_toAllocate = toAllocate;
