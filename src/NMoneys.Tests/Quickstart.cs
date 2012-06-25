@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using NMoneys.Allocations;
 using NMoneys.Extensions;
 using NUnit.Framework;
 
@@ -95,6 +96,49 @@ namespace NMoneys.Tests
 			short thirtySix = CurrencyIsoCode.AUD.NumericCode();
 			string USD = CurrencyIsoCode.USD.AlphabeticCode();
 			string zeroThreeSix = CurrencyIsoCode.AUD.PaddedNumericCode();
+		}
+
+		[Test]
+		public void Money_SplitAllocations()
+		{
+			Allocation fair = 40m.Eur().Allocate(4);
+			Assert.That(fair.IsComplete, Is.True);
+			Assert.That(fair.Remainder, Is.EqualTo(Money.Zero(CurrencyIsoCode.EUR)));
+			Assert.That(fair, Is.EqualTo(new[] { 10m.Eur(), 10m.Eur(), 10m.Eur(), 10m.Eur() }));
+
+			Allocation unfair = 40m.Eur().Allocate(3, RemainderAllocator.LastToFirst);
+			Assert.That(unfair.IsComplete, Is.True);
+			Assert.That(unfair.Remainder, Is.EqualTo(Money.Zero(CurrencyIsoCode.EUR)));			
+			Assert.That(unfair, Is.EqualTo(new[] { 13.33m.Eur(), 13.33m.Eur(), 13.34m.Eur() }));
+		}
+
+		[Test]
+		public void Money_ProRatedAllocation()
+		{
+			var foemmelsConundrumSolution = .05m.Usd().Allocate(new RatioBag(.3m, 0.7m));
+
+			Assert.That(foemmelsConundrumSolution.IsComplete, Is.True);
+			Assert.That(foemmelsConundrumSolution.Remainder, Is.EqualTo(Money.Zero(CurrencyIsoCode.USD)));
+			Assert.That(foemmelsConundrumSolution, Is.EqualTo(new[] { .02m.Usd(), .03m.Usd() }));
+
+			var anotherFoemmelsConundrumSolution = .05m.Usd().Allocate(new RatioBag(.3m, 0.7m), RemainderAllocator.LastToFirst);
+
+			Assert.That(anotherFoemmelsConundrumSolution.IsComplete, Is.True);
+			Assert.That(anotherFoemmelsConundrumSolution.Remainder, Is.EqualTo(Money.Zero(CurrencyIsoCode.USD)));
+			Assert.That(anotherFoemmelsConundrumSolution, Is.EqualTo(new[] { .01m.Usd(), .04m.Usd() }));
+		}
+
+		[Test]
+		public void Money_ResidualAmounts()
+		{
+			var incomplete = 10.001m.Usd().Allocate(2);
+
+			// client applies policy to residual allocations
+			Assert.That(incomplete.IsComplete, Is.False);
+			Assert.That(incomplete.IsQuasiComplete, Is.True);
+			
+			Assert.That(incomplete.Remainder, Is.EqualTo(.001m.Usd()));
+			Assert.That(incomplete, Is.EqualTo(new[] { 5m.Usd(), 5m.Usd() }));
 		}
 	}
 }
