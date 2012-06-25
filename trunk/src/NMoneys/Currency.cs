@@ -457,7 +457,7 @@ namespace NMoneys
 					CurrencyIsoCode isoCode = isoCodes[i];
 					if (!_byIsoCode.Contains(isoCode))
 					{
-						Currency initialized = new Currency(initializer.Get(isoCode));
+						var initialized = new Currency(initializer.Get(isoCode));
 						fillCaches(initialized);
 					}
 				}
@@ -629,7 +629,7 @@ namespace NMoneys
 		/// <exception cref="ArgumentNullException"><paramref name="left"/> is null.</exception>
 		public static bool operator >(Currency left, Currency right)
 		{
-			Guard.AgainstNullArgument("left", left); 
+			Guard.AgainstNullArgument("left", left);
 			return left.CompareTo(right) > 0;
 		}
 
@@ -859,7 +859,7 @@ namespace NMoneys
 
 			if (culture != null && !culture.IsNeutralCulture && !culture.Equals(CultureInfo.InvariantCulture))
 			{
-				RegionInfo region = new RegionInfo(culture.LCID);
+				var region = new RegionInfo(culture.LCID);
 				tryGet = TryGet(region, out currency);
 			}
 			return tryGet;
@@ -959,7 +959,7 @@ namespace NMoneys
 			public static bool TryParse(string isoCode, out CurrencyIsoCode? parsed)
 			{
 				parsed = null;
-				bool result = isoCode != null ? Enumeration.TryParse(isoCode.ToUpperInvariant(), out parsed) : false;
+				bool result = isoCode != null && Enumeration.TryParse(isoCode.ToUpperInvariant(), out parsed);
 				return result;
 			}
 
@@ -998,7 +998,7 @@ namespace NMoneys
 				return Enumeration.TryCast(numericCode, out converted);
 			}
 		}
-		
+
 		#endregion
 
 		/// <summary>
@@ -1052,14 +1052,14 @@ namespace NMoneys
 			Guard.AgainstNullArgument("xs", xs);
 
 			XmlSchemaComplexType complex = null;
-			XmlSerializer schemaSerializer = new XmlSerializer(typeof(XmlSchema));
+			var schemaSerializer = new XmlSerializer(typeof(XmlSchema));
 			using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(Serialization.Data.ResourceName))
 			{
 				if (stream != null)
 				{
-					XmlSchema schema = (XmlSchema)schemaSerializer.Deserialize(new XmlTextReader(stream));
+					var schema = (XmlSchema)schemaSerializer.Deserialize(new XmlTextReader(stream));
 					xs.Add(schema);
-					XmlQualifiedName name = new XmlQualifiedName(Serialization.Data.Currency.DATA_TYPE, Serialization.Data.NAMESPACE);
+					var name = new XmlQualifiedName(Serialization.Data.Currency.DATA_TYPE, Serialization.Data.NAMESPACE);
 					complex = (XmlSchemaComplexType)schema.SchemaTypes[name];
 				}
 			}
@@ -1158,6 +1158,13 @@ namespace NMoneys
 				EventHandler<ObsoleteCurrencyEventArgs> handler = ObsoleteCurrency;
 				if (handler != null) handler(null, new ObsoleteCurrencyEventArgs(currency.IsoCode));
 			}
+		}
+
+		public decimal Round(decimal share)
+		{
+			decimal raw = share - (.5m * MinAmount);
+			decimal rounded = decimal.Round(raw, SignificantDecimalDigits, MidpointRounding.AwayFromZero);
+			return rounded;
 		}
 	}
 }

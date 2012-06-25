@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
-using NMoneys.Allocators;
 using NMoneys.Extensions;
 using NMoneys.Support;
 using NMoneys.Tests.CustomConstraints;
@@ -14,7 +12,7 @@ using NUnit.Framework;
 namespace NMoneys.Tests
 {
 	[TestFixture]
-	public class MoneyTester
+	public partial class MoneyTester
 	{
 		private static readonly Money fiver = new Money(5, CurrencyIsoCode.GBP),
 			tenner = new Money(10, CurrencyIsoCode.GBP),
@@ -173,61 +171,6 @@ namespace NMoneys.Tests
 		{
 			Action moneyWithObsoleteCurrency = () => Money.ForCurrentCulture(decimal.Zero);
 			Assert.That(moneyWithObsoleteCurrency, Must.RaiseObsoleteEvent.Once());
-		}
-
-		#endregion
-
-		#region Zero
-
-		[Test]
-		public void Zero_NoneCurrency()
-		{
-			Assert.That(Money.Zero(), Must.Be.MoneyWith(decimal.Zero, Currency.None));
-		}
-
-		[Test]
-		public void Zero_ExistingIsoCode_PropertiesSet()
-		{
-			Assert.That(Money.Zero(CurrencyIsoCode.USD), Must.Be.MoneyWith(decimal.Zero, Currency.Usd));
-		}
-
-		[Test]
-		public void Zero_ExistingIsoSymbol_PropertiesSet()
-		{
-			Assert.That(Money.Zero("EUR"), Must.Be.MoneyWith(decimal.Zero, Currency.Euro));
-		}
-
-		[Test]
-		public void Zero_NullSymbol_Exception()
-		{
-			Assert.That(() => Money.Zero((string)null), Throws.InstanceOf<ArgumentNullException>());
-		}
-
-		[Test]
-		public void Zero_Currency_PropertiesSet()
-		{
-			Assert.That(Money.Zero(Currency.Gbp), Must.Be.MoneyWith(decimal.Zero, Currency.Gbp));
-		}
-
-		[Test]
-		public void Zero_NullCurrency_Exception()
-		{
-			Assert.That(() => Money.Zero((Currency)null), Throws.InstanceOf<ArgumentNullException>());
-		}
-
-		[Test]
-		public void Zero_NonExistingIsoCode_Exception()
-		{
-			CurrencyIsoCode nonExistingCode = (CurrencyIsoCode)(-7);
-
-			Assert.That(() => Money.Zero(nonExistingCode), Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.StringContaining("-7"));
-		}
-
-		[Test]
-		public void Zero_NonExistingIsoSymbol_PropertiesSet()
-		{
-			string nonExistentIsoSymbol = "XYZ";
-			Assert.That(() => Money.Zero(nonExistentIsoSymbol), Throws.InstanceOf<InvalidEnumArgumentException>());
 		}
 
 		#endregion
@@ -1820,93 +1763,5 @@ namespace NMoneys.Tests
 			Assert.That(poundQuantity.Perform(halfDiscount), Must.Be.MoneyWith(50.25m, Currency.Gbp));
 			Assert.That(yenQuantity.Perform(halfDiscount), Must.Be.MoneyWith(500, Currency.Jpy));
 		}
-
-		#region Allocate
-
-		[TestCaseSource("ProvidedAllocators")]
-		public void Allocate_FairAllocation_EveryoneGetTheSameQuantity(IRemainderAllocator allocator)
-		{
-			Money[] allocated = 8m.Usd().Allocate(4, allocator);
-
-			Assert.That(allocated, Is.EqualTo(new[] { 2m.Usd(), 2m.Usd(), 2m.Usd(), 2m.Usd() }));
-		}
-
-		internal IEnumerable<IRemainderAllocator> ProvidedAllocators
-		{
-			get
-			{
-				yield return RemainderAllocator.FirstToLast;
-				yield return RemainderAllocator.LastToFirst;
-				yield return RemainderAllocator.Random;
-			}
-		}
-
-		[Test]
-		public void Allocate_FairAllocation_RemainderNotAsked()
-		{
-			var spy = new RemainderAllocatorSpy();
-			8m.Gbp().Allocate(4, spy);
-
-			Assert.That(spy.AskedToAllocate, Is.False);
-		}
-
-		[Test]
-		public void Allocate_UnfairAllocation_FirstToLast_FirstAmountsAreBigger()
-		{
-			Money[] allocated = 8.3m.Usd().Allocate(4, RemainderAllocator.FirstToLast);
-
-			Assert.That(allocated, Is.EqualTo(new[] { 2.08m.Usd(), 2.08m.Usd(), 2.07m.Usd(), 2.07m.Usd() }));
-		}
-
-		[Test]
-		public void Allocate_UnfairAllocation_LastToFirst_LastAmountsAreBigger()
-		{
-			Money[] allocated = 8.3m.Usd().Allocate(4, RemainderAllocator.LastToFirst);
-
-			Assert.That(allocated, Is.EqualTo(new[] { 2.07m.Usd(), 2.07m.Usd(), 2.08m.Usd(), 2.08m.Usd() }));
-		}
-
-		[Test]
-		public void Allocate_UnfairAllocation_Random_SomeoneGetsMore()
-		{
-			Money[] allocated = 8.3m.Eur().Allocate(4, RemainderAllocator.Random);
-
-			Assert.That(allocated.Aggregate((a, b) => a + b), Is.EqualTo(8.3m.Eur()));
-		}
-
-		[TestCase(-1)]
-		[TestCase(0)]
-		public void Allocate_NotEnoughRecipients_Exception(int notEnoughRecipients)
-		{
-			Assert.That(() => 8m.Usd().Allocate(notEnoughRecipients, RemainderAllocator.Random),
-				Throws.InstanceOf<ArgumentOutOfRangeException>());
-		}
-
-		[TestCaseSource("ProvidedAllocators")]
-		public void Allocate_SingleAllocation_SameQuantity(IRemainderAllocator remainder)
-		{
-			Money[] allocated = 8.3m.Eur().Allocate(1, remainder);
-
-			Assert.That(allocated, Is.EqualTo(new[] { 8.3m.Eur() }));
-		}
-
-		[Test]
-		public void Allocate_RemainderAllocatorDidNotAllocateAllTheRemainder_Exception()
-		{
-			IRemainderAllocator rogue = new RogueRemainderAllocator();
-
-			Assert.That(() => 8.3m.Gbp().Allocate(4, rogue), Throws.InstanceOf<ArithmeticException>());
-		}
-
-		[Test]
-		public void Allocate_WholeCurrencies_WholeAllocationsAreMade()
-		{
-			// 1 yen is the minimal amount, there are no subdivisions
-			Money[] allocated = 34m.Jpy().Allocate(4, RemainderAllocator.FirstToLast);
-
-			Assert.That(allocated, Is.EqualTo(new[] { 9m.Jpy(), 9m.Jpy(), 8m.Jpy(), 8m.Jpy() }));
-		}
-
-		#endregion
 	}
 }
