@@ -1,6 +1,20 @@
 #summary Summary of changes.
 #labels Phase-Support
 
+= 2.5.0.0 =
+2012/06/25 @revision 176
+   * version bump due to some breaking changes
+   * *breaking change*: `Allocators` namespace is now `Allocations`
+   * *breaking change*: `Money.Allocate(int)` returns an `Allocation` instance, instead of `Money[]`
+   * *breaking change*: `IRemainderAllocator.Allocate()` signature change. Custom implementations of the interface need to be rewritten :-(
+   * *breaking change*: extension method on money instances `.Currency()` renamed to `.GetCurrency()`
+   * Added `Money.Allocate(RatioCollection)` to allow pro-rated allocations. Again, many thanks to Berryl Hesh for his contribution.
+   * Surfaced `EvenAllocator` to perform strictly fair allocations
+   * Added `ProRatedAllocator` to perform strictly pro-rated allocations
+   * Added `Money.Zero()` static factory methods that initialize arrays
+   * Added `Money.Some()` static factory methods that initialize arrays
+   * Added `Money.HasSameCurrencyAs()` and `Money.AssertSameCurrency` instance method that operate on collections of moneys
+
 = 2.2.0.0 =
 2012/02/13 @revision 146
    * Added `Money.Allocate()`. Thanks to Berryl Hesh for the contribution
