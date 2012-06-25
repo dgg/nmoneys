@@ -1,4 +1,4 @@
-﻿using NMoneys.Allocators;
+﻿using NMoneys.Allocations;
 
 namespace NMoneys
 {

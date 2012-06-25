@@ -47,12 +47,16 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Allocators\EvenAllocator.cs" />
-    <Compile Include="Allocators\FirstToLastAllocator.cs" />
-    <Compile Include="Allocators\IRemainderAllocator.cs" />
-    <Compile Include="Allocators\RandomAllocator.cs" />
-    <Compile Include="Allocators\RemainderAllocatorBase.cs" />
-    <Compile Include="Allocators\LastToFirstAllocator.cs" />
+    <Compile Include="Allocations\Allocation.cs" />
+    <Compile Include="Allocations\EvenAllocator.cs" />
+    <Compile Include="Allocations\FirstToLastAllocator.cs" />
+    <Compile Include="Allocations\IRemainderAllocator.cs" />
+    <Compile Include="Allocations\ProRataAllocator.cs" />
+    <Compile Include="Allocations\RandomAllocator.cs" />
+    <Compile Include="Allocations\Ratio.cs" />
+    <Compile Include="Allocations\RatioBag.cs" />
+    <Compile Include="Allocations\RemainderAllocatorBase.cs" />
+    <Compile Include="Allocations\LastToFirstAllocator.cs" />
     <Compile Include="PowerOfTen.cs" />
     <Compile Include="Currency.cs" />
     <Compile Include="CurrencyCharacterReferences.cs" />
@@ -73,6 +77,7 @@
     <Compile Include="Serialization\CurrencyConverter.cs" />
     <Compile Include="Serialization\Data.cs" />
     <Compile Include="Serialization\MoneyConverter.cs" />
+    <Compile Include="Support\Stringifier.cs" />
     <Compile Include="Support\GroupSizes.cs" />
     <Compile Include="Support\Enumeration.cs" />
     <Compile Include="Money.cs" />

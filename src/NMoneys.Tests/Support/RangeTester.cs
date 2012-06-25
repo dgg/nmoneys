@@ -262,7 +262,7 @@ namespace NMoneys.Tests.Support
 		#region AssertArgument
 
 		[Test]
-		public void ToString_Closed_NotContained_Exception()
+		public void AssertArgument_Closed_NotContained_Exception()
 		{
 			var subject = new Range<int>(1.Close(), 5.Close());
 
@@ -276,7 +276,7 @@ namespace NMoneys.Tests.Support
 		}
 
 		[Test]
-		public void ToString_Closed_Contained_NoException()
+		public void AssertArgument_Closed_Contained_NoException()
 		{
 			var subject = new Range<int>(1.Close(), 5.Close());
 
@@ -284,7 +284,7 @@ namespace NMoneys.Tests.Support
 		}
 
 		[Test]
-		public void ToString_Open_NotContained_Exception()
+		public void AssertArgument_Open_NotContained_Exception()
 		{
 			var subject = new Range<int>(1.Open(), 5.Open());
 
@@ -298,7 +298,7 @@ namespace NMoneys.Tests.Support
 		}
 
 		[Test]
-		public void ToString_Open_Contained_NoException()
+		public void AssertArgument_Open_Contained_NoException()
 		{
 			var subject = new Range<int>(1.Open(), 5.Open());
 
@@ -306,7 +306,7 @@ namespace NMoneys.Tests.Support
 		}
 
 		[Test]
-		public void Contains_HalfOpen_NotContained_Exception()
+		public void AssertArgument_HalfOpen_NotContained_Exception()
 		{
 			var subject = new Range<int>(1.Close(), 5.Open());
 
@@ -320,7 +320,7 @@ namespace NMoneys.Tests.Support
 		}
 
 		[Test]
-		public void Contains_HalfOpen_Contained_NoException()
+		public void AssertArgument_HalfOpen_Contained_NoException()
 		{
 			var subject = new Range<int>(1.Close(), 5.Open());
 
@@ -328,7 +328,7 @@ namespace NMoneys.Tests.Support
 		}
 
 		[Test]
-		public void Contains_HalfClosed_NotContained_Exception()
+		public void AssertArgument_HalfClosed_NotContained_Exception()
 		{
 			var subject = new Range<int>(1.Open(), 5.Close());
 
@@ -342,11 +342,38 @@ namespace NMoneys.Tests.Support
 		}
 
 		[Test]
-		public void Contains_HalfClosed_Contained_NoException()
+		public void AssertArgument_HalfClosed_Contained_NoException()
 		{
 			var subject = new Range<int>(1.Open(), 5.Close());
 
 			Assert.That(() => subject.AssertArgument("arg", 4), Throws.Nothing);
+		}
+
+		[Test]
+		public void AssertArgument_NullCollection_Exception()
+		{
+			Assert.That(() => new Range<int>(1.Close(), 5.Close()).AssertArgument("arg", null),
+				Throws.InstanceOf<ArgumentNullException>());
+		}
+
+		[Test]
+		public void AssertArgument_AllContained_NoException()
+		{
+			Assert.That(() => new Range<int>(1.Close(), 5.Close()).AssertArgument("arg", new[]{2, 3, 4}),
+				Throws.Nothing);
+		}
+
+		[Test]
+		public void AssertArgument_SomeNotContained_ExceptionWithOffendingMember()
+		{
+			Assert.That(() => new Range<int>(1.Close(), 5.Close()).AssertArgument("arg", new[] { 2, 6, 4 }),
+				Throws.InstanceOf<ArgumentOutOfRangeException>()
+				.With.Message.StringContaining("[1..5]").And
+				.With.Message.StringContaining("1 (inclusive)").And
+				.With.Message.StringContaining("5 (inclusive)")
+				.With.Property("ParamName").EqualTo("arg").And
+				.With.Property("ActualValue").EqualTo(6)
+				);
 		}
 
 		#endregion

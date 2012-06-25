@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace NMoneys.Allocators
+namespace NMoneys.Allocations
 {
 	/// <summary>
 	/// Distributes the remainder after allocating the highest fair amount amongst all the recipients.
@@ -31,6 +31,8 @@ namespace NMoneys.Allocators
 		/// <param name="remainder">The remainder amount that might need to be allocated or <see cref="Money.Zero()"/> if no remainder.</param>
 		/// <param name="alreadyAllocated">An array representing the evenly allocated amounts.
 		/// Its amounts will be modified according to the strategy chosen to allocate the <paramref name="remainder"/>.</param>
-		void Allocate(Money remainder, IList<decimal> alreadyAllocated);
+		void Allocate(Money remainder, IList<Money> alreadyAllocated);
+
+		Allocation Allocate(Allocation allocationSoFar);
 	}
 }

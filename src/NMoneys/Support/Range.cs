@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace NMoneys.Support
 {
@@ -150,6 +151,15 @@ namespace NMoneys.Support
 						_lowerBound.ToAssertion(),
 						_upperBound.ToAssertion(),
 						this));
+			}
+		}
+
+		public void AssertArgument(string paramName, IEnumerable<T> values)
+		{
+			Guard.AgainstNullArgument("values", values);
+			foreach (var value in values)
+			{
+				AssertArgument(paramName, value);
 			}
 		}
 	}
