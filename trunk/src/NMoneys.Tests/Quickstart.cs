@@ -102,11 +102,19 @@ namespace NMoneys.Tests
 		public void Money_SplitAllocations()
 		{
 			Allocation fair = 40m.Eur().Allocate(4);
+			// fair.IsComplete --> true
+			// fair.Remainder --> 0 €
+			// fair --> < 10€, 10€, 10€ >
+
 			Assert.That(fair.IsComplete, Is.True);
 			Assert.That(fair.Remainder, Is.EqualTo(Money.Zero(CurrencyIsoCode.EUR)));
 			Assert.That(fair, Is.EqualTo(new[] { 10m.Eur(), 10m.Eur(), 10m.Eur(), 10m.Eur() }));
 
 			Allocation unfair = 40m.Eur().Allocate(3, RemainderAllocator.LastToFirst);
+			// unfair.IsComplete --> false
+			// unfair.Remainder --> 0 €
+			// unfair --> < 13.33€, 13.33€, 13.33€, 13.34€ >
+
 			Assert.That(unfair.IsComplete, Is.True);
 			Assert.That(unfair.Remainder, Is.EqualTo(Money.Zero(CurrencyIsoCode.EUR)));			
 			Assert.That(unfair, Is.EqualTo(new[] { 13.33m.Eur(), 13.33m.Eur(), 13.34m.Eur() }));
@@ -116,13 +124,13 @@ namespace NMoneys.Tests
 		public void Money_ProRatedAllocation()
 		{
 			var foemmelsConundrumSolution = .05m.Usd().Allocate(new RatioCollection(.3m, 0.7m));
-
+			// foemmelsConundrumSolution --> < $0.02, $0.03 >
 			Assert.That(foemmelsConundrumSolution.IsComplete, Is.True);
 			Assert.That(foemmelsConundrumSolution.Remainder, Is.EqualTo(Money.Zero(CurrencyIsoCode.USD)));
 			Assert.That(foemmelsConundrumSolution, Is.EqualTo(new[] { .02m.Usd(), .03m.Usd() }));
 
 			var anotherFoemmelsConundrumSolution = .05m.Usd().Allocate(new RatioCollection(.3m, 0.7m), RemainderAllocator.LastToFirst);
-
+			// anotherFoemmelsConundrumSolution --> < $0.01, $0.04 >
 			Assert.That(anotherFoemmelsConundrumSolution.IsComplete, Is.True);
 			Assert.That(anotherFoemmelsConundrumSolution.Remainder, Is.EqualTo(Money.Zero(CurrencyIsoCode.USD)));
 			Assert.That(anotherFoemmelsConundrumSolution, Is.EqualTo(new[] { .01m.Usd(), .04m.Usd() }));
