@@ -1160,7 +1160,7 @@ namespace NMoneys
 			}
 		}
 
-		public decimal Round(decimal share)
+		internal decimal Round(decimal share)
 		{
 			decimal raw = share - (.5m * MinAmount);
 			decimal rounded = decimal.Round(raw, SignificantDecimalDigits, MidpointRounding.AwayFromZero);

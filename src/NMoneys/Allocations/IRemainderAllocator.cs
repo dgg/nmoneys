@@ -10,7 +10,7 @@ namespace NMoneys.Allocations
 	/// this will define the order in which recipients will be allocated the remainder left over
 	/// after an equal distribution is made. 
 	/// <para>
-	/// This is not relevant if the total sum of money can be evenly distributed.
+	/// This is not relevant if the total sum of money can be fully distributed.
 	/// </para>
 	/// </remarks>
 	/// <example>
@@ -24,15 +24,15 @@ namespace NMoneys.Allocations
 		/// Allocates the remainder after allocating the highest fair amount amongst all the recipients.
 		/// </summary>
 		/// <remarks>
-		/// At the end of the distribution, the sum of the amounts of <paramref name="alreadyAllocated"/> must be equal to the original amount to allocate.
-		/// <para>Implementors will increase the amounts of <paramref name="alreadyAllocated"/> according to whichever strategy is chosen to distribute the <paramref name="remainder"/>.</para>
-		/// <para>It may not be called at all if the money can be evently distributed in <see cref="Money.Allocate"/>.</para>
+		/// At the end of the distribution, the resulting allocation should, most of the times, be complete (nothing else to allocate).
+		/// But it does not have to be like that. If the remaining amount is too small to be allocated, it will remain a remainder.
+		/// <para>Implementors will increase the amounts used to generate the returning <see cref="Allocation"/> according to whichever strategy is chosen to distribute the remainder of <paramref name="allocationSoFar"/>.</para>
+		/// <para>It may not be called at all if the money can be evenly distributed in <see cref="Money.Allocate(int)"/> or <see cref="Money.Allocate(RatioBag)"/>.</para>
 		/// </remarks>
-		/// <param name="remainder">The remainder amount that might need to be allocated or <see cref="Money.Zero()"/> if no remainder.</param>
-		/// <param name="alreadyAllocated">An array representing the evenly allocated amounts.
-		/// Its amounts will be modified according to the strategy chosen to allocate the <paramref name="remainder"/>.</param>
-		void Allocate(Money remainder, IList<Money> alreadyAllocated);
-
+		/// <param name="allocationSoFar">Contains the remainder amount that might need to be allocated or <see cref="Money.Zero()"/> if no remainder is left.
+		/// <para>It also contains the evenly allocated amounts (if any).</para>
+		/// </param>
+		/// <returns>A new instance of <see cref="Allocation"/> whose results are modified according to the strategy chosen to allocate the <see cref="Allocation.Remainder"/>.</returns>
 		Allocation Allocate(Allocation allocationSoFar);
 	}
 }
