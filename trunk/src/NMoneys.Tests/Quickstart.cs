@@ -115,13 +115,13 @@ namespace NMoneys.Tests
 		[Test]
 		public void Money_ProRatedAllocation()
 		{
-			var foemmelsConundrumSolution = .05m.Usd().Allocate(new RatioBag(.3m, 0.7m));
+			var foemmelsConundrumSolution = .05m.Usd().Allocate(new RatioCollection(.3m, 0.7m));
 
 			Assert.That(foemmelsConundrumSolution.IsComplete, Is.True);
 			Assert.That(foemmelsConundrumSolution.Remainder, Is.EqualTo(Money.Zero(CurrencyIsoCode.USD)));
 			Assert.That(foemmelsConundrumSolution, Is.EqualTo(new[] { .02m.Usd(), .03m.Usd() }));
 
-			var anotherFoemmelsConundrumSolution = .05m.Usd().Allocate(new RatioBag(.3m, 0.7m), RemainderAllocator.LastToFirst);
+			var anotherFoemmelsConundrumSolution = .05m.Usd().Allocate(new RatioCollection(.3m, 0.7m), RemainderAllocator.LastToFirst);
 
 			Assert.That(anotherFoemmelsConundrumSolution.IsComplete, Is.True);
 			Assert.That(anotherFoemmelsConundrumSolution.Remainder, Is.EqualTo(Money.Zero(CurrencyIsoCode.USD)));

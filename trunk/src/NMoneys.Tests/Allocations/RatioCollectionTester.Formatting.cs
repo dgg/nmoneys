@@ -6,12 +6,12 @@ using NUnit.Framework;
 namespace NMoneys.Tests.Allocations
 {
 	[TestFixture]
-	public partial class RatioBagTester
+	public partial class RatioCollectionTester
 	{
 		[Test]
 		public void ToString_PipeSeparatedRatiosAsPerCurrentCulture()
 		{
-			var bag = new RatioBag(0.5m, .4m, .05m, .05m);
+			var bag = new RatioCollection(0.5m, .4m, .05m, .05m);
 
 			using (CultureReseter.Set("en-US"))
 			{
@@ -27,7 +27,7 @@ namespace NMoneys.Tests.Allocations
 		[Test, SetCulture("")]
 		public void ToString_SingleRatio_PaddedOne()
 		{
-			var singleBag = new RatioBag(1m);
+			var singleBag = new RatioCollection(1m);
 
 			Assert.That(singleBag.ToString(), Is.EqualTo("< 1 >"));
 		}
@@ -35,7 +35,7 @@ namespace NMoneys.Tests.Allocations
 		[Test, SetCulture("")]
 		public void ToString_CustomFormatsAndProviders_AppliesToRatios()
 		{
-			var bag = new RatioBag(0.5m, .4m, .05m, .05m);
+			var bag = new RatioCollection(0.5m, .4m, .05m, .05m);
 			var snailDecimalSeparator = (NumberFormatInfo)CultureInfo.InvariantCulture.NumberFormat.Clone();
 			snailDecimalSeparator.NumberDecimalSeparator = "@";
 

@@ -55,7 +55,7 @@
     <Compile Include="Allocations\AllocationTester.cs" />
     <Compile Include="Allocations\RatioTester.Formatting.cs" />
     <Compile Include="Allocations\EvenAllocatorTester.cs" />
-    <Compile Include="Allocations\RatioBagTester.cs" />
+    <Compile Include="Allocations\RatioCollectionTester.cs" />
     <Compile Include="Allocations\RatioTester.cs" />
     <Compile Include="Allocations\RatioTester.Equality.cs" />
     <Compile Include="CharacterReferenceTester.cs" />
@@ -116,10 +116,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Allocations\RatioBagTester.Immutablecollection.cs" />
+    <Compile Include="Allocations\RatioCollectionTester.Immutablecollection.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Allocations\RatioBagTester.Formatting.cs" />
+    <Compile Include="Allocations\RatioCollectionTester.Formatting.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
