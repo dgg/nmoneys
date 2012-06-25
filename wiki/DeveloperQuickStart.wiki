@@ -107,6 +107,29 @@ Money alsoTwo = two.Perform(ten, (amt1, amt2) => amt1 % amt2);
 Money three = new Money(3.9m).Perform(amt => Math.Floor(amt));
 }}}
 
+=== Allocations ===
+Complex allocation logic is performed via the `Allocate()` methods. For example, to perform split allocations:
+{{{
+Allocation fair = 40m.Eur().Allocate(4);
+// fair.IsComplete --> true
+// fair.Remainder --> 0€
+// fair --> < 10€, 10€, 10€ >
+
+Allocation unfair = 40m.Eur().Allocate(3, RemainderAllocator.LastToFirst);
+// unfair.IsComplete --> false
+// unfair.Remainder --> 0€
+// unfair --> < 13.33€, 13.33€, 13.33€, 13.34€ >
+}}}
+Pro-rated allocations are also possible:
+{{{
+var foemmelsConundrumSolution = .05m.Usd().Allocate(new RatioCollection(.3m, 0.7m));
+// foemmelsConundrumSolution --> < $0.02, $0.03 >
+
+var anotherFoemmelsConundrumSolution = .05m.Usd().Allocate(new RatioCollection(.3m, 0.7m), RemainderAllocator.LastToFirst);
+// anotherFoemmelsConundrumSolution --> < $0.01, $0.04 >
+}}}
+
+
 === Formatting ===
 Of course a `Money` instance can be formatted in several ways:
 {{{
@@ -115,6 +138,15 @@ s = threeDollars.ToString("N"); // format applied to currency "3.00"
 s = threeDollars.ToString(CultureInfo.GetCultureInfo("es-ES")); // format provider used "3,00 €", better suited for countries with same currency and different number formatting
 s = threeDollars.Format("{1} {0:00.00}"); // formatting with placeholders for currency symbol and amount "$ 03.00"
 s = new Money(1500, Currency.Eur).Format("{1} {0:#,#.00}"); // rich formatting "€ 1.500,00"
+}}}
+
+=== Extensions ===
+Extension methods are provided as shortcuts for creation of money and currency instances:
+
+{{{
+3m.Gbp();
+1000m.Pounds();
+CurrencyIsoCode.NOK.ToMoney(3m);
 }}}
 
 === Extensions ===
