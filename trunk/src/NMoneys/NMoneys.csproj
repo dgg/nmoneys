@@ -58,6 +58,7 @@
     <Compile Include="Allocations\RatioCollection.cs" />
     <Compile Include="Allocations\RemainderAllocatorBase.cs" />
     <Compile Include="Allocations\LastToFirstAllocator.cs" />
+    <Compile Include="Money.Formatting.cs" />
     <Compile Include="PowerOfTen.cs" />
     <Compile Include="Currency.cs" />
     <Compile Include="CurrencyCharacterReferences.cs" />

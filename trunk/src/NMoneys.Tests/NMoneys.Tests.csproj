@@ -83,6 +83,7 @@
     <Compile Include="CustomConstraints\XmlSerializationConstraint.cs" />
     <Compile Include="ExtensionsTester.cs" />
     <Compile Include="MoneyTester.cs" />
+    <Compile Include="MoneyTester.Formatting.cs" />
     <Compile Include="MoneyTester.ProRatedAllocations.cs" />
     <Compile Include="MoneyTester.Some.cs" />
     <Compile Include="MoneyTester.SplitAllocations.cs" />
