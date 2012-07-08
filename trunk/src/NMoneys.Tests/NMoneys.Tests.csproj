@@ -88,9 +88,9 @@
     <Compile Include="ExtensionsTester.cs" />
     <Compile Include="MoneyTester.cs" />
     <Compile Include="MoneyTester.Formatting.cs" />
-    <Compile Include="MoneyTester.ProRatedAllocations.cs" />
+    <Compile Include="MoneyTester.Allocations.ProRated.cs" />
     <Compile Include="MoneyTester.Some.cs" />
-    <Compile Include="MoneyTester.SplitAllocations.cs" />
+    <Compile Include="MoneyTester.Allocations.Split.cs" />
     <Compile Include="MoneyTester.Zero.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProvidersTesters.cs" />
