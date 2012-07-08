@@ -28,26 +28,39 @@ namespace NMoneys.Tests.Allocations
 		public void Ctor_AllocatedMoreThanWasPossible_Exception()
 		{
 			Money allocatable = 1m.Dkk();
-			var allocated = new[]{.75m.Dkk(), .75m.Dkk()};
+			var allocated = new[] { .75m.Dkk(), .75m.Dkk() };
 
-			Assert.That(()=> new Allocation(allocatable, allocated), Throws.ArgumentException);
-			
+			Assert.That(() => new Allocation(allocatable, allocated), Throws.ArgumentException);
+
 		}
 
 		[TestCaseSource("allocationResults")]
-		public void Ctor_AllocatedIsWrapped(Money moreThanAllocated, Money[] allocated)
+		public void Ctor_AllocatedIsWrappedIntoAnEnumerable(Money moreThanAllocated, Money[] allocated)
 		{
 			var subject = new Allocation(moreThanAllocated, allocated);
 
 			Assert.That(subject, Is.EqualTo(allocated));
 		}
 
-		protected IEnumerable<TestCaseData> allocationResults = new[]
+		[TestCaseSource("allocationResults")]
+		public void Ctor_AllocatedIsWrappedIntoAnIndexable(Money moreThanAllocated, Money[] allocated)
+		{
+			var subject = new Allocation(moreThanAllocated, allocated);
+
+			Assert.That(subject, Has.Length.EqualTo(allocated.Length));
+
+			for (int i = 0; i < allocated.Length; i++)
 			{
-				new TestCaseData(10m.Dkk(), new[]{8m.Dkk(), 2m.Dkk()}).SetName("All money allocated"), 
-				new TestCaseData(10m.Dkk(), new[]{6m.Dkk(), 2m.Dkk()}).SetName("Some money not allocated"), 
-				new TestCaseData(10m.Dkk(), new[]{9.99m.Dkk(), .001m.Dkk()}).SetName("Some marginal money not allocated")
-			};
+				Assert.That(subject[i], Is.EqualTo(allocated[i]));
+			}
+		}
+
+		protected IEnumerable<TestCaseData> allocationResults = new[]
+		{
+			new TestCaseData(10m.Dkk(), new[]{8m.Dkk(), 2m.Dkk()}).SetName("All money allocated"), 
+			new TestCaseData(10m.Dkk(), new[]{6m.Dkk(), 2m.Dkk()}).SetName("Some money not allocated"), 
+			new TestCaseData(10m.Dkk(), new[]{9.99m.Dkk(), .001m.Dkk()}).SetName("Some marginal money not allocated")
+		};
 
 		[Test]
 		public void Ctor_AllMoneyAllocated_Complete()
@@ -90,7 +103,7 @@ namespace NMoneys.Tests.Allocations
 		[Test]
 		public void Ctor_Debt_CanBeFullyAllocated()
 		{
-			var subject = new Allocation(-10m.Usd(), new[] {-3m.Usd(), -7m.Usd()});
+			var subject = new Allocation(-10m.Usd(), new[] { -3m.Usd(), -7m.Usd() });
 
 			Assert.That(subject.TotalAllocated, Is.EqualTo(-10m.Usd()));
 			Assert.That(subject.Remainder, Is.EqualTo(Money.Zero(CurrencyIsoCode.USD)));
@@ -118,6 +131,18 @@ namespace NMoneys.Tests.Allocations
 			Assert.That(subject.Remainder, Is.EqualTo(-.001m.Usd()));
 			Assert.That(subject.IsComplete, Is.False);
 			Assert.That(subject.IsQuasiComplete, Is.True);
+		}
+
+		[Test]
+		public void Ctor_IdentityAllocation_IsForOneRecipient()
+		{
+			var tenKroner = 10m.Dkk();
+			var subject = new Allocation(tenKroner, new[] { tenKroner });
+
+			Assert.That(subject.TotalAllocated, Is.EqualTo(tenKroner));
+			Assert.That(subject.Remainder, Is.EqualTo(Money.Zero(CurrencyIsoCode.DKK)));
+			Assert.That(subject.IsComplete, Is.True);
+			Assert.That(subject.IsQuasiComplete, Is.False);
 		}
 	}
 }
