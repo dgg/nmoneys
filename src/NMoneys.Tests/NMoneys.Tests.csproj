@@ -59,6 +59,7 @@
     <Compile Include="Allocations\RatioTester.cs" />
     <Compile Include="Allocations\RatioTester.Equality.cs" />
     <Compile Include="CharacterReferenceTester.cs" />
+    <Compile Include="MoneyTester.Arithmetic.cs" />
     <Compile Include="MoneyTester.Arithmetic.Operators.cs" />
     <Compile Include="MoneyTester.Parsing.cs" />
     <Compile Include="MoneyTester.Cloning.cs" />

@@ -1,4 +1,8 @@
-﻿using NUnit.Framework;
+﻿using System;
+using System.Collections.Generic;
+using NMoneys.Extensions;
+using NMoneys.Tests.CustomConstraints;
+using NUnit.Framework;
 
 namespace NMoneys.Tests
 {
@@ -57,5 +61,43 @@ namespace NMoneys.Tests
 			Money money;
 			Assert.That(() => money = fiver - hund, Throws.InstanceOf<DifferentCurrencyException>());
 		}
+
+		#region Total
+
+		[Test]
+		public void Total_AllOfSameCurrency_NewInstanceWithAmountAsSumOfAll()
+		{
+			Assert.That(Money.Total(2m.Dollars(), 3m.Dollars(), 5m.Dollars()), Must.Be.MoneyWith(10m, Currency.Dollar));
+		}
+
+		[Test]
+		public void Total_DiffCurrency_NewInstanceWithAmountAsSumOfAll()
+		{
+			Assert.That(() => Money.Total(2m.Dollars(), 3m.Eur(), 5m.Dollars()), Throws.InstanceOf<DifferentCurrencyException>());
+		}
+
+		[Test]
+		public void Total_NullMoneys_Exception()
+		{
+			IEnumerable<Money> nullMoneys = null;
+
+			Assert.That(() => Money.Total(nullMoneys), Throws.InstanceOf<ArgumentNullException>()
+				.With.Message.StringContaining("moneys"));
+		}
+
+		[Test]
+		public void Total_EmptyMoneys_Exception()
+		{
+			Assert.That(() => Money.Total(), Throws.ArgumentException.With.Message.StringContaining("empty"));
+			Assert.That(() => Money.Total(new Money[0]), Throws.ArgumentException.With.Message.StringContaining("empty"));
+		}
+
+		[Test]
+		public void Total_OnlyOneMoney_AnotherMoneyInstanceWithSameInformation()
+		{
+			Assert.That(Money.Total(10m.Usd()), Is.EqualTo(10m.Usd()));
+		}
+
+		#endregion
 	}
 }
