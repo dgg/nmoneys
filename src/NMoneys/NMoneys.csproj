@@ -58,18 +58,40 @@
     <Compile Include="Allocations\RatioCollection.cs" />
     <Compile Include="Allocations\RemainderAllocatorBase.cs" />
     <Compile Include="Allocations\LastToFirstAllocator.cs" />
-    <Compile Include="Money.Creation.cs" />
-    <Compile Include="Money.Serialization.Xml.cs" />
-    <Compile Include="Money.Serialization.cs" />
-    <Compile Include="Money.Arithmetic.cs" />
-    <Compile Include="Money.Allocations.cs" />
-    <Compile Include="Money.Arithmetic.Operators.cs" />
-    <Compile Include="Money.Parsing.cs" />
-    <Compile Include="Money.Cloning.cs" />
-    <Compile Include="Money.Comparisons.cs" />
-    <Compile Include="Money.Equality.cs" />
-    <Compile Include="Money.Formatting.cs" />
-    <Compile Include="PowerOfTen.cs" />
+    <Compile Include="Money.Creation.cs">
+		<DependentUpon>Money.cs</DependentUpon>
+	</Compile>
+  	<Compile Include="Money.Serialization.Xml.cs">
+		<DependentUpon>Money.cs</DependentUpon>
+	</Compile>
+  	<Compile Include="Money.Serialization.cs">
+		<DependentUpon>Money.cs</DependentUpon>
+	</Compile>
+  	<Compile Include="Money.Arithmetic.cs">
+		<DependentUpon>Money.cs</DependentUpon>
+	</Compile>
+  	<Compile Include="Money.Allocations.cs">
+		<DependentUpon>Money.cs</DependentUpon>
+	</Compile>
+  	<Compile Include="Money.Arithmetic.Operators.cs">
+		<DependentUpon>Money.cs</DependentUpon>
+	</Compile>
+  	<Compile Include="Money.Parsing.cs">
+		<DependentUpon>Money.cs</DependentUpon>
+	</Compile>
+  	<Compile Include="Money.Cloning.cs">
+		<DependentUpon>Money.cs</DependentUpon>
+	</Compile>
+  	<Compile Include="Money.Comparisons.cs">
+		<DependentUpon>Money.cs</DependentUpon>
+	</Compile>
+    <Compile Include="Money.Equality.cs">
+		<DependentUpon>Money.cs</DependentUpon>
+	</Compile>
+  	<Compile Include="Money.Formatting.cs">
+		<DependentUpon>Money.cs</DependentUpon>
+	</Compile>
+  	<Compile Include="PowerOfTen.cs" />
     <Compile Include="Currency.cs" />
     <Compile Include="CurrencyCharacterReferences.cs" />
     <Compile Include="CurrencyEqualityComparer.cs" />
