@@ -313,20 +313,7 @@ namespace NMoneys.Tests
 
 		#endregion
 
-		#region cloning
-
-		[Test]
-		public void Clone_IClonable_ObjectOfCorrectType()
-		{
-			object anotherFiver = fiver.Clone();
-
-			Assert.That(anotherFiver, Is.TypeOf<Money>().And.Not.SameAs(fiver));
-
-			Assert.That(((Money)anotherFiver).Amount, Is.EqualTo(fiver.Amount));
-			Assert.That(((Money)anotherFiver).CurrencyCode, Is.EqualTo(fiver.CurrencyCode));
-		}
-
-		#endregion
+		
 
 		#region property value checking
 
