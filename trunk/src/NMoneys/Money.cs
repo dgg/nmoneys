@@ -21,7 +21,7 @@ namespace NMoneys
 	/// </summary>
 	[Serializable]
 	[XmlRoot(Namespace = Serialization.Data.NAMESPACE, ElementName = Serialization.Data.Money.ROOT_NAME, DataType = Serialization.Data.Money.DATA_TYPE, IsNullable = false)]
-	public partial struct Money : IEquatable<Money>, IComparable, IComparable<Money>, ICloneable, ISerializable, IXmlSerializable
+	public partial struct Money : IComparable, IComparable<Money>, ICloneable, ISerializable, IXmlSerializable
 	{
 		#region .ctor
 
@@ -533,74 +533,6 @@ currency);
 				return new Money(currency.MinAmount, currency);
 			}
 		}
-
-		#region equality
-
-		/// <summary>
-		/// Indicates whether the current <see cref="Money"/> is equal to another <see cref="Money"/>.
-		/// </summary>
-		/// <returns>
-		/// true if the current instance has equal <see cref="Amount"/> and <see cref="Currency"/>as the <paramref name="other"/> parameter;
-		/// otherwise, false.
-		/// </returns>
-		/// <param name="other">An money to compare with this instance.</param>
-		public bool Equals(Money other)
-		{
-			return Equals(other.CurrencyCode, CurrencyCode) && other.Amount == Amount;
-		}
-
-
-		/// <summary>
-		/// Indicates whether this instance and a specified object are equal.
-		/// </summary>
-		/// <returns>
-		/// true if <paramref name="obj"/> and this instance are the same type and represent the same value; otherwise, false.
-		/// </returns>
-		/// <param name="obj">Another object to compare to.</param>
-		public override bool Equals(object obj)
-		{
-			if (ReferenceEquals(null, obj)) return false;
-			if (obj.GetType() != typeof(Money)) return false;
-			return Equals((Money)obj);
-		}
-
-		/// <summary>
-		/// Returns the hash code for this instance.
-		/// </summary>
-		/// <returns>
-		/// A 32-bit signed integer that is the hash code for this instance.
-		/// </returns>
-		public override int GetHashCode()
-		{
-			unchecked
-			{
-				return (CurrencyCode.GetHashCode() * 397) ^ Amount.GetHashCode();
-			}
-		}
-
-		/// <summary>
-		/// Returns a value indicating whether two instances of <see cref="Money"/> are equal.
-		/// </summary>
-		/// <param name="left">The first value to compare.</param>
-		/// <param name="right">The second value to compare.</param>
-		/// <returns>true if <paramref name="left"/> and <paramref name="right"/> are equal; otherwise, false.</returns>
-		public static bool operator ==(Money left, Money right)
-		{
-			return Equals(left, right);
-		}
-
-		/// <summary>
-		/// Returns a value indicating whether two instances of <see cref="Money"/> are not equal.
-		/// </summary>
-		/// <param name="left">The first value to compare.</param>
-		/// <param name="right">The second value to compare.</param>
-		/// <returns>true if <paramref name="left"/> and <paramref name="right"/> are not equal; otherwise, false.</returns>
-		public static bool operator !=(Money left, Money right)
-		{
-			return !Equals(left, right);
-		}
-
-		#endregion
 
 		#region comparison
 
