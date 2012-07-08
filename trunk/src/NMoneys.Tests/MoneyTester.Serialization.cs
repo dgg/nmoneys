@@ -56,5 +56,31 @@ namespace NMoneys.Tests
 				Assert.That(deserializeObsolete, Must.RaiseObsoleteEvent.Once());
 			}
 		}
+
+		[Test]
+		public void BinarySerialization_OfDefaultInstance_StoresAndDeserializesNoCurrency()
+		{
+			var @default = new Money();
+
+			var serializer = new OneGoBinarySerializer<Money>();
+			serializer.Serialize(@default);
+
+			Money deserialized = serializer.Deserialize();
+
+			Assert.That(deserialized, Must.Be.MoneyWith(0m, Currency.Xxx));
+		}
+		
+		[Test]
+		public void JsonSerialization_OfDefaultInstance_StoresAndDeserializesNoCurrency()
+		{
+			var @default = new Money();
+
+			var serializer = new OneGoJsonSerializer<Money>();
+			serializer.Serialize(@default);
+
+			Money deserialized = serializer.Deserialize();
+
+			Assert.That(deserialized, Must.Be.MoneyWith(0m, Currency.Xxx));
+		}
 	}
 }
