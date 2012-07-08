@@ -58,6 +58,8 @@
     <Compile Include="Allocations\RatioCollection.cs" />
     <Compile Include="Allocations\RemainderAllocatorBase.cs" />
     <Compile Include="Allocations\LastToFirstAllocator.cs" />
+    <Compile Include="Money.Serialization.Xml.cs" />
+    <Compile Include="Money.Serialization.cs" />
     <Compile Include="Money.Arithmetic.cs" />
     <Compile Include="Money.Allocations.cs" />
     <Compile Include="Money.Arithmetic.Operators.cs" />
