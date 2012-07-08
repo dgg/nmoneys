@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using NMoneys.Tests.CustomConstraints;
 using NUnit.Framework;
 
 namespace NMoneys.Tests
@@ -7,8 +8,6 @@ namespace NMoneys.Tests
 	[TestFixture]
 	public partial class MoneyTester
 	{
-		#region Arithmetic
-
 		[Test]
 		public void Negate_AnotherMoneyWithNegativeAmount()
 		{
@@ -465,22 +464,16 @@ namespace NMoneys.Tests
 
 		#endregion
 
-		#region HasDecimals
-
 		[Test]
-		public void HasDecimals_Integer_False()
+		public void OperatingOnStrings_IsPossible_IfCurrenciesAreKnownUpfront()
 		{
-			Assert.That(new Money(3m, Currency.Usd).HasDecimals, Is.False);
+			Money poundQuantity = Money.Parse("£100.50", Currency.Gbp);
+			Money yenQuantity = Money.Parse("¥ 1,000", Currency.Jpy);
+
+			Func<decimal, decimal> halfDiscount = q => q * .5m;
+
+			Assert.That(poundQuantity.Perform(halfDiscount), Must.Be.MoneyWith(50.25m, Currency.Gbp));
+			Assert.That(yenQuantity.Perform(halfDiscount), Must.Be.MoneyWith(500, Currency.Jpy));
 		}
-
-		[Test]
-		public void HasDecimals_NotInteger_False()
-		{
-			Assert.That(new Money(3.0000001m, Currency.Usd).HasDecimals, Is.True);
-		}
-
-		#endregion
-
-		#endregion
 	}
 }

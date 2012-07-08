@@ -28,7 +28,7 @@ namespace NMoneys.Tests
 		[Test]
 		public void XmlSerialization_ObsoleteCurrency_RaisesEvent()
 		{
-			Money obsolete = new Money(2m, "EEK");
+			var obsolete = new Money(2m, "EEK");
 			using (var serializer = new OneGoXmlSerializer<Money>())
 			{
 				serializer.Serialize(obsolete);
@@ -40,7 +40,7 @@ namespace NMoneys.Tests
 		[Test]
 		public void CanBe_XamlSerialized()
 		{
-			XamlSerializer serializer = new XamlSerializer();
+			var serializer = new XamlSerializer();
 			string xaml = serializer.Serialize(new Money(3.757m));
 			Assert.DoesNotThrow(() => serializer.Deserialize<Money>(xaml));
 
@@ -67,13 +67,39 @@ namespace NMoneys.Tests
 		[Test]
 		public void DataContractSerialization_ObsoleteCurrency_RaisesEvent()
 		{
-			Money obsolete = new Money(2m, "EEK");
+			var obsolete = new Money(2m, "EEK");
 			using (var serializer = new OneGoDataContractSerializer<Money>())
 			{
 				serializer.Serialize(obsolete);
 				Action deserializeObsolete = () => serializer.Deserialize();
 				Assert.That(deserializeObsolete, Must.RaiseObsoleteEvent.Once());
 			}
+		}
+
+		[Test]
+		public void XmlSerialization_OfDefaultInstance_StoresAndDeserializesNoCurrency()
+		{
+			var @default = new Money();
+
+			var serializer = new OneGoXmlSerializer<Money>();
+			serializer.Serialize(@default);
+
+			Money deserialized = serializer.Deserialize();
+
+			Assert.That(deserialized, Must.Be.MoneyWith(0m, Currency.Xxx));
+		}
+
+		[Test]
+		public void DatacontractSerialization_OfDefaultInstance_StoresAndDeserializesNoCurrency()
+		{
+			var @default = new Money();
+
+			var serializer = new OneGoDataContractSerializer<Money>();
+			serializer.Serialize(@default);
+
+			Money deserialized = serializer.Deserialize();
+
+			Assert.That(deserialized, Must.Be.MoneyWith(0m, Currency.Xxx));
 		}
 	}
 }
