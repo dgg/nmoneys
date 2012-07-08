@@ -21,7 +21,7 @@ namespace NMoneys
 	/// </summary>
 	[Serializable]
 	[XmlRoot(Namespace = Serialization.Data.NAMESPACE, ElementName = Serialization.Data.Money.ROOT_NAME, DataType = Serialization.Data.Money.DATA_TYPE, IsNullable = false)]
-	public partial struct Money : ICloneable, ISerializable, IXmlSerializable
+	public partial struct Money : ISerializable, IXmlSerializable
 	{
 		#region .ctor
 
@@ -533,21 +533,6 @@ currency);
 				return new Money(currency.MinAmount, currency);
 			}
 		}
-
-		#region cloning
-
-		/// <summary>
-		/// Creates a new object that is a copy of the current instance.
-		/// </summary>
-		/// <returns>
-		/// A new object that is a copy of this instance.
-		/// </returns>
-		public object Clone()
-		{
-			return new Money(Amount, CurrencyCode);
-		}
-
-		#endregion
 
 		#region currency checking
 
