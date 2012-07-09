@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
-using System.Web;
 using NMoneys.Support;
 
 namespace NMoneys
@@ -26,6 +26,16 @@ namespace NMoneys
 		/// <remarks>To discourage the use of null, a "null object" pattern is used. "Null objects" are empty.</remarks>
 		public static readonly CharacterReference Empty = new CharacterReference();
 
+		private static readonly Dictionary<string, string> _htmlEntities = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+		{
+			{"cent", "¢"},
+			{"pound", "£"},
+			{"curren", "¤"},
+			{"yen", "¥"},
+			{"fnof", "ƒ"},
+			{"euro", "€"},
+		};
+
 		/// <summary>
 		/// Creates a character reference.
 		/// </summary>
@@ -48,7 +58,7 @@ namespace NMoneys
 				EntityName = toEntityName(entityName);
 				SimpleName = lower(entityName);
 			}
-			Character = HttpUtility.HtmlDecode(EntityName);
+			Character = _htmlEntities[SimpleName];
 			CodePoint = char.ConvertToUtf32(Character, 0);
 			EntityNumber = string.Concat(AMP, SHARP, CodePoint.ToString(CultureInfo.InvariantCulture), SEMICOLON);
 			IsEmpty = false;
