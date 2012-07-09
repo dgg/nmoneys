@@ -59,13 +59,25 @@
     <Compile Include="Allocations\RatioTester.cs" />
     <Compile Include="Allocations\RatioTester.Equality.cs" />
     <Compile Include="CharacterReferenceTester.cs" />
-    <Compile Include="CurrencyTester.Serialization.Xml.cs" />
-    <Compile Include="CurrencyTester.Serialization.cs" />
-    <Compile Include="CurrencyTester.Markup.cs" />
-    <Compile Include="CurrencyTester.Code.cs" />
-    <Compile Include="CurrencyTester.Creation.cs" />
-    <Compile Include="CurrencyTester.Comparisons.cs" />
-    <Compile Include="MoneyTester.Creation.cs">
+    <Compile Include="CurrencyTester.Serialization.Xml.cs">
+		<DependentUpon>CurrencyTester.cs</DependentUpon>
+	</Compile>
+  	<Compile Include="CurrencyTester.Serialization.cs">
+		<DependentUpon>CurrencyTester.cs</DependentUpon>
+	</Compile>
+  	<Compile Include="CurrencyTester.Markup.cs">
+		<DependentUpon>CurrencyTester.cs</DependentUpon>
+	</Compile>
+  	<Compile Include="CurrencyTester.Code.cs">
+		<DependentUpon>CurrencyTester.cs</DependentUpon>
+	</Compile>
+  	<Compile Include="CurrencyTester.Creation.cs">
+		<DependentUpon>CurrencyTester.cs</DependentUpon>
+	</Compile>
+  	<Compile Include="CurrencyTester.Comparisons.cs">
+		<DependentUpon>CurrencyTester.cs</DependentUpon>
+	</Compile>
+  	<Compile Include="MoneyTester.Creation.cs">
       <DependentUpon>MoneyTester.cs</DependentUpon>
     </Compile>
     <Compile Include="MoneyTester.Serialization.Xml.cs">
@@ -89,8 +101,10 @@
     <Compile Include="MoneyTester.Comparisons.cs">
       <DependentUpon>MoneyTester.cs</DependentUpon>
     </Compile>
-    <Compile Include="CurrencyEqualityComparerTester.cs" />
-    <Compile Include="CurrencyIsoCodeTester.cs" />
+    <Compile Include="CurrencyEqualityComparerTester.cs">
+		<DependentUpon>CurrencyTester.cs</DependentUpon>
+	</Compile>
+  	<Compile Include="CurrencyIsoCodeTester.cs" />
     <Compile Include="CurrencyTester.cs" />
     <Compile Include="CustomConstraints\CompleteAllocationConstraint.cs" />
     <Compile Include="CustomConstraints\CurrencyInfoConstraint.cs" />
