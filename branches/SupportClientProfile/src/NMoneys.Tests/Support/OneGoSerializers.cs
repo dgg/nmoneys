@@ -3,10 +3,8 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
-using System.Web.Script.Serialization;
 using System.Xml;
 using System.Xml.Serialization;
-using NMoneys.Serialization;
 
 namespace NMoneys.Tests.Support
 {
@@ -21,7 +19,7 @@ namespace NMoneys.Tests.Support
 
 		public string Serialize(T toSerialize)
 		{
-			BinaryFormatter outFormatter = new BinaryFormatter();
+			var outFormatter = new BinaryFormatter();
 			outFormatter.Serialize(_stream, toSerialize);
 
 			_stream.Flush();
@@ -33,7 +31,7 @@ namespace NMoneys.Tests.Support
 
 		public T Deserialize()
 		{
-			BinaryFormatter inFormatter = new BinaryFormatter();
+			var inFormatter = new BinaryFormatter();
 
 			_stream.Seek(0, SeekOrigin.Begin);
 
@@ -64,7 +62,7 @@ namespace NMoneys.Tests.Support
 		{
 			_serializer.Serialize(_stream, toSerialize);
 
-			StringBuilder sb = new StringBuilder();
+			var sb = new StringBuilder();
 			XmlWriter xw = XmlWriter.Create(sb);
 			_serializer.Serialize(xw, toSerialize);
 			xw.Flush();
@@ -123,33 +121,5 @@ namespace NMoneys.Tests.Support
 			_stream.Close();
 			_stream.Dispose();
 		}
-	}
-
-	internal class OneGoJsonSerializer<T> : IDisposable
-	{
-		private readonly JavaScriptSerializer _serializer;
-		private readonly StringBuilder _sb;
-
-		public OneGoJsonSerializer()
-		{
-			_serializer = new JavaScriptSerializer();
-			_serializer.RegisterConverters(new JavaScriptConverter[] { new MoneyConverter(), new CurrencyConverter(), new CurrencyCodeConverter() });
-
-			_sb = new StringBuilder();
-		}
-
-		public string Serialize(T toSerialize)
-		{
-			_serializer.Serialize(toSerialize, _sb);
-			return _sb.ToString();
-		}
-
-		public T Deserialize()
-		{
-			T deserialized = _serializer.Deserialize<T>(_sb.ToString());
-			return deserialized;
-		}
-
-		public void Dispose() { }
 	}
 }

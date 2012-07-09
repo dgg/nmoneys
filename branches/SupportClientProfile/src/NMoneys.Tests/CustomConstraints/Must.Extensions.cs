@@ -45,16 +45,6 @@ namespace NMoneys.Tests.CustomConstraints
 			return new DataContractJsonSerializationConstraint<T>();
 		}
 
-		public static Constraint JsonSerializable<T>(this Must.BeEntryPoint entryPoint, Func<T, Constraint> constraintOverDeserialized)
-		{
-			return new JsonSerializationConstraint<T>(constraintOverDeserialized);
-		}
-
-		public static Constraint JsonDeserializableInto<T>(this Must.BeEntryPoint entryPoint, T to)
-		{
-			return new JsonDeserializationConstraint<T>(to);
-		}
-
 		public static Constraint Once(this Must.RaiseObsoleteEventEntryPoint entryPoint)
 		{
 			return new ObsoleteCurrencyRaisedConstraint(1);

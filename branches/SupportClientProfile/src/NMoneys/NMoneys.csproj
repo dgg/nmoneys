@@ -43,7 +43,6 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.XML" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
@@ -51,43 +50,43 @@
     <Compile Include="Allocations\Allocation.cs" />
     <Compile Include="Allocations\EvenAllocator.cs" />
     <Compile Include="Allocations\FirstToLastAllocator.cs">
-		<DependentUpon>IRemainderAllocator.cs</DependentUpon>
-	</Compile>
-  	<Compile Include="Allocations\IRemainderAllocator.cs" />
+      <DependentUpon>IRemainderAllocator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Allocations\IRemainderAllocator.cs" />
     <Compile Include="Allocations\ProRataAllocator.cs" />
     <Compile Include="Allocations\RandomAllocator.cs">
-		<DependentUpon>IRemainderAllocator.cs</DependentUpon>
-	</Compile>
-  	<Compile Include="Allocations\Ratio.cs" />
+      <DependentUpon>IRemainderAllocator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Allocations\Ratio.cs" />
     <Compile Include="Allocations\RatioCollection.cs" />
     <Compile Include="Allocations\RemainderAllocatorBase.cs">
-		<DependentUpon>IRemainderAllocator.cs</DependentUpon>
-	</Compile>
-  	<Compile Include="Allocations\LastToFirstAllocator.cs">
-		<DependentUpon>IRemainderAllocator.cs</DependentUpon>
-	</Compile>
-  	<Compile Include="Currency.Serialization.Xml.cs">
-		<DependentUpon>Currency.cs</DependentUpon>
-	</Compile>
-  	<Compile Include="Currency.Serialization.cs">
-		<DependentUpon>Currency.cs</DependentUpon>
-	</Compile>
-  	<Compile Include="Currency.Code.cs">
-		<DependentUpon>Currency.cs</DependentUpon>
-	</Compile>
-  	<Compile Include="Currency.Creation.cs">
-		<DependentUpon>Currency.cs</DependentUpon>
-	</Compile>
-  	<Compile Include="Currency.Formatting.cs">
-		<DependentUpon>Currency.cs</DependentUpon>
-	</Compile>
-  	<Compile Include="Currency.Comparisons.cs">
-		<DependentUpon>Currency.cs</DependentUpon>
-	</Compile>
-  	<Compile Include="Currency.Equality.cs">
-		<DependentUpon>Currency.cs</DependentUpon>
-	</Compile>
-  	<Compile Include="Money.Creation.cs">
+      <DependentUpon>IRemainderAllocator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Allocations\LastToFirstAllocator.cs">
+      <DependentUpon>IRemainderAllocator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Currency.Serialization.Xml.cs">
+      <DependentUpon>Currency.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Currency.Serialization.cs">
+      <DependentUpon>Currency.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Currency.Code.cs">
+      <DependentUpon>Currency.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Currency.Creation.cs">
+      <DependentUpon>Currency.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Currency.Formatting.cs">
+      <DependentUpon>Currency.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Currency.Comparisons.cs">
+      <DependentUpon>Currency.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Currency.Equality.cs">
+      <DependentUpon>Currency.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Money.Creation.cs">
       <DependentUpon>Money.cs</DependentUpon>
     </Compile>
     <Compile Include="Money.Serialization.Xml.cs">
@@ -123,18 +122,18 @@
     <Compile Include="PowerOfTen.cs" />
     <Compile Include="Currency.cs" />
     <Compile Include="CurrencyCharacterReferences.cs">
-		<DependentUpon>Currency.cs</DependentUpon>
-	</Compile>
-  	<Compile Include="CurrencyEqualityComparer.cs">
-		<DependentUpon>Currency.cs</DependentUpon>
-	</Compile>
-  	<Compile Include="CurrencyInfo.cs" />
+      <DependentUpon>Currency.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CurrencyEqualityComparer.cs">
+      <DependentUpon>Currency.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CurrencyInfo.cs" />
     <Compile Include="CurrencyIsoCode.cs" />
     <Compile Include="CanonicalCultureAttribute.cs" />
     <Compile Include="CurrencyIsoCode.Extensions.cs">
-		<DependentUpon>CurrencyIsoCode.cs</DependentUpon>
-	</Compile>
-  	<Compile Include="Exceptions.cs" />
+      <DependentUpon>CurrencyIsoCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Exceptions.cs" />
     <Compile Include="Extensions\Money.Extensions.cs" />
     <Compile Include="CharacterReference.cs" />
     <Compile Include="ObsoleteCurrencies.cs" />
@@ -142,10 +141,7 @@
     <Compile Include="ObsoleteCurrencyEventBehavior.cs" />
     <Compile Include="Providers.cs" />
     <Compile Include="RemainderAllocator.cs" />
-    <Compile Include="Serialization\CurrencyCodeConverter.cs" />
-    <Compile Include="Serialization\CurrencyConverter.cs" />
     <Compile Include="Serialization\Data.cs" />
-    <Compile Include="Serialization\MoneyConverter.cs" />
     <Compile Include="Support\Stringifier.cs" />
     <Compile Include="Support\GroupSizes.cs" />
     <Compile Include="Support\Enumeration.cs" />

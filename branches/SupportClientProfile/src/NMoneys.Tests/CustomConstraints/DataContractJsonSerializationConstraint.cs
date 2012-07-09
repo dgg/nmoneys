@@ -22,11 +22,11 @@ namespace NMoneys.Tests.CustomConstraints
 
 		private static string serialize(T toSerialize)
 		{
-			using (MemoryStream str = new MemoryStream())
+			using (var str = new MemoryStream())
 			{
 				try
 				{
-					DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(T));
+					var serializer = new DataContractJsonSerializer(typeof(T));
 					serializer.WriteObject(str, toSerialize);
 
 					str.Flush();
