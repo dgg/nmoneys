@@ -37,8 +37,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework">
-      <HintPath>..\..\tools\NUnit\framework\nunit.framework.dll</HintPath>
+    <Reference Include="nunit.framework, Version=2.6.0.12051, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\NUnit.2.6.0.12054\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -60,24 +61,24 @@
     <Compile Include="Allocations\RatioTester.Equality.cs" />
     <Compile Include="CharacterReferenceTester.cs" />
     <Compile Include="CurrencyTester.Serialization.Xml.cs">
-		<DependentUpon>CurrencyTester.cs</DependentUpon>
-	</Compile>
-  	<Compile Include="CurrencyTester.Serialization.cs">
-		<DependentUpon>CurrencyTester.cs</DependentUpon>
-	</Compile>
-  	<Compile Include="CurrencyTester.Markup.cs">
-		<DependentUpon>CurrencyTester.cs</DependentUpon>
-	</Compile>
-  	<Compile Include="CurrencyTester.Code.cs">
-		<DependentUpon>CurrencyTester.cs</DependentUpon>
-	</Compile>
-  	<Compile Include="CurrencyTester.Creation.cs">
-		<DependentUpon>CurrencyTester.cs</DependentUpon>
-	</Compile>
-  	<Compile Include="CurrencyTester.Comparisons.cs">
-		<DependentUpon>CurrencyTester.cs</DependentUpon>
-	</Compile>
-  	<Compile Include="MoneyTester.Creation.cs">
+      <DependentUpon>CurrencyTester.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CurrencyTester.Serialization.cs">
+      <DependentUpon>CurrencyTester.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CurrencyTester.Markup.cs">
+      <DependentUpon>CurrencyTester.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CurrencyTester.Code.cs">
+      <DependentUpon>CurrencyTester.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CurrencyTester.Creation.cs">
+      <DependentUpon>CurrencyTester.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CurrencyTester.Comparisons.cs">
+      <DependentUpon>CurrencyTester.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MoneyTester.Creation.cs">
       <DependentUpon>MoneyTester.cs</DependentUpon>
     </Compile>
     <Compile Include="MoneyTester.Serialization.Xml.cs">
@@ -102,9 +103,9 @@
       <DependentUpon>MoneyTester.cs</DependentUpon>
     </Compile>
     <Compile Include="CurrencyEqualityComparerTester.cs">
-		<DependentUpon>CurrencyTester.cs</DependentUpon>
-	</Compile>
-  	<Compile Include="CurrencyIsoCodeTester.cs" />
+      <DependentUpon>CurrencyTester.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CurrencyIsoCodeTester.cs" />
     <Compile Include="CurrencyTester.cs" />
     <Compile Include="CustomConstraints\CompleteAllocationConstraint.cs" />
     <Compile Include="CustomConstraints\CurrencyInfoConstraint.cs" />
@@ -177,6 +178,9 @@
     <Compile Include="MoneyTester.Equality.cs">
       <DependentUpon>MoneyTester.cs</DependentUpon>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
