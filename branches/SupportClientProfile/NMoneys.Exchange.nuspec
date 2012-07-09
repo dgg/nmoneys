@@ -3,7 +3,7 @@
     <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
         <id>NMoneys.Exchange</id>
         <title>NMoneys Exchange</title>
-        <version>1.0.0.0</version>
+        <version>1.9.0.0</version>
         <authors>Daniel González García</authors>
         <licenseUrl>http://www.opensource.org/licenses/bsd-license.php</licenseUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -16,7 +16,7 @@
 		<iconUrl>https://nugetgallery.blob.core.windows.net/icons/NMoneys.Exchange.1.0.0.0.png</iconUrl>
 		<tags>.net currency money</tags>
 		<dependencies>
-			<dependency id="nmoneys" version="2.0.0.0" />
+			<dependency id="nmoneys" version="2.9.0.0" />
 		</dependencies>
 	</metadata>
 	<files>

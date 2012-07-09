@@ -18,7 +18,7 @@
 		<nuGetManifest>NMoneys.nuspec</nuGetManifest>
 		<exchange_nuGetManifest>NMoneys.Exchange.nuspec</exchange_nuGetManifest>
 		<nuGetReleasePath>$(releasePath)nuget\</nuGetReleasePath>
-		<nuGetReleaseLib>$(nuGetReleasePath)lib\Net20</nuGetReleaseLib>
+		<nuGetReleaseLib>$(nuGetReleasePath)lib\Net20-client</nuGetReleaseLib>
 	
 </PropertyGroup>
 	<ItemGroup Label="testDeployables">
