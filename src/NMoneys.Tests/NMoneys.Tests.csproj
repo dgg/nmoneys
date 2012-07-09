@@ -59,14 +59,30 @@
     <Compile Include="Allocations\RatioTester.cs" />
     <Compile Include="Allocations\RatioTester.Equality.cs" />
     <Compile Include="CharacterReferenceTester.cs" />
-    <Compile Include="MoneyTester.Creation.cs" />
-    <Compile Include="MoneyTester.Serialization.Xml.cs" />
-    <Compile Include="MoneyTester.Serialization.cs" />
-    <Compile Include="MoneyTester.Arithmetic.cs" />
-    <Compile Include="MoneyTester.Arithmetic.Operators.cs" />
-    <Compile Include="MoneyTester.Parsing.cs" />
-    <Compile Include="MoneyTester.Cloning.cs" />
-    <Compile Include="MoneyTester.Comparisons.cs" />
+    <Compile Include="MoneyTester.Creation.cs">
+      <DependentUpon>MoneyTester.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MoneyTester.Serialization.Xml.cs">
+      <DependentUpon>MoneyTester.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MoneyTester.Serialization.cs">
+      <DependentUpon>MoneyTester.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MoneyTester.Arithmetic.cs">
+      <DependentUpon>MoneyTester.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MoneyTester.Arithmetic.Operators.cs">
+      <DependentUpon>MoneyTester.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MoneyTester.Parsing.cs">
+      <DependentUpon>MoneyTester.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MoneyTester.Cloning.cs">
+      <DependentUpon>MoneyTester.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MoneyTester.Comparisons.cs">
+      <DependentUpon>MoneyTester.cs</DependentUpon>
+    </Compile>
     <Compile Include="CurrencyEqualityComparerTester.cs" />
     <Compile Include="CurrencyIsoCodeTester.cs" />
     <Compile Include="CurrencyTester.cs" />
@@ -91,11 +107,18 @@
     <Compile Include="CustomConstraints\XmlSerializationConstraint.cs" />
     <Compile Include="ExtensionsTester.cs" />
     <Compile Include="MoneyTester.cs" />
-    <Compile Include="MoneyTester.Formatting.cs" />
-    <Compile Include="MoneyTester.Allocations.ProRated.cs" />
-    <Compile Include="MoneyTester.Some.cs" />
-    <Compile Include="MoneyTester.Allocations.Split.cs" />
-    <Compile Include="MoneyTester.Zero.cs" />
+    <Compile Include="MoneyTester.Formatting.cs">
+      <DependentUpon>MoneyTester.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MoneyTester.Allocations.ProRated.cs">
+      <DependentUpon>MoneyTester.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MoneyTester.Some.cs">
+      <DependentUpon>MoneyTester.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MoneyTester.Allocations.Split.cs">
+      <DependentUpon>MoneyTester.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProvidersTesters.cs" />
     <Compile Include="Quickstart.cs" />
@@ -131,7 +154,9 @@
     <Compile Include="Allocations\RatioCollectionTester.Formatting.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MoneyTester.Equality.cs" />
+    <Compile Include="MoneyTester.Equality.cs">
+      <DependentUpon>MoneyTester.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
