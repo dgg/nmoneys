@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<Configuration>Release</Configuration>
 		<solutionFile>NMoneys.sln</solutionFile>
-		<nunitPath>tools\NUnit\</nunitPath>
+		<nunitPath>tools\NUnit.Runners.lite\</nunitPath>
 		<nunitSummaryPath>tools\NUnitSummary\</nunitSummaryPath>
 		<projectPath>src\NMoneys\</projectPath>
 		<exchange_projectPath>src\NMoneys.Exchange\</exchange_projectPath>
