@@ -3,14 +3,14 @@
     <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
         <id>NMoneys</id>
         <title>NMoneys</title>
-        <version>2.9.0.0</version>
+        <version>3.0.0.0</version>
         <authors>Daniel González García</authors>
         <licenseUrl>http://www.opensource.org/licenses/bsd-license.php</licenseUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Implementation of the Money Value Object to support representing moneys in the currencies defined in the ISO 4217 standard.</description>
         <summary>
             NMoneys (plural) is a simple .Net library to represent monetary quantities. Provides: a) types for representing currencies that conform to the ISO 4217 standard and quantities of money in a given currency.
-			b) simple but extensible operations with monetary quantities of the same currency. c) ways of formatting the representation of monetary quantities
+			b) extensible operations with monetary quantities of the same currency. c) ways of formatting the representation of monetary quantities
         </summary>
         <projectUrl>http://code.google.com/p/nmoneys/</projectUrl>
 		<iconUrl>https://nugetgallery.blob.core.windows.net/icons/NMoneys.2.0.0.0.png</iconUrl>
