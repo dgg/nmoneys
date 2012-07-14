@@ -149,11 +149,31 @@ namespace NMoneys.Tests.Support
 
 		public T Deserialize()
 		{
-			_stream.Seek(0, SeekOrigin.Begin);
+			return deserialize(_stream);
+		}
+
+		private T deserialize(Stream s)
+		{
+			s.Seek(0, SeekOrigin.Begin);
 
 			T deserialized = (T)_serializer.ReadObject(_stream);
 
 			return deserialized;
+		}
+
+		public T Deserialize(string serialized)
+		{
+			using (var ms = new MemoryStream(Encoding.Default.GetBytes(serialized)))
+			{
+				try
+				{
+					return deserialize(ms);
+				}
+				finally
+				{
+					ms.Close();
+				}
+			}
 		}
 
 		public void Dispose()

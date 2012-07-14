@@ -5,11 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("NMoneys.Tests")]
+[assembly: AssemblyTitle("NMoneys.Serialization.Json_NET")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("NMoneys.Tests")]
+[assembly: AssemblyProduct("NMoneys.Serialization.Json_NET")]
+[assembly: AssemblyCopyright("Copyright ©  2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -19,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("63090818-1cdd-46c6-b835-304183b85319")]
+[assembly: Guid("2a681915-2c08-4805-b848-accf720b5942")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -31,8 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("3.0.0.0")]
-[assembly: AssemblyFileVersion("3.0.0.0")]
-
-[assembly: InternalsVisibleTo("NMoneys.Exchange.Tests")]
-[assembly: InternalsVisibleTo("NMoneys.Serialization.Tests")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]

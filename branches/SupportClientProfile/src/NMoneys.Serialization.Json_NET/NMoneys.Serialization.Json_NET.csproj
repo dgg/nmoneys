@@ -5,13 +5,14 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{407F2075-27A6-485F-9CD0-FC392043C9E5}</ProjectGuid>
+    <ProjectGuid>{A30FA2A1-CE95-4CA9-A786-8C5616F98B57}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NMoneys.Serialization.Tests</RootNamespace>
-    <AssemblyName>NMoneys.Serialization.Tests</AssemblyName>
+    <RootNamespace>NMoneys.Serialization.Json_NET</RootNamespace>
+    <AssemblyName>NMoneys.Serialization.Json_NET</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,36 +35,21 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\packages\Newtonsoft.Json.4.5.7\lib\net35\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\..\packages\NUnit.2.6.0.12054\lib\nunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Json_Net\DeserializationTester.cs" />
-    <Compile Include="Json_Net\SerializationTester.cs" />
+    <Compile Include="MoneyConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\NMoneys.Serialization.Json_NET\NMoneys.Serialization.Json_NET.csproj">
-      <Project>{A30FA2A1-CE95-4CA9-A786-8C5616F98B57}</Project>
-      <Name>NMoneys.Serialization.Json_NET</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NMoneys.Tests\NMoneys.Tests.csproj">
-      <Project>{2034BAF2-6337-425D-A111-4407361FC974}</Project>
-      <Name>NMoneys.Tests</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NMoneys\NMoneys.csproj">
       <Project>{5408F146-6F8A-406C-9E90-292662018F72}</Project>
       <Name>NMoneys</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
