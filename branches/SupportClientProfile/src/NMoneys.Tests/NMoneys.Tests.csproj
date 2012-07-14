@@ -59,7 +59,13 @@
     <Compile Include="Allocations\RatioTester.cs" />
     <Compile Include="Allocations\RatioTester.Equality.cs" />
     <Compile Include="CharacterReferenceTester.cs" />
-    <Compile Include="CurrencyTester.Serialization.Xml.cs">
+    <Compile Include="CurrencyIsoCodeTester.Serialization.cs">
+		<DependentUpon>CurrencyIsoCodeTester.cs</DependentUpon>
+	</Compile>
+  	<Compile Include="CurrencyIsoCodeTester.Serialization.Xml.cs">
+		<DependentUpon>CurrencyIsoCodeTester.cs</DependentUpon>
+	</Compile>
+  	<Compile Include="CurrencyTester.Serialization.Xml.cs">
       <DependentUpon>CurrencyTester.cs</DependentUpon>
     </Compile>
     <Compile Include="CurrencyTester.Serialization.cs">
@@ -77,6 +83,7 @@
     <Compile Include="CurrencyTester.Comparisons.cs">
       <DependentUpon>CurrencyTester.cs</DependentUpon>
     </Compile>
+    <Compile Include="CustomConstraints\DataContractJsonDeserializationConstraint.cs" />
     <Compile Include="MoneyTester.Creation.cs">
       <DependentUpon>MoneyTester.cs</DependentUpon>
     </Compile>

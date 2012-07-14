@@ -2,9 +2,11 @@
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
+using NMoneys.Serialization;
 
 namespace NMoneys.Tests.Support
 {
@@ -95,6 +97,44 @@ namespace NMoneys.Tests.Support
 		{
 			_stream = new MemoryStream();
 			_serializer = new DataContractSerializer(typeof(T));
+		}
+
+		public string Serialize(T toSerialize)
+		{
+			_serializer.WriteObject(_stream, toSerialize);
+
+			_stream.Flush();
+			_stream.Seek(0, SeekOrigin.Begin);
+			string serialized = new StreamReader(_stream).ReadToEnd();
+			return serialized;
+		}
+
+		public T Deserialize()
+		{
+			_stream.Seek(0, SeekOrigin.Begin);
+
+			T deserialized = (T)_serializer.ReadObject(_stream);
+
+			return deserialized;
+		}
+
+		public void Dispose()
+		{
+			_stream.Close();
+			_stream.Dispose();
+		}
+	}
+
+	internal class OneGoDataContractJsonSerializer<T> : IDisposable
+	{
+		private readonly MemoryStream _stream;
+		private readonly DataContractJsonSerializer _serializer;
+
+		public OneGoDataContractJsonSerializer()
+		{
+			_stream = new MemoryStream();
+			var surrogate = new DataContractJsonSurrogate();
+			_serializer = surrogate.BuildSerializer<T>();
 		}
 
 		public string Serialize(T toSerialize)

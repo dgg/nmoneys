@@ -42,6 +42,8 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.XML" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
@@ -141,6 +143,7 @@
     <Compile Include="Providers.cs" />
     <Compile Include="RemainderAllocator.cs" />
     <Compile Include="Serialization\Data.cs" />
+    <Compile Include="Serialization\DataContractJsonSurrogate.cs" />
     <Compile Include="Support\Stringifier.cs" />
     <Compile Include="Support\GroupSizes.cs" />
     <Compile Include="Support\Enumeration.cs" />

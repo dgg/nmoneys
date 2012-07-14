@@ -38,9 +38,28 @@ namespace NMoneys.Tests
 		}
 
 		[Test]
-		public void CannotBe_DataContractJsonSerialized()
+		public void CanBe_DataContractJsonSerialized()
 		{
-			Assert.That(Currency.Dollar, Must.Not.Be.DataContractJsonSerializable<Currency>());
+			Assert.That(Currency.Dollar, Must.Be.DataContractJsonSerializable<Currency>());
+		}
+
+		[Test]
+		public void CanBe_DataContractJsonDeserializable()
+		{
+			string serializedDollar = "{\"isoCode\":\"USD\"}";
+			Assert.That(serializedDollar, Must.Be.DataContractJsonDeserializableInto(Currency.Dollar));
+		}
+
+		[Test]
+		public void DataContractJsonDeserialization_OfObsoleteCurrency_RaisesEvent()
+		{
+			using (var serializer = new OneGoDataContractJsonSerializer<Currency>())
+			{
+				var obsolete = Currency.Get("EEK");
+				serializer.Serialize(obsolete);
+				Action deserializeObsolete = () => serializer.Deserialize();
+				Assert.That(deserializeObsolete, Must.RaiseObsoleteEvent.Once());
+			}
 		}
 	}
 }

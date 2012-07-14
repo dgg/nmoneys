@@ -1,39 +1,43 @@
 using System.IO;
 using System.Runtime.Serialization.Json;
-using System.Text;
-using System.Web;
+using NMoneys.Serialization;
 using NUnit.Framework.Constraints;
 
 namespace NMoneys.Tests.CustomConstraints
 {
 	internal class DataContractJsonSerializationConstraint<T> : CustomConstraint<T>
 	{
-		public DataContractJsonSerializationConstraint()
-		{
-			_inner = new AndConstraint(
-				new SubstringConstraint("<"),
-				new SubstringConstraint(">"));
-		}
-
 		protected override bool matches(T current)
 		{
-			return _inner.Matches(serialize(current));
+			return (_inner = new EqualConstraint(getDeserializedObject(current)))
+				.Matches(current);
 		}
 
-		private static string serialize(T toSerialize)
+		private static T getDeserializedObject(T toSerialize)
 		{
 			using (var str = new MemoryStream())
 			{
 				try
 				{
-					var serializer = new DataContractJsonSerializer(typeof(T));
+					var surrogate = new DataContractJsonSurrogate();
+
+					var serializer = new DataContractJsonSerializer(
+						surrogate.Type<T>(),
+						surrogate.KnownTypes<T>(),
+						surrogate.MaxItemsInObjectGraph,
+						surrogate.IgnoreExtensionDataObject,
+						surrogate,
+						surrogate.AlwaysEmitTypeInformation);
 					serializer.WriteObject(str, toSerialize);
 
 					str.Flush();
 					str.Seek(0, SeekOrigin.Begin);
+					string serialized = new StreamReader(str).ReadToEnd();
+					str.Seek(0, SeekOrigin.Begin);
 
-					string json = HttpUtility.HtmlDecode(Encoding.Default.GetString(str.ToArray()));
-					return json;
+					T deserialized = (T)serializer.ReadObject(str);
+
+					return deserialized;
 				}
 				finally
 				{
