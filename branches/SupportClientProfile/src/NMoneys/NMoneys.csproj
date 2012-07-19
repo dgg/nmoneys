@@ -143,7 +143,7 @@
     <Compile Include="Providers.cs" />
     <Compile Include="RemainderAllocator.cs" />
     <Compile Include="Serialization\Data.cs" />
-    <Compile Include="Serialization\DataContractJsonSurrogate.cs" />
+    <Compile Include="Serialization\DataContractSurrogate.cs" />
     <Compile Include="Support\Stringifier.cs" />
     <Compile Include="Support\GroupSizes.cs" />
     <Compile Include="Support\Enumeration.cs" />

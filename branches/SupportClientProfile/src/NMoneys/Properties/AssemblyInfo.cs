@@ -40,6 +40,7 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("NMoneys.Tools")]
 [assembly: InternalsVisibleTo("NMoneys.Exchange")]
 [assembly: InternalsVisibleTo("NMoneys.Serialization.Json_NET")]
+[assembly: InternalsVisibleTo("NMoneys.Serialization.Service_Stack")]
 [assembly: System.Windows.Markup.XmlnsDefinition(NMoneys.Serialization.Data.NAMESPACE, "NMoneys")]
 
 [assembly: CLSCompliant(true)]

@@ -19,7 +19,7 @@ namespace NMoneys.Tests.CustomConstraints
 			{
 				try
 				{
-					var surrogate = new DataContractJsonSurrogate();
+					var surrogate = new DataContractSurrogate();
 
 					var serializer = new DataContractJsonSerializer(
 						surrogate.Type<T>(),

@@ -18,7 +18,7 @@ namespace NMoneys.Tests.CustomConstraints
 			{
 				try
 				{
-					var surrogate = new DataContractJsonSurrogate();
+					var surrogate = new DataContractSurrogate();
 					var serializer = surrogate.BuildSerializer<T>();
 					T actualDeserialized = (T)serializer.ReadObject(ms);
 

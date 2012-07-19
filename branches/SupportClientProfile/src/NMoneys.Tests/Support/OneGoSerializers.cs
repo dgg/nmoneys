@@ -125,7 +125,7 @@ namespace NMoneys.Tests.Support
 		}
 	}
 
-	internal class OneGoDataContractJsonSerializer<T> : IDisposable
+	public class OneGoDataContractJsonSerializer<T> : IDisposable
 	{
 		private readonly MemoryStream _stream;
 		private readonly DataContractJsonSerializer _serializer;
@@ -133,7 +133,7 @@ namespace NMoneys.Tests.Support
 		public OneGoDataContractJsonSerializer()
 		{
 			_stream = new MemoryStream();
-			var surrogate = new DataContractJsonSurrogate();
+			var surrogate = new DataContractSurrogate();
 			_serializer = surrogate.BuildSerializer<T>();
 		}
 

@@ -5,13 +5,13 @@ namespace NMoneys.Serialization
 	internal static class Data
 	{
 		[DataContract]
-		internal class Currency
+		public class Currency
 		{
 			internal const string ISO_CODE = "isoCode";
 			internal const string ROOT_NAME = "currency", DATA_TYPE = "currencyType";
 
 			[DataMember(Name = ISO_CODE)]
-			internal string IsoCode { get; set; }
+			public string IsoCode { get; set; }
 
 			public Currency(NMoneys.Currency surrogated)
 			{
@@ -30,15 +30,15 @@ namespace NMoneys.Serialization
 		}
 
 		[DataContract]
-		internal class Money
+		public class Money
 		{
 			internal const string AMOUNT = "amount", CURRENCY = "currency";
 			internal const string ROOT_NAME = "money", DATA_TYPE = "moneyType";
 
 			[DataMember(Name = AMOUNT)]
-			internal decimal Amount { get; set; }
+			public decimal Amount { get; set; }
 			[DataMember(Name = CURRENCY)]
-			internal Currency Currency { get; set; }
+			public Currency Currency { get; set; }
 
 			public Money(NMoneys.Money surrogated)
 			{
