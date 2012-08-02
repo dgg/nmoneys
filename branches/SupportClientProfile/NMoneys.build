@@ -7,16 +7,21 @@
 		<nunitSummaryPath>tools\NUnitSummary\</nunitSummaryPath>
 		<projectPath>src\NMoneys\</projectPath>
 		<exchange_projectPath>src\NMoneys.Exchange\</exchange_projectPath>
+		<jsonNet_projectPath>src\NMoneys.Serialization.Json_NET\</jsonNet_projectPath>
 		<testProjectPath>src\NMoneys.Tests\</testProjectPath>
 		<exchange_testProjectPath>src\NMoneys.Exchange.Tests\</exchange_testProjectPath>
+		<serialization_testProjectPath>src\NMoneys.Serialization.Tests\</serialization_testProjectPath>
 		<testProjectFile>NMoneys.Tests.csproj</testProjectFile>
 		<exchange_testProjectFile>NMoneys.Exchange.Tests.csproj</exchange_testProjectFile>
+		<serialization_testProjectFile>NMoneys.Serialization.Tests.csproj</serialization_testProjectFile>
 		<testAssemblyFile>NMoneys.Tests.dll</testAssemblyFile>
 		<exchange_testAssemblyFile>NMoneys.Exchange.Tests.dll</exchange_testAssemblyFile>
+		<serialization_testAssemblyFile>NMoneys.Serialization.Tests.dll</serialization_testAssemblyFile>
 		<releasePath>release\</releasePath>
 		<nuGetPath>tools\NuGet\</nuGetPath>
 		<nuGetManifest>NMoneys.nuspec</nuGetManifest>
 		<exchange_nuGetManifest>NMoneys.Exchange.nuspec</exchange_nuGetManifest>
+		<jsonNet_nuGetManifest>NMoneys.Serialization.Json_NET.nuspec</jsonNet_nuGetManifest>
 		<nuGetReleasePath>$(releasePath)nuget\</nuGetReleasePath>
 		<nuGetReleaseLib>$(nuGetReleasePath)lib\Net20-client</nuGetReleaseLib>
 	
@@ -29,12 +34,16 @@
 		<exchange_assemblyFile Include="$(MSBuildProjectDirectory)\$(exchange_projectPath)bin\$(Configuration)\NMoneys.Exchange.dll" />
 		<exchange_pdbFile Include="$(MSBuildProjectDirectory)\$(exchange_projectPath)bin\$(Configuration)\NMoneys.Exchange.pdb" />
 		<exchange_docFile Include="$(MSBuildProjectDirectory)\$(exchange_projectPath)bin\$(Configuration)\NMoneys.Exchange.XML" />
+		<jsonNet_assemblyFile Include="$(MSBuildProjectDirectory)\$(jsonNet_projectPath)bin\$(Configuration)\NMoneys.Serialization.Json_NET.dll" />
+		<jsonNet_pdbFile Include="$(MSBuildProjectDirectory)\$(jsonNet_projectPath)bin\$(Configuration)\NMoneys.Serialization.Json_NET.pdb" />
+		<jsonNet_docFile Include="$(MSBuildProjectDirectory)\$(jsonNet_projectPath)bin\$(Configuration)\NMoneys.Serialization.Json_NET.XML" />
 	</ItemGroup>
 	<Target Name="compile">
 		<MSBuild Projects="$(solutionFile)" Properties="configuration=$(Configuration)" />
 	</Target>
 	<Target Name="runTests" DependsOnTargets="compile">
-		<Exec Command="$(nunitPath)nunit-console.exe $(testProjectPath)bin\$(Configuration)\$(testAssemblyFile) $(exchange_testProjectPath)bin\$(Configuration)\$(exchange_testAssemblyFile)" />
+		<Exec Command="$(nunitPath)nunit-console.exe $(testProjectPath)bin\$(Configuration)\$(testAssemblyFile) $(exchange_testProjectPath)bin\$(Configuration)\$(exchange_testAssemblyFile) $(serialization_testProjectPath)bin\$(Configuration)\$(serialization_testAssemblyFile)"
+			  />
 		<Exec Command="$(nunitSummaryPath)nunit-summary.exe -html -o=TestSummary.htm " />
 		<Exec Command="$(nunitSummaryPath)nunit-summary.exe -xsl=$(nunitSummaryPath)AlternativeNUnitDetails.xsl -o=TestDetails.htm " />
 	</Target>
@@ -60,5 +69,13 @@
 		<Copy Condition="'$(Configuration)'=='Debug'" SourceFiles="@(exchange_pdbFile)" DestinationFolder="$(releasePath)" />
 		<Copy SourceFiles="$(exchange_nuGetManifest)" DestinationFolder="$(nuGetReleasePath)" />
 		<Exec Condition="'$(Configuration)'=='Release'" Command="$(nuGetPath)nuget.exe pack $(nuGetReleasePath)$(exchange_nuGetManifest) /o $(nuGetReleasePath)" />
+
+		<Copy SourceFiles="@(jsonNet_assemblyFile)" DestinationFolder="$(releasePath)" />
+		<Copy SourceFiles="@(jsonNet_assemblyFile)" DestinationFolder="$(nuGetReleaseLib)" />
+		<Copy Condition="'$(Configuration)'=='Release'" SourceFiles="@(jsonNet_docFile)" DestinationFolder="$(releasePath)" />
+		<Copy Condition="'$(Configuration)'=='Release'" SourceFiles="@(jsonNet_docFile)" DestinationFolder="$(nuGetReleaseLib)" />
+		<Copy Condition="'$(Configuration)'=='Debug'" SourceFiles="@(jsonNet_pdbFile)" DestinationFolder="$(releasePath)" />
+		<Copy SourceFiles="$(jsonNet_nuGetManifest)" DestinationFolder="$(nuGetReleasePath)" />
+		<Exec Condition="'$(Configuration)'=='Release'" Command="$(nuGetPath)nuget.exe pack  $(nuGetReleasePath)$(jsonNet_nuGetManifest) /o $(nuGetReleasePath)" />
 	</Target>
 </Project> 
