@@ -98,8 +98,8 @@ namespace NMoneys.Tools
 		{
 			try
 			{
-				//WebClient client = new WebClient();
-				//client.DownloadFile(_url, _cachedFile);
+				WebClient client = new WebClient();
+				client.DownloadFile(_url, _cachedFile);
 			}
 			catch
 			{

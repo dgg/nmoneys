@@ -43,6 +43,8 @@ namespace NMoneys.Tests.CustomConstraints
 
 		public class RaiseObsoleteEventEntryPoint { }
 
+		public class NotRaiseObsoleteEventEntryPoint { }
+
 		private static readonly RaiseObsoleteEventEntryPoint _raiseObsoleteEventEntryPoint = new RaiseObsoleteEventEntryPoint();
 		public static RaiseObsoleteEventEntryPoint RaiseObsoleteEvent { get { return _raiseObsoleteEventEntryPoint; } }
 
@@ -72,6 +74,9 @@ namespace NMoneys.Tests.CustomConstraints
 
 			private static readonly NotSatisfyEntryPoint _satisfyEntryPoint = new NotSatisfyEntryPoint();
 			public static NotSatisfyEntryPoint Satisfy { get { return _satisfyEntryPoint; } }
+
+			private static readonly NotRaiseObsoleteEventEntryPoint _raiseObsoleteEventEntryPoint = new NotRaiseObsoleteEventEntryPoint();
+			public static NotRaiseObsoleteEventEntryPoint Raise { get { return _raiseObsoleteEventEntryPoint; } }
 		}
 	}
 }

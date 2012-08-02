@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+        <id>NMoneys.Serialization.Json_NET</id>
+        <title>NMoneys Serialization: Json.NET</title>
+        <version>1.0.0.0</version>
+        <authors>Daniel González García</authors>
+        <licenseUrl>http://www.opensource.org/licenses/bsd-license.php</licenseUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Custom serialiation when NMoneys objects are to be serialized/deserialized using Json.NET.</description>
+        <summary>
+			NMoneys Serialization: Json.NET is an extension to the NMoneys library that allows customize the serialization and deserialization process
+			when using the library Json.NET via custom converters.
+		</summary>
+        <projectUrl>http://code.google.com/p/nmoneys/</projectUrl>
+		<iconUrl>https://nugetgallery.blob.core.windows.net/icons/NMoneys.1.0.0.0.png</iconUrl>
+		<tags>.net currency money</tags>
+		<dependencies>
+			<dependency id="nmoneys" version="3.0.0.0" />
+			<dependency id="Newtonsoft.Json" version="4.5.7" />
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="lib\**\NMoneys.Serialization.Json_NET.dll" target="lib" />
+		<file src="lib\**\NMoneys.Serialization.Json_NET.XML" target="lib" />
+	</files>
+</package>

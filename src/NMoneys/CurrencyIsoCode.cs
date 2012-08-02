@@ -1,5 +1,6 @@
 using System;
-using System.ComponentModel;
+using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 namespace NMoneys
 {
@@ -7,848 +8,919 @@ namespace NMoneys
 	/// Currency codes as stated by the ISO 4217 standard 
 	/// </summary>
 	/// <seealso href="http://www.iso.org/iso/support/currency_codes_list-1.htm" />
+	[XmlRoot(Namespace = Serialization.Data.NAMESPACE, ElementName = Serialization.Data.Currency.ISO_CODE, DataType = Serialization.Data.Currency.DATA_TYPE, IsNullable = false)]
+	[DataContract(Namespace = Serialization.Data.NAMESPACE, Name = Serialization.Data.Currency.ISO_CODE)]
 	public enum CurrencyIsoCode : short
 	{
 		///<summary>
 		/// UAE Dirham
 		///</summary>
-		[CanonicalCulture("ar-AE")]
+		[EnumMember, CanonicalCulture("ar-AE")]
 		AED = 784,
 		/// <summary>
 		/// Afghani
 		/// </summary>
-		[CanonicalCulture("ps-AF")]
+		[EnumMember, CanonicalCulture("ps-AF")]
 		AFN = 971,
 		/// <summary>
 		/// Lek
 		/// </summary>
-		[CanonicalCulture("sq-AL")]
+		[EnumMember, CanonicalCulture("sq-AL")]
 		ALL = 008,
 		/// <summary>
 		/// Armenian Dram
 		/// </summary>
-		[CanonicalCulture("hy-AM")]
+		[EnumMember, CanonicalCulture("hy-AM")]
 		AMD = 051,
 		/// <summary>
 		/// Netherlands Antillean Guilder
 		/// </summary>
+		[EnumMember]
 		ANG = 532,
 		/// <summary>
 		/// Kwanza
 		/// </summary>
+		[EnumMember]
 		AOA = 973,
 		/// <summary>
 		/// Argentine Peso
 		/// </summary>
-		[CanonicalCulture("es-AR")]
+		[EnumMember, CanonicalCulture("es-AR")]
 		ARS = 032,
 		/// <summary>
 		/// Australian Dollar
 		/// </summary>
-		[CanonicalCulture("en-AU")]
+		[EnumMember, CanonicalCulture("en-AU")]
 		AUD = 036,
 		/// <summary>
 		/// Aruban Florin
 		/// </summary>
+		[EnumMember]
 		AWG = 533,
 		/// <summary>
 		/// Azerbaijanian Manat
 		/// </summary>
-		[CanonicalCulture("az-Latn-AZ")]
+		[EnumMember, CanonicalCulture("az-Latn-AZ")]
 		AZN = 944,
 		/// <summary>
 		/// Convertible Mark
 		/// </summary>
-		[CanonicalCulture("bs-Latn-BA")]
+		[EnumMember, CanonicalCulture("bs-Latn-BA")]
 		BAM = 977,
 		/// <summary>
 		/// Barbados Dollar
 		/// </summary>
+		[EnumMember]
 		BBD = 052,
 		/// <summary>
 		/// Taka
 		/// </summary>
-		[CanonicalCulture("bn-BD")]
+		[EnumMember, CanonicalCulture("bn-BD")]
 		BDT = 050,
 		/// <summary>
 		/// Bulgarian Lev
 		/// </summary>
-		[CanonicalCulture("bg-BG", Overwritten = true)]
+		[EnumMember, CanonicalCulture("bg-BG", Overwritten = true)]
 		BGN = 975,
 		/// <summary>
 		/// Bahraini Dinar
 		/// </summary>
-		[CanonicalCulture("ar-BH")]
+		[EnumMember, CanonicalCulture("ar-BH")]
 		BHD = 048,
 		/// <summary>
 		/// Burundi Franc
 		/// </summary>
+		[EnumMember]
 		BIF = 108,
 		/// <summary>
 		/// Bermudian Dollar
 		/// </summary>
+		[EnumMember]
 		BMD = 060,
 		/// <summary>
 		/// Brunei Dollar
 		/// </summary>
-		[CanonicalCulture("ms-BN")]
+		[EnumMember, CanonicalCulture("ms-BN")]
 		BND = 096,
 		/// <summary>
 		/// Boliviano
 		/// </summary>
-		[CanonicalCulture("es-BO")]
+		[EnumMember, CanonicalCulture("es-BO")]
 		BOB = 068,
 		/// <summary>
 		/// Mvdol
 		/// </summary>
-		[CanonicalCulture("es-BO")]
+		[EnumMember, CanonicalCulture("es-BO")]
 		BOV = 984,
 		/// <summary>
 		/// Brazilian Real
 		/// </summary>
-		[CanonicalCulture("pt-BR")]
+		[EnumMember, CanonicalCulture("pt-BR")]
 		BRL = 986,
 		/// <summary>
 		/// Bahamian Dollar
 		/// </summary>
+		[EnumMember]
 		BSD = 044,
 		/// <summary>
 		/// Ngultrum
 		/// </summary>
+		[EnumMember]
 		BTN = 064,
 		/// <summary>
 		/// Pula
 		/// </summary>
+		[EnumMember]
 		BWP = 072,
 		/// <summary>
 		/// Belarussian Ruble
 		/// </summary>
-		[CanonicalCulture("be-BY")]
+		[EnumMember, CanonicalCulture("be-BY")]
 		BYR = 974,
 		/// <summary>
 		/// Belize Dollar
 		/// </summary>
-		[CanonicalCulture("en-BZ")]
+		[EnumMember, CanonicalCulture("en-BZ")]
 		BZD = 084,
 		/// <summary>
 		/// Canadian Dollar
 		/// </summary>
-		[CanonicalCulture("en-CA")]
+		[EnumMember, CanonicalCulture("en-CA")]
 		CAD = 124,
 		/// <summary>
 		/// Congolese Franc
 		/// </summary>
+		[EnumMember]
 		CDF = 976,
 		/// <summary>
 		/// WIR Euro
 		/// </summary>
-		[CanonicalCulture("de-CH")]
+		[EnumMember, CanonicalCulture("de-CH")]
 		CHE = 947,
 		/// <summary>
 		/// Swiss Franc
 		/// </summary>
-		[CanonicalCulture("de-CH", Overwritten = true)]
+		[EnumMember, CanonicalCulture("de-CH", Overwritten = true)]
 		CHF = 756,
 		/// <summary>
 		/// WIR Franc
 		/// </summary>
-		[CanonicalCulture("de-CH")]
+		[EnumMember, CanonicalCulture("de-CH")]
 		CHW = 948,
 		/// <summary>
 		/// Unidades de fomento
 		/// </summary>
-		[CanonicalCulture("es-CL")]
+		[EnumMember, CanonicalCulture("es-CL")]
 		CLF = 990,
 		/// <summary>
 		/// Chilean Peso
 		/// </summary>
-		[CanonicalCulture("es-CL")]
+		[EnumMember, CanonicalCulture("es-CL")]
 		CLP = 152,
 		/// <summary>
 		/// Yuan Renminbi
 		/// </summary>
-		[CanonicalCulture("zh-CN")]
+		[EnumMember, CanonicalCulture("zh-CN")]
 		CNY = 156,
 		/// <summary>
 		/// Colombian Peso
 		/// </summary>
-		[CanonicalCulture("es-CO")]
+		[EnumMember, CanonicalCulture("es-CO")]
 		COP = 170,
 		/// <summary>
 		/// Unidad de Valor Real
 		/// </summary>
-		[CanonicalCulture("es-CO")]
+		[EnumMember, CanonicalCulture("es-CO")]
 		COU = 970,
 		/// <summary>
 		/// Costa Rican Colon
 		/// </summary>
-		[CanonicalCulture("es-CR")]
+		[EnumMember, CanonicalCulture("es-CR")]
 		CRC = 188,
 		/// <summary>
 		/// Peso Convertible
 		/// </summary>
+		[EnumMember]
 		CUC = 931,
 		/// <summary>
 		/// Cuban Peso
 		/// </summary>
+		[EnumMember]
 		CUP = 192,
 		/// <summary>
 		/// Cape Verde Escudo
 		/// </summary>
+		[EnumMember]
 		CVE = 132,
 		/// <summary>
 		/// Czech Koruna
 		/// </summary>
-		[CanonicalCulture("cs-CZ")]
+		[EnumMember, CanonicalCulture("cs-CZ")]
 		CZK = 203,
 		/// <summary>
 		/// Djibouti Franc
 		/// </summary>
+		[EnumMember]
 		DJF = 262,
 		/// <summary>
 		/// Danish Krone
 		/// </summary>
-		[CanonicalCulture("da-DK", Overwritten = true)]
+		[EnumMember, CanonicalCulture("da-DK", Overwritten = true)]
 		DKK = 208,
 		/// <summary>
 		/// Dominican Peso
 		/// </summary>
-		[CanonicalCulture("es-DO")]
+		[EnumMember, CanonicalCulture("es-DO")]
 		DOP = 214,
 		/// <summary>
 		/// Algerian Dinar
 		/// </summary>
-		[CanonicalCulture("ar-DZ")]
+		[EnumMember, CanonicalCulture("ar-DZ")]
 		DZD = 012,
 		/// <summary>
 		/// Estonian Kroon
 		/// </summary>
-		[CanonicalCulture("et-EE"), Obsolete("deprecated")]
+		[EnumMember, CanonicalCulture("et-EE"), Obsolete("deprecated")]
 		EEK = 233,
 		/// <summary>
 		/// Egyptian Pound
 		/// </summary>
-		[CanonicalCulture("ar-EG")]
+		[EnumMember, CanonicalCulture("ar-EG")]
 		EGP = 818,
 		/// <summary>
 		/// Nakfa
 		/// </summary>
+		[EnumMember]
 		ERN = 232,
 		/// <summary>
 		/// Ethiopian Birr
 		/// </summary>
-		[CanonicalCulture("am-ET")]
+		[EnumMember, CanonicalCulture("am-ET")]
 		ETB = 230,
 		/// <summary>
 		/// Euro
 		/// </summary>
-		[CanonicalCulture("de-DE")]
+		[EnumMember, CanonicalCulture("de-DE")]
 		EUR = 978,
 		/// <summary>
 		/// Fiji Dollar
 		/// </summary>
+		[EnumMember]
 		FJD = 242,
 		/// <summary>
 		/// Falkland Islands Pound
 		/// </summary>
+		[EnumMember]
 		FKP = 238,
 		/// <summary>
 		/// Pound Sterling
 		/// </summary>
-		[CanonicalCulture("en-GB")]
+		[EnumMember, CanonicalCulture("en-GB")]
 		GBP = 826,
 		/// <summary>
 		/// Lari
 		/// </summary>
-		[CanonicalCulture("ka-GE")]
+		[EnumMember, CanonicalCulture("ka-GE")]
 		GEL = 981,
 		/// <summary>
 		/// Ghana Cedi
 		/// </summary>
+		[EnumMember]
 		GHS = 936,
 		/// <summary>
 		/// Gibraltar Pound
 		/// </summary>
+		[EnumMember]
 		GIP = 292,
 		/// <summary>
 		/// Dalasi
 		/// </summary>
+		[EnumMember]
 		GMD = 270,
 		/// <summary>
 		/// Guinea Franc
 		/// </summary>
+		[EnumMember]
 		GNF = 324,
 		/// <summary>
 		/// Quetzal
 		/// </summary>
-		[CanonicalCulture("es-GT")]
+		[EnumMember, CanonicalCulture("es-GT")]
 		GTQ = 320,
 		/// <summary>
 		/// Guyana Dollar
 		/// </summary>
+		[EnumMember]
 		GYD = 328,
 		/// <summary>
 		/// Hong Kong Dollar
 		/// </summary>
-		[CanonicalCulture("zh-HK")]
+		[EnumMember, CanonicalCulture("zh-HK")]
 		HKD = 344,
 		/// <summary>
 		/// Lempira
 		/// </summary>
-		[CanonicalCulture("es-HN")]
+		[EnumMember, CanonicalCulture("es-HN")]
 		HNL = 340,
 		/// <summary>
 		/// Croatian Kuna
 		/// </summary>
-		[CanonicalCulture("hr-HR")]
+		[EnumMember, CanonicalCulture("hr-HR")]
 		HRK = 191,
 		/// <summary>
 		/// Gourde
 		/// </summary>
+		[EnumMember]
 		HTG = 332,
 		/// <summary>
 		/// Forint
 		/// </summary>
-		[CanonicalCulture("hu-HU")]
+		[EnumMember, CanonicalCulture("hu-HU")]
 		HUF = 348,
 		/// <summary>
 		/// Rupiah
 		/// </summary>
-		[CanonicalCulture("id-ID")]
+		[EnumMember, CanonicalCulture("id-ID")]
 		IDR = 360,
 		/// <summary>
 		/// New Israeli Sheqel
 		/// </summary>
-		[CanonicalCulture("he-IL")]
+		[EnumMember, CanonicalCulture("he-IL")]
 		ILS = 376,
 		/// <summary>
 		/// Indian Rupee
 		/// </summary>
-		[CanonicalCulture("hi-IN")]
+		[EnumMember, CanonicalCulture("hi-IN")]
 		INR = 356,
 		/// <summary>
 		/// Iraqi Dinar
 		/// </summary>
-		[CanonicalCulture("ar-IQ")]
+		[EnumMember, CanonicalCulture("ar-IQ")]
 		IQD = 368,
 		/// <summary>
 		/// Iranian Rial
 		/// </summary>
-		[CanonicalCulture("fa-IR")]
+		[EnumMember, CanonicalCulture("fa-IR")]
 		IRR = 364,
 		/// <summary>
 		/// Iceland Krona
 		/// </summary>
-		[CanonicalCulture("is-IS")]
+		[EnumMember, CanonicalCulture("is-IS")]
 		ISK = 352,
 		/// <summary>
 		/// Jamaican Dollar
 		/// </summary>
-		[CanonicalCulture("en-JM")]
+		[EnumMember, CanonicalCulture("en-JM")]
 		JMD = 388,
 		/// <summary>
 		/// Jordanian Dinar
 		/// </summary>
-		[CanonicalCulture("ar-JO")]
+		[EnumMember, CanonicalCulture("ar-JO")]
 		JOD = 400,
 		/// <summary>
 		/// Yen
 		/// </summary>
-		[CanonicalCulture("ja-JP")]
+		[EnumMember, CanonicalCulture("ja-JP")]
 		JPY = 392,
 		/// <summary>
 		/// Kenyan Shilling
 		/// </summary>
-		[CanonicalCulture("sw-KE")]
+		[EnumMember, CanonicalCulture("sw-KE")]
 		KES = 404,
 		/// <summary>
 		/// Som
 		/// </summary>
-		[CanonicalCulture("ky-KG")]
+		[EnumMember, CanonicalCulture("ky-KG")]
 		KGS = 417,
 		/// <summary>
 		/// Comoro Franc
 		/// </summary>
+		[EnumMember]
 		KMF = 174,
 		/// <summary>
 		/// Riel
 		/// </summary>
-		[CanonicalCulture("km-KH")]
+		[EnumMember, CanonicalCulture("km-KH")]
 		KHR = 116,
 		/// <summary>
 		/// North Korean Won
 		/// </summary>
+		[EnumMember]
 		KPW = 408,
 		/// <summary>
 		/// Won
 		/// </summary>
-		[CanonicalCulture("ko-KR")]
+		[EnumMember, CanonicalCulture("ko-KR")]
 		KRW = 410,
 		/// <summary>
 		/// Kuwaiti Dinar
 		/// </summary>
-		[CanonicalCulture("ar-KW")]
+		[EnumMember, CanonicalCulture("ar-KW")]
 		KWD = 414,
 		/// <summary>
 		/// Cayman Islands Dollar
 		/// </summary>
+		[EnumMember]
 		KYD = 136,
 		/// <summary>
 		/// Tenge
 		/// </summary>
-		[CanonicalCulture("kk-KZ")]
+		[EnumMember, CanonicalCulture("kk-KZ")]
 		KZT = 398,
 		/// <summary>
 		/// Kip
 		/// </summary>
-		[CanonicalCulture("lo-LA")]
+		[EnumMember, CanonicalCulture("lo-LA")]
 		LAK = 418,
 		/// <summary>
 		/// Lebanese Pound
 		/// </summary>
-		[CanonicalCulture("ar-LB")]
+		[EnumMember, CanonicalCulture("ar-LB")]
 		LBP = 422,
 		/// <summary>
 		/// Sri Lanka Rupee
 		/// </summary>
-		[CanonicalCulture("si-LK")]
+		[EnumMember, CanonicalCulture("si-LK")]
 		LKR = 144,
 		/// <summary>
 		/// Liberian Dollar
 		/// </summary>
+		[EnumMember]
 		LRD = 430,
 		/// <summary>
 		/// Loti
 		/// </summary>
+		[EnumMember]
 		LSL = 426,
 		/// <summary>
 		/// Lithuanian Litas
 		/// </summary>
-		[CanonicalCulture("lt-LT")]
+		[EnumMember, CanonicalCulture("lt-LT")]
 		LTL = 440,
 		/// <summary>
 		/// Latvian Lats
 		/// </summary>
-		[CanonicalCulture("lv-LV")]
+		[EnumMember, CanonicalCulture("lv-LV")]
 		LVL = 428,
 		/// <summary>
 		/// Libyan Dinar
 		/// </summary>
-		[CanonicalCulture("ar-LY")]
+		[EnumMember, CanonicalCulture("ar-LY")]
 		LYD = 434,
 		/// <summary>
 		/// Moroccan Dirham
 		/// </summary>
-		[CanonicalCulture("ar-MA")]
+		[EnumMember, CanonicalCulture("ar-MA")]
 		MAD = 504,
 		/// <summary>
 		/// Moldovan Leu
 		/// </summary>
+		[EnumMember]
 		MDL = 498,
 		/// <summary>
 		/// Malagasy Ariary
 		/// </summary>
+		[EnumMember]
 		MGA = 969,
 		/// <summary>
 		/// Denar
 		/// </summary>
-		[CanonicalCulture("mk-MK")]
+		[EnumMember, CanonicalCulture("mk-MK")]
 		MKD = 807,
 		/// <summary>
 		/// Kyat
 		/// </summary>
+		[EnumMember]
 		MMK = 104,
 		/// <summary>
 		/// Tugrik
 		/// </summary>
-		[CanonicalCulture("mn-MN")]
+		[EnumMember, CanonicalCulture("mn-MN")]
 		MNT = 496,
 		/// <summary>
 		/// Pataca
 		/// </summary>
-		[CanonicalCulture("zh-MO")]
+		[EnumMember, CanonicalCulture("zh-MO")]
 		MOP = 446,
 		/// <summary>
 		/// Ouguiya
 		/// </summary>
+		[EnumMember]
 		MRO = 478,
 		/// <summary>
 		/// Mauritius Rupee
 		/// </summary>
+		[EnumMember]
 		MUR = 480,
 		/// <summary>
 		/// Rufiyaa
 		/// </summary>
-		[CanonicalCulture("dv-MV")]
+		[EnumMember, CanonicalCulture("dv-MV")]
 		MVR = 462,
 		/// <summary>
 		/// Kwacha
 		/// </summary>
+		[EnumMember]
 		MWK = 454,
 		/// <summary>
 		/// Mexican Peso
 		/// </summary>
-		[CanonicalCulture("es-MX")]
+		[EnumMember, CanonicalCulture("es-MX")]
 		MXN = 484,
 		/// <summary>
 		/// Mexican Unidad de Inversion (UDI)
 		/// </summary>
-		[CanonicalCulture("es-MX")]
+		[EnumMember, CanonicalCulture("es-MX")]
 		MXV = 979,
 		/// <summary>
 		/// Malaysian Ringgit
 		/// </summary>
-		[CanonicalCulture("ms-MY", Overwritten = true)]
+		[EnumMember, CanonicalCulture("ms-MY", Overwritten = true)]
 		MYR = 458,
 		/// <summary>
 		/// Mozambique Metical
 		/// </summary>
+		[EnumMember]
 		MZN = 943,
 		/// <summary>
 		/// Namibia Dollar
 		/// </summary>
+		[EnumMember]
 		NAD = 516,
 		/// <summary>
 		/// Naira
 		/// </summary>
-		[CanonicalCulture("ha-Latn-NG")]
+		[EnumMember, CanonicalCulture("ha-Latn-NG")]
 		NGN = 566,
 		/// <summary>
 		/// Cordoba Oro
 		/// </summary>
-		[CanonicalCulture("es-NI")]
+		[EnumMember, CanonicalCulture("es-NI")]
 		NIO = 558,
 		/// <summary>
 		/// Norwegian Krone
 		/// </summary>
-		[CanonicalCulture("nn-NO")]
+		[EnumMember, CanonicalCulture("nn-NO")]
 		NOK = 578,
 		/// <summary>
 		/// Nepalese Rupee
 		/// </summary>
-		[CanonicalCulture("ne-NP")]
+		[EnumMember, CanonicalCulture("ne-NP")]
 		NPR = 524,
 		/// <summary>
 		/// New Zealand Dollar
 		/// </summary>
-		[CanonicalCulture("en-NZ")]
+		[EnumMember, CanonicalCulture("en-NZ")]
 		NZD = 554,
 		/// <summary>
 		/// Rial Omani
 		/// </summary>
-		[CanonicalCulture("ar-OM")]
+		[EnumMember, CanonicalCulture("ar-OM")]
 		OMR = 512,
 		/// <summary>
 		/// Balboa
 		/// </summary>
-		[CanonicalCulture("es-PA")]
+		[EnumMember, CanonicalCulture("es-PA")]
 		PAB = 590,
 		/// <summary>
 		/// Nuevo Sol
 		/// </summary>
-		[CanonicalCulture("es-PE")]
+		[EnumMember, CanonicalCulture("es-PE")]
 		PEN = 604,
 		/// <summary>
 		/// Kina
 		/// </summary>
+		[EnumMember]
 		PGK = 598,
 		/// <summary>
 		/// Philippine Peso
 		/// </summary>
-		[CanonicalCulture("fil-PH")]
+		[EnumMember, CanonicalCulture("fil-PH")]
 		PHP = 608,
 		/// <summary>
 		/// Pakistan Rupee
 		/// </summary>
-		[CanonicalCulture("ur-PK")]
+		[EnumMember, CanonicalCulture("ur-PK")]
 		PKR = 586,
 		/// <summary>
 		/// Zloty
 		/// </summary>
-		[CanonicalCulture("pl-PL")]
+		[EnumMember, CanonicalCulture("pl-PL")]
 		PLN = 985,
 		/// <summary>
 		/// Guarani
 		/// </summary>
-		[CanonicalCulture("es-PY")]
+		[EnumMember, CanonicalCulture("es-PY")]
 		PYG = 600,
 		/// <summary>
 		/// Qatari Rial
 		/// </summary>
-		[CanonicalCulture("ar-QA")]
+		[EnumMember, CanonicalCulture("ar-QA")]
 		QAR = 634,
 		/// <summary>
 		/// New Romanian Leu
 		/// </summary>
-		[CanonicalCulture("ro-RO")]
+		[EnumMember, CanonicalCulture("ro-RO")]
 		RON = 946,
 		/// <summary>
 		/// Serbian Dinar
 		/// </summary>
-		[CanonicalCulture("sr-Latn-RS", Overwritten = true)]
+		[EnumMember, CanonicalCulture("sr-Latn-RS", Overwritten = true)]
 		RSD = 941,
 		/// <summary>
 		/// Russian Ruble
 		/// </summary>
-		[CanonicalCulture("ru-RU")]
+		[EnumMember, CanonicalCulture("ru-RU")]
 		RUB = 643,
 		/// <summary>
 		/// Rwanda Franc
 		/// </summary>
-		[CanonicalCulture("rw-RW")]
+		[EnumMember, CanonicalCulture("rw-RW")]
 		RWF = 646,
 		/// <summary>
 		/// Saudi Riyal
 		/// </summary>
-		[CanonicalCulture("ar-SA")]
+		[EnumMember, CanonicalCulture("ar-SA")]
 		SAR = 682,
 		/// <summary>
 		/// Solomon Islands Dollar
 		/// </summary>
+		[EnumMember]
 		SBD = 090,
 		/// <summary>
 		/// Seychelles Rupee
 		/// </summary>
+		[EnumMember]
 		SCR = 690,
 		/// <summary>
 		/// Sudanese Pound
 		/// </summary>
+		[EnumMember]
 		SDG = 938,
 		/// <summary>
 		/// Swedish Krona
 		/// </summary>
-		[CanonicalCulture("sv-SE")]
+		[EnumMember, CanonicalCulture("sv-SE")]
 		SEK = 752,
 		/// <summary>
 		/// Singapore Dollar
 		/// </summary>
-		[CanonicalCulture("zh-SG")]
+		[EnumMember, CanonicalCulture("zh-SG")]
 		SGD = 702,
 		/// <summary>
 		/// Saint Helena Pound
 		/// </summary>
+		[EnumMember]
 		SHP = 654,
 		/// <summary>
 		/// Leone
 		/// </summary>
+		[EnumMember]
 		SLL = 694,
 		/// <summary>
 		/// Somali Shilling
 		/// </summary>
+		[EnumMember]
 		SOS = 706,
 		/// <summary>
 		/// Surinam Dollar
 		/// </summary>
+		[EnumMember]
 		SRD = 968,
 		/// <summary>
 		/// South Sudanese Pound
 		/// </summary>
+		[EnumMember]
 		SSP = 728,
 		/// <summary>
 		/// Dobra
 		/// </summary>
+		[EnumMember]
 		STD = 678,
 		/// <summary>
 		/// El Salvador Colon
 		/// </summary>
-		[CanonicalCulture("es-SV")]
+		[EnumMember, CanonicalCulture("es-SV")]
 		SVC = 222,
 		/// <summary>
 		/// Syrian Pound
 		/// </summary>
-		[CanonicalCulture("ar-SY")]
+		[EnumMember, CanonicalCulture("ar-SY")]
 		SYP = 760,
 		/// <summary>
 		/// Lilangeni
 		/// </summary>
+		[EnumMember]
 		SZL = 748,
 		/// <summary>
 		/// Baht
 		/// </summary>
-		[CanonicalCulture("th-TH")]
+		[EnumMember, CanonicalCulture("th-TH")]
 		THB = 764,
 		/// <summary>
 		/// Somoni
 		/// </summary>
-		[CanonicalCulture("tg-Cyrl-TJ")]
+		[EnumMember, CanonicalCulture("tg-Cyrl-TJ")]
 		TJS = 972,
 		/// <summary>
 		/// Turkmenistan New Manat
 		/// </summary>
-		[CanonicalCulture("tk-TM")]
+		[EnumMember, CanonicalCulture("tk-TM")]
 		TMT = 934,
 		/// <summary>
 		/// Tunisian Dinar
 		/// </summary>
-		[CanonicalCulture("ar-TN")]
+		[EnumMember, CanonicalCulture("ar-TN")]
 		TND = 788,
 		/// <summary>
 		/// Pa'anga
 		/// </summary>
+		[EnumMember]
 		TOP = 776,
 		/// <summary>
 		/// Turkish Lira
 		/// </summary>
-		[CanonicalCulture("tr-TR", Overwritten = true)]
+		[EnumMember, CanonicalCulture("tr-TR", Overwritten = true)]
 		TRY = 949,
 		/// <summary>
 		/// Trinidad and Tobago Dollar
 		/// </summary>
-		[CanonicalCulture("en-TT")]
+		[EnumMember, CanonicalCulture("en-TT")]
 		TTD = 780,
 		/// <summary>
 		/// New Taiwan Dollar
 		/// </summary>
-		[CanonicalCulture("zh-TW")]
+		[EnumMember, CanonicalCulture("zh-TW")]
 		TWD = 901,
 		/// <summary>
 		/// Tanzanian Shilling
 		/// </summary>
+		[EnumMember]
 		TZS = 834,
 		/// <summary>
 		/// Hryvnia
 		/// </summary>
-		[CanonicalCulture("uk-UA")]
+		[EnumMember, CanonicalCulture("uk-UA")]
 		UAH = 980,
 		/// <summary>
 		/// Uganda Shilling
 		/// </summary>
+		[EnumMember]
 		UGX = 800,
 		/// <summary>
 		/// US Dollar
 		/// </summary>
-		[CanonicalCulture("en-US")]
+		[EnumMember, CanonicalCulture("en-US")]
 		USD = 840,
 		/// <summary>
 		/// US Dollar (Next day)
 		/// </summary>
+		[EnumMember]
 		USN = 997,
 		/// <summary>
 		/// US Dollar (Same day)
 		/// </summary>
+		[EnumMember]
 		USS = 998,
 		/// <summary>
 		/// >Uruguay Peso en Unidades Indexadas (URUIURUI)
 		/// </summary>
-		[CanonicalCulture("es-UY")]
+		[EnumMember, CanonicalCulture("es-UY")]
 		UYI = 940,
 		/// <summary>
 		/// Peso Uruguayo
 		/// </summary>
-		[CanonicalCulture("es-UY")]
+		[EnumMember, CanonicalCulture("es-UY")]
 		UYU = 858,
 		/// <summary>
 		/// Uzbekistan Sum
 		/// </summary>
-		[CanonicalCulture("uz-Latn-UZ")]
+		[EnumMember, CanonicalCulture("uz-Latn-UZ")]
 		UZS = 860,
 		/// <summary>
 		/// Bolivar Fuerte
 		/// </summary>
-		[CanonicalCulture("es-VE")]
+		[EnumMember, CanonicalCulture("es-VE")]
 		VEF = 937,
 		/// <summary>
 		/// Dong
 		/// </summary>
-		[CanonicalCulture("vi-VN")]
+		[EnumMember, CanonicalCulture("vi-VN")]
 		VND = 704,
 		/// <summary>
 		/// Vatu
 		/// </summary>
+		[EnumMember]
 		VUV = 548,
 		/// <summary>
 		/// Tala
 		/// </summary>
+		[EnumMember]
 		WST = 882,
 		/// <summary>
 		/// CFA Franc BEAC
 		/// </summary>
+		[EnumMember]
 		XAF = 950,
 		/// <summary>
 		/// Silver
 		/// </summary>
+		[EnumMember]
 		XAG = 961,
 		/// <summary>
 		/// Gold
 		/// </summary>
+		[EnumMember]
 		XAU = 959,
 		/// <summary>
 		/// European Composite Unit (EURCO)
 		/// </summary>
+		[EnumMember]
 		XBA = 955,
 		/// <summary>
 		/// European Monetary Unit (E.M.U.-6)
 		/// </summary>
+		[EnumMember]
 		XBB = 956,
 		/// <summary>
 		/// European Unit of Account 9(E.U.A.-9)
 		/// </summary>
+		[EnumMember]
 		XBC = 957,
 		/// <summary>
 		/// European Unit of Account 17(E.U.A.-17)
 		/// </summary>
+		[EnumMember]
 		XBD = 958,
 		/// <summary>
 		/// East Caribbean Dollar
 		/// </summary>
+		[EnumMember]
 		XCD = 951,
 		/// <summary>
 		/// SDR (Special Drawing Right)
 		/// </summary>
+		[EnumMember]
 		XDR = 960,
 		/// <summary>
 		/// CFA Franc BCEAO
 		/// </summary>
-		[CanonicalCulture("wo-SN")]
+		[EnumMember, CanonicalCulture("wo-SN")]
 		XOF = 952,
 		/// <summary>
 		/// Palladium
 		/// </summary>
+		[EnumMember]
 		XPD = 964,
 		/// <summary>
 		/// CFP Franc
 		/// </summary>
+		[EnumMember]
 		XPF = 953,
 		/// <summary>
 		/// Platinum
 		/// </summary>
+		[EnumMember]
 		XPT = 962,
 		/// <summary>
 		/// Sucre
 		/// </summary>
+		[EnumMember]
 		XSU = 994,
 		/// <summary>
 		/// Test currency
 		/// </summary>
-		[Description("Test currency")]
+		[EnumMember]
 		XTS = 963,
 		/// <summary>
 		/// ADB Unit of Account
 		/// </summary>
+		[EnumMember]
 		XUA = 965,
 		/// <summary>
 		/// No currency
 		/// </summary>
-		[Description("No currency")]
+		[EnumMember]
 		XXX = 999,
 		/// <summary>
 		/// Yemeni Rial
 		/// </summary>
-		[CanonicalCulture("ar-YE")]
+		[EnumMember, CanonicalCulture("ar-YE")]
 		YER = 886,
 		/// <summary>
 		/// Rand
 		/// </summary>
-		[CanonicalCulture("en-ZA")]
+		[EnumMember, CanonicalCulture("en-ZA")]
 		ZAR = 710,
 		/// <summary>
 		/// Zambian Kwacha
 		/// </summary>
+		[EnumMember]
 		ZMK = 894,
 		/// <summary>
 		/// Zimbabwe Dollar
 		/// </summary>
-		[CanonicalCulture("en-ZW")]
+		[EnumMember, CanonicalCulture("en-ZW")]
 		ZWL = 932
 	}
 }

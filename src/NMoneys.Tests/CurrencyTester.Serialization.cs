@@ -38,28 +38,22 @@ namespace NMoneys.Tests
 		}
 
 		[Test]
-		public void CannotBe_DataContractJsonSerialized()
+		public void CanBe_DataContractJsonSerialized()
 		{
-			Assert.That(Currency.Dollar, Must.Not.Be.DataContractJsonSerializable<Currency>());
+			Assert.That(Currency.Dollar, Must.Be.DataContractJsonSerializable<Currency>());
 		}
 
 		[Test]
-		public void CanBe_JsonSerialized()
-		{
-			Assert.That(Currency.Dollar, Must.Be.JsonSerializable<Currency>(Is.SameAs));
-		}
-
-		[Test]
-		public void CanBe_JsonDeserializable()
+		public void CanBe_DataContractJsonDeserializable()
 		{
 			string serializedDollar = "{\"isoCode\":\"USD\"}";
-			Assert.That(serializedDollar, Must.Be.JsonDeserializableInto(Currency.Dollar));
+			Assert.That(serializedDollar, Must.Be.DataContractJsonDeserializableInto(Currency.Dollar));
 		}
 
 		[Test]
-		public void JsonDeserialization_OfObsoleteCurrency_RaisesEvent()
+		public void DataContractJsonDeserialization_OfObsoleteCurrency_RaisesEvent()
 		{
-			using (var serializer = new OneGoJsonSerializer<Currency>())
+			using (var serializer = new OneGoDataContractJsonSerializer<Currency>())
 			{
 				var obsolete = Currency.Get("EEK");
 				serializer.Serialize(obsolete);
@@ -67,27 +61,5 @@ namespace NMoneys.Tests
 				Assert.That(deserializeObsolete, Must.RaiseObsoleteEvent.Once());
 			}
 		}
-
-		[Test]
-		public void JsonDeserialization_DoesPreserveInstanceUniqueness()
-		{
-			using (var serializer = new OneGoJsonSerializer<Currency>())
-			{
-				Currency usd = Currency.Get("USD");
-				serializer.Serialize(usd);
-				Assert.That(serializer.Deserialize(), Is.SameAs(usd));
-			}
-		}
-
-		#region Issue 16. Case sensitivity. Currency instances can be obtained by any casing of the IsoCode (Alphbetic code)
-
-		[Test]
-		public void JsonDeserialization_IsCaseInsensitive()
-		{
-			string serializedDollar = "{\"isoCode\":\"uSd\"}";
-			Assert.That(serializedDollar, Must.Be.JsonDeserializableInto(Currency.Dollar));
-		}
-
-		#endregion
 	}
 }

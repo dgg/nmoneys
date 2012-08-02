@@ -40,19 +40,14 @@ namespace NMoneys.Tests.CustomConstraints
 			return new DataContractDeserializationConstraint<T>(to);
 		}
 
-		public static Constraint DataContractJsonSerializable<T>(this Must.NotBeEntryPoint entryPoint)
+		public static Constraint DataContractJsonSerializable<T>(this Must.BeEntryPoint entryPoint)
 		{
 			return new DataContractJsonSerializationConstraint<T>();
 		}
 
-		public static Constraint JsonSerializable<T>(this Must.BeEntryPoint entryPoint, Func<T, Constraint> constraintOverDeserialized)
+		public static Constraint DataContractJsonDeserializableInto<T>(this Must.BeEntryPoint entryPoint, T to)
 		{
-			return new JsonSerializationConstraint<T>(constraintOverDeserialized);
-		}
-
-		public static Constraint JsonDeserializableInto<T>(this Must.BeEntryPoint entryPoint, T to)
-		{
-			return new JsonDeserializationConstraint<T>(to);
+			return new DataContractJsonDeserializationConstraint<T>(to);
 		}
 
 		public static Constraint Once(this Must.RaiseObsoleteEventEntryPoint entryPoint)
@@ -60,7 +55,7 @@ namespace NMoneys.Tests.CustomConstraints
 			return new ObsoleteCurrencyRaisedConstraint(1);
 		}
 
-		public static Constraint None(this Must.RaiseObsoleteEventEntryPoint entryPoint)
+		public static Constraint ObsoleteEvent(this Must.NotRaiseObsoleteEventEntryPoint entryPoint)
 		{
 			return new ObsoleteCurrencyRaisedConstraint(0);
 		}
