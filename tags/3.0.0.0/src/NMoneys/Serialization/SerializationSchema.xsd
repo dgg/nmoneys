@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema
+	attributeFormDefault="unqualified"
+	elementFormDefault="qualified"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="urn:nmoneys"
+	xmlns:tns="urn:nmoneys">
+
+	<xs:element name="currency" nillable="false" type="tns:currencyType"/>
+	<xs:element name="money" nillable="false" type="tns:moneyType" />
+
+	<xs:complexType name="currencyType">
+		<xs:sequence minOccurs="1" maxOccurs="1">
+			<xs:element name="isoCode" type="tns:currencyCode" minOccurs="1" maxOccurs="1" nillable="false" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="currencyCode">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{3}"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="moneyType">
+		<xs:sequence minOccurs="1" maxOccurs="1">
+			<xs:element name="amount" type="xs:decimal" minOccurs="1" maxOccurs="1" nillable="false" />
+			<xs:element name="currency" type="tns:currencyType" minOccurs="1" maxOccurs="1" nillable="false" />
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>
