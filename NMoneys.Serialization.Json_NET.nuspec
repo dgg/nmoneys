@@ -13,7 +13,7 @@
 			when using the library Json.NET via custom converters.
 		</summary>
         <projectUrl>http://code.google.com/p/nmoneys/</projectUrl>
-		<iconUrl>https://nugetgallery.blob.core.windows.net/icons/NMoneys.1.0.0.0.png</iconUrl>
+		<iconUrl>https://nugetgallery.blob.core.windows.net/icons/NMoneys.2.0.0.0.png</iconUrl>
 		<tags>.net currency money</tags>
 		<dependencies>
 			<dependency id="nmoneys" version="3.0.0.0" />
