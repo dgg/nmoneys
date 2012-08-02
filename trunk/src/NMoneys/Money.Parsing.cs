@@ -29,7 +29,7 @@ namespace NMoneys
 		/// <remarks>Use this method when <paramref name="s"/> is supected not to have a <see cref="NumberStyles.Currency"/> style or more control over the operation is needed.</remarks>
 		/// <param name="s">The string representation of the monetary quantity to convert.</param>
 		/// <param name="style">A bitwise combination of <see cref="NumberStyles"/> values that indicates the style elements that can be present in <paramref name="s"/>.
-		/// A typical value to specify is <see cref="Number"/>.</param>
+		/// A typical value to specify is <see cref="NumberStyles.Number"/>.</param>
 		/// <param name="currency">Expected currency of <paramref name="s"/> that provides format information.</param>
 		/// <returns>The <see cref="Money"/> equivalent to the monetary quantity contained in <paramref name="s"/> as specified by <paramref name="style"/> and <paramref name="currency"/>.</returns>
 		/// <exception cref="FormatException"><paramref name="s"/> is not in the correct format.</exception>
@@ -73,7 +73,7 @@ namespace NMoneys
 		/// </summary>
 		/// <param name="s">The string representation of the monetary quantity to convert.</param>
 		/// <param name="style">A bitwise combination of enumeration values that indicates the permitted format of <paramref name="s"/>.
-		/// A typical value to specify is <see cref="Number"/>.</param>
+		/// A typical value to specify is <see cref="NumberStyles.Number"/>.</param>
 		/// <param name="currency">Expected currency of <paramref name="s"/> that provides format information.</param>
 		/// <param name="money">When this method returns, contains the <see cref="Money"/> that is equivalent to the monetary quantity contained in <paramref name="s"/>,
 		/// if the conversion succeeded, or is null if the conversion failed.

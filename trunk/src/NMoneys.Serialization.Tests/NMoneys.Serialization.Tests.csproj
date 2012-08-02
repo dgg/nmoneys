@@ -5,14 +5,13 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{8C7ADB2F-BD47-4235-BA7C-B9328D54D1C2}</ProjectGuid>
+    <ProjectGuid>{407F2075-27A6-485F-9CD0-FC392043C9E5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NMoneys.Exchange</RootNamespace>
-    <AssemblyName>NMoneys.Exchange</AssemblyName>
+    <RootNamespace>NMoneys.Serialization.Tests</RootNamespace>
+    <AssemblyName>NMoneys.Serialization.Tests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -22,8 +21,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>
-    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,30 +29,49 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\NMoneys.Exchange.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\packages\Newtonsoft.Json.4.5.7\lib\net35\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\packages\NUnit.2.6.0.12054\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\..\packages\ServiceStack.Text.3.8.5\lib\net35\ServiceStack.Text.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExchangeRate.cs" />
-    <Compile Include="TabulatedExchangeRateProvider.cs" />
-    <Compile Include="ExchangeSafeConversion.cs" />
-    <Compile Include="IExchangeConversion.cs" />
-    <Compile Include="IExchangeRateProvider.cs" />
-    <Compile Include="IExchangeSafeConversion.cs" />
-    <Compile Include="ExchangeConversion.cs" />
-    <Compile Include="Money.Extensions.cs" />
-    <Compile Include="ProviderOfIdentities.cs" />
+    <Compile Include="Json_Net\DeserializationTester.cs" />
+    <Compile Include="Json_Net\SerializationTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NMoneys.Serialization.Json_NET\NMoneys.Serialization.Json_NET.csproj">
+      <Project>{A30FA2A1-CE95-4CA9-A786-8C5616F98B57}</Project>
+      <Name>NMoneys.Serialization.Json_NET</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NMoneys.Tests\NMoneys.Tests.csproj">
+      <Project>{2034BAF2-6337-425D-A111-4407361FC974}</Project>
+      <Name>NMoneys.Tests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NMoneys\NMoneys.csproj">
       <Project>{5408F146-6F8A-406C-9E90-292662018F72}</Project>
       <Name>NMoneys</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Service_Stack\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

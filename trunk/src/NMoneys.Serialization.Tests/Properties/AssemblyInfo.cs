@@ -1,17 +1,16 @@
-﻿using System;
-using System.Reflection;
-using System.Resources;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("NMoneys")]
-[assembly: AssemblyDescription("Implementation of the Money Value Object to support representing moneys in the currencies defined in the ISO 4217 standard.")]
+[assembly: AssemblyTitle("NMoneys.Serialization.Tests")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("NMoneys")]
+[assembly: AssemblyProduct("NMoneys.Serialization.Tests")]
+[assembly: AssemblyCopyright("Copyright ©  2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -21,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("6008a10f-70bd-400b-8ebb-112069622351")]
+[assembly: Guid("79796213-d001-4594-a882-54bddf92ae01")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -33,14 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("3.0.0.0")]
-[assembly: AssemblyFileVersion("3.0.0.0")]
-
-[assembly: InternalsVisibleTo("NMoneys.Tests")]
-[assembly: InternalsVisibleTo("NMoneys.Tools")]
-[assembly: InternalsVisibleTo("NMoneys.Exchange")]
-[assembly: InternalsVisibleTo("NMoneys.Serialization.Json_NET")]
-[assembly: InternalsVisibleTo("NMoneys.Serialization.Service_Stack")]
-[assembly: System.Windows.Markup.XmlnsDefinition(NMoneys.Serialization.Data.NAMESPACE, "NMoneys")]
-
-[assembly: CLSCompliant(true)]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]

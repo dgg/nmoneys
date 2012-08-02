@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{8C7ADB2F-BD47-4235-BA7C-B9328D54D1C2}</ProjectGuid>
+    <ProjectGuid>{A30FA2A1-CE95-4CA9-A786-8C5616F98B57}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NMoneys.Exchange</RootNamespace>
-    <AssemblyName>NMoneys.Exchange</AssemblyName>
+    <RootNamespace>NMoneys.Serialization.Json_NET</RootNamespace>
+    <AssemblyName>NMoneys.Serialization.Json_NET</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
@@ -22,8 +22,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>
-    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,23 +30,18 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\NMoneys.Exchange.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\NMoneys.Serialization.Json_NET.XML</DocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\packages\Newtonsoft.Json.4.5.7\lib\net35\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExchangeRate.cs" />
-    <Compile Include="TabulatedExchangeRateProvider.cs" />
-    <Compile Include="ExchangeSafeConversion.cs" />
-    <Compile Include="IExchangeConversion.cs" />
-    <Compile Include="IExchangeRateProvider.cs" />
-    <Compile Include="IExchangeSafeConversion.cs" />
-    <Compile Include="ExchangeConversion.cs" />
-    <Compile Include="Money.Extensions.cs" />
-    <Compile Include="ProviderOfIdentities.cs" />
+    <Compile Include="MoneyConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -56,6 +49,11 @@
       <Project>{5408F146-6F8A-406C-9E90-292662018F72}</Project>
       <Name>NMoneys</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

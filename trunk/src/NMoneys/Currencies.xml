@@ -1600,8 +1600,8 @@
 		<negativePattern>3</negativePattern>
 	</currency>
 	<currency code="TOP">
-		<englishName>Pa'anga</englishName>
-		<nativeName>pa'anga</nativeName>
+		<englishName>Pa’anga</englishName>
+		<nativeName>paʻang</nativeName>
 		<symbol>84 36</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>.</decimalSeparator>

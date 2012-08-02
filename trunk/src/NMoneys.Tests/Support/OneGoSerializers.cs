@@ -2,8 +2,8 @@
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization.Json;
 using System.Text;
-using System.Web.Script.Serialization;
 using System.Xml;
 using System.Xml.Serialization;
 using NMoneys.Serialization;
@@ -21,7 +21,7 @@ namespace NMoneys.Tests.Support
 
 		public string Serialize(T toSerialize)
 		{
-			BinaryFormatter outFormatter = new BinaryFormatter();
+			var outFormatter = new BinaryFormatter();
 			outFormatter.Serialize(_stream, toSerialize);
 
 			_stream.Flush();
@@ -33,7 +33,7 @@ namespace NMoneys.Tests.Support
 
 		public T Deserialize()
 		{
-			BinaryFormatter inFormatter = new BinaryFormatter();
+			var inFormatter = new BinaryFormatter();
 
 			_stream.Seek(0, SeekOrigin.Begin);
 
@@ -64,7 +64,7 @@ namespace NMoneys.Tests.Support
 		{
 			_serializer.Serialize(_stream, toSerialize);
 
-			StringBuilder sb = new StringBuilder();
+			var sb = new StringBuilder();
 			XmlWriter xw = XmlWriter.Create(sb);
 			_serializer.Serialize(xw, toSerialize);
 			xw.Flush();
@@ -125,31 +125,61 @@ namespace NMoneys.Tests.Support
 		}
 	}
 
-	internal class OneGoJsonSerializer<T> : IDisposable
+	public class OneGoDataContractJsonSerializer<T> : IDisposable
 	{
-		private readonly JavaScriptSerializer _serializer;
-		private readonly StringBuilder _sb;
+		private readonly MemoryStream _stream;
+		private readonly DataContractJsonSerializer _serializer;
 
-		public OneGoJsonSerializer()
+		public OneGoDataContractJsonSerializer()
 		{
-			_serializer = new JavaScriptSerializer();
-			_serializer.RegisterConverters(new JavaScriptConverter[] { new MoneyConverter(), new CurrencyConverter(), new CurrencyCodeConverter() });
-
-			_sb = new StringBuilder();
+			_stream = new MemoryStream();
+			var surrogate = new DataContractSurrogate();
+			_serializer = surrogate.BuildSerializer<T>();
 		}
 
 		public string Serialize(T toSerialize)
 		{
-			_serializer.Serialize(toSerialize, _sb);
-			return _sb.ToString();
+			_serializer.WriteObject(_stream, toSerialize);
+
+			_stream.Flush();
+			_stream.Seek(0, SeekOrigin.Begin);
+			string serialized = new StreamReader(_stream).ReadToEnd();
+			return serialized;
 		}
 
 		public T Deserialize()
 		{
-			T deserialized = _serializer.Deserialize<T>(_sb.ToString());
+			return deserialize(_stream);
+		}
+
+		private T deserialize(Stream s)
+		{
+			s.Seek(0, SeekOrigin.Begin);
+
+			T deserialized = (T)_serializer.ReadObject(_stream);
+
 			return deserialized;
 		}
 
-		public void Dispose() { }
+		public T Deserialize(string serialized)
+		{
+			using (var ms = new MemoryStream(Encoding.Default.GetBytes(serialized)))
+			{
+				try
+				{
+					return deserialize(ms);
+				}
+				finally
+				{
+					ms.Close();
+				}
+			}
+		}
+
+		public void Dispose()
+		{
+			_stream.Close();
+			_stream.Dispose();
+		}
 	}
 }

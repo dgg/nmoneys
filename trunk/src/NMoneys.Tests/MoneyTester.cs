@@ -251,7 +251,7 @@ namespace NMoneys.Tests
 		[Test, Explicit("WARNING: THIS TEST MIGH FAIL. Rerun the test to solve it.")]
 		public void ExploratoryTesting_OnPerformance()
 		{
-			Stopwatch watch = new Stopwatch();
+			var watch = new Stopwatch();
 			ActionTimer.Time(watch, () =>
 			{
 				var c = new WithoutEnsure().NonZero;
@@ -356,8 +356,8 @@ namespace NMoneys.Tests
 		[Test]
 		public void ctor_IsoCode_IsCaseInsensitive()
 		{
-			Money upper = new Money(100, "EUR");
-			Money mixed = new Money(100, "eUr");
+			var upper = new Money(100, "EUR");
+			var mixed = new Money(100, "eUr");
 
 			Assert.That(upper, Is.EqualTo(mixed));
 		}
@@ -382,13 +382,6 @@ namespace NMoneys.Tests
 				"<currency><isoCode>xXx</isoCode></currency>" +
 				"</money>";
 			Assert.That(serializedMoney, Must.Be.DataContractDeserializableInto(new Money(3.757m)));
-		}
-
-		[Test]
-		public void JsonDeserialization_IsCaseInsensitive()
-		{
-			string serializedMoney = "{\"amount\":3.757,\"currency\":{\"isoCode\":\"xXx\"}}";
-			Assert.That(serializedMoney, Must.Be.JsonDeserializableInto(new Money(3.757m)));
 		}
 
 		#endregion

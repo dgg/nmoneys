@@ -3,7 +3,7 @@
 namespace NMoneys.Tests
 {
 	[TestFixture]
-	public class CurrencyIsoCodeTester
+	public partial class CurrencyIsoCodeTester
 	{
 		[Test]
 		public void NumericCode_HoldsTheValueOfTheCode()

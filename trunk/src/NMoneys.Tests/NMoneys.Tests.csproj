@@ -48,7 +48,6 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.XML" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
@@ -60,7 +59,13 @@
     <Compile Include="Allocations\RatioTester.cs" />
     <Compile Include="Allocations\RatioTester.Equality.cs" />
     <Compile Include="CharacterReferenceTester.cs" />
-    <Compile Include="CurrencyTester.Serialization.Xml.cs">
+    <Compile Include="CurrencyIsoCodeTester.Serialization.cs">
+		<DependentUpon>CurrencyIsoCodeTester.cs</DependentUpon>
+	</Compile>
+  	<Compile Include="CurrencyIsoCodeTester.Serialization.Xml.cs">
+		<DependentUpon>CurrencyIsoCodeTester.cs</DependentUpon>
+	</Compile>
+  	<Compile Include="CurrencyTester.Serialization.Xml.cs">
       <DependentUpon>CurrencyTester.cs</DependentUpon>
     </Compile>
     <Compile Include="CurrencyTester.Serialization.cs">
@@ -78,6 +83,7 @@
     <Compile Include="CurrencyTester.Comparisons.cs">
       <DependentUpon>CurrencyTester.cs</DependentUpon>
     </Compile>
+    <Compile Include="CustomConstraints\DataContractJsonDeserializationConstraint.cs" />
     <Compile Include="MoneyTester.Creation.cs">
       <DependentUpon>MoneyTester.cs</DependentUpon>
     </Compile>
@@ -115,8 +121,6 @@
     <Compile Include="CustomConstraints\DataContractJsonSerializationConstraint.cs" />
     <Compile Include="CustomConstraints\CharacterReferenceConstraint.cs" />
     <Compile Include="CustomConstraints\IncompleteAllocationConstraint.cs" />
-    <Compile Include="CustomConstraints\JsonDeserializationConstraint.cs" />
-    <Compile Include="CustomConstraints\JsonSerializationConstraint.cs" />
     <Compile Include="CustomConstraints\MoneyConstraintTester.cs" />
     <Compile Include="CustomConstraints\EventRaisedConstraint.cs" />
     <Compile Include="CustomConstraints\NoAllocationConstraint.cs" />
