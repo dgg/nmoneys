@@ -1,6 +1,15 @@
 #summary Summary of changes.
 #labels Phase-Support
 
+= 3.0.0.0 =
+2012/08/02 @revision 215
+   * _NMoneys_ version bump due to client profile targeting and some breaking changes
+   * _NMoneys.Exchange_ version bump due to client profile targeting
+   * *breaking change*: deprecated `CurrencyConverter`, `CurrencyCodeConverter` and `MoneyConverter` that used the old undeprecated, but well on its way out, `System.Web.Script.Serialization.JavasScriptConverter` 
+   * custom JSON serialiation can be performed using the `DataContractJsonSerializer` and customized with `DataContractSurrogate`
+   * removed _System.Web_ dependency
+   * added project _NMoneys.Serialization.Json_NET_ which follows a parallel distribution method (different binaries and packages) to support custom JSON serialization using the popular "Json.NET" library
+
 = 2.5.0.0 =
 2012/06/25 @revision 176
    * version bump due to some breaking changes
