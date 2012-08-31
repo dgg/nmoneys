@@ -1743,7 +1743,7 @@
 		<negativePattern>8</negativePattern>
 	</currency>
 	<currency code="VEF">
-		<englishName>Bolivar Fuerte</englishName>
+		<englishName>Bolivar</englishName>
 		<nativeName>Bolívar</nativeName>
 		<symbol>66 115 46 32 70 46</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
