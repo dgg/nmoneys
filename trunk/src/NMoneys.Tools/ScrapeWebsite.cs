@@ -4,11 +4,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Net;
 using System.Reflection;
 using Excel;
-using NMoneys.Tools.Support;
 
 namespace NMoneys.Tools
 {
@@ -61,23 +59,6 @@ namespace NMoneys.Tools
 					WL(diff);
 				}
 			}
-			/*Dictionary<short, int> scrapped = scrappedCurrencies
-				.Where(c => c.NumberOfDecimals.HasValue)
-				.ToDictionary(c => c.NumericCode, c => c.NumberOfDecimals.GetValueOrDefault());
-			Func<short, int?> tryGet = code =>
-			                          	{
-			                          		int i;
-			                          		bool parsed = scrapped.TryGetValue(code, out i);
-			                          		return parsed ? i : (default(int?));
-			                          	};
-			var discrepancies = allCurrencies
-				.Where(c => c.SignificantDecimalDigits != tryGet(c.NumericCode))
-				.Select(c => new{Code = c.IsoCode, NMoneys = c.SignificantDecimalDigits, Scrapped = tryGet(c.NumericCode)});
-
-			foreach (var discrepancy in discrepancies)
-			{
-				WL("{0}: {1} (NMoneys) / {2} (Web)", discrepancy.Code, discrepancy.NMoneys, discrepancy.Scrapped);
-			}*/
 		}
 	}
 
