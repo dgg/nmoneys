@@ -22,5 +22,6 @@
 	<files>
 		<file src="lib\**\NMoneys.Exchange.dll" target="lib" />
 		<file src="lib\**\NMoneys.Exchange.XML" target="lib" />
+		<file src="lib\**\NMoneys_Exchange.chm" target="lib" />
 	</files>
 </package>

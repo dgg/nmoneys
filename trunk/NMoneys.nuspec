@@ -19,5 +19,6 @@
 	<files>
 		<file src="lib\**\NMoneys.dll" target="lib" />
 		<file src="lib\**\NMoneys.XML" target="lib" />
+		<file src="lib\**\NMoneys.chm" target="lib" />
 	</files>
 </package>
