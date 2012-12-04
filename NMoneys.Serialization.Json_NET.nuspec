@@ -23,5 +23,6 @@
 	<files>
 		<file src="lib\**\NMoneys.Serialization.Json_NET.dll" target="lib" />
 		<file src="lib\**\NMoneys.Serialization.Json_NET.XML" target="lib" />
+		<file src="lib\**\NMoneys_Serialization.chm" target="lib" />
 	</files>
 </package>
