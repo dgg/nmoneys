@@ -25,7 +25,8 @@
 		<nuGetReleasePath>$(releasePath)nuget\</nuGetReleasePath>
 		<nuGetReleaseLib>$(nuGetReleasePath)lib\Net20-client</nuGetReleaseLib>
 		<immmDocNetPath>tools\ImmDoc.Net\</immmDocNetPath>	
-</PropertyGroup>
+	</PropertyGroup>
+
 	<ItemGroup Label="testDeployables">
 		<testResults Include="TestResult.xml;*.htm" />
 		<assemblyFile Include="$(MSBuildProjectDirectory)\$(projectPath)bin\$(Configuration)\NMoneys.dll" />
@@ -38,15 +39,18 @@
 		<jsonNet_pdbFile Include="$(MSBuildProjectDirectory)\$(jsonNet_projectPath)bin\$(Configuration)\NMoneys.Serialization.Json_NET.pdb" />
 		<jsonNet_docFile Include="$(MSBuildProjectDirectory)\$(jsonNet_projectPath)bin\$(Configuration)\NMoneys.Serialization.Json_NET.XML" />
 	</ItemGroup>
+	
 	<Target Name="compile">
 		<MSBuild Projects="$(solutionFile)" Properties="configuration=$(Configuration)" />
 	</Target>
+	
 	<Target Name="runTests" DependsOnTargets="compile">
-		<!--Exec Command="$(nunitPath)nunit-console.exe $(testProjectPath)bin\$(Configuration)\$(testAssemblyFile) $(exchange_testProjectPath)bin\$(Configuration)\$(exchange_testAssemblyFile) $(serialization_testProjectPath)bin\$(Configuration)\$(serialization_testAssemblyFile)"
+		<Exec Command="$(nunitPath)nunit-console.exe $(testProjectPath)bin\$(Configuration)\$(testAssemblyFile) $(exchange_testProjectPath)bin\$(Configuration)\$(exchange_testAssemblyFile) $(serialization_testProjectPath)bin\$(Configuration)\$(serialization_testAssemblyFile)"
 			  />
 		<Exec Command="$(nunitSummaryPath)nunit-summary.exe -html -o=TestSummary.htm " />
-		<Exec Command="$(nunitSummaryPath)nunit-summary.exe -xsl=$(nunitSummaryPath)AlternativeNUnitDetails.xsl -o=TestDetails.htm " /-->
+		<Exec Command="$(nunitSummaryPath)nunit-summary.exe -xsl=$(nunitSummaryPath)AlternativeNUnitDetails.xsl -o=TestDetails.htm " />
 	</Target>
+	
 	<Target Name="artifactCopy" DependsOnTargets="runTests">
 		<RemoveDir Directories="$(releasePath)" />
 		
@@ -64,31 +68,32 @@
 		<Copy Condition="'$(Configuration)'=='Release'" SourceFiles="@(jsonNet_docFile)" DestinationFolder="$(releasePath)" />
 		<Copy Condition="'$(Configuration)'=='Debug'" SourceFiles="@(jsonNet_pdbFile)" DestinationFolder="$(releasePath)" />
 	</Target>
+	
 	<Target Name="document" DependsOnTargets="artifactCopy">
-		<Exec Condition="'$(Configuration)'=='Release'" Command="$(immmDocNetPath)ImmDocNet.exe -fd -pn:NMoneys -od:$(releasePath)doc\NMoneys -cn:$(releasePath)doc\NMoneys.chm -cp:$(immmDocNetPath) $(releasePath)NMoneys.XML $(releasePath)NMoneys.dll" />
-		<Exec Condition="'$(Configuration)'=='Release'" Command="$(immmDocNetPath)ImmDocNet.exe -fd -pn:NMoneys.Exchange -od:$(releasePath)doc\NMoneys_Exchange -cn:$(releasePath)doc\NMoneys_Exchange.chm -cp:$(immmDocNetPath) $(releasePath)NMoneys.Exchange.XML $(releasePath)NMoneys.Exchange.dll" />
-		<Exec Condition="'$(Configuration)'=='Release'" Command="$(immmDocNetPath)ImmDocNet.exe -fd -pn:NMoneys.Serialization -od:$(releasePath)doc\NMoneys_Serialization -cn:$(releasePath)doc\NMoneys_Serialization.chm -cp:$(immmDocNetPath) $(releasePath)NMoneys.Serialization.Json_NET.XML $(releasePath)NMoneys.Serialization.Json_NET.dll" />
+		<Exec Condition="'$(Configuration)'=='Release'" Command="$(immmDocNetPath)ImmDocNet.exe -vl:1 -fd -pn:NMoneys -od:$(releasePath)doc\NMoneys -cn:$(releasePath)doc\NMoneys.chm -cp:$(immmDocNetPath) $(releasePath)NMoneys.XML $(releasePath)NMoneys.dll" />
+		<Exec Condition="'$(Configuration)'=='Release'" Command="$(immmDocNetPath)ImmDocNet.exe -vl:1 -fd -pn:NMoneys.Exchange -od:$(releasePath)doc\NMoneys_Exchange -cn:$(releasePath)doc\NMoneys_Exchange.chm -cp:$(immmDocNetPath) $(releasePath)NMoneys.Exchange.XML $(releasePath)NMoneys.Exchange.dll" />
+		<Exec Condition="'$(Configuration)'=='Release'" Command="$(immmDocNetPath)ImmDocNet.exe -vl:1 -fd -pn:NMoneys.Serialization -od:$(releasePath)doc\NMoneys_Serialization -cn:$(releasePath)doc\NMoneys_Serialization.chm -cp:$(immmDocNetPath) $(releasePath)NMoneys.Serialization.Json_NET.XML $(releasePath)NMoneys.Serialization.Json_NET.dll" />
 	</Target>
+	
 	<Target Name="pack" DependsOnTargets="document">
 		<Copy SourceFiles="@(assemblyFile)" DestinationFolder="$(nuGetReleaseLib)" />
 		<Copy Condition="'$(Configuration)'=='Release'" SourceFiles="@(docFile)" DestinationFolder="$(nuGetReleaseLib)" />
 		<Copy Condition="'$(Configuration)'=='Release'" SourceFiles="$(releasePath)doc\NMoneys.chm" DestinationFolder="$(nuGetReleaseLib)" />
 		<Copy SourceFiles="$(nuGetManifest)" DestinationFolder="$(nuGetReleasePath)" />
 		<Exec Condition="'$(Configuration)'=='Release'" Command="$(nuGetPath)nuget.exe pack $(nuGetReleasePath)$(nuGetManifest) /o $(nuGetReleasePath)" />		
-		
-		
+				
 		<Copy SourceFiles="@(exchange_assemblyFile)" DestinationFolder="$(nuGetReleaseLib)" />
 		<Copy Condition="'$(Configuration)'=='Release'" SourceFiles="@(exchange_docFile)" DestinationFolder="$(nuGetReleaseLib)" />
 		<Copy Condition="'$(Configuration)'=='Release'" SourceFiles="$(releasePath)doc\NMoneys_Exchange.chm" DestinationFolder="$(nuGetReleaseLib)" />
 		<Copy SourceFiles="$(exchange_nuGetManifest)" DestinationFolder="$(nuGetReleasePath)" />
 		<Exec Condition="'$(Configuration)'=='Release'" Command="$(nuGetPath)nuget.exe pack $(nuGetReleasePath)$(exchange_nuGetManifest) /o $(nuGetReleasePath)" />
-		
-		
+				
 		<Copy SourceFiles="@(jsonNet_assemblyFile)" DestinationFolder="$(nuGetReleaseLib)" />
 		<Copy Condition="'$(Configuration)'=='Release'" SourceFiles="@(jsonNet_docFile)" DestinationFolder="$(nuGetReleaseLib)" />
 		<Copy Condition="'$(Configuration)'=='Release'" SourceFiles="$(releasePath)doc\NMoneys_Serialization.chm" DestinationFolder="$(nuGetReleaseLib)" />
 		<Copy SourceFiles="$(jsonNet_nuGetManifest)" DestinationFolder="$(nuGetReleasePath)" />
 		<Exec Condition="'$(Configuration)'=='Release'" Command="$(nuGetPath)nuget.exe pack  $(nuGetReleasePath)$(jsonNet_nuGetManifest) /o $(nuGetReleasePath)" />
 	</Target>
+	
 	<Target Name="build" DependsOnTargets="pack" />
 </Project> 
