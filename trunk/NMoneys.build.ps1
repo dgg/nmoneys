@@ -4,7 +4,7 @@ properties {
   $release_dir = "$base_dir\release"
 }
 
-task default -depends CopyArtifacts
+task default -depends Document
 
 task Clean {
 	Exec { msbuild "NMoneys.sln" /t:clean /p:configuration=$configuration /m }
@@ -48,12 +48,13 @@ task CopyArtifacts -depends runTests {
 
 task Document -depends CopyArtifacts {
 	if ($configuration -eq 'Release') {
-		
-		
+		$immDocNet_dir = "$base_dir\tools\ImmDoc.NET"
+		$immDocNet = "$immDocNet_dir\immDocNet.exe"
+	
+		build_document "NMoneys" "NMoneys"
+		build_document "NMoneys.Exchange" "NMoneys.Exchange"
+		build_document "NMoneys.Serialization" "NMoneys.Serialization.Json_NET"
 	}
-	<Exec Condition="'$(Configuration)'=='Release'" Command="$(immmDocNetPath)ImmDocNet.exe -vl:1 -fd -pn:NMoneys -od:$(releasePath)doc\NMoneys -cn:$(releasePath)doc\NMoneys.chm -cp:$(immmDocNetPath) $(releasePath)NMoneys.XML $(releasePath)NMoneys.dll" />
-		<Exec Condition="'$(Configuration)'=='Release'" Command="$(immmDocNetPath)ImmDocNet.exe -vl:1 -fd -pn:NMoneys.Exchange -od:$(releasePath)doc\NMoneys_Exchange -cn:$(releasePath)doc\NMoneys_Exchange.chm -cp:$(immmDocNetPath) $(releasePath)NMoneys.Exchange.XML $(releasePath)NMoneys.Exchange.dll" />
-		<Exec Condition="'$(Configuration)'=='Release'" Command="$(immmDocNetPath)ImmDocNet.exe -vl:1 -fd -pn:NMoneys.Serialization -od:$(releasePath)doc\NMoneys_Serialization -cn:$(releasePath)doc\NMoneys_Serialization.chm -cp:$(immmDocNetPath) $(releasePath)NMoneys.Serialization.Json_NET.XML $(releasePath)NMoneys.Serialization.Json_NET.dll" />
 }
 
 task ? -Description "Helper to display task info" {
@@ -74,4 +75,13 @@ function global:deploy ($source,$extension)
 {
   $file = release_file $source $extension
   Copy-Item -Path $file -Destination $release_dir
+}
+
+function global:build_document ($title,$source)
+{
+	$immDocNet_dir = "$base_dir\tools\ImmDoc.NET"
+	$immDocNet = "$immDocNet_dir\immDocNet.exe"
+	$name = $title.Replace(".", "_")
+	
+	exec { & $immDocNet "-vl:1" "-fd" "-pn:$title" "-od:$release_dir\doc\$name" "-cn:$release_dir\doc\$name.chm" "-cp:$immDocNet_dir" "$release_dir\$source.XML" "$release_dir\$source.dll" }
 }
