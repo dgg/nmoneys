@@ -8,12 +8,12 @@ In theory, it should run in every platform that supports the .Net Framework as i
 
 = Build sources =
 
-Building the library is as simple as getting the latest source code from the trunk of the repository and from a command prompt that contains .Net framework _MsBuild.exe_ in the path, invoke:
+Building the library is as simple as getting the latest source code from the trunk of the repository and from a powershell prompt that contains .Net framework _MsBuild.exe_ in the path, invoke:
 {{{
-msbuild path_to_source_code\NMoneys.build
+path_to_source_code\build.ps1
 }}}
 and the built binary and XML documentation can be copied from
-`path_to_source_code\build` into the folder that contains dependencies for your solution.
+`path_to_source_code\release` into the folder that contains dependencies for your solution.
 
 = Get the binaries =
 Latest binaries can be downloaded from the [http://code.google.com/p/nmoneys/downloads/list Downloads] section within the project's website.
