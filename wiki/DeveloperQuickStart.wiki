@@ -21,10 +21,6 @@ For [http://nuget.org/ NuGet] users, the [http://nuget.org/List/Packages/NMoneys
 
 [http://nmoneys.googlecode.com/svn/wiki/NMoneys_NuGet.png]
 
-For .NET developers that make use of Ruby tools, they can also get a [https://rubygems.org/gems/nmoneys NMoneys gem] from RubyGems.org
-
-[http://nmoneys.googlecode.com/svn/wiki/NMoneys_Gem.png]
-
 = Use the Library =
 
 == Currencies ==
