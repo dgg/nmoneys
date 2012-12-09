@@ -74,7 +74,7 @@ namespace NMoneys.Tests
 		[Test]
 		public void TruncateToSignificantDecimalDigits_CurrencyWith2Decimals_AmountHas2Decimals()
 		{
-			var subject = new Money(twoThirds, CurrencyIsoCode.XXX);
+			var subject = new Money(2m /3, CurrencyIsoCode.XXX);
 
 			Assert.That(subject.Amount, Is.Not.EqualTo(0.66m), "has more decimals");
 			Assert.That(subject.TruncateToSignificantDecimalDigits().Amount, Is.EqualTo(0.66m));
@@ -83,7 +83,7 @@ namespace NMoneys.Tests
 		[Test]
 		public void TruncateToSignificantDecimalDigits_CultureWithSameCurrency_CultureApplied()
 		{
-			var subject = new Money(twoThirds, CurrencyIsoCode.EUR);
+			var subject = new Money(2m /3, CurrencyIsoCode.EUR);
 			NumberFormatInfo spanishFormatting = CultureInfo.GetCultureInfo("es-ES").NumberFormat;
 
 			Assert.That(subject.Amount, Is.Not.EqualTo(0.66m),
@@ -95,7 +95,7 @@ namespace NMoneys.Tests
 		[Test]
 		public void TruncateToSignificantDecimalDigits_CultureWithDifferentCurrency_CultureApplied()
 		{
-			var subject = new Money(twoThirds, CurrencyIsoCode.GBP);
+			var subject = new Money(2m /3, CurrencyIsoCode.GBP);
 			NumberFormatInfo spanishFormatting = CultureInfo.GetCultureInfo("es-ES").NumberFormat;
 
 			Assert.That(subject.Amount, Is.Not.EqualTo(0.66m),
@@ -147,7 +147,7 @@ namespace NMoneys.Tests
 #pragma warning disable 169
 		private static readonly TestCaseData[] roundToNearestInt = new[]
 		{
-			new TestCaseData(twoThirds, 1m),
+			new TestCaseData(2m /3, 1m),
 			new TestCaseData(0.5m, 0m).SetName("the closest even number is 0"),
 			new TestCaseData(1.5m, 2m).SetName("the closest even number is 2"),
 			new TestCaseData(1.499999m, 1m).SetName("the closest number is 1")
@@ -168,8 +168,8 @@ namespace NMoneys.Tests
 #pragma warning disable 169
 		private static readonly TestCaseData[] roundToNearestInt_WithMode = new[]
 		{
-			new TestCaseData(twoThirds, MidpointRounding.ToEven, 1m),
-			new TestCaseData(twoThirds, MidpointRounding.AwayFromZero, 1m),
+			new TestCaseData(2m /3, MidpointRounding.ToEven, 1m),
+			new TestCaseData(2m /3, MidpointRounding.AwayFromZero, 1m),
 			new TestCaseData(0.5m, MidpointRounding.ToEven, 0m).SetName("the closest even number is 0"),
 			new TestCaseData(0.5m, MidpointRounding.AwayFromZero, 1m).SetName("the closest number away from zero is 1"),
 			new TestCaseData(1.5m, MidpointRounding.ToEven, 2m).SetName("the closest number is 2"),
@@ -193,19 +193,19 @@ namespace NMoneys.Tests
 #pragma warning disable 169
 		private static readonly TestCaseData[] round = new[]
 		{
-			new TestCaseData(CurrencyIsoCode.XTS, 2.345m, 2.34m).SetName("2 decimal places"),
+			/*new TestCaseData(CurrencyIsoCode.XTS, 2.345m, 2.34m).SetName("2 decimal places"),
 			new TestCaseData(CurrencyIsoCode.USD, 2.345m, 2.34m).SetName("2 decimal places"),
 			new TestCaseData(CurrencyIsoCode.JPY, 2.345m, 2m).SetName("0 decimal places"),
 			
 			new TestCaseData(CurrencyIsoCode.XTS, 2.355m, 2.36m).SetName("2 decimal places"),
 			new TestCaseData(CurrencyIsoCode.USD, 2.355m, 2.36m).SetName("2 decimal places"),
-			new TestCaseData(CurrencyIsoCode.JPY, 2.355m, 2m).SetName("0 decimal places"),
+			new TestCaseData(CurrencyIsoCode.JPY, 2.355m, 2m).SetName("0 decimal places"),*/
 			
-			new TestCaseData(CurrencyIsoCode.XTS, twoThirds, 0.67m).SetName("2 decimal places"),
-			new TestCaseData(CurrencyIsoCode.USD, twoThirds, 0.67m).SetName("2 decimal places"),
-			new TestCaseData(CurrencyIsoCode.JPY, twoThirds, 1m).SetName("0 decimal places"),
+			new TestCaseData(CurrencyIsoCode.XTS, 2m /3, 0.67m).SetName("2 decimal places"),
+			new TestCaseData(CurrencyIsoCode.USD, 2m / 3, 0.67m).SetName("2 decimal places"),
+			new TestCaseData(CurrencyIsoCode.JPY, 2m / 3, 1m).SetName("0 decimal places"),
 			
-			new TestCaseData(CurrencyIsoCode.XTS, 0.5m, 0.50m).SetName("2 decimal places"),
+			/*new TestCaseData(CurrencyIsoCode.XTS, 0.5m, 0.50m).SetName("2 decimal places"),
 			new TestCaseData(CurrencyIsoCode.USD, 0.5m, 0.50m).SetName("2 decimal places"),
 			new TestCaseData(CurrencyIsoCode.JPY, 0.5m, 0m).SetName("0 decimal places"),
 			
@@ -215,7 +215,7 @@ namespace NMoneys.Tests
 			
 			new TestCaseData(CurrencyIsoCode.XTS, 1.499999m, 1.50m).SetName("2 decimal places"),
 			new TestCaseData(CurrencyIsoCode.USD, 1.499999m, 1.50m).SetName("2 decimal places"),
-			new TestCaseData(CurrencyIsoCode.JPY, 1.499999m, 1m).SetName("0 decimal places"),
+			new TestCaseData(CurrencyIsoCode.JPY, 1.499999m, 1m).SetName("0 decimal places"),*/
 		};
 #pragma warning restore 169
 
@@ -247,12 +247,12 @@ namespace NMoneys.Tests
 		    new object[] {CurrencyIsoCode.JPY, MidpointRounding.ToEven, 2.355m, 2m},
 		    new object[] {CurrencyIsoCode.JPY, MidpointRounding.AwayFromZero, 2.355m, 2m},
 
-		    new object[] {CurrencyIsoCode.XTS, MidpointRounding.ToEven, twoThirds, 0.67m},	
-		    new object[] {CurrencyIsoCode.XTS, MidpointRounding.AwayFromZero, twoThirds, 0.67m},	
-		    new object[] {CurrencyIsoCode.USD, MidpointRounding.ToEven, twoThirds, 0.67m},	
-		    new object[] {CurrencyIsoCode.USD, MidpointRounding.AwayFromZero, twoThirds, 0.67m},	
-		    new object[] {CurrencyIsoCode.JPY, MidpointRounding.ToEven, twoThirds, 1m},		
-		    new object[] {CurrencyIsoCode.JPY, MidpointRounding.AwayFromZero, twoThirds, 1m},		
+		    new object[] {CurrencyIsoCode.XTS, MidpointRounding.ToEven, 2m /3, 0.67m},	
+		    new object[] {CurrencyIsoCode.XTS, MidpointRounding.AwayFromZero, 2m /3, 0.67m},	
+		    new object[] {CurrencyIsoCode.USD, MidpointRounding.ToEven, 2m /3, 0.67m},	
+		    new object[] {CurrencyIsoCode.USD, MidpointRounding.AwayFromZero, 2m /3, 0.67m},	
+		    new object[] {CurrencyIsoCode.JPY, MidpointRounding.ToEven, 2m /3, 1m},		
+		    new object[] {CurrencyIsoCode.JPY, MidpointRounding.AwayFromZero, 2m /3, 1m},		
 
 		    new object[] {CurrencyIsoCode.XTS, MidpointRounding.ToEven, 0.5m, 0.50m},		
 		    new object[] {CurrencyIsoCode.XTS, MidpointRounding.AwayFromZero, 0.5m, 0.50m},		
@@ -299,9 +299,9 @@ namespace NMoneys.Tests
 		    new object[] {4, 2.355m, 2.355m},
 		    new object[] {0, 2.355m, 2m},
 
-		    new object[] {2, twoThirds, 0.67m},
-		    new object[] {3, twoThirds, 0.667m},
-		    new object[] {0, twoThirds, 1m},
+		    new object[] {2, 2m /3, 0.67m},
+		    new object[] {3, 2m /3, 0.667m},
+		    new object[] {0, 2m /3, 1m},
 
 		    new object[] {2, 0.5m, 0.50m},
 		    new object[] {3, 0.5m, 0.5m},
@@ -345,12 +345,12 @@ namespace NMoneys.Tests
 		    new object[] {0, MidpointRounding.ToEven, 2.355m, 2m},
 		    new object[] {0, MidpointRounding.AwayFromZero, 2.355m, 2m},
 
-		    new object[] {2, MidpointRounding.ToEven, twoThirds, 0.67m},	
-		    new object[] {2, MidpointRounding.AwayFromZero, twoThirds, 0.67m},	
-		    new object[] {3, MidpointRounding.ToEven, twoThirds, 0.667m},	
-		    new object[] {3, MidpointRounding.AwayFromZero, twoThirds, 0.667m},	
-		    new object[] {0, MidpointRounding.ToEven, twoThirds, 1m},		
-		    new object[] {0, MidpointRounding.AwayFromZero, twoThirds, 1m},		
+		    new object[] {2, MidpointRounding.ToEven, 2m /3, 0.67m},	
+		    new object[] {2, MidpointRounding.AwayFromZero, 2m /3, 0.67m},	
+		    new object[] {3, MidpointRounding.ToEven, 2m /3, 0.667m},	
+		    new object[] {3, MidpointRounding.AwayFromZero, 2m /3, 0.667m},	
+		    new object[] {0, MidpointRounding.ToEven, 2m /3, 1m},		
+		    new object[] {0, MidpointRounding.AwayFromZero, 2m /3, 1m},		
 
 		    new object[] {2, MidpointRounding.ToEven, 0.5m, 0.50m},		
 		    new object[] {2, MidpointRounding.AwayFromZero, 0.5m, 0.50m},		

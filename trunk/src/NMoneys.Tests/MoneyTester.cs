@@ -17,8 +17,6 @@ namespace NMoneys.Tests
 			nought = new Money(0, CurrencyIsoCode.GBP),
 			oweMeQuid = new Money(-1, Currency.Gbp);
 
-		private static readonly decimal twoThirds = 2m / 3;
-
 		#region Ctor
 
 		[Test]
