@@ -26,7 +26,7 @@ task RunTests -depends Compile {
 	$exchange_tests = test_assembly "NMoneys.Exchange"
 	$serialization_tests = test_assembly "NMoneys.Serialization"
 	$nunit_result = "$release_dir\TestResult.xml"
-	#exec { & $nunit_console $tests $exchange_tests $serialization_tests "/nodots" "/result=$nunit_result" }
+	exec { & $nunit_console $tests $exchange_tests $serialization_tests "/nodots" "/result=$nunit_result" }
 	
 	$summary_dir = "$base_dir\tools\NUnitSummary"
 	$summary = "$summary_dir\nunit-summary.exe"
