@@ -15,9 +15,7 @@ For [http://nuget.org/ NuGet] users, the [http://nuget.org/List/Packages/NMoneys
 
 http://nmoneys.googlecode.com/svn/wiki/NMoneysExchange_NuGet.png
 
-For .NET developers that make use of Ruby tools, they can also get a [https://rubygems.org/gems/nmoneys-exchange nmoneys-exchange gem] from RubyGems.org
-
-http://nmoneys.googlecode.com/svn/wiki/NMoneysExchange_Gem.png
+For .NET developers that make use of Ruby tools, you are out of luck; the gem will no longer be updated.
 
 = Use the Library =
 
