@@ -2,14 +2,18 @@ properties {
   $configuration = 'Release'
   $base_dir  = resolve-path .
   $release_dir = "$base_dir\release"
+  $release_nuget = "$release_dir\nuget"
+  $release_nuget_lib = "$release_nuget\lib\Net20-client"
 }
 
-task default -depends Document
+task default -depends Pack
 
 task Clean {
 	Exec { msbuild "NMoneys.sln" /t:clean /p:configuration=$configuration /m }
 	Remove-Item $release_dir -Recurse -Force -ErrorAction SilentlyContinue | out-null
 	New-Item -ItemType directory -Path $release_dir | out-null
+	New-Item -ItemType directory -Path $release_nuget | out-null
+	New-Item -ItemType directory -Path $release_nuget_lib | out-null
 }
 
 task Compile -depends Clean { 
@@ -22,7 +26,7 @@ task RunTests -depends Compile {
 	$exchange_tests = test_assembly "NMoneys.Exchange"
 	$serialization_tests = test_assembly "NMoneys.Serialization"
 	$nunit_result = "$release_dir\TestResult.xml"
-	exec { & $nunit_console $tests $exchange_tests $serialization_tests "/nodots" "/result=$nunit_result" }
+	#exec { & $nunit_console $tests $exchange_tests $serialization_tests "/nodots" "/result=$nunit_result" }
 	
 	$summary_dir = "$base_dir\tools\NUnitSummary"
 	$summary = "$summary_dir\nunit-summary.exe"
@@ -57,6 +61,14 @@ task Document -depends CopyArtifacts {
 	}
 }
 
+task Pack -depends Document {
+	$nuget_path = "$release_dir\nuget"
+	
+	build_package "NMoneys"
+	build_package "NMoneys.Exchange"
+	build_package "NMoneys.Serialization.Json_NET" "NMoneys_Serialization"
+}
+
 task ? -Description "Helper to display task info" {
 	Write-Documentation
 }
@@ -71,10 +83,10 @@ function global:release_file ($source,$extension)
   "$base_dir\src\$source\bin\$configuration\$source.$extension"
 }
 
-function global:deploy ($source,$extension)
+function global:deploy ($source,$extension,$destination = $release_dir)
 {
   $file = release_file $source $extension
-  Copy-Item -Path $file -Destination $release_dir
+  Copy-Item -Path $file -Destination $destination
 }
 
 function global:build_document ($title,$source)
@@ -84,4 +96,17 @@ function global:build_document ($title,$source)
 	$name = $title.Replace(".", "_")
 	
 	exec { & $immDocNet "-vl:1" "-fd" "-pn:$title" "-od:$release_dir\doc\$name" "-cn:$release_dir\doc\$name.chm" "-cp:$immDocNet_dir" "$release_dir\$source.XML" "$release_dir\$source.dll" }
+}
+
+function global:build_package($source,$doc_name = $source.Replace(".", "_"))
+{
+	deploy $source "dll" $release_nuget_lib
+	if ($configuration -eq 'Release') {
+		deploy $source "XML" $release_nuget_lib
+		Copy-Item -Path $release_dir\doc\$doc_name.chm -Destination $release_nuget_lib
+	}
+	Copy-Item -Path $base_dir\$source.nuspec -Destination $release_nuget
+	
+	$nuget = "$base_dir\tools\NuGet\nuget.exe"
+	exec { & $nuget "pack" "$release_nuget\$source.nuspec" "/o" "$release_nuget" }
 }
