@@ -21,6 +21,8 @@ For [http://nuget.org/ NuGet] users, the [http://nuget.org/List/Packages/NMoneys
 
 [http://nmoneys.googlecode.com/svn/wiki/NMoneys_NuGet.png]
 
+For .NET developers that make use of Ruby tools, you are out of luck; the gem will no longer be updated.
+
 = Use the Library =
 
 == Currencies ==
