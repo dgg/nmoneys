@@ -1669,7 +1669,7 @@
 		<englishName>Uganda Shilling</englishName>
 		<nativeName>Uganda Shilling</nativeName>
 		<symbol>85 83 104</symbol>
-		<significantDecimalDigits>2</significantDecimalDigits>
+		<significantDecimalDigits>0</significantDecimalDigits>
 		<decimalSeparator>.</decimalSeparator>
 		<groupSeparator>,</groupSeparator>
 		<groupSizes>3</groupSizes>
@@ -1844,8 +1844,8 @@
 		<entity>curren</entity>
 	</currency>
 	<currency code="XBC">
-		<englishName>European Unit of Account 9(E.U.A.-9)</englishName>
-		<nativeName>European Unit of Account 9(E.U.A.-9)</nativeName>
+		<englishName>European Unit of Account 9 (E.U.A.-9)</englishName>
+		<nativeName>European Unit of Account 9 (E.U.A.-9)</nativeName>
 		<symbol>164</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>.</decimalSeparator>
@@ -1856,8 +1856,8 @@
 		<entity>curren</entity>
 	</currency>
 	<currency code="XBD">
-		<englishName>European Unit of Account 17(E.U.A.-17)</englishName>
-		<nativeName>European Unit of Account 17(E.U.A.-17)</nativeName>
+		<englishName>European Unit of Account 17 (E.U.A.-17)</englishName>
+		<nativeName>European Unit of Account 17 (E.U.A.-17)</nativeName>
 		<symbol>164</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>.</decimalSeparator>
