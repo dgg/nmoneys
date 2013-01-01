@@ -14,10 +14,10 @@ namespace NMoneys.Tests
 			Assert.That(new Money(3.757m), Must.Be.BinarySerializable<Money>(m => Is.EqualTo(m)));
 		}
 
-		[Test]
-		public void BinarySerialization_ObsoleteCurrency_RaisesEvent()
+		[Test, TestCaseSource(typeof(Obsolete), "ThreeLetterIsoCodes")]
+		public void BinarySerialization_ObsoleteCurrency_RaisesEvent(string threeLetterIsoCode)
 		{
-			var obsolete = new Money(2m, "EEK");
+			var obsolete = new Money(2m, threeLetterIsoCode);
 			using (var serializer = new OneGoBinarySerializer<Money>())
 			{
 				serializer.Serialize(obsolete);
@@ -39,10 +39,10 @@ namespace NMoneys.Tests
 			Assert.That(serializedMoney, Must.Be.DataContractJsonDeserializableInto(new Money(3.757m)));
 		}
 
-		[Test]
-		public void DataContractJsonSerialization_ObsoleteCurrency_RaisesEvent()
+		[Test, TestCaseSource(typeof(Obsolete), "ThreeLetterIsoCodes")]
+		public void DataContractJsonSerialization_ObsoleteCurrency_RaisesEvent(string threeLetterIsoCode)
 		{
-			var obsolete = new Money(2m, "EEK");
+			var obsolete = new Money(2m, threeLetterIsoCode);
 			using (var serializer = new OneGoDataContractJsonSerializer<Money>())
 			{
 				serializer.Serialize(obsolete);

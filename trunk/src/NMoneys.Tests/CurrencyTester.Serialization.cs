@@ -14,12 +14,12 @@ namespace NMoneys.Tests
 			Assert.That(Currency.Dollar, Must.Be.BinarySerializable<Currency>(Is.EqualTo));
 		}
 
-		[Test]
-		public void BinaryDeserialization_OfObsoleteCurrency_RaisesEvent()
+		[Test, TestCaseSource(typeof(Obsolete), "ThreeLetterIsoCodes")]
+		public void BinaryDeserialization_OfObsoleteCurrency_RaisesEvent(string threeLetterIsoCode)
 		{
 			using (var serializer = new OneGoBinarySerializer<Currency>())
 			{
-				var obsolete = Currency.Get("EEK");
+				var obsolete = Currency.Get(threeLetterIsoCode);
 				serializer.Serialize(obsolete);
 				Action deserializeObsolete = () => serializer.Deserialize();
 				Assert.That(deserializeObsolete, Must.RaiseObsoleteEvent.Once());
@@ -50,12 +50,12 @@ namespace NMoneys.Tests
 			Assert.That(serializedDollar, Must.Be.DataContractJsonDeserializableInto(Currency.Dollar));
 		}
 
-		[Test]
-		public void DataContractJsonDeserialization_OfObsoleteCurrency_RaisesEvent()
+		[Test, TestCaseSource(typeof(Obsolete), "ThreeLetterIsoCodes")]
+		public void DataContractJsonDeserialization_OfObsoleteCurrency_RaisesEvent(string threeLetterIsoCode)
 		{
 			using (var serializer = new OneGoDataContractJsonSerializer<Currency>())
 			{
-				var obsolete = Currency.Get("EEK");
+				var obsolete = Currency.Get(threeLetterIsoCode);
 				serializer.Serialize(obsolete);
 				Action deserializeObsolete = () => serializer.Deserialize();
 				Assert.That(deserializeObsolete, Must.RaiseObsoleteEvent.Once());

@@ -43,10 +43,10 @@ namespace NMoneys.Tests
 			Assert.That(tenDollars.CurrencyCode, Is.EqualTo(CurrencyIsoCode.USD));
 		}
 
-		[Test]
-		public void Ctor_ObsoleteIsoCode_EventRaised()
+		[Test, TestCaseSource(typeof(Obsolete), "ThreeLetterIsoCodes")]
+		public void Ctor_ObsoleteIsoCode_EventRaised(string threeLetterIsoCode)
 		{
-			CurrencyIsoCode obsolete = Enumeration.Parse<CurrencyIsoCode>("EEK");
+			var obsolete = Enumeration.Parse<CurrencyIsoCode>(threeLetterIsoCode);
 			Action moneyWithObsoleteCurrency = () => new Money(10, obsolete);
 			Assert.That(moneyWithObsoleteCurrency, Must.RaiseObsoleteEvent.Once());
 		}
@@ -59,10 +59,10 @@ namespace NMoneys.Tests
 			Assert.That(hundredLerus.CurrencyCode, Is.EqualTo(CurrencyIsoCode.EUR));
 		}
 
-		[Test]
-		public void Ctor_ObsoleteIsoSymbol_EventRaised()
+		[Test, TestCaseSource(typeof(Obsolete), "ThreeLetterIsoCodes")]
+		public void Ctor_ObsoleteIsoSymbol_EventRaised(string threeLetterIsoCode)
 		{
-			Action moneyWithObsoleteCurrency = () => new Money(10, "EEK");
+			Action moneyWithObsoleteCurrency = () => new Money(10, threeLetterIsoCode);
 			Assert.That(moneyWithObsoleteCurrency, Must.RaiseObsoleteEvent.Once());
 		}
 
@@ -72,10 +72,10 @@ namespace NMoneys.Tests
 			Assert.That(() => new Money(decimal.Zero, (string)null), Throws.InstanceOf<ArgumentNullException>());
 		}
 
-		[Test]
-		public void Ctor_ObsoleteCurrency_EventRaised()
+		[Test, TestCaseSource(typeof(Obsolete), "ThreeLetterIsoCodes")]
+		public void Ctor_ObsoleteCurrency_EventRaised(string threeLetterIsoCode)
 		{
-			Currency obsolete = Currency.Get("EEK");
+			Currency obsolete = Currency.Get(threeLetterIsoCode);
 			Action moneyWithObsoleteCurrency = () => new Money(10, obsolete);
 			Assert.That(moneyWithObsoleteCurrency, Must.RaiseObsoleteEvent.Once());
 		}

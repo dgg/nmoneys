@@ -14,7 +14,8 @@ namespace NMoneys
 #pragma warning disable 612,618
 			_set = new HashSet<CurrencyIsoCode>(FastEnumComparer<CurrencyIsoCode>.Instance)
 			{
-				CurrencyIsoCode.EEK
+				CurrencyIsoCode.EEK,
+				CurrencyIsoCode.ZMK
 			};
 #pragma warning restore 612,618
 		}

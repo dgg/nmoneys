@@ -915,8 +915,13 @@ namespace NMoneys
 		/// <summary>
 		/// Zambian Kwacha
 		/// </summary>
-		[EnumMember]
+		[EnumMember, Obsolete("deprecated")]
 		ZMK = 894,
+		/// <summary>
+		/// Zambian Kwacha
+		/// </summary>
+		[EnumMember]
+		ZMV = 967,
 		/// <summary>
 		/// Zimbabwe Dollar
 		/// </summary>
