@@ -1,6 +1,16 @@
 #summary Summary of changes.
 #labels Phase-Support
 
+= 3.1.0.0 =
+2013/01/01 @revision 241
+   * Applied rest of changes from ISO4217 amendment 154: `ZMK` is deprecated, and `ZMV` has been added
+   * Changed number of decimals for `UGX` as per ISO website
+   * Changed misspelled denominations of `XBC` and `XBD`
+   * Added _.chm_ documentation to _NMoneys_, _NMoneys.Exchange_ and _NMoneys.Serialization.Json_NET_
+   * Upgraded dependency of _NMoneys.Serialization.Json_NET_ to latest _Json.NET_
+   * Upgraded version of _NuGet_
+   * Build migrated to _psake_ instead of _MSBuild_
+
 = 3.0.0.0 =
 2012/08/02 @revision 215
    * _NMoneys_ version bump due to client profile targeting and some breaking changes
