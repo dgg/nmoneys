@@ -14,12 +14,11 @@ namespace NMoneys.Tests
 			Assert.That(CurrencyIsoCode.USD, Must.Be.BinarySerializable<CurrencyIsoCode>(c => Is.EqualTo(c)));
 		}
 
-		[Test]
-		public void BinaryDeserialization_OfObsoleteCurrency_DoesNotRaiseEvent()
+		[Test, TestCaseSource(typeof(Obsolete), "IsoCodes")]
+		public void BinaryDeserialization_OfObsoleteCurrency_DoesNotRaiseEvent(CurrencyIsoCode obsolete)
 		{
 			using (var serializer = new OneGoBinarySerializer<CurrencyIsoCode>())
 			{
-				var obsolete = CurrencyIsoCode.EEK;
 				serializer.Serialize(obsolete);
 				Action deserializeObsolete = () => serializer.Deserialize();
 				Assert.That(deserializeObsolete, Must.Not.Raise.ObsoleteEvent());
@@ -52,12 +51,11 @@ namespace NMoneys.Tests
 			Assert.That(serializedDollar, Must.Be.DataContractJsonDeserializableInto(CurrencyIsoCode.USD));
 		}
 
-		[Test]
-		public void DataContractJsonDeserialization_OfObsoleteCurrency_DoesNotRaiseEvent()
+		[Test, TestCaseSource(typeof(Obsolete), "IsoCodes")]
+		public void DataContractJsonDeserialization_OfObsoleteCurrency_DoesNotRaiseEvent(CurrencyIsoCode obsolete)
 		{
 			using (var serializer = new OneGoDataContractJsonSerializer<CurrencyIsoCode>())
 			{
-				var obsolete = CurrencyIsoCode.EEK;
 				serializer.Serialize(obsolete);
 				Action deserializeObsolete = () => serializer.Deserialize();
 				Assert.That(deserializeObsolete, Must.Not.Raise.ObsoleteEvent());

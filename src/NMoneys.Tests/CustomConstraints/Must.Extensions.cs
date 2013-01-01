@@ -55,6 +55,11 @@ namespace NMoneys.Tests.CustomConstraints
 			return new ObsoleteCurrencyRaisedConstraint(1);
 		}
 
+		public static Constraint Times(this Must.RaiseObsoleteEventEntryPoint entryPoint, uint times)
+		{
+			return new ObsoleteCurrencyRaisedConstraint(times);
+		}
+
 		public static Constraint ObsoleteEvent(this Must.NotRaiseObsoleteEventEntryPoint entryPoint)
 		{
 			return new ObsoleteCurrencyRaisedConstraint(0);

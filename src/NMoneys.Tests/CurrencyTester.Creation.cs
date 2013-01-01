@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using NMoneys.Support;
 using NMoneys.Tests.CustomConstraints;
+using NMoneys.Tests.Support;
 using NUnit.Framework;
 
 namespace NMoneys.Tests
@@ -92,17 +93,17 @@ namespace NMoneys.Tests
 			Assert.That(notAShortcut.EnglishName, Is.EqualTo("Namibia Dollar"));
 		}
 
-		[Test]
-		public void Get_ObsoleteCurrencyIsoCode_EventRaised()
+		[Test, TestCaseSource(typeof(Obsolete), "ThreeLetterIsoCodes")]
+		public void Get_ObsoleteCurrencyIsoCode_EventRaised(string threeLetterIsoCode)
 		{
-			Action getObsolete = () => Currency.Get(Enumeration.Parse<CurrencyIsoCode>("EEK"));
+			Action getObsolete = () => Currency.Get(Enumeration.Parse<CurrencyIsoCode>(threeLetterIsoCode));
 			Assert.That(getObsolete, Must.RaiseObsoleteEvent.Once());
 		}
 
-		[Test]
-		public void Get_ObsoleteCurrencyCode_EventRaised()
+		[Test, TestCaseSource(typeof(Obsolete), "ThreeLetterIsoCodes")]
+		public void Get_ObsoleteCurrencyCode_EventRaised(string threeLetterIsoCode)
 		{
-			Action getObsolete = () => Currency.Get("EEK");
+			Action getObsolete = () => Currency.Get(threeLetterIsoCode);
 			Assert.That(getObsolete, Must.RaiseObsoleteEvent.Once());
 		}
 
@@ -204,19 +205,19 @@ namespace NMoneys.Tests
 			Assert.That(rsd, Is.Null);
 		}
 
-		[Test]
-		public void TryGet_ObsoleteCurrencyIsoCode_EventRaised()
+		[Test, TestCaseSource(typeof(Obsolete), "ThreeLetterIsoCodes")]
+		public void TryGet_ObsoleteCurrencyIsoCode_EventRaised(string threeLetterIsoCode)
 		{
 			Currency c;
-			Action tryGetObsolete = () => Currency.TryGet(Enumeration.Parse<CurrencyIsoCode>("EEK"), out c);
+			Action tryGetObsolete = () => Currency.TryGet(Enumeration.Parse<CurrencyIsoCode>(threeLetterIsoCode), out c);
 			Assert.That(tryGetObsolete, Must.RaiseObsoleteEvent.Once());
 		}
 
-		[Test]
-		public void TryGet_ObsoleteCurrencyCode_EventRaised()
+		[Test, TestCaseSource(typeof(Obsolete), "ThreeLetterIsoCodes")]
+		public void TryGet_ObsoleteCurrencyCode_EventRaised(string threeLetterIsoCode)
 		{
 			Currency c;
-			Action tryGetObsolete = () => Currency.TryGet("EEK", out c);
+			Action tryGetObsolete = () => Currency.TryGet(threeLetterIsoCode, out c);
 			Assert.That(tryGetObsolete, Must.RaiseObsoleteEvent.Once());
 		}
 
@@ -260,7 +261,7 @@ namespace NMoneys.Tests
 		public void FindAll_ReturnsObsoleteCurrencies()
 		{
 			Action iterateAllCurrencies = () => Currency.FindAll().ToArray();
-			Assert.That(iterateAllCurrencies, Must.RaiseObsoleteEvent.Once());
+			Assert.That(iterateAllCurrencies, Must.RaiseObsoleteEvent.Times(2));
 		}
 
 		#endregion

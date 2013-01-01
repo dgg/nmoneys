@@ -2015,6 +2015,18 @@
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
 		<negativePattern>0</negativePattern>
+		<obsolete>true</obsolete>
+	</currency>
+	<currency code="ZMV">
+		<englishName>Zambian Kwacha</englishName>
+		<nativeName>Zambian Kwacha</nativeName>
+		<symbol>90 75</symbol>
+		<significantDecimalDigits>2</significantDecimalDigits>
+		<decimalSeparator>.</decimalSeparator>
+		<groupSeparator>,</groupSeparator>
+		<groupSizes>3</groupSizes>
+		<positivePattern>0</positivePattern>
+		<negativePattern>0</negativePattern>
 	</currency>
 	<currency code="ZWL">
 		<englishName>Zimbabwe Dollar</englishName>

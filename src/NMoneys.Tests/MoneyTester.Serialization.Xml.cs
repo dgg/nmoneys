@@ -25,10 +25,10 @@ namespace NMoneys.Tests
 			Assert.That(serializedMoney, Must.Be.XmlDeserializableInto(new Money(3.757m)));
 		}
 
-		[Test]
-		public void XmlSerialization_ObsoleteCurrency_RaisesEvent()
+		[Test, TestCaseSource(typeof(Obsolete), "ThreeLetterIsoCodes")]
+		public void XmlSerialization_ObsoleteCurrency_RaisesEvent(string threeLetterIsoCode)
 		{
-			var obsolete = new Money(2m, "EEK");
+			var obsolete = new Money(2m, threeLetterIsoCode);
 			using (var serializer = new OneGoXmlSerializer<Money>())
 			{
 				serializer.Serialize(obsolete);
@@ -64,10 +64,10 @@ namespace NMoneys.Tests
 			Assert.That(serializedMoney, Must.Be.DataContractDeserializableInto(new Money(3.757m)));
 		}
 
-		[Test]
-		public void DataContractSerialization_ObsoleteCurrency_RaisesEvent()
+		[Test, TestCaseSource(typeof(Obsolete), "ThreeLetterIsoCodes")]
+		public void DataContractSerialization_ObsoleteCurrency_RaisesEvent(string threeLetterIsoCode)
 		{
-			var obsolete = new Money(2m, "EEK");
+			var obsolete = new Money(2m, threeLetterIsoCode);
 			using (var serializer = new OneGoDataContractSerializer<Money>())
 			{
 				serializer.Serialize(obsolete);
