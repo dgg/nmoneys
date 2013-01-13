@@ -207,7 +207,7 @@ namespace NMoneys
 		}
 
 		/// <summary>
-		/// Performs the arithmetial operation <paramref name="binaryOperation"/> on <see cref="Amount"/>.
+		/// Performs the arithmetical operation <paramref name="binaryOperation"/> on <see cref="Amount"/>.
 		/// </summary>
 		/// <param name="operand">Value which <see cref="Amount"/> serves as the second argument to <paramref name="binaryOperation"/>.</param>
 		/// <param name="binaryOperation">Arithmetical operation to perform.</param>
@@ -223,7 +223,7 @@ namespace NMoneys
 		}
 
 		/// <summary>
-		/// Performs the arithmetial operation <paramref name="unaryOperation"/> on <see cref="Amount"/>.
+		/// Performs the arithmetical operation <paramref name="unaryOperation"/> on <see cref="Amount"/>.
 		/// </summary>
 		/// <param name="unaryOperation">Arithmetical operation to perform.</param>
 		/// <returns>a <see cref="Money"/> with <see cref="Amount"/> as the result of applying <paramref name="unaryOperation"/> to the previous <see cref="Amount"/>.</returns>
