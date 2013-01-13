@@ -7,12 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NMoneys.Tests", "src\NMoney
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{775196FF-CC47-4AF3-890E-53BFBC923D78}"
 	ProjectSection(SolutionItems) = preProject
-		NMoneys.build = NMoneys.build
+		build.ps1 = build.ps1
+		NMoneys.build.ps1 = NMoneys.build.ps1
 		NMoneys.Exchange.nuspec = NMoneys.Exchange.nuspec
 		NMoneys.nuspec = NMoneys.nuspec
 		NMoneys.Serialization.Json_NET.nuspec = NMoneys.Serialization.Json_NET.nuspec
-		gems\VERSION = gems\VERSION
-		gems\VERSION.Exchange = gems\VERSION.Exchange
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NMoneys.Exchange", "src\NMoneys.Exchange\NMoneys.Exchange.csproj", "{8C7ADB2F-BD47-4235-BA7C-B9328D54D1C2}"
@@ -29,6 +28,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{2E7E61
 	EndProjectSection
 EndProject
 Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -101,9 +104,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal
