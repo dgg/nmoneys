@@ -461,7 +461,7 @@ namespace NMoneys.Tests
 			Assert.That(() => subject.Perform(operand, binary), Throws.InstanceOf<DifferentCurrencyException>());
 			Assert.That(performed, Is.False);
 		}
-
+		
 		#endregion
 
 		[Test]
