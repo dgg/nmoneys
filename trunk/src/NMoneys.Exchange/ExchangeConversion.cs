@@ -19,6 +19,8 @@ namespace NMoneys.Exchange
 
 		public Money To(CurrencyIsoCode to)
 		{
+			if (_from.CurrencyCode == to) return _from;
+
 			ExchangeRate rate = _provider.Get(_from.CurrencyCode, to);
 			return rate.Apply(_from);
 		}
@@ -26,6 +28,9 @@ namespace NMoneys.Exchange
 		public Money To(Currency to)
 		{
 			Guard.AgainstNullArgument("to", to);
+
+			if (_from.CurrencyCode == to.IsoCode) return _from;
+
 			ExchangeRate rate = _provider.Get(_from.CurrencyCode, to.IsoCode);
 			return rate.Apply(_from);
 		}

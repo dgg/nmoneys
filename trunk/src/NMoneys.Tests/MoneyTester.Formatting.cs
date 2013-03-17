@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using NMoneys.Extensions;
 using NUnit.Framework;
 
 namespace NMoneys.Tests
@@ -103,5 +104,21 @@ namespace NMoneys.Tests
 			string format = "{1} {0:#,#.00}";
 			Assert.That(subject.Format(format, CultureInfo.GetCultureInfo("en-US")), Is.EqualTo("€ 1,500.00"));
 		}
+
+		#region Issue 22. Default number formatting. Default does not include group separation
+
+		[Test]
+		public void Format_AmountWithoutFormatting_NumberWithoutSperators()
+		{
+			Assert.That(1500m.Dkk().Format("{0}"), Is.EqualTo("1500"));
+		}
+
+		[Test]
+		public void Format_AmountWithCustomFormatting_NumberWithSperators()
+		{
+			Assert.That(1500m.Dkk().Format("{0:N}"), Is.EqualTo("1.500,00"));
+		}
+
+		#endregion
 	}
 }
