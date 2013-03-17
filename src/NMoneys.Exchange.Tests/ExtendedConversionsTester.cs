@@ -58,6 +58,19 @@ namespace NMoneys.Exchange.Tests
 			Assert.That(() => 13m.Usd().Convert().To(null), Throws.InstanceOf<ArgumentNullException>());
 		}
 
+		#region issue 21. Optimize Convert().To(sameCurrency)
+
+		[Test]
+		public void Convert_To_SameCurrency_OriginalInstance()
+		{
+			Money thirteenDollars = 13m.Usd();
+			
+			Assert.That(thirteenDollars.Convert().To(Currency.Usd),
+				Is.EqualTo(thirteenDollars));
+		}
+
+		#endregion
+
 		[Test]
 		public void TryConvert_To_CurrencyCode_DoubledConversion()
 		{
