@@ -1,6 +1,11 @@
 #summary Summary of changes.
 #labels Phase-Support
 
+= 2.1.1.0 =
+2013/03/17 @revision 247
+   * Released 2.1.1.0 of _NMoney.Exchange_, including issue 21
+   * Upgraded version of _NuGet_
+
 = 3.1.0.0 =
 2013/01/01 @revision 241
    * Applied rest of changes from ISO4217 amendment 154: `ZMK` is deprecated, and `ZMV` has been added
