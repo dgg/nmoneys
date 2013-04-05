@@ -402,6 +402,31 @@ namespace NMoneys.Tests
 
 		#endregion
 
+		#region Floor
+
+		[TestCaseSource("ceiling")]
+		public void Ceiling_Spec(decimal amount, decimal ceiledAmount)
+		{
+			var subject = new Money(amount, CurrencyIsoCode.XTS);
+
+			Money truncated = subject.Ceiling();
+			Assert.That(truncated.Amount, Is.EqualTo(ceiledAmount));
+			Assert.That(truncated.CurrencyCode, Is.EqualTo(CurrencyIsoCode.XTS));
+		}
+
+#pragma warning disable 169
+		private static readonly object ceiling = new[]
+		{
+			new[] {0m, 0m},
+			new[] {123.456m, 124m},
+			new[] {-123.456m, -123m},
+			new[] {-123.0000000m, -123m},
+			new[] {-9999999999.9999999999m, -9999999999m}
+		};
+#pragma warning restore 169
+
+		#endregion
+
 		#region Perform
 
 		[Test]
