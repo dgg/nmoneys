@@ -207,6 +207,18 @@ namespace NMoneys
 		}
 
 		/// <summary>
+		/// Rounds <see cref="Amount"/> to the closest integer toward positive infinity.
+		/// </summary>
+		/// <returns>A <see cref="Money"/> which <see cref="Amount"/> is:
+		/// <para>if <see cref="Amount"/> has a fractional part, the next whole decimal number toward positive infinity that is more than <see cref="Amount"/>.</para>
+		///<para>-or-</para>
+		///<para>If <see cref="Amount"/> doesn't have a fractional part, is remains unchanged.</para></returns>
+		public Money Ceiling()
+		{
+			return new Money(decimal.Ceiling(Amount), CurrencyCode);
+		}
+
+		/// <summary>
 		/// Performs the arithmetical operation <paramref name="binaryOperation"/> on <see cref="Amount"/>.
 		/// </summary>
 		/// <param name="operand">Value which <see cref="Amount"/> serves as the second argument to <paramref name="binaryOperation"/>.</param>
