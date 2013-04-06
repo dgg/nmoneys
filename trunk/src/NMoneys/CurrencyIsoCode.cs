@@ -130,7 +130,7 @@ namespace NMoneys
 		/// <summary>
 		/// Pula
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("tn-BW")]
 		BWP = 072,
 		/// <summary>
 		/// Belarussian Ruble
@@ -250,7 +250,7 @@ namespace NMoneys
 		/// <summary>
 		/// Nakfa
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("ti-ER")]
 		ERN = 232,
 		/// <summary>
 		/// Ethiopian Birr
@@ -921,7 +921,7 @@ namespace NMoneys
 		/// Zambian Kwacha
 		/// </summary>
 		[EnumMember]
-		ZMV = 967,
+		ZMW = 967,
 		/// <summary>
 		/// Zimbabwe Dollar
 		/// </summary>
