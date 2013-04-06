@@ -30,8 +30,19 @@ namespace NMoneys.Tools
 					var comparer = new CurrencyInfoComparer(global.Culture);
 					if (!comparer.Equals(global.Info, notGlobal))
 					{
-						var differences = comparer.ExtendedEquals(global.Info, notGlobal);
-						displayDifferences(global, notGlobal, differences, writer);
+						CanonicalCultureAttribute attr;
+						Enumeration.TryGetAttribute(notGlobal.Code, out attr);
+						CultureInfo canonical = attr != null ? attr.Culture() : null;
+						if (canonical != null && !canonical.Name.Equals(global.Culture.Name))
+						{
+							displayCultureInformation(writer, global, notGlobal);
+						}
+						else
+						{
+							var differences = comparer.ExtendedEquals(global.Info, notGlobal);
+							displayDifferences(global, notGlobal, differences, writer);	
+						}
+						
 					}
 				}
 			}
