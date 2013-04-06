@@ -31,7 +31,7 @@ namespace NMoneys.Tests
 			new object[] {Currency.Gbp, CurrencyIsoCode.GBP, "GBP", "£", "Pound Sterling"},
 			new object[] {Currency.Hkd, CurrencyIsoCode.HKD, "HKD", "HK$", "Hong Kong Dollar"},
 			new object[] {Currency.Huf, CurrencyIsoCode.HUF, "HUF", "Ft", "Forint"},
-			new object[] {Currency.Inr, CurrencyIsoCode.INR, "INR", "रु", "Indian Rupee"},
+			new object[] {Currency.Inr, CurrencyIsoCode.INR, "INR", "₹", "Indian Rupee"},
 			new object[] {Currency.Jpy, CurrencyIsoCode.JPY, "JPY", "¥", "Yen"},
 			new object[] {Currency.Mxn, CurrencyIsoCode.MXN, "MXN", "$", "Mexican Peso"},
 			// overriden for 2.0 "R"
