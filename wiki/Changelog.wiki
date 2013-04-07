@@ -1,6 +1,14 @@
 #summary Summary of changes.
 #labels Phase-Support
 
+= 3.2.0.0 =
+2013/04/06 @revision 250
+   * Added `.Ceiling()` to _Money_
+   * Removed faulty `ZMV` and replaced for correct `ZMW`, let's hope not a lot of people persisted information with the non-existing currency
+   * Changed representation: `ALL`, `BWP`, `COP`, `DOP`, `ERN`, `ETB`, `GTQ`, `IRR`, `KGS`, `LTL`, `MNT`, `NIO`, `RUB`, `RWF`, `SEK`, `TJS`, `UYU`, `XCD`
+   * Changed currency symbol: `AMD`, `GEL`, `INR`, `KZT`, `NGN`, `PYG`, `TJS`, `TRY`, `VEF`, `XCD`
+   * Changed native name: `BGN`, `CZK`, `ERN`, `IRR`, `KZT`, `TJS`
+
 = 2.1.1.0 =
 2013/03/17 @revision 247
    * Released 2.1.1.0 of _NMoney.Exchange_, including issue 21
