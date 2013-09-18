@@ -146,12 +146,3 @@ Extension methods are provided as shortcuts for creation of money and currency i
 1000m.Pounds();
 CurrencyIsoCode.NOK.ToMoney(3m);
 }}}
-
-=== Extensions ===
-Extension methods are provided as shortcuts for creation of money and currency instances:
-
-{{{
-3m.Gbp();
-1000m.Pounds();
-CurrencyIsoCode.NOK.ToMoney(3m);
-}}}
