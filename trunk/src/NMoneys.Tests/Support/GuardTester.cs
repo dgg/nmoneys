@@ -1,6 +1,6 @@
 using System;
-using NMoneys.Support;
 using NUnit.Framework;
+using Guard = NMoneys.Support.Guard;
 
 namespace NMoneys.Tests.Support
 {
