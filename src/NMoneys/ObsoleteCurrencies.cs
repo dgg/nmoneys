@@ -15,7 +15,8 @@ namespace NMoneys
 			_set = new HashSet<CurrencyIsoCode>(FastEnumComparer<CurrencyIsoCode>.Instance)
 			{
 				CurrencyIsoCode.EEK,
-				CurrencyIsoCode.ZMK
+				CurrencyIsoCode.ZMK,
+				CurrencyIsoCode.LVL
 			};
 #pragma warning restore 612,618
 		}

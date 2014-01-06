@@ -261,7 +261,7 @@ namespace NMoneys.Tests
 		public void FindAll_ReturnsObsoleteCurrencies()
 		{
 			Action iterateAllCurrencies = () => Currency.FindAll().ToArray();
-			Assert.That(iterateAllCurrencies, Must.RaiseObsoleteEvent.Times(2));
+			Assert.That(iterateAllCurrencies, Must.RaiseObsoleteEvent.Times(3));
 		}
 
 		#endregion
