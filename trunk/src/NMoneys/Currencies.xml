@@ -1002,6 +1002,7 @@
 		<groupSizes>3</groupSizes>
 		<positivePattern>2</positivePattern>
 		<negativePattern>9</negativePattern>
+		<obsolete>true</obsolete>
 	</currency>
 	<currency code="LYD">
 		<englishName>Libyan Dinar</englishName>

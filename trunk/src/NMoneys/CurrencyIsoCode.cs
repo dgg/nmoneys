@@ -240,7 +240,7 @@ namespace NMoneys
 		/// <summary>
 		/// Estonian Kroon
 		/// </summary>
-		[EnumMember, CanonicalCulture("et-EE"), Obsolete("deprecated")]
+		[EnumMember, CanonicalCulture("et-EE"), Obsolete("deprecated in favor of EUR")]
 		EEK = 233,
 		/// <summary>
 		/// Egyptian Pound
@@ -460,7 +460,7 @@ namespace NMoneys
 		/// <summary>
 		/// Latvian Lats
 		/// </summary>
-		[EnumMember, CanonicalCulture("lv-LV")]
+		[EnumMember, CanonicalCulture("lv-LV"), Obsolete("deprecated in favor of EUR")]
 		LVL = 428,
 		/// <summary>
 		/// Libyan Dinar
@@ -915,7 +915,7 @@ namespace NMoneys
 		/// <summary>
 		/// Zambian Kwacha
 		/// </summary>
-		[EnumMember, Obsolete("deprecated")]
+		[EnumMember, Obsolete("deprecated in favor of ZMW")]
 		ZMK = 894,
 		/// <summary>
 		/// Zambian Kwacha
