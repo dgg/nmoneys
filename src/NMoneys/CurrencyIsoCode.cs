@@ -168,7 +168,7 @@ namespace NMoneys
 		[EnumMember, CanonicalCulture("de-CH")]
 		CHW = 948,
 		/// <summary>
-		/// Unidades de fomento
+		/// Unidad de Fomento
 		/// </summary>
 		[EnumMember, CanonicalCulture("es-CL")]
 		CLF = 990,

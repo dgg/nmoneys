@@ -347,8 +347,8 @@
 		<negativePattern>2</negativePattern>
 	</currency>
 	<currency code="CLF" >
-		<englishName>Unidades de fomento</englishName>
-		<nativeName>Unidades de fomento</nativeName>
+		<englishName>Unidad de Fomento</englishName>
+		<nativeName>Unidad de Fomento</nativeName>
 		<symbol>36</symbol>
 		<significantDecimalDigits>0</significantDecimalDigits>
 		<decimalSeparator>,</decimalSeparator>
