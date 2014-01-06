@@ -12,7 +12,7 @@ namespace NMoneys.Tools
 {
 	internal class ScrapeWebsite : Command
 	{
-		public static readonly Uri IsoCurrenciesUrl = new Uri("http://www.currency-iso.org/dam/isocy/downloads/dl_iso_table_a1.xls");
+		public static readonly Uri IsoCurrenciesUrl = new Uri("http://www.currency-iso.org/dam/downloads/table_a1.xls");
 		protected override void DoExecute()
 		{
 			var doc = new CurrenciesSheet(IsoCurrenciesUrl);
