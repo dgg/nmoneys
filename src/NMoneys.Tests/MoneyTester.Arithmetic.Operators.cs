@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using NMoneys.Extensions;
-using NMoneys.Tests.CustomConstraints;
+﻿using NMoneys.Extensions;
 using NUnit.Framework;
 
 namespace NMoneys.Tests
@@ -10,7 +7,7 @@ namespace NMoneys.Tests
 	public partial class MoneyTester
 	{
 		[Test]
-		public void UnaryNegate_AnotherMoneyWithNegativeAmount()
+		public void opUnaryNegation_AnotherMoneyWithNegativeAmount()
 		{
 			Money oweYouFive = -fiver;
 			Assert.That(oweYouFive, Is.Not.SameAs(fiver));
@@ -21,8 +18,10 @@ namespace NMoneys.Tests
 			Assert.That(youOweMeFive.Amount, Is.EqualTo(fiver.Amount));
 		}
 
+		#region addition
+
 		[Test]
-		public void Add_SameCurrency_AnotherMoneyWithAddedUpamount()
+		public void opAddition_SameCurrency_AnotherMoneyWithAddedUpamount()
 		{
 			Money fifteenQuid = fiver + tenner;
 
@@ -32,14 +31,18 @@ namespace NMoneys.Tests
 		}
 
 		[Test]
-		public void Add_DifferentCurrency_Exception()
+		public void opAddition_DifferentCurrency_Exception()
 		{
 			Money money;
 			Assert.That(() => money = fiver + hund, Throws.InstanceOf<DifferentCurrencyException>());
 		}
 
+		#endregion
+
+		#region substraction
+
 		[Test]
-		public void Substract_SameCurrency_AnotherMoneyWithAddedUpamount()
+		public void opSubstraction_SameCurrency_AnotherMoneyWithAddedUpamount()
 		{
 			Money anotherFiver = tenner - fiver;
 
@@ -49,53 +52,64 @@ namespace NMoneys.Tests
 		}
 
 		[Test]
-		public void Substract_TennerMinusFiver_OweMeMoney()
+		public void opSubstraction_TennerMinusFiver_OweMeMoney()
 		{
 			Money oweFiver = fiver - tenner;
 			Assert.That(oweFiver.Amount, Is.EqualTo(-5));
 		}
 
 		[Test]
-		public void Substract_DifferentCurrency_Exception()
+		public void opSubstraction_DifferentCurrency_Exception()
 		{
 			Money money;
 			Assert.That(() => money = fiver - hund, Throws.InstanceOf<DifferentCurrencyException>());
 		}
 
-		#region Total
+		#endregion
+
+		#region multiplication
 
 		[Test]
-		public void Total_AllOfSameCurrency_NewInstanceWithAmountAsSumOfAll()
+		public void opMultiply_MultipliesAmount()
 		{
-			Assert.That(Money.Total(2m.Dollars(), 3m.Dollars(), 5m.Dollars()), Must.Be.MoneyWith(10m, Currency.Dollar));
+			Money oweMeFour = 2m.Dkk() * -2;
+
+			Assert.That(oweMeFour.Amount, Is.EqualTo(-4m));
+			Assert.That(oweMeFour.CurrencyCode, Is.EqualTo(CurrencyIsoCode.DKK));
 		}
 
-		[Test]
-		public void Total_DiffCurrency_NewInstanceWithAmountAsSumOfAll()
-		{
-			Assert.That(() => Money.Total(2m.Dollars(), 3m.Eur(), 5m.Dollars()), Throws.InstanceOf<DifferentCurrencyException>());
-		}
 
 		[Test]
-		public void Total_NullMoneys_Exception()
+		public void opMultiply_SupportsAllIntegralTypes()
 		{
-			IEnumerable<Money> nullMoneys = null;
+			Money money = new Money(1m, CurrencyIsoCode.EUR), min, max;
 
-			Assert.That(() => Money.Total(nullMoneys), Throws.InstanceOf<ArgumentNullException>()
-				.With.Message.StringContaining("moneys"));
-		}
+			byte b = byte.MaxValue;
+			sbyte sb = sbyte.MinValue;
+			max = money * b; //  * long
+			min = money * sb; // * long
+			Assert.That(min.Amount, Is.EqualTo(sbyte.MinValue));
+			Assert.That(max.Amount, Is.EqualTo(byte.MaxValue));
 
-		[Test]
-		public void Total_EmptyMoneys_Exception()
-		{
-			Assert.That(() => Money.Total(), Throws.ArgumentException.With.Message.StringContaining("empty"));
-			Assert.That(() => Money.Total(new Money[0]), Throws.ArgumentException.With.Message.StringContaining("empty"));
-		}
+			short s = short.MinValue;
+			ushort us = ushort.MaxValue;
+			min = money * s; // * long
+			max = money * us; // * long
+			Assert.That(min.Amount, Is.EqualTo(short.MinValue));
+			Assert.That(max.Amount, Is.EqualTo(ushort.MaxValue));
 
-		[Test]
-		public void Total_OnlyOneMoney_AnotherMoneyInstanceWithSameInformation()
-		{
-			Assert.That(Money.Total(10m.Usd()), Is.EqualTo(10m.Usd()));
+			int i = int.MinValue;
+			uint ui = uint.MaxValue;
+			min = money * i; // * long
+			max = money * ui; //  * long
+			Assert.That(min.Amount, Is.EqualTo(int.MinValue));
+			Assert.That(max.Amount, Is.EqualTo(uint.MaxValue));
+
+			long l = long.MinValue;
+			min = money* l; // * long
+			max = money * long.MaxValue; // * long
+			Assert.That(min.Amount, Is.EqualTo(long.MinValue));
+			Assert.That(max.Amount, Is.EqualTo(long.MaxValue));
 		}
 
 		#endregion

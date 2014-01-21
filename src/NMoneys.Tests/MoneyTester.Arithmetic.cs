@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using NMoneys.Extensions;
 using NMoneys.Tests.CustomConstraints;
 using NUnit.Framework;
 
@@ -20,10 +22,22 @@ namespace NMoneys.Tests
 			Assert.That(youOweMeFive.Amount, Is.EqualTo(fiver.Amount));
 		}
 
+		#region addition
+
 		[Test]
 		public void Plus_SameCurrency_AnotherMoneyWithAddedUpamount()
 		{
 			Money fifteenQuid = fiver.Plus(tenner);
+
+			Assert.That(fifteenQuid, Is.Not.SameAs(fiver).And.Not.SameAs(tenner));
+			Assert.That(fifteenQuid.Amount, Is.EqualTo(15));
+			Assert.That(fifteenQuid.CurrencyCode, Is.EqualTo(CurrencyIsoCode.GBP));
+		}
+
+		[Test]
+		public void Add_SameCurrency_AnotherMoneyWithAddedUpamount()
+		{
+			Money fifteenQuid = Money.Add(fiver, tenner);
 
 			Assert.That(fifteenQuid, Is.Not.SameAs(fiver).And.Not.SameAs(tenner));
 			Assert.That(fifteenQuid.Amount, Is.EqualTo(15));
@@ -38,9 +52,68 @@ namespace NMoneys.Tests
 		}
 
 		[Test]
+		public void Add_DifferentCurrency_Exception()
+		{
+			Money money;
+			Assert.That(() => money = Money.Add(fiver, hund), Throws.InstanceOf<DifferentCurrencyException>());
+		}
+
+		#region Total
+
+		[Test]
+		public void Total_AllOfSameCurrency_NewInstanceWithAmountAsSumOfAll()
+		{
+			Assert.That(Money.Total(2m.Dollars(), 3m.Dollars(), 5m.Dollars()), Must.Be.MoneyWith(10m, Currency.Dollar));
+		}
+
+		[Test]
+		public void Total_DiffCurrency_NewInstanceWithAmountAsSumOfAll()
+		{
+			Assert.That(() => Money.Total(2m.Dollars(), 3m.Eur(), 5m.Dollars()), Throws.InstanceOf<DifferentCurrencyException>());
+		}
+
+		[Test]
+		public void Total_NullMoneys_Exception()
+		{
+			IEnumerable<Money> nullMoneys = null;
+
+			Assert.That(() => Money.Total(nullMoneys), Throws.InstanceOf<ArgumentNullException>()
+				.With.Message.StringContaining("moneys"));
+		}
+
+		[Test]
+		public void Total_EmptyMoneys_Exception()
+		{
+			Assert.That(() => Money.Total(), Throws.ArgumentException.With.Message.StringContaining("empty"));
+			Assert.That(() => Money.Total(new Money[0]), Throws.ArgumentException.With.Message.StringContaining("empty"));
+		}
+
+		[Test]
+		public void Total_OnlyOneMoney_AnotherMoneyInstanceWithSameInformation()
+		{
+			Assert.That(Money.Total(10m.Usd()), Is.EqualTo(10m.Usd()));
+		}
+
+		#endregion
+
+		#endregion
+
+		#region substraction
+
+		[Test]
 		public void Minus_SameCurrency_AnotherMoneyWithAddedUpamount()
 		{
 			Money anotherFiver = tenner.Minus(fiver);
+
+			Assert.That(anotherFiver, Is.Not.SameAs(fiver).And.Not.SameAs(tenner));
+			Assert.That(anotherFiver.Amount, Is.EqualTo(5));
+			Assert.That(anotherFiver.CurrencyCode, Is.EqualTo(CurrencyIsoCode.GBP));
+		}
+
+		[Test]
+		public void Substract_SameCurrency_AnotherMoneyWithAddedUpamount()
+		{
+			Money anotherFiver = Money.Subtract(tenner, fiver);
 
 			Assert.That(anotherFiver, Is.Not.SameAs(fiver).And.Not.SameAs(tenner));
 			Assert.That(anotherFiver.Amount, Is.EqualTo(5));
@@ -55,11 +128,94 @@ namespace NMoneys.Tests
 		}
 
 		[Test]
+		public void Substract_TennerMinusFiver_OweMeMoney()
+		{
+			Money oweFiver = Money.Subtract(fiver, tenner);
+			Assert.That(oweFiver.Amount, Is.EqualTo(-5));
+		}
+
+		[Test]
 		public void Minus_DifferentCurrency_Exception()
 		{
 			Money money;
 			Assert.That(() => money = fiver.Minus(hund), Throws.InstanceOf<DifferentCurrencyException>());
 		}
+
+		[Test]
+		public void Substract_DifferentCurrency_Exception()
+		{
+			Money money;
+			Assert.That(() => money = Money.Subtract(fiver, hund), Throws.InstanceOf<DifferentCurrencyException>());
+		}
+
+		#endregion
+
+		#region multiplication
+
+		[Test]
+		public void Times_MultipliesAmount()
+		{
+			Money oweMeFour = 2m.Dkk().Times(-2);
+
+			Assert.That(oweMeFour.Amount, Is.EqualTo(-4m));
+			Assert.That(oweMeFour.CurrencyCode, Is.EqualTo(CurrencyIsoCode.DKK));
+		}
+
+		[Test]
+		public void Multiply_MultipliesAmount()
+		{
+			Money oweMeFour = Money.Multiply(2m.Dkk(), -2);
+
+			Assert.That(oweMeFour.Amount, Is.EqualTo(-4m));
+			Assert.That(oweMeFour.CurrencyCode, Is.EqualTo(CurrencyIsoCode.DKK));
+		}
+
+		[Test]
+		public void Times_OperatesOn_AlmostAllIntegralTypes()
+		{
+			Money money = new Money(1m, CurrencyIsoCode.EUR), min, max;
+
+			byte b = byte.MaxValue;
+			sbyte sb = sbyte.MinValue;
+			max = money.Times(b); // .Times(long)
+			min = money.Times(sb); // .Times(long)
+			Assert.That(min.Amount, Is.EqualTo(sbyte.MinValue));
+			Assert.That(max.Amount, Is.EqualTo(byte.MaxValue));
+
+			short s = short.MinValue;
+			ushort us = ushort.MaxValue;
+			min = money.Times(s); // .Times(long)
+			max = money.Times(us); // .Times(long)
+			Assert.That(min.Amount, Is.EqualTo(short.MinValue));
+			Assert.That(max.Amount, Is.EqualTo(ushort.MaxValue));
+
+			int i = int.MinValue;
+			uint ui = uint.MaxValue;
+			min = money.Times(i); // .Times(long)
+			max = money.Times(ui); // .Times(long)
+			Assert.That(min.Amount, Is.EqualTo(int.MinValue));
+			Assert.That(max.Amount, Is.EqualTo(uint.MaxValue));
+
+			long l = long.MinValue;
+			min = money.Times(l); // .Times(long)
+			max = money.Times(long.MaxValue);
+			Assert.That(min.Amount, Is.EqualTo(long.MinValue));
+			Assert.That(max.Amount, Is.EqualTo(long.MaxValue));
+		}
+
+		[Test]
+		public void BeCarefulWithBigUInt64_CannotBeConvertedToInt64()
+		{
+			ulong max = ulong.MaxValue;
+			long l = (long)max;
+
+			Assert.That(l, Is.EqualTo(-1), "wat?!");
+
+			Assert.That(()=> Convert.ToInt64(max), Throws.InstanceOf<OverflowException>(),
+				"FAIL!");
+		}
+
+		#endregion
 
 		[Test]
 		public void Abs_GetsPositiveAmount()
