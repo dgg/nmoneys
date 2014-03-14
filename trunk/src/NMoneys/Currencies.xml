@@ -18,8 +18,8 @@
 		<nativeName>افغانى</nativeName>
 		<symbol>1547</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
-		<decimalSeparator>٫</decimalSeparator>
-		<groupSeparator>٬</groupSeparator>
+		<decimalSeparator>.</decimalSeparator>
+		<groupSeparator>,</groupSeparator>
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
 		<negativePattern>3</negativePattern>
@@ -205,7 +205,7 @@
 	<currency code="BOB">
 		<englishName>Boliviano</englishName>
 		<nativeName>Boliviano</nativeName>
-		<symbol>36 98</symbol>
+		<symbol>66 115 46</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>,</decimalSeparator>
 		<groupSeparator>.</groupSeparator>
@@ -303,14 +303,14 @@
 	</currency>
 	<currency code="CDF">
 		<englishName>Congolese Franc</englishName>
-		<nativeName>Congolese Franc</nativeName>
-		<symbol>70</symbol>
+		<nativeName>franc congolais</nativeName>
+		<symbol>70 67</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
-		<decimalSeparator>.</decimalSeparator>
-		<groupSeparator>,</groupSeparator>
+		<decimalSeparator>,</decimalSeparator>
+		<groupSeparator> </groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<positivePattern>1</positivePattern>
+		<negativePattern>4</negativePattern>
 	</currency>
 	<currency code="CHE">
 		<englishName>WIR Euro</englishName>
@@ -350,7 +350,7 @@
 		<englishName>Unidad de Fomento</englishName>
 		<nativeName>Unidad de Fomento</nativeName>
 		<symbol>36</symbol>
-		<significantDecimalDigits>0</significantDecimalDigits>
+		<significantDecimalDigits>4</significantDecimalDigits>
 		<decimalSeparator>,</decimalSeparator>
 		<groupSeparator>.</groupSeparator>
 		<groupSizes>3</groupSizes>
@@ -707,14 +707,14 @@
 	</currency>
 	<currency code="HTG">
 		<englishName>Gourde</englishName>
-		<nativeName>Gourde</nativeName>
+		<nativeName>gourde</nativeName>
 		<symbol>71</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
-		<decimalSeparator>.</decimalSeparator>
-		<groupSeparator>,</groupSeparator>
+		<decimalSeparator>,</decimalSeparator>
+		<groupSeparator> </groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<positivePattern>1</positivePattern>
+		<negativePattern>4</negativePattern>
 	</currency>
 	<currency code="HUF">
 		<englishName>Forint</englishName>
@@ -777,7 +777,7 @@
 		<symbol>1585 1610 1575 1604</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>/</decimalSeparator>
-		<groupSeparator>،</groupSeparator>
+		<groupSeparator>,</groupSeparator>
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
 		<negativePattern>3</negativePattern>
@@ -830,7 +830,7 @@
 	<currency code="KES">
 		<englishName>Kenyan Shilling</englishName>
 		<nativeName>Shilingi</nativeName>
-		<symbol>83</symbol>
+		<symbol>75 83 104</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>.</decimalSeparator>
 		<groupSeparator>,</groupSeparator>
@@ -1028,14 +1028,14 @@
 	</currency>
 	<currency code="MDL">
 		<englishName>Moldovan Leu</englishName>
-		<nativeName>Moldovan Leu</nativeName>
-		<symbol>164</symbol>
+		<nativeName>leu moldovenesc</nativeName>
+		<symbol>76</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
-		<decimalSeparator>.</decimalSeparator>
-		<groupSeparator>,</groupSeparator>
+		<decimalSeparator>,</decimalSeparator>
+		<groupSeparator>.</groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<positivePattern>1</positivePattern>
+		<negativePattern>5</negativePattern>
 	</currency>
 	<currency code="MGA">
 		<englishName>Malagasy Ariary</englishName>
@@ -1061,14 +1061,14 @@
 	</currency>
 	<currency code="MMK">
 		<englishName>Kyat</englishName>
-		<nativeName>Kyat</nativeName>
+		<nativeName>ကျပ်</nativeName>
 		<symbol>75</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>.</decimalSeparator>
 		<groupSeparator>,</groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<positivePattern>3</positivePattern>
+		<negativePattern>9</negativePattern>
 	</currency>
 	<currency code="MNT">
 		<englishName>Tugrik</englishName>
@@ -1293,7 +1293,7 @@
 	<currency code="PHP">
 		<englishName>Philippine Peso</englishName>
 		<nativeName>Philippine Peso</nativeName>
-		<symbol>80 104 80</symbol>
+		<symbol>8369</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>.</decimalSeparator>
 		<groupSeparator>,</groupSeparator>
@@ -1481,14 +1481,14 @@
 	</currency>
 	<currency code="SOS">
 		<englishName>Somali Shilling</englishName>
-		<nativeName>Somali Shilling</nativeName>
+		<nativeName>Shilin soomaali</nativeName>
 		<symbol>83</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>.</decimalSeparator>
 		<groupSeparator>,</groupSeparator>
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<negativePattern>1</negativePattern>
 	</currency>
 	<currency code="SRD">
 		<englishName>Surinam Dollar</englishName>
@@ -1733,7 +1733,7 @@
 		<negativePattern>9</negativePattern>
 	</currency>
 	<currency code="UZS">
-		<englishName>Uzbekistan Sum</englishName>
+		<englishName>Uzbekistan Som</englishName>
 		<nativeName>so‘m</nativeName>
 		<symbol>115 111 39 109</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
@@ -1792,11 +1792,11 @@
 		<nativeName>CFA Franc BEAC</nativeName>
 		<symbol>70 67 70 65</symbol>
 		<significantDecimalDigits>0</significantDecimalDigits>
-		<decimalSeparator>.</decimalSeparator>
-		<groupSeparator>,</groupSeparator>
+		<decimalSeparator>,</decimalSeparator>
+		<groupSeparator> </groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<positivePattern>1</positivePattern>
+		<negativePattern>4</negativePattern>
 	</currency>
 	<currency code="XAG">
 		<englishName>Silver</englishName>
