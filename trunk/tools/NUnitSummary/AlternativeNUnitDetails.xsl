@@ -5,6 +5,12 @@
 	<xsl:param name="applicationPath"/>
 
 	<xsl:template match="/">
+		<html>
+		<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		</head>
+		<body>
         <div id="report">
 			<script type="text/javascript">
 				function toggleDiv(imgId, divId)
@@ -177,6 +183,7 @@
 				</div>
             </xsl:for-each>
 		</div>
+		</body></html>
 	</xsl:template>
 
 	<!-- Template for a particular TestFixture -->
