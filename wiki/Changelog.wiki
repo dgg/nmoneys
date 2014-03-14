@@ -1,6 +1,13 @@
 #summary Summary of changes.
 #labels Phase-Support
 
+= 3.3.0.0 =
+2014/03/14 @revision 268
+   * Apply ISO4217 amendment 155: increase significative decimals for `CLF`
+   * Update currencies based on newest OS/framework information: `AFN`, `BOB`, `CDF`, `CLF`, `HTG`, `IRR`, `KES`, `MDL`, `MMK`, `PHP`, `SOS` `UZS`, `XAF`
+   * fixed _NUnit_ report to support UTF-8
+   * Upgraded version of _NuGet_
+
 = 3.4.0.0 =
 2014/01/21 @revision 262
    * Integral multiplication `.Times()` and `.Multiply()` added to _Money_
