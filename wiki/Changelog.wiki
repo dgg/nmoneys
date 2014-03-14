@@ -1,7 +1,7 @@
 #summary Summary of changes.
 #labels Phase-Support
 
-= 3.3.0.0 =
+= 3.4.1.0 =
 2014/03/14 @revision 268
    * Apply ISO4217 amendment 155: increase significative decimals for `CLF`
    * Update currencies based on newest OS/framework information: `AFN`, `BOB`, `CDF`, `CLF`, `HTG`, `IRR`, `KES`, `MDL`, `MMK`, `PHP`, `SOS` `UZS`, `XAF`
