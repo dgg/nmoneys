@@ -150,7 +150,7 @@ namespace NMoneys
 		/// <summary>
 		/// Congolese Franc
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("fr-CD")]
 		CDF = 976,
 		/// <summary>
 		/// WIR Euro
@@ -330,7 +330,7 @@ namespace NMoneys
 		/// <summary>
 		/// Gourde
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("fr-HT")]
 		HTG = 332,
 		/// <summary>
 		/// Forint
@@ -475,7 +475,7 @@ namespace NMoneys
 		/// <summary>
 		/// Moldovan Leu
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("ro-MD")]
 		MDL = 498,
 		/// <summary>
 		/// Malagasy Ariary
@@ -490,7 +490,7 @@ namespace NMoneys
 		/// <summary>
 		/// Kyat
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("my-MM")]
 		MMK = 104,
 		/// <summary>
 		/// Tugrik
@@ -680,7 +680,7 @@ namespace NMoneys
 		/// <summary>
 		/// Somali Shilling
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("so-SO")]
 		SOS = 706,
 		/// <summary>
 		/// Surinam Dollar
@@ -820,7 +820,7 @@ namespace NMoneys
 		/// <summary>
 		/// CFA Franc BEAC
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("fr-CM")]
 		XAF = 950,
 		/// <summary>
 		/// Silver
