@@ -16,10 +16,13 @@ and the built binary and XML documentation can be copied from
 `path_to_source_code\release` into the folder that contains dependencies for your solution.
 
 = Get the binaries =
-Latest binaries can be downloaded from the [http://code.google.com/p/nmoneys/downloads/list Downloads] section within the project's website.
+Latest binaries can be downloaded from [https://bintray.com/danielgonnet/nMoneys/bin/view Bintray].
+
 For [http://nuget.org/ NuGet] users, the [http://nuget.org/List/Packages/NMoneys NMoneys package] is available in the official live feed.
 
 [http://nmoneys.googlecode.com/svn/wiki/NMoneys_NuGet.png]
+
+Old versions of the library are available from the [http://code.google.com/p/nmoneys/downloads/list Downloads] section within the project's website.
 
 For .NET developers that make use of Ruby tools, you are out of luck; the gem will no longer be updated.
 
