@@ -1,6 +1,10 @@
 #summary Summary of changes.
 #labels Phase-Support
 
+= 3.5.0.0 =
+2014/04/15 @revision 273
+   * Exposed fast equality comparer for `CurrencyIsoCode` via _Currency.Code_
+
 = 3.4.1.0 =
 2014/03/14 @revision 268
    * Apply ISO4217 amendment 155: increase significative decimals for `CLF`
