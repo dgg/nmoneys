@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using NMoneys.Support;
 
@@ -79,6 +80,12 @@ namespace NMoneys
 			{
 				return Enumeration.TryCast(numericCode, out converted);
 			}
+
+			/// <summary>
+			/// Provides a performant implementation of <see cref="IEqualityComparer{T}"/> for instances of <see cref="CurrencyIsoCode"/>.
+			/// </summary>
+			/// <remarks><seealso href="http://www.codeproject.com/Articles/33528/Accelerating-Enum-Based-Dictionaries-with-Generic">Source</seealso></remarks>
+			public static readonly IEqualityComparer<CurrencyIsoCode> Comparer = FastEnumComparer<CurrencyIsoCode>.Instance;
 		}
 	}
 }

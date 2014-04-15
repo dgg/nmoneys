@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
+using NMoneys.Support;
 using NUnit.Framework;
 
 namespace NMoneys.Tests
@@ -179,6 +182,57 @@ namespace NMoneys.Tests
 			CurrencyIsoCode? casted;
 			Assert.That(Currency.Code.TryCast(46, out casted), Is.False);
 			Assert.That(casted, Is.Null);
+		}
+
+		#endregion
+
+		#region Comparer
+
+		[Test, NUnit.Framework.Category("Performance")]
+		public void Comparer_BetterPerformance_ThanDefaultComparer()
+		{
+			CurrencyIsoCode[] values = Enumeration.GetValues<CurrencyIsoCode>();
+
+			int iterations = 1000000;
+			TimeSpan fast = run(iterations, i => 
+				populateDictionary(new Dictionary<CurrencyIsoCode, int>(Currency.Code.Comparer), values, i));
+			TimeSpan @default = run(iterations, i => 
+				populateDictionary(new Dictionary<CurrencyIsoCode, int>(EqualityComparer<CurrencyIsoCode>.Default), values, i));
+
+			Assert.That(fast, Is.LessThan(@default), "{0} < {1}", fast, @default);
+
+			// not only faster, more than 5 times faster
+			Assert.That(fast.TotalMilliseconds * 5, Is.LessThan(@default.Milliseconds), "{0} << {1}", fast, @default);
+		}
+
+		private static void populateDictionary(Dictionary<CurrencyIsoCode, int> map, CurrencyIsoCode[] values, int iters)
+		{
+			for (var i = 0; i < iters; i++)
+			{
+				CurrencyIsoCode code = values[i%values.Length];
+				map[code] = i;
+			}
+		}
+
+		private static TimeSpan run(int numberOfIterations, Action<int> action)
+		{
+			action(numberOfIterations);
+			var stopwatch = new Stopwatch();
+			var elapsed = TimeSpan.Zero;
+			int runs = 3;
+			for (var i = 0; i < runs; i++)
+			{
+				stopwatch.Start();
+				action(numberOfIterations);
+				stopwatch.Stop();
+				elapsed += stopwatch.Elapsed;
+				stopwatch.Reset();
+			}
+			elapsed = TimeSpan.FromTicks(elapsed.Ticks / runs);
+
+			Debug.WriteLine(elapsed.TotalMilliseconds + " ms");
+
+			return elapsed;
 		}
 
 		#endregion
