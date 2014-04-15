@@ -110,7 +110,7 @@ namespace NMoneys.Tests
 			}
 		}
 
-		[Test]
+		[Test, Category("Performance")]
 		public void MultipleCallsToInitializer_AreFasterThan_MultipleCallsToProvider()
 		{
 			var provider = new EmbeddedXmlProvider();
