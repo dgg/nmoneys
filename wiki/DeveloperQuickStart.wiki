@@ -22,10 +22,22 @@ For [http://nuget.org/ NuGet] users, the [http://nuget.org/List/Packages/NMoneys
 
 [http://nmoneys.googlecode.com/svn/wiki/NMoneys_NuGet.png]
 
-Old versions of the library are available from the [http://code.google.com/p/nmoneys/downloads/list Downloads] section within the project's website.
+Older versions of the library are available from the [http://code.google.com/p/nmoneys/downloads/list Downloads] section within the project's website.
 
 For .NET developers that make use of Ruby tools, you are out of luck; the gem will no longer be updated.
 
+== Strong naming ==
+I took the decision of not strong-naming my assembly by default, as I think it causes more trouble than anything with NuGet.
+
+In quite a few years of .NET development I have been able to dodge the need to strong name my assemblies; I suggest you do the same.
+
+However, I see edge cases in which this decission might be preventing a limited number of users to use the library. For those unlucky few that have to live in strongly-namef land, signed versions of `NMoneys.dll` will be available from the binaries repository in [https://bintray.com/danielgonnet/nMoneys/bin/view Bintray]
+
+If you want to build a strongly-named version of the assembly from source, invoke:
+{{{
+path_to_source_code\build.ps1 -task Sign
+}}}
+and a strongly-named version of `NMoneys.dll` will be available in `path_to_source_code\release\signed`.
 = Use the Library =
 
 == Currencies ==
