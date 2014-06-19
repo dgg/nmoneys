@@ -2,8 +2,6 @@ properties {
   $configuration = 'Release'
   $base_dir  = resolve-path .
   $release_dir = "$base_dir\release"
-  #$release_nuget = "$release_dir\nuget"
-  #$release_nuget_lib = "$release_nuget\lib\Net20-client"
 }
 
 task default -depends Clean, Compile, RunTests, CopyArtifacts, Document, Pack
@@ -71,6 +69,15 @@ task Pack {
 
 	Get-ChildItem -File -Filter '*.nuspec' -Path $release_dir  | 
 		ForEach-Object { exec { & $nuget pack $_.FullName /o $release_dir } }
+}
+
+task Sign -depends Clean, Compile, CopyArtifacts {
+
+	$signed_dir = "$release_dir\signed"
+	md $signed_dir -Force | Out-Null
+
+	Exec { ildasm $release_dir\NMoneys.dll /out:$release_dir\NMoneys.il }
+	Exec { ilasm $release_dir\NMoneys.il /dll /key=$base_dir\NMoneys.key.snk /output=$signed_dir\NMoneys.dll } | Out-Null
 }
 
 task ? -Description "Helper to display task info" {
