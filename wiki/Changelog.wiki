@@ -1,6 +1,16 @@
 #summary Summary of changes.
 #labels Phase-Support
 
+= 3.5.1.0 =
+2014/06/19 @revision 283
+   * Update symbol and native name for `BYR`
+   * Update symbol for `BGN`
+   * Update native name for `CZK`
+   * Update version of _NuGet_
+   * Update version of _psake_
+   * Improve build scripts
+   * Add facility to strongly name `NMoneys.dll` in order to upload to bin repository
+
 = 3.5.0.0 =
 2014/04/15 @revision 273
    * Exposed fast equality comparer for `CurrencyIsoCode` via _Currency.Code_
