@@ -64,7 +64,6 @@ namespace NMoneys.Tests
 
 			Assert.That(lev.IsoSymbol, Is.Not.EqualTo(bulgaria.ISOCurrencySymbol));
 			Assert.That(lev.NativeName, Is.Not.EqualTo(bulgaria.CurrencyNativeName));
-			Assert.That(lev.Symbol, Is.EqualTo(bulgaria.CurrencySymbol));
 		}
 
 		[Test]
@@ -183,7 +182,6 @@ namespace NMoneys.Tests
 
 			Assert.That(lev.IsoSymbol, Is.Not.EqualTo(bulgaria.ISOCurrencySymbol));
 			Assert.That(lev.NativeName, Is.Not.EqualTo(bulgaria.CurrencyNativeName));
-			Assert.That(lev.Symbol, Is.EqualTo(bulgaria.CurrencySymbol));
 		}
 
 		[Test]
