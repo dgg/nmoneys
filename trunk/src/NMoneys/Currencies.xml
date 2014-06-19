@@ -150,7 +150,7 @@
 	<currency code="BGN">
 		<englishName>Bulgarian Lev</englishName>
 		<nativeName>български лев</nativeName>
-		<symbol>1083 1074</symbol>
+		<symbol>1083 1074 46</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>,</decimalSeparator>
 		<groupSeparator> </groupSeparator>
