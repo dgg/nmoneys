@@ -1,5 +1,7 @@
-﻿using Newtonsoft.Json.Serialization;
+﻿using System;
+using Newtonsoft.Json.Serialization;
 using NMoneys.Serialization.Json_NET;
+using NMoneys.Serialization.Tests.Support;
 using NMoneys.Tests.Support;
 using NUnit.Framework;
 using Newtonsoft.Json;
@@ -122,6 +124,24 @@ namespace NMoneys.Serialization.Tests.Json_Net
 				new StringEnumConverter(),
 				new DefaultMoneyConverter(CurrencyStyle.Numeric));
 			Assert.That(actual, Is.EqualTo("{\"Amount\":14.3,\"Currency\":963}"));
+		}
+
+		[Test]
+		public void CustomCurrencyLessConverter_ContainerObject_Exception()
+		{
+			var toSerialize = new MoneyContainer { PropName = new Money(14.3m, CurrencyIsoCode.XTS) };
+
+			Assert.That(()=> JsonConvert.SerializeObject(toSerialize, new CurrencyLessMoneyConverter()),
+				Throws.InstanceOf<NotImplementedException>());
+		}
+
+		[Test]
+		public void CustomCurrencyLessConverter_MoneyInstance_Exception()
+		{
+			var toSerialize = new Money(14.3m, CurrencyIsoCode.XTS);
+
+			Assert.That(() => JsonConvert.SerializeObject(toSerialize, new CurrencyLessMoneyConverter()),
+				Throws.InstanceOf<NotImplementedException>());
 		}
 
 		#endregion

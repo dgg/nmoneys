@@ -1,6 +1,7 @@
 ﻿using System.Runtime.Serialization;
 using Newtonsoft.Json.Serialization;
 using NMoneys.Serialization.Json_NET;
+using NMoneys.Serialization.Tests.Support;
 using NMoneys.Tests.CustomConstraints;
 using NMoneys.Tests.Support;
 using NUnit.Framework;
@@ -115,6 +116,42 @@ namespace NMoneys.Serialization.Tests.Json_Net
 			var actual = JsonConvert.DeserializeObject<Money>(json, new DefaultMoneyConverter(CurrencyStyle.Numeric));
 
 			Assert.That(actual, Is.EqualTo(expected));
+		}
+		
+		[Test]
+		public void CustomCurrencyLessConverter_OnlyMoney_ReadsPascalCasedProperties()
+		{
+			var expected = new Money(14.3m, CurrencyIsoCode.XXX);
+
+			string json = "{\"what_ever\":14.3}";
+			var actual = JsonConvert.DeserializeObject<Money>(json, new CurrencyLessMoneyConverter());
+			Assert.That(actual, Is.EqualTo(expected));
+		}
+
+		[Test]
+		public void CustomCurrencyLessConverter_WithDefaultContract_ReadsPascalCasedProperties()
+		{
+			var expected = new Money(14.3m, CurrencyIsoCode.XXX);
+
+			string json = "{\"Name\": \"something\", \"PropName\":14.3}";
+			var actual = JsonConvert.DeserializeObject<MoneyContainer>(json, new CurrencyLessMoneyConverter());
+
+			Assert.That(actual.PropName, Is.EqualTo(expected));
+
+			json = "{\"what_ever\":14.3}";
+			var m = JsonConvert.DeserializeObject<Money>(json, new CurrencyLessMoneyConverter());
+			Assert.That(m, Is.EqualTo(expected));
+		}
+
+		[Test]
+		public void CustomCurrencyLessConverter_WithCamelCaseContract_ReadsCamelCasedProperties()
+		{
+			var expected = new Money(14.3m, CurrencyIsoCode.XXX);
+
+			string json = "{\"Name\": \"something\", \"PropName\":14.3}";
+			var actual = JsonConvert.DeserializeObject<MoneyContainer>(json, new CurrencyLessMoneyConverter());
+
+			Assert.That(actual.PropName, Is.EqualTo(expected));
 		}
 
 		#endregion
