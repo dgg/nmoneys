@@ -48,9 +48,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NMoneys.Serialization.Json_NET\NMoneys.Serialization.Json_NET.csproj">
-      <Project>{A30FA2A1-CE95-4CA9-A786-8C5616F98B57}</Project>
-      <Name>NMoneys.Serialization.Json_NET</Name>
+    <ProjectReference Include="..\NMoneys.Serialization\NMoneys.Serialization.csproj">
+      <Project>{a30fa2a1-ce95-4ca9-a786-8c5616f98b57}</Project>
+      <Name>NMoneys.Serialization</Name>
     </ProjectReference>
     <ProjectReference Include="..\NMoneys.Tests\NMoneys.Tests.csproj">
       <Project>{2034BAF2-6337-425D-A111-4407361FC974}</Project>

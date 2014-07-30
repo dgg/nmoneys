@@ -1,71 +1,20 @@
-﻿using System.Globalization;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
+using Newtonsoft.Json.Serialization;
 using NMoneys.Serialization.Json_NET;
 using NMoneys.Tests.CustomConstraints;
 using NMoneys.Tests.Support;
 using NUnit.Framework;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace NMoneys.Serialization.Tests.Json_Net
 {
 	[TestFixture]
 	public class DeserializationTester
 	{
-		#region CurrencyIsoCode
-
-		[Test, Category("exploratory")]
-		public void CurrencyIsoCode_DefaultOverNumericValue_Currency()
-		{
-			string numericValue = CurrencyIsoCode.EGP.NumericCode().ToString(CultureInfo.InvariantCulture);
-
-			Assert.That(JsonConvert.DeserializeObject<CurrencyIsoCode>(numericValue),
-				Is.EqualTo(CurrencyIsoCode.EGP));
-		}
-
-		[Test]
-		public void CurrencyIsoCode_DefaultDeserialiation_LikeCanonicalJsonSerialization()
-		{
-			string serializedDollar = "840";
-			Assert.That(serializedDollar, Must.Be.DataContractJsonDeserializableInto(CurrencyIsoCode.USD));
-			Assert.That(JsonConvert.DeserializeObject<CurrencyIsoCode>(serializedDollar), Is.EqualTo(CurrencyIsoCode.USD));
-		}
-
-		[Test, Category("exploratory")]
-		public void CurrencyIsoCode_IncludedCustomConverterOverStringValue_Currency()
-		{
-			string stringValue = "\"EGP\"";
-			var deserialized = JsonConvert.DeserializeObject<CurrencyIsoCode>(stringValue, new StringEnumConverter());
-			Assert.That(deserialized, Is.EqualTo(CurrencyIsoCode.EGP));
-		}
-
-		#endregion
-
-		#region Currency
-
-		[Test, Category("exploratory")]
-		public void Currency_DefaultDeserialization_UsesCustomSerialization()
-		{
-			string customValue = "{\"isoCode\":\"EGP\"}";
-			var deserialized = JsonConvert.DeserializeObject<Currency>(customValue);
-
-			Assert.That(deserialized, Is.EqualTo(Currency.Get("EGP")));
-		}
-
-		[Test]
-		public void Currency_DefaultSerialiation_LikeCanonicalJsonSerialization()
-		{
-			string serializedDollar = "{\"isoCode\":\"USD\"}";
-			Assert.That(serializedDollar, Must.Be.DataContractJsonDeserializableInto(Currency.Usd));
-			Assert.That(JsonConvert.DeserializeObject<Currency>(serializedDollar), Is.EqualTo(Currency.Usd));
-		}
-
-		#endregion
-
 		#region Money
 
 		[Test, Category("exploratory")]
-		public void Money_DefaultDeserialization_UsesCustomSerialization()
+		public void DefaultDeserialization_UsesCustomSerialization()
 		{
 			string customValue = "{\"amount\":14.3,\"currency\":963}";
 			var deserialized = JsonConvert.DeserializeObject<Money>(customValue);
@@ -74,7 +23,7 @@ namespace NMoneys.Serialization.Tests.Json_Net
 		}
 
 		[Test]
-		public void Money_DefaultDeserialiation_NotLikeCanonicalJsonSerialization()
+		public void DefaultDeserialiation_NotLikeCanonicalJsonSerialization()
 		{
 			string customValue = "{\"amount\":14.3,\"currency\":963}";
 			using (var serializer = new OneGoDataContractJsonSerializer<Money>())
@@ -85,15 +34,87 @@ namespace NMoneys.Serialization.Tests.Json_Net
 		}
 
 		[Test]
-		public void Money_CustomConverter_LikeCanonicalJsonSerialization()
+		public void CustomCanonicalConverter_WithDefaultContract_ReadsPascalCasedProperties()
+		{
+			var expected = new Money(14.3m, CurrencyIsoCode.XTS);
+
+			string json = "{\"Amount\":14.3,\"Currency\":{\"IsoCode\":\"XTS\"}}";
+			var actual = JsonConvert.DeserializeObject<Money>(json, new CanonicalMoneyConverter());
+
+			Assert.That(actual, Is.EqualTo(expected));
+		}
+
+		[Test]
+		public void CustomCanonicalConverter_WithCamelCaseContract_ReadsCamelCasedProperties()
+		{
+			var expected = new Money(14.3m, CurrencyIsoCode.XTS);
+
+			string json = "{\"amount\":14.3,\"currency\":{\"isoCode\":\"XTS\"}}";
+			var settings = new JsonSerializerSettings
+			{
+				ContractResolver = new CamelCasePropertyNamesContractResolver(),
+				Converters = new[] { new CanonicalMoneyConverter() }
+			};
+			var actual = JsonConvert.DeserializeObject<Money>(json, settings);
+
+			Assert.That(actual, Is.EqualTo(expected));
+		}
+
+		[Test]
+		public void CustomCanonicalConverter_WithCamelCaseContract_LikeCanonicalJsonSerialization()
 		{
 			using (var serializer = new OneGoDataContractJsonSerializer<Money>())
 			{
 				var toSerialize = new Money(14.3m, CurrencyIsoCode.XTS);
 				string canonical = serializer.Serialize(toSerialize);
-				Assert.That(JsonConvert.DeserializeObject<Money>(canonical, new MoneyConverter()),
+
+				var settings = new JsonSerializerSettings
+				{
+					ContractResolver = new CamelCasePropertyNamesContractResolver(),
+					Converters = new[] { new CanonicalMoneyConverter() }
+				};
+				Assert.That(JsonConvert.DeserializeObject<Money>(canonical, settings),
 					Is.EqualTo(toSerialize));
 			}
+		}
+
+		[Test]
+		public void CustomDefaultConverter_WithDefaultContractAndCurrencyStyle_ReadsPascalCasedProperties()
+		{
+			var expected = new Money(14.3m, CurrencyIsoCode.XTS);
+
+			string json = "{\"Amount\":14.3,\"Currency\":\"XTS\"}";
+			var actual = JsonConvert.DeserializeObject<Money>(json, new DefaultMoneyConverter());
+
+			Assert.That(actual, Is.EqualTo(expected));
+		}
+
+		[Test]
+		public void CustomDefaultConverter_WithCamelCaseContractAndCurrencyStyle_ReadsCamelCasedProperties()
+		{
+			var expected = new Money(14.3m, CurrencyIsoCode.XTS);
+
+			string json = "{\"amount\":14.3,\"currency\":\"XTS\"}";
+			var settings = new JsonSerializerSettings
+			{
+				ContractResolver = new CamelCasePropertyNamesContractResolver(),
+				Converters = new[] { new DefaultMoneyConverter() }
+			};
+			var actual = JsonConvert.DeserializeObject<Money>(json, settings);
+
+			Assert.That(actual, Is.EqualTo(expected));
+		}
+
+		[Test]
+		public void CustomDefaultConverter_NumericStyle_ReadsCurrencyAsNumber()
+		{
+			var expected = new Money(14.3m, CurrencyIsoCode.XTS);
+
+			string json = "{\"Amount\":14.3,\"Currency\":963}";
+			
+			var actual = JsonConvert.DeserializeObject<Money>(json, new DefaultMoneyConverter(CurrencyStyle.Numeric));
+
+			Assert.That(actual, Is.EqualTo(expected));
 		}
 
 		#endregion
