@@ -46,6 +46,7 @@
     <Compile Include="Json_Net\DeserializationTester.cs" />
     <Compile Include="Json_Net\SerializationTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Support\MoneyContainer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NMoneys.Serialization\NMoneys.Serialization.csproj">
