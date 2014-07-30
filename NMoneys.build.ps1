@@ -31,21 +31,28 @@ task CopyArtifacts {
 
 	$core = Bin-Folder $base_dir $configuration "NMoneys"
 	$exchange = Bin-Folder $base_dir $configuration "NMoneys.Exchange"
-	$serialization = Bin-Folder $base_dir $configuration "NMoneys.Serialization.Json_NET"
+	$serialization = Src-Folder $base_dir "NMoneys.Serialization"
 
-	Get-ChildItem -Path ($core, $exchange, $serialization) -Filter 'NMoneys*.dll' |
-		Copy-To $release_folders
+	$except_content = $release_folders.Length-2
+	$bin_release_folders = $release_folders[0..$except_content]
+	$src_release_folders = $release_folders[$except_content+1]
+
+	Get-ChildItem -Path ($core, $exchange) -Filter 'NMoneys*.dll' |
+		Copy-To $bin_release_folders
 
 	Get-ChildItem $base_dir -Filter '*.nuspec' |
 		Copy-Item -Destination $release_dir
 
+	Get-ChildItem -Path "$serialization\Json_NET" -Filter "*.cs" |
+		Copy-Item -Destination $src_release_folders
+
 	if ($configuration -eq 'Release') {
-		Get-ChildItem -Path ($core, $exchange, $serialization) -Filter 'NMoneys*.xml' |
-			Copy-To $release_folders
+		Get-ChildItem -Path ($core, $exchange) -Filter 'NMoneys*.xml' |
+			Copy-To $bin_release_folders
 	}
 	elseif ($configuration -eq 'Debug') {
-		Get-ChildItem -Path ($core, $exchange, $serialization) -Filter 'NMoneys*.pdb' |
-			Copy-Item -Destination $release_dir
+		Get-ChildItem -Path ($core, $exchange) -Filter 'NMoneys*.pdb' |
+			Copy-To $bin_release_folders
 	}
 }
 
@@ -55,7 +62,6 @@ task Document {
 
 		$doc_path = Generate-Documentation $base_dir $release_dir "NMoneys" "NMoneys"
 		$doc_path = Generate-Documentation $base_dir $release_dir "NMoneys.Exchange" "NMoneys.Exchange"
-		$doc_path = Generate-Documentation $base_dir $release_dir "NMoneys.Serialization" "NMoneys.Serialization.Json_NET"
 
 		Get-ChildItem -Path ($doc_path) -Filter '*.chm' |
 			Copy-To $release_folders
@@ -86,7 +92,7 @@ task ? -Description "Helper to display task info" {
 
 function Ensure-Release-Folders($base)
 {
-	$release_folders = ($base, "$base\lib\Net20-client")
+	$release_folders = ($base, "$base\lib\Net20-client", "$base\content\Infrastructure\Serialization")
 
 	foreach ($f in $release_folders) { md $f -Force | Out-Null }
 
@@ -100,7 +106,7 @@ function Test-Assembly($base, $config, $name)
 
 function Run-Tests($base, $release, $test_assemblies){
 	$nunit_console = "$base\tools\NUnit.Runners.lite\nunit-console.exe"
-
+	
 	exec { & $nunit_console $test_assemblies /nologo /nodots /result="$release\TestResult.xml"  }
 }
 
