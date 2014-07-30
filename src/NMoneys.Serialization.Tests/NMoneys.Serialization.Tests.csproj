@@ -10,8 +10,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NMoneys.Serialization.Tests</RootNamespace>
     <AssemblyName>NMoneys.Serialization.Tests</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,41 +34,57 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Newtonsoft.Json.4.5.11\lib\net35\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=2.6.3.13283, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\NMoneys.Serialization\Json_NET\CanonicalMoneyConverter.cs">
+      <Link>Json_Net\Infrastructure\Serialization\CanonicalMoneyConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\NMoneys.Serialization\Json_NET\CurrencyLessMoneyConverter.cs">
+      <Link>Json_Net\Infrastructure\Serialization\CurrencyLessMoneyConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\NMoneys.Serialization\Json_NET\CurrencyStyle.cs">
+      <Link>Json_Net\Infrastructure\Serialization\CurrencyStyle.cs</Link>
+    </Compile>
+    <Compile Include="..\NMoneys.Serialization\Json_NET\DefaultMoneyConverter.cs">
+      <Link>Json_Net\Infrastructure\Serialization\DefaultMoneyConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\NMoneys.Serialization\Json_NET\MoneyOperator.cs">
+      <Link>Json_Net\Infrastructure\Serialization\MoneyOperator.cs</Link>
+    </Compile>
+    <Compile Include="..\NMoneys.Serialization\Json_NET\SupportForReading.cs">
+      <Link>Json_Net\Infrastructure\Serialization\SupportForReading.cs</Link>
+    </Compile>
+    <Compile Include="..\NMoneys.Serialization\Json_NET\SupportForWriting.cs">
+      <Link>Json_Net\Infrastructure\Serialization\SupportForWriting.cs</Link>
+    </Compile>
     <Compile Include="Json_Net\DeserializationTester.cs" />
     <Compile Include="Json_Net\SerializationTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Support\MoneyContainer.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\NMoneys.Serialization\NMoneys.Serialization.csproj">
-      <Project>{a30fa2a1-ce95-4ca9-a786-8c5616f98b57}</Project>
-      <Name>NMoneys.Serialization</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NMoneys.Tests\NMoneys.Tests.csproj">
-      <Project>{2034BAF2-6337-425D-A111-4407361FC974}</Project>
-      <Name>NMoneys.Tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NMoneys\NMoneys.csproj">
-      <Project>{5408F146-6F8A-406C-9E90-292662018F72}</Project>
-      <Name>NMoneys</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Service_Stack\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NMoneys.Tests\NMoneys.Tests.csproj">
+      <Project>{2034baf2-6337-425d-a111-4407361fc974}</Project>
+      <Name>NMoneys.Tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NMoneys\NMoneys.csproj">
+      <Project>{5408f146-6f8a-406c-9e90-292662018f72}</Project>
+      <Name>NMoneys</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

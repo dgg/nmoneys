@@ -1,6 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using NMoneys;
 
 namespace NMoneys.Serialization.Json_NET
 {
@@ -76,7 +77,7 @@ namespace NMoneys.Serialization.Json_NET
 		}
 	}
 
-	internal static partial class CurrencyStyleExtensions
+	internal static class CurrencyStyleWriteExtensions
 	{
 		internal static void WriteValue(this JsonWriter writer, CurrencyIsoCode currency, CurrencyStyle style)
 		{

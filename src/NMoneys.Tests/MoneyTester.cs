@@ -236,12 +236,7 @@ namespace NMoneys.Tests
 			var p = new MoneyContainer();
 			var someMoney = new Money(0m, Currency.Dkk);
 
-			Assert.That(p.Money, Is.Not.EqualTo(someMoney));
-		}
-
-		public class MoneyContainer
-		{
-			public Money Money { get; set; }
+			Assert.That(p.PropName, Is.Not.EqualTo(someMoney));
 		}
 
 		#endregion
