@@ -1,7 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json.Serialization;
 using NMoneys.Serialization.Json_NET;
-using NMoneys.Serialization.Tests.Support;
 using NMoneys.Tests.Support;
 using NUnit.Framework;
 using Newtonsoft.Json;

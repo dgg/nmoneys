@@ -2,6 +2,7 @@
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
+using NMoneys;
 
 namespace NMoneys.Serialization.Json_NET
 {
@@ -64,7 +65,7 @@ namespace NMoneys.Serialization.Json_NET
 		}
 	}
 
-	internal static partial class CurrencyStyleExtensions
+	internal static class CurrencyStyleReadExtensions
 	{
 		internal static CurrencyIsoCode GetValue(this JToken token, CurrencyStyle style)
 		{
