@@ -46,6 +46,9 @@ task CopyArtifacts {
 	Get-ChildItem -Path "$serialization\Json_NET" -Filter "*.cs" |
 		Copy-Item -Destination $src_release_folders
 
+		Get-ChildItem -Path "$serialization\Service_Stack" -Filter "*.cs" |
+		Copy-Item -Destination $src_release_folders
+
 	if ($configuration -eq 'Release') {
 		Get-ChildItem -Path ($core, $exchange) -Filter 'NMoneys*.xml' |
 			Copy-To $bin_release_folders

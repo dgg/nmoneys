@@ -14,7 +14,7 @@
 		</summary>
 		<projectUrl>http://code.google.com/p/nmoneys/</projectUrl>
 		<iconUrl>https://nugetgallery.blob.core.windows.net/icons/NMoneys.2.0.0.0.png</iconUrl>
-		<tags>.net currency money</tags>
+		<tags>.net currency money newtonsoft Json.NET JSON</tags>
 		<dependencies>
 			<dependency id="nmoneys" version="3.1.0.0" />
 		</dependencies>
