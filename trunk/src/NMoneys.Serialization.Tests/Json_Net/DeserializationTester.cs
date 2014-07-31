@@ -137,10 +137,6 @@ namespace NMoneys.Serialization.Tests.Json_Net
 			var actual = JsonConvert.DeserializeObject<MoneyContainer>(json, new CurrencyLessMoneyConverter());
 
 			Assert.That(actual.PropName, Is.EqualTo(expected));
-
-			json = "{\"what_ever\":14.3}";
-			var m = JsonConvert.DeserializeObject<Money>(json, new CurrencyLessMoneyConverter());
-			Assert.That(m, Is.EqualTo(expected));
 		}
 
 		[Test]
