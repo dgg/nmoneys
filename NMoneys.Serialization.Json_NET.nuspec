@@ -20,12 +20,6 @@
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="content\**\CanonicalMoneyConverter.cs" target="content" />
-		<file src="content\**\DefaultMoneyConverter.cs" target="content" />
-		<file src="content\**\CurrencyLessMoneyConverter.cs" target="content" />
-		<file src="content\**\CurrencyStyle.cs" target="content" />
-		<file src="content\**\MoneyOperator.cs" target="content" />
-		<file src="content\**\SupportForReading.cs" target="content" />
-		<file src="content\**\SupportForWriting.cs" target="content" />
+		<file src="content\**\Json_NET.cs" target="content" />
 	</files>
 </package>
