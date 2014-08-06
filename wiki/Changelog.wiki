@@ -1,6 +1,12 @@
 #summary Summary of changes.
 #labels Phase-Support
 
+= 2.0.0.0 =
+2014/08/06 @revision 296
+   * Breaking change of _NuGet_ package `NMoneys.Serialization.Json_NET` as it is now a source code package with no binary dependency on _Json.NET_
+   * Add source code package to support custom serialization for _ServiceStack.Text_
+   * Add source code package to support custom serialization for _RavenDB_
+
 = 3.5.1.0 =
 2014/06/19 @revision 283
    * Update symbol and native name for `BYR`
