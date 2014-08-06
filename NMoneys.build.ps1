@@ -34,28 +34,35 @@ task CopyArtifacts {
 	$serialization = Src-Folder $base_dir "NMoneys.Serialization"
 
 	$except_content = $release_folders.Length-2
-	$bin_release_folders = $release_folders[0..$except_content]
-	$src_release_folders = $release_folders[$except_content+1]
+	$bin_release_folder = $release_folders[0..$except_content]
+	$src_release_folder = $release_folders[$except_content+1]
+	Write-Host $bin_release_folders
 
 	Get-ChildItem -Path ($core, $exchange) -Filter 'NMoneys*.dll' |
-		Copy-To $bin_release_folders
+		Copy-To $bin_release_folder
 
 	Get-ChildItem $base_dir -Filter '*.nuspec' |
 		Copy-Item -Destination $release_dir
 
 	Get-ChildItem -Path "$serialization\Json_NET" -Filter "*.cs" |
-		Copy-Item -Destination $src_release_folders
+		Copy-Item -Destination $src_release_folder
 
-		Get-ChildItem -Path "$serialization\Service_Stack" -Filter "*.cs" |
-		Copy-Item -Destination $src_release_folders
+	Get-ChildItem -Path "$serialization\Service_Stack" -Filter "*.cs" |
+		Copy-Item -Destination $src_release_folder
+
+	Get-ChildItem -Path "$serialization\Json_Net" -Filter "*.cs" |
+		Get-Content |
+		Foreach-Object {$_ -replace "Newtonsoft", "Raven.Imports.Newtonsoft"} | 
+		Foreach-Object {$_ -replace ".Json_NET", ".Raven_DB"} |
+		Set-Content "$src_release_folder\Raven_DB.cs"
 
 	if ($configuration -eq 'Release') {
 		Get-ChildItem -Path ($core, $exchange) -Filter 'NMoneys*.xml' |
-			Copy-To $bin_release_folders
+			Copy-To $bin_release_folder
 	}
 	elseif ($configuration -eq 'Debug') {
 		Get-ChildItem -Path ($core, $exchange) -Filter 'NMoneys*.pdb' |
-			Copy-To $bin_release_folders
+			Copy-To $bin_release_folder
 	}
 }
 
