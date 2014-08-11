@@ -1,0 +1,5 @@
+#summary How to serialize money instances using popular thrid party libraries.
+#labels Phase-Design
+
+= Third Party Serialization =
+
