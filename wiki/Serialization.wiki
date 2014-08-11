@@ -33,12 +33,11 @@ I do not have enough user base with sufficient different usage scenarios to make
 In this version I am commited to support fully customized:
   * binary
   * xml
-  * data contract
-  * simple json serialization
+  * data contract (XML and Json) serialization
 
 SOAP serialization is left out as it's deprecated.
 XAML serialization is not supported as, either I do not have enough kwnoledge to meet my requirements or they are not possible to meet with the current version of the language.
-Data contract json serialization is left out because it collides with XML serialization and there are better (and faster) alternatives for serialzing to JSON.
-Third party serialization models are left out as I do not wish to take any non-framework dependency on the library.
+"Simple" json serialization (`JavaScriptSerializer`) is left out because there are better (and faster) alternatives for serialzing to JSON.
+Third party serialization models are left out of the library as I do not wish to take any non-framework dependency on the library. See [ThirdPartySerialization Third-Party Serialization] for supported libraries.
 
 `ISerializable` model is supported to handle the requirements. If that means that most people can't use the library, we can reconsider that support.
