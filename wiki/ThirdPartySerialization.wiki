@@ -2,3 +2,17 @@
 #labels Phase-Design
 
 = Third Party Serialization =
+Serialization for third party libraries (those not included in the .NET framework) is supported via separate NuGet packages (one per library) that provide the source code needed to customize the serialization process.
+   NOTE: the process and artifacts needed is different for each library. A different section will be provided for each library.
+
+== Json.NET ==
+
+[https://nmoneys.googlecode.com/svn/wiki/NMoneys_JsonNET_Nuget.png]
+
+== ServiceStack ==
+
+[https://nmoneys.googlecode.com/svn/wiki/NMoneys_ServiceStack_Nuget.png]
+
+== RavenDB ==
+
+[https://nmoneys.googlecode.com/svn/wiki/NMoneys_RavenDB_Nuget.png]
