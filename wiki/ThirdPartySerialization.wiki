@@ -8,6 +8,10 @@ Serialization for third party libraries (those not included in the .NET framewor
 == Json.NET ==
 
 [https://nmoneys.googlecode.com/svn/wiki/NMoneys_JsonNET_Nuget.png]
+Once the package is installed, there are available three custom converters
+ * `CanonicalConverter`
+ * `DefaultConverter`
+ * `NumericalConverter`
 
 == ServiceStack ==
 
