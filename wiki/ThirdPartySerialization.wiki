@@ -19,8 +19,17 @@ Each converter can be configured as per _Json.NET_ configuration instructions:
 
 If _Json-NET_ is used by a framework/library, refer to that library documentation on how to customize serialization/deserialization. Or you can drop a line in the discussion group in case someone can give a hand. 
 
-== ServiceStack ==
+=== CanonicalConverter ===
+This converter produces the same output as the built-in JSON serialization of the library when using the built-in `DataContractJsonSerializer`: an _Amount_ numeric property and a _Currency_ object with a three-letter code (by default) _IsoCode_ property.
 
+Property casing must be configured outside this converter, for example, using a different implementation of `DefaultContractResolver`.
+
+=== DefaultConverter===
+This converter produces a standard representation of a monetary quantity: an _Amount_ numeric property and a _Currency_ code that can be serialized either as a string (the default or providing `CurrencyStyle.Alphabetic` to the converter constructor) or as a number (providing `CurrencyStyle.Numeric` to the converter constructor).
+
+Property casing must be configured outside this converter, for example, using a different implementation of `DefaultContractResolver`.
+
+== ServiceStack ==
 [https://nmoneys.googlecode.com/svn/wiki/NMoneys_ServiceStack_Nuget.png]
 
 == RavenDB ==
