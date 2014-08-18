@@ -24,10 +24,22 @@ This converter produces the same output as the built-in JSON serialization of th
 
 Property casing must be configured outside this converter, for example, using a different implementation of `DefaultContractResolver`.
 
+{{{
+{"Amount" : 123.4, "Currency" : {"IsoCode" : "XXX"}}
+}}}
+
 === DefaultConverter===
 This converter produces a standard representation of a monetary quantity: an _Amount_ numeric property and a _Currency_ code that can be serialized either as a string (the default or providing `CurrencyStyle.Alphabetic` to the converter constructor) or as a number (providing `CurrencyStyle.Numeric` to the converter constructor).
 
 Property casing must be configured outside this converter, for example, using a different implementation of `DefaultContractResolver`.
+
+{{{
+{"Amount" : 123.4, "Currency" : "XXX"}
+{"amount" : 123.4, "currency" : 999}
+}}}
+
+=== CurrencyLessConverter ===
+This converter is a deserializer designed to provide some limited support to legacy integration processes in which a numeric property is included, but no currency is specified in the input, but a default currency (`XXX` by default) can be provided at the time of instantiating the converter.
 
 == ServiceStack ==
 [https://nmoneys.googlecode.com/svn/wiki/NMoneys_ServiceStack_Nuget.png]
