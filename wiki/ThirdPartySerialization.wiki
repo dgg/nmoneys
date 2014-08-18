@@ -8,10 +8,16 @@ Serialization for third party libraries (those not included in the .NET framewor
 == Json.NET ==
 
 [https://nmoneys.googlecode.com/svn/wiki/NMoneys_JsonNET_Nuget.png]
+
 Once the package is installed, there are available three custom converters
  * `CanonicalConverter`
  * `DefaultConverter`
  * `NumericalConverter`
+Each converter can be configured as per _Json.NET_ configuration instructions:
+ * pass the converter as an optional parameter to either`.SerializeObject()`or `.DeserializeObject()` static methods of `JsonConvert`
+ * Use the [http://james.newtonking.com/json/help/index.html?topic=html/P_Newtonsoft_Json_JsonSerializerSettings_Converters.htm .Converters] collection of a `JsonSerializerSettings` instance that will be passed to any of the aforementioned methods
+
+If _Json-NET_ is used by a framework/library, refer to that library documentation on how to customize serialization/deserialization. Or you can drop a line in the discussion group in case someone can give a hand. 
 
 == ServiceStack ==
 
