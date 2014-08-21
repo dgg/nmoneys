@@ -82,3 +82,12 @@ Due to the functional style of configuration, no other default currency can be s
 == RavenDB ==
 
 [https://nmoneys.googlecode.com/svn/wiki/NMoneys_RavenDB_Nuget.png]
+
+_RavenDB_ uses its own "internalized" version of _Json.NET_ under its own namespace. The very same converters (`CanonicalMoneyConverter`, `DefaultMoneyConverter` and `NumericalMoneyConverter`) are included in the package and their usage is exactly the same.
+
+The only difference occurs when configuring the converters, as serialization happens not by invoking a method on `JsonConvert`. In order to use any of the provided converters, they can be added to the `.Converters` collection from the `JsonSerializer` instance configurable via the `docStoreInstance.Conventions.CustomizeJsonSerializer` delegate. For instance:
+
+{{{
+var store = new DocumentStore() { /* initialize the store */ };
+store.Conventions.CustomizeJsonSerializer = serializer => serializer.Converters.Add(new DefaultMoneyConverter());
+}}}
