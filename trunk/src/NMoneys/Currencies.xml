@@ -436,15 +436,15 @@
 		<negativePattern>0</negativePattern>
 	</currency>
 	<currency code="CVE">
-		<englishName>Cape Verde Escudo</englishName>
-		<nativeName>Cape Verde Escudo</nativeName>
-		<symbol>36</symbol>
+		<englishName>Cabo Verde Escudo</englishName>
+		<nativeName>Escudo cabo-verdiano</nativeName>
+		<symbol></symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>$</decimalSeparator>
 		<groupSeparator>.</groupSeparator>
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<negativePattern>1</negativePattern>
 	</currency>
 	<currency code="CZK">
 		<englishName>Czech Koruna</englishName>

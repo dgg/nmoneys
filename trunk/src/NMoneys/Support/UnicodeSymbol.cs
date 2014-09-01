@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
+using NMoneys.Support.Ext;
 
 namespace NMoneys.Support
 {
@@ -44,13 +45,19 @@ namespace NMoneys.Support
 		{
 			Guard.AgainstNullArgument("tokenizedCodePoints", tokenizedCodePoints);
 
-			int[] codePoints = 
-				split(tokenizedCodePoints)
-				.Select(cp => Convert.ToInt32(cp.Trim(), CultureInfo.InvariantCulture))
-				.ToArray();
-			string symbol = string.Empty;
-			Array.ForEach(codePoints, cp => symbol += char.ConvertFromUtf32(cp));
-			return new UnicodeSymbol(codePoints, symbol);
+			UnicodeSymbol unicode = Empty;
+
+			if (!tokenizedCodePoints.IsEmpty())
+			{
+				int[] codePoints = split(tokenizedCodePoints)
+					.Select(cp => Convert.ToInt32(cp.Trim(), CultureInfo.InvariantCulture))
+					.ToArray();
+				string symbol = string.Empty;
+				Array.ForEach(codePoints, cp => symbol += char.ConvertFromUtf32(cp));
+				unicode = new UnicodeSymbol(codePoints, symbol);
+			}
+
+			return unicode;
 		}
 
 		/// <summary>
@@ -72,5 +79,7 @@ namespace NMoneys.Support
 			
 			return new UnicodeSymbol(codePoints, symbol);
 		}
+
+		public static readonly UnicodeSymbol Empty =  new UnicodeSymbol(new int[0], string.Empty);
 	}
 }
