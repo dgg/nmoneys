@@ -38,13 +38,22 @@ namespace NMoneys.Tests.Support
 		[TestCase("a b", ExpectedException = typeof(FormatException))]
 		[TestCase("A", ExpectedException = typeof(FormatException))]
 		[TestCase("-4 -3", ExpectedException = typeof(ArgumentOutOfRangeException))]
-		[TestCase("", ExpectedException = typeof(FormatException))]
 		[TestCase(null, ExpectedException = typeof(ArgumentNullException))]
 		public void FromTokenizedCodePoints_NotACodePointChain_Exception(string notAChainOfCodePoints)
 		{
 			UnicodeSymbol.FromTokenizedCodePoints(notAChainOfCodePoints);
 
 			Assert.Fail("An exception should have been thrown before");
+		}
+
+		[Test]
+		public void FromTokenizedCodePoints_Empty_EmptySymbol()
+		{
+			UnicodeSymbol empty = UnicodeSymbol.FromTokenizedCodePoints(string.Empty);
+
+			Assert.That(empty.Symbol, Is.Empty);
+			Assert.That(empty.CodePoints, Is.Empty);
+			Assert.That(empty.TokenizedCodePoints, Is.Empty);
 		}
 
 		#endregion

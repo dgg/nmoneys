@@ -183,5 +183,15 @@ namespace NMoneys.Tests
 		}
 
 		#endregion
+
+		#region Issue 29. Allow empty currency symbols
+
+		[Test]
+		public void Get_SymbolLessCurrency_NoException()
+		{
+			Assert.That(() => Currency.Get(CurrencyIsoCode.CVE), Throws.Nothing);
+		}
+
+		#endregion
 	}
 }
