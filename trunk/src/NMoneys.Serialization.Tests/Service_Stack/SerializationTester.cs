@@ -139,5 +139,183 @@ namespace NMoneys.Serialization.Tests.Service_Stack
 				Assert.That(actual, Is.EqualTo("{\"Amount\":14.3,\"Currency\":\"XTS\"}"));
 			}
 		}
+
+		#region nullable
+
+		[Test]
+		public void CustomCanonicalConverter_NotNullDefaultConfiguration_UsesPascalCasedPropertyNamesAndAlphabeticCode()
+		{
+			Money? notNull = new Money(14.3m, CurrencyIsoCode.XTS);
+
+			JsConfig<Money?>.RawSerializeFn = CanonicalNullableMoneySerializer.Serialize;
+
+			string actual = JsonSerializer.SerializeToString(notNull);
+			Assert.That(actual, Is.EqualTo("{\"Amount\":14.3,\"Currency\":{\"IsoCode\":\"XTS\"}}"));
+
+			JsConfig<Money?>.Reset();
+		}
+
+		[Test]
+		public void CustomCanonicalConverter_NullDefaultConfiguration_UsesPascalCasedPropertyNamesAndAlphabeticCode()
+		{
+			Money? @null = default(Money?);
+
+			JsConfig<Money?>.RawSerializeFn = CanonicalNullableMoneySerializer.Serialize;
+
+			string actual = JsonSerializer.SerializeToString(@null);
+			Assert.That(actual, Is.Null);
+
+			JsConfig<Money?>.Reset();
+		}
+
+		[Test]
+		public void CustomCanonicalConverter_NotNullContainer_UsesPascalCasedPropertyNamesAndAlphabeticCode()
+		{
+			var notNull = new NullableMoneyContainer { PropName = new Money(14.3m, CurrencyIsoCode.XTS) };
+
+			JsConfig<Money?>.RawSerializeFn = CanonicalNullableMoneySerializer.Serialize;
+
+			string actual = JsonSerializer.SerializeToString(notNull);
+			Assert.That(actual, Is.EqualTo("{\"PropName\":{\"Amount\":14.3,\"Currency\":{\"IsoCode\":\"XTS\"}}}"));
+
+			JsConfig<Money?>.Reset();
+		}
+
+		[Test]
+		public void CustomCanonicalConverter_NullContainer_UsesPascalCasedPropertyNamesAndAlphabeticCode()
+		{
+			var @null = new NullableMoneyContainer { PropName = default(Money?) };
+
+			JsConfig<Money?>.RawSerializeFn = CanonicalNullableMoneySerializer.Serialize;
+
+			string actual = JsonSerializer.SerializeToString(@null);
+			Assert.That(actual, Is.EqualTo("{}"));
+
+			JsConfig<Money?>.Reset();
+		}
+
+		[Test]
+		public void CustomCanonicalConverter_NotNullCamelCase_UsesCamelCasedPropertyNamesAndAlphabeticCode()
+		{
+			Money? notNull = new Money(14.3m, CurrencyIsoCode.XTS);
+
+			using (new NullableConfigScope(CanonicalNullableMoneySerializer.Serialize, JsConfig.With(emitCamelCaseNames: true)))
+			{
+				string actual = JsonSerializer.SerializeToString(notNull);
+				Assert.That(actual, Is.EqualTo("{\"amount\":14.3,\"currency\":{\"isoCode\":\"XTS\"}}"));
+			}
+		}
+
+		[Test]
+		public void CustomCanonicalConverter_NullCamelCase_UsesCamelCasedPropertyNamesAndAlphabeticCode()
+		{
+			Money? @null = default(Money?);
+
+			using (new NullableConfigScope(CanonicalNullableMoneySerializer.Serialize, JsConfig.With(emitCamelCaseNames: true)))
+			{
+				string actual = JsonSerializer.SerializeToString(@null);
+				Assert.That(actual, Is.Null);
+			}
+		}
+
+		[Test]
+		public void CustomDefaultConverter_NotNullDefaultConfiguration_UsesPascalCasedPropertyNamesAndAlphabeticCode()
+		{
+			Money? notNull = new Money(14.3m, CurrencyIsoCode.XTS);
+
+			using (new NullableConfigScope(DefaultNullableMoneySerializer.Serialize))
+			{
+				string actual = JsonSerializer.SerializeToString(notNull);
+				Assert.That(actual, Is.EqualTo("{\"Amount\":14.3,\"Currency\":\"XTS\"}"));
+			}
+		}
+
+		[Test]
+		public void CustomDefaultConverter_NullDefaultConfiguration_UsesPascalCasedPropertyNamesAndAlphabeticCode()
+		{
+			Money? @null = default(Money?);
+
+			using (new NullableConfigScope(DefaultNullableMoneySerializer.Serialize))
+			{
+				string actual = JsonSerializer.SerializeToString(@null);
+				Assert.That(actual, Is.Null);
+			}
+		}
+
+		[Test]
+		public void CustomDefaultConverter_NotNullCamelCasing_UsesCamelCasedPropertyNamesAndAlphabeticCode()
+		{
+			Money? notNull = new Money(14.3m, CurrencyIsoCode.XTS);
+
+			using (new NullableConfigScope(DefaultNullableMoneySerializer.Serialize, JsConfig.With(emitCamelCaseNames: true)))
+			{
+				string actual = JsonSerializer.SerializeToString(notNull);
+				Assert.That(actual, Is.EqualTo("{\"amount\":14.3,\"currency\":\"XTS\"}"));
+			}
+		}
+
+		[Test]
+		public void CustomDefaultConverter_NullCamelCasing_UsesCamelCasedPropertyNamesAndAlphabeticCode()
+		{
+			Money? @null = default(Money?);
+
+			using (new NullableConfigScope(DefaultNullableMoneySerializer.Serialize, JsConfig.With(emitCamelCaseNames: true)))
+			{
+				string actual = JsonSerializer.SerializeToString(@null);
+				Assert.That(actual, Is.Null);
+			}
+		}
+
+		[Test]
+		public void CustomDefaultConverter_NotNullNumericStyle_UsesNumericCode()
+		{
+			Money? notNull = new Money(14.3m, CurrencyIsoCode.XTS);
+
+			using (new NullableConfigScope(DefaultNullableMoneySerializer.Numeric.Serialize))
+			{
+				string actual = JsonSerializer.SerializeToString(notNull);
+				Assert.That(actual, Is.EqualTo("{\"Amount\":14.3,\"Currency\":963}"));
+			}
+		}
+
+		[Test]
+		public void CustomDefaultConverter_NullNumericStyle_UsesNumericCode()
+		{
+			Money? @null = default(Money?);
+
+			using (new NullableConfigScope(DefaultNullableMoneySerializer.Numeric.Serialize))
+			{
+				string actual = JsonSerializer.SerializeToString(@null);
+				Assert.That(actual, Is.Null);
+			}
+		}
+
+		[Test]
+		public void CustomDefaultConverter_NotNullContainer_UsesPascalCasedPropertyNamesAndAlphabeticCode()
+		{
+			var notNull = new NullableMoneyContainer { PropName = new Money(14.3m, CurrencyIsoCode.XTS) };
+
+			JsConfig<Money?>.RawSerializeFn = DefaultNullableMoneySerializer.Serialize;
+
+			string actual = JsonSerializer.SerializeToString(notNull);
+			Assert.That(actual, Is.EqualTo("{\"PropName\":{\"Amount\":14.3,\"Currency\":\"XTS\"}}"));
+
+			JsConfig<Money?>.Reset();
+		}
+
+		[Test]
+		public void CustomDefaultConverter_NullContainer_UsesPascalCasedPropertyNamesAndAlphabeticCode()
+		{
+			var @null = new NullableMoneyContainer { PropName = default(Money?) };
+
+			JsConfig<Money?>.RawSerializeFn = DefaultNullableMoneySerializer.Serialize;
+
+			string actual = JsonSerializer.SerializeToString(@null);
+			Assert.That(actual, Is.EqualTo("{}"));
+
+			JsConfig<Money?>.Reset();
+		}
+
+		#endregion
 	}
 }

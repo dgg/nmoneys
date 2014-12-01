@@ -36,6 +36,44 @@ namespace NMoneys.Serialization.Service_Stack
 	}
 
 	/// <summary>
+	/// Converts a <see cref="System.Nullable{Money}"/> instance to and from JSON in the canonical way.
+	/// </summary>
+	/// <remarks>The canonical way is the one implemented in NMoneys itself, with an <c>Amount</c>
+	/// numeric property and a <c>Currency</c> object with a three-letter code <c>IsoCode"</c> property.
+	/// <para>
+	/// Property casing must be configured apart from this serializer using, for instance,
+	/// <see cref="JsConfig.EmitCamelCaseNames"/>
+	/// </para>
+	/// </remarks>
+	/// <example>
+	/// <code>{"Amount" : 123.4, "Currency" : {"IsoCode" : "XXX"}}</code>
+	/// <code>{"amount" : 123.4, "currency" : {"isoCode" : "XXX"}}</code>
+	/// </example>
+	public static class CanonicalNullableMoneySerializer
+	{
+		public static string Serialize(Money? instance)
+		{
+			string serialized;
+			if (instance.HasValue)
+			{
+				var surrogate = new CanonicalSurrogate(instance.Value);
+				serialized = JsonSerializer.SerializeToString(surrogate);
+			}
+			else
+			{
+				serialized = JsonSerializer.SerializeToString(instance);
+			}
+			return serialized;
+		}
+
+		public static Money? Deserialize(string json)
+		{
+			var surrogate = JsonSerializer.DeserializeFromString<CanonicalSurrogate>(json);
+			return surrogate != null ? surrogate.ToMoney() : default(Money?);
+		}
+	}
+
+	/// <summary>
 	/// Converts a <see cref="Money"/> instance to and from JSON in a default (standard) way.
 	/// </summary>
 	/// <remarks>The default (standard) way is the one that a normal serializer would do for a money instance,
@@ -84,6 +122,80 @@ namespace NMoneys.Serialization.Service_Stack
 			}
 
 			public static Money Deserialize(string json)
+			{
+				var proxy = JsonSerializer.DeserializeFromString<NumericSurrogate>(json);
+				return proxy.ToMoney();
+			}
+		}
+	}
+
+	/// <summary>
+	/// Converts a <see cref="System.Nullable{Money}"/> instance to and from JSON in a default (standard) way.
+	/// </summary>
+	/// <remarks>The default (standard) way is the one that a normal serializer would do for a money instance,
+	/// with an <c>Amount</c> numeric property and an alphabetical <c>Currency</c> code.
+	/// <para>
+	/// Property casing must be configured apart from this serializer using, for instance,
+	/// <see cref="JsConfig.EmitCamelCaseNames"/>
+	/// </para>
+	/// </remarks>
+	/// <example>
+	/// <code>{"Amount" : 123.4, "Currency" : "XXX"}</code>
+	/// </example>
+	public static class DefaultNullableMoneySerializer
+	{
+		public static string Serialize(Money? instance)
+		{
+			string serialized;
+			if (instance.HasValue)
+			{
+				var surrogate = new DefaultSurrogate(instance.Value);
+				serialized = JsonSerializer.SerializeToString(surrogate);
+			}
+			else
+			{
+				serialized = JsonSerializer.SerializeToString(instance);
+			}
+			return serialized;
+		}
+
+		public static Money? Deserialize(string json)
+		{
+			var proxy = JsonSerializer.DeserializeFromString<DefaultSurrogate>(json);
+			return proxy.ToMoney();
+		}
+
+		/// <summary>
+		/// Converts a <see cref="System.Nullable{Money}"/> instance to and from JSON in a default (standard) way.
+		/// </summary>
+		/// <remarks>The default (standard) way is the one that a normal serializer would do for a money instance,
+		/// with an <c>Amount</c> numeric property and a numerical <c>Currency</c> code.
+		/// <para>
+		/// Property casing must be configured apart from this serializer using, for instance,
+		/// <see cref="JsConfig.EmitCamelCaseNames"/>
+		/// </para>
+		/// </remarks>
+		/// <example>
+		/// <code>{"Amount" : 123.4, "Currency" : 999}</code>
+		/// </example>
+		public static class Numeric
+		{
+			public static string Serialize(Money? instance)
+			{
+				string serialized;
+				if (instance.HasValue)
+				{
+					var surrogate = new NumericSurrogate(instance.Value);
+					serialized = JsonSerializer.SerializeToString(surrogate);
+				}
+				else
+				{
+					serialized = JsonSerializer.SerializeToString(instance);
+				}
+				return serialized;
+			}
+
+			public static Money? Deserialize(string json)
 			{
 				var proxy = JsonSerializer.DeserializeFromString<NumericSurrogate>(json);
 				return proxy.ToMoney();

@@ -54,6 +54,7 @@
     <Compile Include="Service_Stack\DeserializationTester.cs" />
     <Compile Include="Service_Stack\SerializationTester.cs" />
     <Compile Include="Service_Stack\Support\ConfigScope.cs" />
+    <Compile Include="Service_Stack\Support\NullableConfigScope.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
