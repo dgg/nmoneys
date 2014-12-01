@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Json_NET\Json_NET.cs" />
+    <Compile Include="Json_NET\Nullable\Json_NET.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service_Stack\Service_Stack.cs" />
   </ItemGroup>
