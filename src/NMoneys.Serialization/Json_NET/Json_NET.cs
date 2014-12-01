@@ -50,6 +50,55 @@ namespace NMoneys.Serialization.Json_NET
 	}
 
 	/// <summary>
+	/// Converts a <see cref="Nullable{Money}"/> instance to and from JSON in the canonical way.
+	/// </summary>
+	/// <remarks>The canonical way is the one implemented in NMoneys itself, with an <c>Amount</c>
+	/// numeric property and a <c>Currency</c> object with a three-letter code <c>IsoCode"</c> property.
+	/// <para>
+	/// Property casing must be configured apart from this converter using, for instance, another
+	/// <see cref="IContractResolver"/>
+	/// </para>
+	/// </remarks>
+	/// <example>
+	/// <code>{"Amount" : 123.4, "Currency" : {"IsoCode" : "XXX"}}</code>
+	/// <code>{"amount" : 123.4, "currency" : {"isoCode" : "XXX"}}</code>
+	/// </example>
+	public class CanonicalNullableMoneyConverter : JsonConverter
+	{
+		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+		{
+			var money = (Money?)value;
+
+			if (money.HasValue)
+			{
+				IMoneyWriter canonical = new CanonicalMoneyWriter(money.Value, serializer.ContractResolver);
+				canonical.WriteTo(writer);
+			}
+		}
+
+		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+		{
+			var token = JToken.ReadFrom(reader);
+			Money? read = default(Money?);
+			if (token.HasValues)
+			{
+
+				var canonical = new CanonicalMoneyReader(serializer.ContractResolver as DefaultContractResolver);
+
+				read = new Money(
+					canonical.ReadAmount(token),
+					canonical.ReadCurrencyCode(token));
+			}
+			return read;
+		}
+
+		public override bool CanConvert(Type objectType)
+		{
+			return objectType == typeof(Money) || objectType == typeof(Money?);
+		}
+	}
+
+	/// <summary>
 	/// Converts a <see cref="Money"/> instance to and from JSON in a default (standard) way.
 	/// </summary>
 	/// <remarks>The default (standard) way is the one that a normal serializer would do for a money instance,
@@ -100,6 +149,67 @@ namespace NMoneys.Serialization.Json_NET
 		public override bool CanConvert(Type objectType)
 		{
 			return objectType == typeof (Money);
+		}
+	}
+
+	/// <summary>
+	/// Converts a <see cref="Nullable{Money}"/> instance to and from JSON in a default (standard) way.
+	/// </summary>
+	/// <remarks>The default (standard) way is the one that a normal serializer would do for a money instance,
+	/// with an <c>Amount</c> numeric property and a <c>Currency</c> code. The <c>Currency</c> property can be
+	/// serialized either as a string (the default or providing <see cref="CurrencyStyle.Alphabetic"/>) or as
+	/// a number (providing <see cref="CurrencyStyle.Numeric"/>).
+	/// <para>
+	/// Property casing must be configured apart from this converter using, for instance, another
+	/// <see cref="IContractResolver"/>
+	/// </para>
+	/// </remarks>
+	/// <example>
+	/// <code>{"Amount" : 123.4, "Currency" : "XXX"}</code>
+	/// <code>{"amount" : 123.4, "currency" : 999}</code>
+	/// </example>
+	public class DefaultNullableMoneyConverter : JsonConverter
+	{
+		private readonly CurrencyStyle _style;
+
+		public DefaultNullableMoneyConverter()
+			: this(CurrencyStyle.Alphabetic)
+		{
+		}
+
+		public DefaultNullableMoneyConverter(CurrencyStyle style)
+		{
+			_style = style;
+		}
+
+		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+		{
+			var instance = (Money?)value;
+			if (instance.HasValue)
+			{
+				IMoneyWriter @default = new DefaultMoneyWriter(instance.Value, _style, serializer.ContractResolver);
+				@default.WriteTo(writer);
+			}
+		}
+
+		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+		{
+			var token = JToken.ReadFrom(reader);
+			Money? read = default(Money?);
+			if (token.HasValues)
+			{
+				IMoneyReader @default = new DefaultMoneyReader(_style, serializer.ContractResolver);
+
+				read = new Money(
+					@default.ReadAmount(token),
+					@default.ReadCurrencyCode(token));
+			}
+			return read;
+		}
+
+		public override bool CanConvert(Type objectType)
+		{
+			return objectType == typeof(Money) || objectType == typeof(Money?);
 		}
 	}
 
