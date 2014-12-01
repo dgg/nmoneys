@@ -88,10 +88,53 @@ namespace NMoneys
 		/// <seealso cref="decimal.TryParse(string, NumberStyles, IFormatProvider, out decimal)" />
 		public static bool TryParse(string s, NumberStyles style, Currency currency, out Money? money)
 		{
+			money = tryParse(s, style, currency.FormatInfo, currency.IsoCode);
+			return money.HasValue;
+		}
+
+		/// <summary>
+		/// Converts the string representation of a monetary quantity to its <see cref="Money" /> equivalent
+		/// using the specified style, the <paramref name="numberFormatInfo" /> and the symbol of the provided
+		/// <paramref name="currency" /> as format information.
+		/// A return value indicates whether the conversion succeeded or failed.
+		/// </summary>
+		/// <param name="s">The string representation of the monetary quantity to convert.</param>
+		/// <param name="style">A bitwise combination of enumeration values that indicates the permitted format of <paramref name="s"/>.
+		/// A typical value to specify is <see cref="NumberStyles.Currency"/>.</param>
+		/// <param name="numberFormatInfo">
+		/// The format info for the textual representation of the currency. This may be different from
+		/// how the currency would normally be represented in the country that uses it. For example, the
+		/// <see cref="NumberFormatInfo" /> for en-GB would
+		/// allow the string "€10,000.00" for <see cref="Currency.Eur" />, even though this would normally be written as
+		/// "10.000,00 €"
+		/// </param>
+		/// <param name="currency">Resultant currency of <paramref name="s" /> (only symbol is used for formatting).</param>
+		/// <param name="money">
+		/// When this method returns, contains the <see cref="T:NMoneys.Money" /> that is equivalent to the monetary quantity
+		/// contained in <paramref name="s" />,
+		/// if the conversion succeeded, or is null if the conversion failed.
+		/// The conversion fails if the <paramref name="s" /> parameter is null, is not in a format compliant with currency
+		/// style,
+		/// or represents a number less than <see cref="F:System.Decimal.MinValue" /> or greater than
+		/// <see cref="F:System.Decimal.MaxValue" />.
+		/// This parameter is passed uninitialized.
+		/// </param>
+		/// <returns> true if s was converted successfully; otherwise, false. </returns>
+		public static bool TryParse(string s, NumberStyles style, NumberFormatInfo numberFormatInfo, Currency currency, out Money? money)
+		{
+			var mergedNumberFormatInfo = (NumberFormatInfo)numberFormatInfo.Clone();
+			mergedNumberFormatInfo.CurrencySymbol = currency.Symbol;
+
+			money = tryParse(s, style, mergedNumberFormatInfo, currency.IsoCode);
+
+			return money.HasValue;
+		}
+
+		private static Money? tryParse(string s, NumberStyles style, NumberFormatInfo formatProvider, CurrencyIsoCode currency)
+		{
 			decimal amount;
-			bool result = decimal.TryParse(s, style, currency, out amount);
-			money = result ? new Money(amount, currency) : (Money?)null;
-			return result;
+			bool result = decimal.TryParse(s, style, formatProvider, out amount);
+			return result ? new Money(amount, currency) : (Money?)null;
 		}
 	}
 }

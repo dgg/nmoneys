@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using NMoneys.Extensions;
 using NMoneys.Tests.CustomConstraints;
 using NUnit.Framework;
 
@@ -231,6 +232,24 @@ namespace NMoneys.Tests
 
 			Assert.That(beforeWritting, Is.EqualTo(afterParsing));
 		}
+
+		#region Issue 28. Support detachment of parsing logic from currency
+
+		[Test]
+		public void TryParse_ParsingDetachedFromCurrency_FullControlOverParsing()
+		{
+			// currency does the parsing and the money construction: dot is not a decimal separator
+			Money? parsed;
+			Money.TryParse("€1000.00", Currency.Eur, out parsed);
+			Assert.That(parsed, Is.EqualTo(100000m.Eur()));
+
+			// NumberFormatInfo used for parsing, currency for building the money instance
+			NumberFormatInfo parser = CultureInfo.GetCultureInfo("en-GB").NumberFormat;
+			Money.TryParse("€1000.00", NumberStyles.Currency, parser, Currency.Eur, out parsed);
+			Assert.That(parsed, Is.EqualTo(1000m.Eur()));
+		}
+
+		#endregion
 
 		#endregion
 	}
