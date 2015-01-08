@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NMoneys.Support;
 
 namespace NMoneys
@@ -16,7 +17,8 @@ namespace NMoneys
 			{
 				CurrencyIsoCode.EEK,
 				CurrencyIsoCode.ZMK,
-				CurrencyIsoCode.LVL
+				CurrencyIsoCode.LVL,
+				CurrencyIsoCode.LTL,
 			};
 #pragma warning restore 612,618
 		}
@@ -30,5 +32,7 @@ namespace NMoneys
 		{
 			return currency == null || IsObsolete(currency.IsoCode);
 		}
+
+		public static uint Count { get { return Convert.ToUInt32(_set.Count); } }
 	}
 }

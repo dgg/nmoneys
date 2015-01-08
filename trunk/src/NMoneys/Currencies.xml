@@ -991,6 +991,7 @@
 		<groupSizes>3</groupSizes>
 		<positivePattern>3</positivePattern>
 		<negativePattern>8</negativePattern>
+		<obsolete>true</obsolete>
 	</currency>
 	<currency code="LVL">
 		<englishName>Latvian Lats</englishName>

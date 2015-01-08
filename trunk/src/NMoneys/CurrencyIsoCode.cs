@@ -455,7 +455,7 @@ namespace NMoneys
 		/// <summary>
 		/// Lithuanian Litas
 		/// </summary>
-		[EnumMember, CanonicalCulture("lt-LT")]
+		[EnumMember, CanonicalCulture("lt-LT"), Obsolete("deprecated in favor of EUR")]
 		LTL = 440,
 		/// <summary>
 		/// Latvian Lats
