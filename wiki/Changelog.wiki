@@ -1,6 +1,12 @@
 #summary Summary of changes.
 #labels Phase-Support
 
+= 3.6.0.0 =
+2015/01/08 @revision 319
+   * Apply ISO4217 amendment 159: deprecate `LTL` and change `CVE`
+   * support for currencies without symbols
+   * fix issue #28 by overloading `Money.Parse()`
+
 = 2.0.0.0 =
 2014/08/06 @revision 296
    * Breaking change of _NuGet_ package `NMoneys.Serialization.Json_NET` as it is now a source code package with no binary dependency on _Json.NET_
