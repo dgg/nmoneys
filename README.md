@@ -1,3 +1,5 @@
+![logo](https://raw.githubusercontent.com/dgg/nmoneys/wiki/NMoneys_long.png)
+
 Implementation of the Money Value Object to support representing moneys in the currencies defined in the ISO 4417 standard
 
 # What
