@@ -39,6 +39,5 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("NMoneys.Tests")]
 [assembly: InternalsVisibleTo("NMoneys.Tools")]
 [assembly: InternalsVisibleTo("NMoneys.Exchange")]
-[assembly: System.Windows.Markup.XmlnsDefinition(NMoneys.Serialization.Data.NAMESPACE, "NMoneys")]
 
 [assembly: CLSCompliant(true)]

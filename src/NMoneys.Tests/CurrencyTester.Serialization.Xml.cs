@@ -50,14 +50,6 @@ namespace NMoneys.Tests
 		}
 
 		[Test]
-		public void CannotBe_XamlSerialized()
-		{
-			var serializer = new XamlSerializer();
-			string xaml = serializer.Serialize(Currency.Dollar);
-			Assert.That(() => serializer.Deserialize<Currency>(xaml), Throws.InstanceOf<XamlParseException>());
-		}
-
-		[Test]
 		public void CanBe_DataContractSerialized()
 		{
 			Assert.That(Currency.Dollar, Must.Be.DataContractSerializable<Currency>());

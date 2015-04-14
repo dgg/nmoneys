@@ -47,7 +47,6 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.XML" />
-    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Allocations\AllocationTester.cs" />
@@ -162,7 +161,6 @@
     <Compile Include="Support\RangeTester.cs" />
     <Compile Include="Support\RemainderAllocatorDoubles.cs" />
     <Compile Include="Support\UnicodeSymbolTester.cs" />
-    <Compile Include="Support\XamlSerializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomConstraints\Must.Extensions.cs" />
