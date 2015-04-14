@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Markup;
 using NMoneys.Tests.CustomConstraints;
 using NMoneys.Tests.Support;
 using NUnit.Framework;

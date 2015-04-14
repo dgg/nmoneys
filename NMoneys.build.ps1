@@ -36,8 +36,7 @@ task CopyArtifacts {
 	$except_content = $release_folders.Length-2
 	$bin_release_folder = $release_folders[0..$except_content]
 	$src_release_folder = $release_folders[$except_content+1]
-	Write-Host $bin_release_folders
-
+	
 	Get-ChildItem -Path ($core, $exchange) -Filter 'NMoneys*.dll' |
 		Copy-To $bin_release_folder
 
@@ -102,7 +101,7 @@ task ? -Description "Helper to display task info" {
 
 function Ensure-Release-Folders($base)
 {
-	$release_folders = ($base, "$base\lib\Net20-client", "$base\content\Infrastructure\Serialization")
+	$release_folders = ($base, "$base\lib\Net40-client", "$base\content\Infrastructure\Serialization")
 
 	foreach ($f in $release_folders) { md $f -Force | Out-Null }
 

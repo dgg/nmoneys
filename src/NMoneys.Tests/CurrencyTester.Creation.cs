@@ -106,14 +106,14 @@ namespace NMoneys.Tests
 			Assert.That(getObsolete, Must.RaiseObsoleteEvent.Once());
 		}
 
-		[Test]
+		[Test, Platform(Include = "Net-2.0", Reason = "updated culture uses non-deprecated currency")]
 		public void Get_ObsoleteCulture_EventRaised()
 		{
 			Action getObsolete = () => Currency.Get(CultureInfo.GetCultureInfo("et-EE"));
 			Assert.That(getObsolete, Must.RaiseObsoleteEvent.Once());
 		}
 
-		[Test]
+		[Test, Platform(Include = "Net-2.0", Reason = "updated culture uses non-deprecated currency")]
 		public void Get_ObsoleteRegion_EventRaised()
 		{
 			Action getObsolete = () => Currency.Get(new RegionInfo("EE"));
@@ -219,7 +219,7 @@ namespace NMoneys.Tests
 			Assert.That(tryGetObsolete, Must.RaiseObsoleteEvent.Once());
 		}
 
-		[Test]
+		[Test, Platform(Include = "Net-2.0", Reason = "updated culture uses non-deprecated currency")]
 		public void TryGet_ObsoleteCulture_EventRaised()
 		{
 			Currency c;
@@ -227,7 +227,7 @@ namespace NMoneys.Tests
 			Assert.That(tryGetObsolete, Must.RaiseObsoleteEvent.Once());
 		}
 
-		[Test]
+		[Test, Platform(Include = "Net-2.0", Reason = "updated culture uses non-deprecated currency")]
 		public void TryGet_ObsoleteRegion_EventRaised()
 		{
 			Currency c;
