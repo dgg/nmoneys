@@ -400,8 +400,6 @@ namespace NMoneys
 		/// </summary>
 		private static void fillCaches(Currency currency)
 		{
-			Guard.AgainstNullArgument("currency", currency);
-
 			_byIsoCode.Add(currency.IsoCode, currency);
 			_byIsoSymbol.Add(currency.IsoSymbol, currency);
 		}
