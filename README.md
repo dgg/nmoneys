@@ -2,6 +2,8 @@
 
 Implementation of the Money Value Object to support representing moneys in the currencies defined in the ISO 4417 standard
 
+[![Build status](https://ci.appveyor.com/api/projects/status/n8378j7abyui3hwb?svg=true)](https://ci.appveyor.com/project/dgg/nmoneys)
+
 # What
 
 _NMoneys_ (plural) is a simple .Net library to represent monetary quantities.
