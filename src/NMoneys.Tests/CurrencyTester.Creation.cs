@@ -106,14 +106,14 @@ namespace NMoneys.Tests
 			Assert.That(getObsolete, Must.RaiseObsoleteEvent.Once());
 		}
 
-		[Test]
+		[Test, Platform(Include = "Net-2.0", Reason = "updated culture uses non-deprecated currency")]
 		public void Get_ObsoleteCulture_EventRaised()
 		{
 			Action getObsolete = () => Currency.Get(CultureInfo.GetCultureInfo("et-EE"));
 			Assert.That(getObsolete, Must.RaiseObsoleteEvent.Once());
 		}
 
-		[Test]
+		[Test, Platform(Include = "Net-2.0", Reason = "updated culture uses non-deprecated currency")]
 		public void Get_ObsoleteRegion_EventRaised()
 		{
 			Action getObsolete = () => Currency.Get(new RegionInfo("EE"));
@@ -219,7 +219,7 @@ namespace NMoneys.Tests
 			Assert.That(tryGetObsolete, Must.RaiseObsoleteEvent.Once());
 		}
 
-		[Test]
+		[Test, Platform(Include = "Net-2.0", Reason = "updated culture uses non-deprecated currency")]
 		public void TryGet_ObsoleteCulture_EventRaised()
 		{
 			Currency c;
@@ -227,7 +227,7 @@ namespace NMoneys.Tests
 			Assert.That(tryGetObsolete, Must.RaiseObsoleteEvent.Once());
 		}
 
-		[Test]
+		[Test, Platform(Include = "Net-2.0", Reason = "updated culture uses non-deprecated currency")]
 		public void TryGet_ObsoleteRegion_EventRaised()
 		{
 			Currency c;
@@ -264,5 +264,25 @@ namespace NMoneys.Tests
 
 		#endregion
 
+		#region change SEK
+
+		[Test]
+		public void SEK_GroupSeparator_IsNeitherDotAnymoreNorUsualSpace()
+		{
+			Assert.That(Currency.Sek.GroupSeparator, Is.Not.EqualTo(".").And
+				.Not.EqualTo(" "));
+		}
+
+		[Test]
+		public void SEK_GroupSeparator_ButNeitherIsNormalSpace()
+		{
+			string nonBreakingSpace = " ", normalSpace = " ";
+			Assert.That(Currency.Sek.GroupSeparator, Is.EqualTo(nonBreakingSpace).And
+				.EqualTo(char.ConvertFromUtf32(160)).And
+				.Not.EqualTo(normalSpace).And
+				.Not.EqualTo(char.ConvertFromUtf32(32)));
+		}
+
+		#endregion
 	}
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Markup;
 using NMoneys.Tests.CustomConstraints;
 using NMoneys.Tests.Support;
 using NUnit.Framework;
@@ -47,14 +46,6 @@ namespace NMoneys.Tests
 				Assert.That(serializer.Deserialize(), Is.Not.SameAs(usd)
 					.And.EqualTo(usd));
 			}
-		}
-
-		[Test]
-		public void CannotBe_XamlSerialized()
-		{
-			var serializer = new XamlSerializer();
-			string xaml = serializer.Serialize(Currency.Dollar);
-			Assert.That(() => serializer.Deserialize<Currency>(xaml), Throws.InstanceOf<XamlParseException>());
 		}
 
 		[Test]

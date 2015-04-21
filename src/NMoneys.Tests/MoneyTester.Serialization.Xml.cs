@@ -38,16 +38,6 @@ namespace NMoneys.Tests
 		}
 
 		[Test]
-		public void CanBe_XamlSerialized()
-		{
-			var serializer = new XamlSerializer();
-			string xaml = serializer.Serialize(new Money(3.757m));
-			Assert.DoesNotThrow(() => serializer.Deserialize<Money>(xaml));
-
-			Assert.Inconclusive("Properties are not serialized, though.");
-		}
-
-		[Test]
 		public void CanBe_DataContractSerialized()
 		{
 			Assert.That(new Money(3.757m), Must.Be.DataContractSerializable<Money>());
