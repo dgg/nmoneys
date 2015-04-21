@@ -12,7 +12,7 @@
 			NMoneys Serialization: Json.NET is an extension to the NMoneys library that allows customize the serialization and deserialization process
 			when using the library Json.NET via custom converters.
 		</summary>
-		<projectUrl>http://code.google.com/p/nmoneys/</projectUrl>
+		<projectUrl>https://github.com/dgg/nmoneys</projectUrl>
 		<iconUrl>https://nugetgallery.blob.core.windows.net/icons/NMoneys.2.0.0.0.png</iconUrl>
 		<tags>.net currency money newtonsoft Json.NET JSON</tags>
 		<dependencies>
