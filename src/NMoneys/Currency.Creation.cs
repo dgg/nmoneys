@@ -24,16 +24,15 @@ namespace NMoneys
 		public static Currency Get(CurrencyIsoCode isoCode)
 		{
 			Enumeration.AssertDefined(isoCode);
-			RaiseIfObsolete(isoCode);
 
-			Currency currency;
-			if (!_byIsoCode.TryGet(isoCode, out currency))
+			Currency currency = _cache.GetOrAdd(isoCode, () =>
 			{
-				currency = init(isoCode, _provider.Get);
-				if (currency == null) throw new MisconfiguredCurrencyException(isoCode);
-				fillCaches(currency);
-			}
+				var built = init(isoCode, _provider.Get);
+				if (built == null) throw new MisconfiguredCurrencyException(isoCode);
+				return built;
+			});
 
+			RaiseIfObsolete(isoCode);
 			return currency;
 		}
 
@@ -53,14 +52,13 @@ namespace NMoneys
 		/// <exception cref="MisconfiguredCurrencyException">The currency represented by <paramref name="threeLetterIsoCode"/> has not been properly configured by the library implementor. Please, log a issue.</exception>
 		public static Currency Get(string threeLetterIsoCode)
 		{
-			Currency currency;
-			if (!_byIsoSymbol.TryGet(threeLetterIsoCode, out currency))
+			Currency currency = _cache.GetOrAdd(threeLetterIsoCode, () =>
 			{
 				var isoCode = Code.ParseArgument(threeLetterIsoCode, "threeLetterIsoCode");
-				currency = init(isoCode, _provider.Get);
-				if (currency == null) throw new MisconfiguredCurrencyException(isoCode);
-				fillCaches(currency);
-			}
+				var built = init(isoCode, _provider.Get);
+				if (built == null) throw new MisconfiguredCurrencyException(isoCode);
+				return built;
+			});
 			RaiseIfObsolete(currency);
 			return currency;
 		}
@@ -137,16 +135,8 @@ namespace NMoneys
 
 			if (Enumeration.CheckDefined(isoCode))
 			{
-				tryGet = _byIsoCode.TryGet(isoCode, out currency);
-				if (!tryGet)
-				{
-					currency = init(isoCode, _provider.Get);
-					if (currency != null)
-					{
-						tryGet = true;
-						fillCaches(currency);
-					}
-				}
+				tryGet = true;
+				currency = _cache.GetOrAdd(isoCode, () => init(isoCode, _provider.Get));
 			}
 			RaiseIfObsolete(currency);
 			return tryGet;
@@ -169,22 +159,15 @@ namespace NMoneys
 		/// <returns>true if <paramref name="threeLetterIsoSymbol"/> was looked up successfully; otherwise, false.</returns>
 		public static bool TryGet(string threeLetterIsoSymbol, out Currency currency)
 		{
+			bool tryGet = false;
 			currency = null;
-			if (threeLetterIsoSymbol == null) return false;
-			bool tryGet = _byIsoSymbol.TryGet(threeLetterIsoSymbol, out currency);
+			CurrencyIsoCode? isoCode;
 
-			if (!tryGet)
+			if (threeLetterIsoSymbol != null && Enumeration.TryParse(threeLetterIsoSymbol.ToUpperInvariant(), out isoCode))
 			{
-				CurrencyIsoCode? isoCode;
-				if (Enumeration.TryParse(threeLetterIsoSymbol.ToUpperInvariant(), out isoCode))
-				{
-					currency = init(isoCode.Value, _provider.Get);
-					if (currency != null)
-					{
-						tryGet = true;
-						fillCaches(currency);
-					}
-				}
+				tryGet = true;
+				currency = _cache.GetOrAdd(isoCode.GetValueOrDefault(), () =>
+					init(isoCode.GetValueOrDefault(), _provider.Get));
 			}
 			RaiseIfObsolete(currency);
 			return tryGet;
@@ -265,14 +248,10 @@ namespace NMoneys
 				for (int i = 0; i < isoCodes.Length; i++)
 				{
 					CurrencyIsoCode isoCode = isoCodes[i];
+					var copy = initializer;
+					Currency currency = _cache.GetOrAdd(isoCode, () => init(isoCode, copy.Get));
 					RaiseIfObsolete(isoCode);
-					Currency maybeInCache;
-					if (!_byIsoCode.TryGet(isoCode, out maybeInCache))
-					{
-						maybeInCache = new Currency(initializer.Get(isoCode));
-						fillCaches(maybeInCache);
-					}
-					yield return maybeInCache;
+					yield return currency;
 				}
 			}
 		}

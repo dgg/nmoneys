@@ -84,6 +84,7 @@
     <Compile Include="Currency.Equality.cs">
       <DependentUpon>Currency.cs</DependentUpon>
     </Compile>
+    <Compile Include="CurrencyCache.cs" />
     <Compile Include="Money.Creation.cs">
       <DependentUpon>Money.cs</DependentUpon>
     </Compile>
@@ -150,7 +151,6 @@
     <Compile Include="Support\FastEnumComparer.cs" />
     <Compile Include="Support\Guard.cs" />
     <Compile Include="Support\Range.cs" />
-    <Compile Include="Support\ThreadSafeCache.cs" />
     <Compile Include="Support\TokenizedValue.cs" />
     <Compile Include="Support\UnicodeSymbol.cs" />
   </ItemGroup>

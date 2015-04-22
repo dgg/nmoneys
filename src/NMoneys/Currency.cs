@@ -300,8 +300,9 @@ namespace NMoneys
 		/// </summary>
 		public static readonly Currency Test;
 
-		private static readonly ThreadSafeCache<string, Currency> _byIsoSymbol;
-		private static readonly ThreadSafeCache<CurrencyIsoCode, Currency> _byIsoCode;
+		/*private static readonly ThreadSafeCache<string, Currency> _byIsoSymbol;
+		private static readonly ThreadSafeCache<CurrencyIsoCode, Currency> _byIsoCode;*/
+		private static readonly CurrencyCache _cache;
 
 		private static readonly ICurrencyInfoProvider _provider;
 
@@ -310,82 +311,79 @@ namespace NMoneys
 		/// </summary>
 		static Currency()
 		{
-			int cacheCapacity = Enum.GetNames(typeof(CurrencyIsoCode)).Length;
-			_byIsoSymbol = new ThreadSafeCache<string, Currency>(cacheCapacity, StringComparer.OrdinalIgnoreCase);
-			// we use a fast comparer as we have quite a few enum keys
-			_byIsoCode = new ThreadSafeCache<CurrencyIsoCode, Currency>(cacheCapacity, Enumeration.Comparer<CurrencyIsoCode>());
+			_cache = new CurrencyCache();
 			_provider = CurrencyInfo.CreateProvider();
 
 			using (var initializer = CurrencyInfo.CreateInitializer())
 			{
 				Aud = init(CurrencyIsoCode.AUD, initializer.Get);
-				fillCaches(Aud);
+				_cache.Add(Aud);
 
 				Cad = init(CurrencyIsoCode.CAD, initializer.Get);
-				fillCaches(Cad);
+				_cache.Add(Cad);
 
 				Chf = init(CurrencyIsoCode.CHF, initializer.Get);
-				fillCaches(Chf);
+				_cache.Add(Chf);
 
 				Cny = init(CurrencyIsoCode.CNY, initializer.Get);
-				fillCaches(Cny);
+				_cache.Add(Cny);
 
 				Dkk = init(CurrencyIsoCode.DKK, initializer.Get);
-				fillCaches(Dkk);
+				_cache.Add(Dkk);
 
 				Eur = init(CurrencyIsoCode.EUR, initializer.Get);
-				fillCaches(Eur);
+				_cache.Add(Eur);
 
 				Gbp = init(CurrencyIsoCode.GBP, initializer.Get);
-				fillCaches(Gbp);
+				_cache.Add(Gbp);
 
 				Hkd = init(CurrencyIsoCode.HKD, initializer.Get);
-				fillCaches(Hkd);
+				_cache.Add(Hkd);
 
 				Huf = init(CurrencyIsoCode.HUF, initializer.Get);
-				fillCaches(Huf);
+				_cache.Add(Huf);
 
 				Inr = init(CurrencyIsoCode.INR, initializer.Get);
-				fillCaches(Inr);
+				_cache.Add(Inr);
 
 				Jpy = init(CurrencyIsoCode.JPY, initializer.Get);
-				fillCaches(Jpy);
+				_cache.Add(Jpy);
 
 				Mxn = init(CurrencyIsoCode.MXN, initializer.Get);
-				fillCaches(Mxn);
+				_cache.Add(Mxn);
 
 				Myr = init(CurrencyIsoCode.MYR, initializer.Get);
-				fillCaches(Myr);
+				_cache.Add(Myr);
 
 				Nok = init(CurrencyIsoCode.NOK, initializer.Get);
-				fillCaches(Nok);
+				_cache.Add(Nok);
 
 				Nzd = init(CurrencyIsoCode.NZD, initializer.Get);
-				fillCaches(Nzd);
+				_cache.Add(Nzd);
 
 				Rub = init(CurrencyIsoCode.RUB, initializer.Get);
-				fillCaches(Rub);
+				_cache.Add(Rub);
 
 				Sek = init(CurrencyIsoCode.SEK, initializer.Get);
-				fillCaches(Sek);
+				_cache.Add(Sek);
 
 				Sgd = init(CurrencyIsoCode.SGD, initializer.Get);
-				fillCaches(Sgd);
+				_cache.Add(Sgd);
 
 				Thb = init(CurrencyIsoCode.THB, initializer.Get);
-				fillCaches(Thb);
+				_cache.Add(Thb);
 
 				Usd = init(CurrencyIsoCode.USD, initializer.Get);
-				fillCaches(Usd);
+				_cache.Add(Usd);
 
 				Zar = init(CurrencyIsoCode.ZAR, initializer.Get);
-				fillCaches(Zar);
+				_cache.Add(Zar);
 
 				Xxx = init(CurrencyIsoCode.XXX, initializer.Get);
-				fillCaches(Xxx);
+				_cache.Add(Xxx);
 
 				Xts = init(CurrencyIsoCode.XTS, initializer.Get);
-				fillCaches(Xts);
+				_cache.Add(Xts);
 			}
 
 			Euro = Eur;
@@ -398,11 +396,11 @@ namespace NMoneys
 		/// <summary>
 		/// Stores the currency in both symbol and code caches
 		/// </summary>
-		private static void fillCaches(Currency currency)
+		/*private static void fillCaches(Currency currency)
 		{
 			_byIsoCode.Add(currency.IsoCode, currency);
 			_byIsoSymbol.Add(currency.IsoSymbol, currency);
-		}
+		}*/
 
 		private static Currency init(CurrencyIsoCode isoCode, Func<CurrencyIsoCode, CurrencyInfo> infoReading)
 		{
@@ -423,11 +421,8 @@ namespace NMoneys
 				for (int i = 0; i < isoCodes.Length; i++)
 				{
 					CurrencyIsoCode isoCode = isoCodes[i];
-					if (!_byIsoCode.Contains(isoCode))
-					{
-						var initialized = new Currency(initializer.Get(isoCode));
-						fillCaches(initialized);
-					}
+					var copy = initializer;
+					_cache.GetOrAdd(isoCode, () => init(isoCode, copy.Get));
 				}
 			}
 		}

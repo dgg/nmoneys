@@ -158,7 +158,6 @@
     <Compile Include="CustomConstraints\Must.cs" />
     <Compile Include="Support\RangeTester.cs" />
     <Compile Include="Support\RemainderAllocatorDoubles.cs" />
-    <Compile Include="Support\ThreadSafeCacheTester.cs" />
     <Compile Include="Support\UnicodeSymbolTester.cs" />
   </ItemGroup>
   <ItemGroup>
