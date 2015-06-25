@@ -1,0 +1,1 @@
+New-Item -Type directory ..\release\doc\ -Force
