@@ -1,1 +1,1 @@
-New-Item -Type directory ..\release\doc\ -Force
+New-Item -Type directory .\release\doc\ -Force
