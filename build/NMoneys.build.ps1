@@ -1,18 +1,18 @@
 properties {
   $configuration = 'Release'
-  $base_dir  = resolve-path .
+  $base_dir  = resolve-path ..
   $release_dir = "$base_dir\release"
 }
 
 task default -depends Clean, Compile, RunTests, CopyArtifacts, Document, Pack
 
 task Clean {
-	Exec { msbuild .\NMoneys.sln /t:clean /p:configuration=$configuration /m }
+	Exec { msbuild "$base_dir\NMoneys.sln" /t:clean /p:configuration=$configuration /m }
 	Remove-Item $release_dir -Recurse -Force -ErrorAction SilentlyContinue | out-null
 }
 
 task Compile { 
-	Exec { msbuild .\NMoneys.sln /p:configuration=$configuration /m }
+	Exec { msbuild "$base_dir\NMoneys.sln" /p:configuration=$configuration /m }
 }
 
 task RunTests {
@@ -22,8 +22,8 @@ task RunTests {
 	$exchange = Test-Assembly $base_dir $configuration "NMoneys.Exchange"
 	$serialization = Test-Assembly $base_dir $configuration "NMoneys.Serialization"
 
-	Run-Tests $base_dir $release_dir ($core, $exchange, $serialization)
-	Report-On-Test-Results $base_dir $release_dir
+	#Run-Tests $base_dir $release_dir ($core, $exchange, $serialization)
+	#Report-On-Test-Results $base_dir $release_dir
 }
 
 task CopyArtifacts {
@@ -43,10 +43,7 @@ task CopyArtifacts {
 	Get-ChildItem $base_dir -Filter '*.nuspec' |
 		Copy-Item -Destination $release_dir
 
-	Get-ChildItem -Path "$serialization\Json_NET" -Filter "*.cs" |
-		Copy-Item -Destination $src_release_folder
-
-	Get-ChildItem -Path "$serialization\Service_Stack" -Filter "*.cs" |
+	Get-ChildItem -Path ("$serialization\Json_NET", "$serialization\Service_Stack") -Filter "*.cs" |
 		Copy-Item -Destination $src_release_folder
 
 	Get-ChildItem -Path "$serialization\Json_Net" -Filter "*.cs" |
