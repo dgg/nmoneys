@@ -1,4 +1,4 @@
-remove-module [N]Moneys
-import-module .\build\NMoneys.psm1 -DisableNameChecking
+Remove-Module [N]Moneys
+Import-Module .\build\NMoneys.psm1 -DisableNameChecking
 
 Ensure-Release-Folders .

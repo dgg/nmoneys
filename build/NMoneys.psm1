@@ -59,7 +59,8 @@ function CopyDoc($base){
 
 function CopyPackageManifests($base){
 	$release_dir = Join-Path $base release
-	Get-ChildItem $base_dir -Filter '*.nuspec' |
+	
+	Get-ChildItem $base -Filter '*.nuspec' |
 		Copy-Item -Destination $release_dir
 }
 

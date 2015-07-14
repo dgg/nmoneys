@@ -4,7 +4,7 @@ properties {
   $release_dir = "$base_dir\release"
 }
 
-task default -depends Clean, Compile, RunTests, CopyArtifacts, Document, Pack
+task default -depends Clean, Compile, Document, Test, CopyArtifacts, Pack
 
 task Clean {
 	Exec { msbuild "$base_dir\NMoneys.sln" /t:clean /p:configuration=$configuration /m }
@@ -15,72 +15,34 @@ task Compile {
 	Exec { msbuild "$base_dir\NMoneys.sln" /p:configuration=$configuration /m }
 }
 
-task RunTests {
-	Ensure-Release-Folders $release_dir
-	
+task Document -depends EnsureRelease {
+	Build-Documentation $base_dir $configuration
+}
+
+task EnsureRelease -depends ImportModule {
+	Ensure-Release-Folders $base_dir
+}
+
+task ImportModule {
+	Remove-Module [N]Moneys
+	Import-Module "$base_dir\build\NMoneys.psm1" -DisableNameChecking
+}
+
+task Test -depends EnsureRelease {
 	$core = Test-Assembly $base_dir $configuration "NMoneys"
 	$exchange = Test-Assembly $base_dir $configuration "NMoneys.Exchange"
 	$serialization = Test-Assembly $base_dir $configuration "NMoneys.Serialization"
 
-	#Run-Tests $base_dir $release_dir ($core, $exchange, $serialization)
-	#Report-On-Test-Results $base_dir $release_dir
+	Run-Tests $base_dir $release_dir ($core, $exchange, $serialization)
+	Report-On-Test-Results $base_dir $release_dir
 }
 
-task CopyArtifacts {
-	$release_folders = Ensure-Release-Folders $release_dir
-
-	$core = Bin-Folder $base_dir $configuration "NMoneys"
-	$exchange = Bin-Folder $base_dir $configuration "NMoneys.Exchange"
-	$serialization = Src-Folder $base_dir "NMoneys.Serialization"
-
-	$except_content = $release_folders.Length-2
-	$bin_release_folder = $release_folders[0..$except_content]
-	$src_release_folder = $release_folders[$except_content+1]
-	
-	Get-ChildItem -Path ($core, $exchange) -Filter 'NMoneys*.dll' |
-		Copy-To $bin_release_folder
-
-	Get-ChildItem $base_dir -Filter '*.nuspec' |
-		Copy-Item -Destination $release_dir
-
-	Get-ChildItem -Path ("$serialization\Json_NET", "$serialization\Service_Stack") -Filter "*.cs" |
-		Copy-Item -Destination $src_release_folder
-
-	Get-ChildItem -Path "$serialization\Json_Net" -Filter "*.cs" |
-		Get-Content |
-		Foreach-Object {$_ -replace "Newtonsoft", "Raven.Imports.Newtonsoft"} | 
-		Foreach-Object {$_ -replace ".Json_NET", ".Raven_DB"} |
-		Set-Content "$src_release_folder\Raven_DB.cs"
-
-	if ($configuration -eq 'Release') {
-		Get-ChildItem -Path ($core, $exchange) -Filter 'NMoneys*.xml' |
-			Copy-To $bin_release_folder
-	}
-	elseif ($configuration -eq 'Debug') {
-		Get-ChildItem -Path ($core, $exchange) -Filter 'NMoneys*.pdb' |
-			Copy-To $bin_release_folder
-	}
+task CopyArtifacts -depends EnsureRelease {
+	Copy-Artifacts $base_dir $configuration
 }
 
-task Document {
-	if ($configuration -eq 'Release') {
-		$release_folders = Ensure-Release-Folders $release_dir
-
-		$doc_path = Generate-Documentation $base_dir $release_dir "NMoneys" "NMoneys"
-		$doc_path = Generate-Documentation $base_dir $release_dir "NMoneys.Exchange" "NMoneys.Exchange"
-
-		Get-ChildItem -Path ($doc_path) -Filter '*.chm' |
-			Copy-To $release_folders
-	}
-}
-
-task Pack {
-	Ensure-Release-Folders $release_dir
-
-	$nuget = "$base_dir\tools\nuget\nuget.exe"
-
-	Get-ChildItem -File -Filter '*.nuspec' -Path $release_dir  | 
-		ForEach-Object { exec { & $nuget pack $_.FullName /o $release_dir } }
+task Pack -depends EnsureRelease {
+	Generate-Packages $base_dir
 }
 
 task Sign -depends Clean, Compile, CopyArtifacts {
@@ -94,15 +56,6 @@ task Sign -depends Clean, Compile, CopyArtifacts {
 
 task ? -Description "Helper to display task info" {
 	Write-Documentation
-}
-
-function Ensure-Release-Folders($base)
-{
-	$release_folders = ($base, "$base\lib\Net40-client", "$base\content\Infrastructure\Serialization")
-
-	foreach ($f in $release_folders) { md $f -Force | Out-Null }
-
-	return $release_folders
 }
 
 function Test-Assembly($base, $config, $name)
@@ -126,31 +79,4 @@ function Report-On-Test-Results($base, $release)
 
 	exec { & $nunit_summary $release\TestResult.xml -html -o="$release\TestSummary.htm" }
 	exec { & $nunit_summary $release\TestResult.xml -html -o="$release\TestDetails.htm" $alternative_details -noheader }
-}
-
-function Bin-Folder($base, $config, $name)
-{
-	$project = Src-Folder $base $name
-	return Join-Path $project "bin\$config\"
-}
-
-function Src-Folder($base, $name)
-{
-	return "$base\src\$name\"
-}
-
-function Copy-To($destinations)
-{
-	Process { foreach ($d in $destinations) { Copy-Item -Path $_.FullName -Destination $d } }
-}
-
-function Generate-Documentation ($base, $release, $title, $source)
-{
-	$immDocNet_path = "$base\tools\ImmDoc.NET"
-	$immDocNet = "$immDocNet_path\immDocNet.exe"
-	$name = $title.Replace(".", "_")
-	
-	exec { & $immDocNet "-vl:1" "-fd" "-pn:$title" "-od:$release\doc\$name" "-cn:$release\doc\$name.chm" "-cp:$immDocNet_path" "$release\$source.XML" "$release\$source.dll" }
-
-	return "$release\doc\"
 }
