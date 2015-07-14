@@ -31,4 +31,63 @@ function ImmDocNet($base, $configuration, $project)
 	Throw-If-Error
 }
 
-export-modulemember -function Throw-If-Error, Ensure-Release-Folders, Build-Documentation
+function Copy-Artifacts($base, $configuration)
+{
+	CopyBinaries $base $configuration
+	CopySources $base $configuration
+	CopyDoc $base $configuration
+	CopyPackageManifests $base
+}
+
+function CopyBinaries($base, $configuration)
+{
+	$release_bin_dir = Join-Path $base release\lib\Net40-client
+	
+	Copy-Item $base\src\NMoneys\bin\$configuration\NMoneys.dll $release_bin_dir
+	Copy-Item $base\src\NMoneys\bin\$configuration\NMoneys.XML $release_bin_dir
+	Copy-Item $base\src\NMoneys.Exchange\bin\$configuration\NMoneys.Exchange.dll $release_bin_dir
+	Copy-Item $base\src\NMoneys.Exchange\bin\$configuration\NMoneys.Exchange.XML $release_bin_dir
+}
+
+function CopyDoc($base){
+	$release_bin_dir = Join-Path $base release\lib\Net40-client
+	$release_doc_dir = Join-Path $base release\doc
+	
+	Get-ChildItem $release_doc_dir -Filter *.chm |
+		Copy-Item -Destination $release_bin_dir
+}
+
+function CopyPackageManifests($base){
+	$release_dir = Join-Path $base release
+	Get-ChildItem $base_dir -Filter '*.nuspec' |
+		Copy-Item -Destination $release_dir
+}
+
+function CopySources()
+{
+	$src = Join-Path $base src\NMoneys.Serialization\
+	$release_src_dir = Join-Path $base release\content\Infrastructure\Serialization
+	
+	Get-ChildItem -Path ("$src\Json_NET", "$src\Service_Stack") -Filter "*.cs" |
+		Copy-Item -Destination $release_src_dir
+
+	Get-ChildItem -Path "$src\Json_Net" -Filter "*.cs" |
+		Get-Content |
+		% {$_ -replace "Newtonsoft", "Raven.Imports.Newtonsoft"} | 
+		% {$_ -replace ".Json_NET", ".Raven_DB"} |
+		Set-Content "$release_src_dir\Raven_DB.cs"
+}
+
+function Generate-Packages($base)
+{
+	$nuget = Join-Path $base tools\nuget\nuget.exe
+	$release_dir = Join-Path $base release
+
+	Get-ChildItem -File -Filter '*.nuspec' -Path $release_dir  | 
+		% { 
+			& $nuget pack $_.FullName /o $release_dir
+			Throw-If-Error
+		}
+}
+
+export-modulemember -function Throw-If-Error, Ensure-Release-Folders, Build-Documentation, Copy-Artifacts, Generate-Packages
