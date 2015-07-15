@@ -93,13 +93,13 @@ function Generate-Packages($base)
 
 function Generate-Zip-Files($base)
 {
-	$version = Get-Version-From-Package $base 'NMoneys'
+	$version = GetVersionFromPackage $base 'NMoneys'
 	('NMoneys.dll', 'NMoneys.XML', 'NMoneys.chm') |
 		% { ZipBin $base $version 'NMoneys' $_ | Out-Null }
 		
 	ZipSigned $base $version 'NMoneys' 'NMoneys.dll' | Out-Null
 
-	$version = Get-Version-From-Package $base 'NMoneys.Exchange'
+	$version = GetVersionFromPackage $base 'NMoneys.Exchange'
 	('NMoneys.Exchange.dll', 'NMoneys.Exchange.XML', 'NMoneys_Exchange.chm') |
 		% { ZipBin $base $version 'NMoneys.Exchange' $_ | Out-Null }
 }
@@ -132,7 +132,7 @@ function Zip($zip_file, $to_add)
 	return $zip_file
 }
 
-function Get-Version-From-Package($base, $packageFragment)
+function GetVersionFromPackage($base, $packageFragment)
 {
 	$pkgVersion = Get-ChildItem -File "$base\release\$packageFragment*.nupkg" |
 		? { $_.Name -match "$packageFragment\.(\d(?:\.\d){3})" } |
@@ -153,4 +153,4 @@ function Sign-Assemblies($base, $configuration)
 	Throw-If-Error "Could not assemble $il_file"
 }
 
-export-modulemember -function Throw-If-Error, Ensure-Release-Folders, Build-Documentation, Copy-Artifacts, Generate-Packages, Generate-Zip-Files, Sign-Assemblies, Get-Version-From-Package
+export-modulemember -function Throw-If-Error, Ensure-Release-Folders, Build-Documentation, Copy-Artifacts, Generate-Packages, Generate-Zip-Files, Sign-Assemblies
