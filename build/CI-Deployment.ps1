@@ -14,10 +14,10 @@ function PushZipArtifact($zipFragment, $artifactName, $zipType)
 
 function SetEnvironmentVersions()
 {
-	$version = GetVersionFromPackage . 'NMoneys'
+	$version = Get-Version-From-Package . 'NMoneys'
 	Set-AppveyorBuildVariable -Name 'NMONEYS_VERSION' -Value $version
 	
-	$version = GetVersionFromPackage . 'NMoneys.Exchange'
+	$version = Get-Version-From-Package . 'NMoneys.Exchange'
 	Set-AppveyorBuildVariable -Name 'NMONEYS_EXCHANGE_VERSION' -Value $version
 }
 
@@ -38,7 +38,9 @@ PushZipArtifact 'NMoneys' 'nmoneys_signed_zip' 'signed'
 
 PushZipArtifact 'NMoneys.Exchange' 'nmoneys_exchange_zip' 'bin'
 
+Get-ChildItem Env:
+
 SetEnvironmentVersions
 
-Get-ChildItem Env
+Get-ChildItem Env:
 
