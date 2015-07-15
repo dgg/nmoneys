@@ -4,15 +4,19 @@ properties {
   $release_dir = "$base_dir\release"
 }
 
-task default -depends Clean, Compile, Document, Test, CopyArtifacts, Pack
+task default -depends Clean, Compile, Sign, Document, Test, CopyArtifacts, Build
 
 task Clean {
-	Exec { msbuild "$base_dir\NMoneys.sln" /t:clean /p:configuration=$configuration /m }
+	Exec { msbuild "$base_dir\NMoneys.sln" /t:clean /p:configuration=$configuration /m /v:m }
 	Remove-Item $release_dir -Recurse -Force -ErrorAction SilentlyContinue | out-null
 }
 
 task Compile { 
-	Exec { msbuild "$base_dir\NMoneys.sln" /p:configuration=$configuration /m }
+	Exec { msbuild "$base_dir\NMoneys.sln" /p:configuration=$configuration /m /v:m }
+}
+
+task Sign -depends EnsureRelease, Compile { 
+	Sign-Assemblies $base_dir $configuration
 }
 
 task Document -depends EnsureRelease {
@@ -33,25 +37,17 @@ task Test -depends EnsureRelease {
 	$exchange = Test-Assembly $base_dir $configuration "NMoneys.Exchange"
 	$serialization = Test-Assembly $base_dir $configuration "NMoneys.Serialization"
 
-	Run-Tests $base_dir $release_dir ($core, $exchange, $serialization)
-	Report-On-Test-Results $base_dir $release_dir
+	#Run-Tests $base_dir $release_dir ($core, $exchange, $serialization)
+	#Report-On-Test-Results $base_dir $release_dir
 }
 
 task CopyArtifacts -depends EnsureRelease {
 	Copy-Artifacts $base_dir $configuration
 }
 
-task Pack -depends EnsureRelease {
+task Build -depends EnsureRelease {
 	Generate-Packages $base_dir
-}
-
-task Sign -depends Clean, Compile, CopyArtifacts {
-
-	$signed_dir = "$release_dir\signed"
-	md $signed_dir -Force | Out-Null
-
-	Exec { ildasm $release_dir\NMoneys.dll /out:$release_dir\NMoneys.il }
-	Exec { ilasm $release_dir\NMoneys.il /dll /key=$base_dir\NMoneys.key.snk /output=$signed_dir\NMoneys.dll } | Out-Null
+	Generate-Zip-Files $base_dir
 }
 
 task ? -Description "Helper to display task info" {

@@ -11,7 +11,7 @@ function Throw-If-Error
 
 function Ensure-Release-Folders($base)
 {
-	("$base\release\doc\", "$base\release\lib\Net40-client\", "$base\release\content\Infrastructure\Serialization") |
+	("$base\release\doc\", "$base\release\lib\Net40-client\", "$base\release\content\Infrastructure\Serialization", "$base\release\signed\") |
 		% { New-Item -Type directory $_ -Force | Out-Null }
 }
 
@@ -86,9 +86,71 @@ function Generate-Packages($base)
 
 	Get-ChildItem -File -Filter '*.nuspec' -Path $release_dir  | 
 		% { 
-			& $nuget pack $_.FullName /o $release_dir
+			& $nuget pack $_.FullName /o $release_dir /verbosity quiet
 			Throw-If-Error
 		}
 }
 
-export-modulemember -function Throw-If-Error, Ensure-Release-Folders, Build-Documentation, Copy-Artifacts, Generate-Packages
+function Generate-Zip-Files($base)
+{
+	$version = GetVersionFromPackage $base 'NMoneys'
+	('NMoneys.dll', 'NMoneys.XML', 'NMoneys.chm') |
+		% { ZipBin $base $version 'NMoneys' $_ | Out-Null }
+		
+	ZipSigned $base $version 'NMoneys' 'NMoneys.dll' | Out-Null
+
+	$version = GetVersionFromPackage $base 'NMoneys.Exchange'
+	('NMoneys.Exchange.dll', 'NMoneys.Exchange.XML', 'NMoneys_Exchange.chm') |
+		% { ZipBin $base $version 'NMoneys.Exchange' $_ | Out-Null }
+}
+
+function ZipBin($base, $version, $zipName, $fileName)
+{
+	$zip_file = Join-Path $base "\release\$zipName.$version-bin.zip"
+	$to_add = Join-Path $base "\release\lib\Net40-client\$fileName"
+	
+	Zip $zip_file $to_add
+	
+	return $zip_file
+}
+
+function ZipSigned($base, $version, $zipName, $fileName)
+{
+	$zip_file = Join-Path $base "\release\$zipName.$version-signed.zip"
+	$to_add = Join-Path $base "\release\signed\$fileName"
+	
+	Zip $zip_file $to_add
+	
+	return $zip_file
+}
+
+function Zip($zip_file, $to_add)
+{
+	& "$base\tools\Info-Zip\zip.exe" -jq $zip_file $to_add
+	Throw-If-Error "Cannot add '$to_add' to '$zip_file'"
+	
+	return $zip_file
+}
+
+function GetVersionFromPackage($base, $packageFragment)
+{
+	$pkgVersion = Get-ChildItem -File "$base\release\$packageFragment*.nupkg" |
+		? { $_.Name -match "$packageFragment\.(\d(?:\.\d){3})" } |
+		select -First 1 -Property @{ Name = "value"; Expression = {$matches[1]} }
+		
+	return $pkgVersion.value
+}
+
+function Sign-Assemblies($base, $configuration)
+{
+	$assembly = Join-Path $base \src\NMoneys\bin\$configuration\NMoneys.dll
+	$il_file = Join-Path $base \release\signed\NMoneys.il
+	$signed_assembly = Join-Path $base \release\signed\NMoneys.dll
+	
+	ildasm $assembly /out:$il_file
+	Throw-If-Error "Could disassemble $assembly_file"
+	ilasm $il_file /dll /key=$base\NMoneys.key.snk /output=$signed_assembly /quiet
+	Throw-If-Error "Could not assemble $il_file"
+}
+
+export-modulemember -function Throw-If-Error, Ensure-Release-Folders, Build-Documentation, Copy-Artifacts, Generate-Packages, Generate-Zip-Files, Sign-Assemblies
