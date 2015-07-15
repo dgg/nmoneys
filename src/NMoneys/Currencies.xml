@@ -695,8 +695,8 @@
 		<negativePattern>12</negativePattern>
 	</currency>
 	<currency code="HRK">
-		<englishName>Croatian Kuna</englishName>
-		<nativeName>hrvatska kuna</nativeName>
+		<englishName>Kuna</englishName>
+		<nativeName>kuna</nativeName>
 		<symbol>107 110</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>,</decimalSeparator>
@@ -1347,7 +1347,7 @@
 		<negativePattern>3</negativePattern>
 	</currency>
 	<currency code="RON">
-		<englishName>New Romanian Leu</englishName>
+		<englishName>Romanian Leu</englishName>
 		<nativeName>Leu românesc</nativeName>
 		<symbol>108 101 105</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
