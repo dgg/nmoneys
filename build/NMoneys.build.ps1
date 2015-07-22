@@ -15,37 +15,37 @@ task Compile {
 	Exec { msbuild "$base_dir\NMoneys.sln" /p:configuration=$configuration /m /v:m }
 }
 
-task Sign -depends EnsureRelease, Compile { 
+task Sign -depends ensureRelease, Compile { 
 	Sign-Assemblies $base_dir $configuration
 }
 
-task Document -depends EnsureRelease {
+task Document -depends ensureRelease {
 	Build-Documentation $base_dir $configuration
 }
 
-task EnsureRelease -depends ImportModule {
+task ensureRelease -depends importModule {
 	Ensure-Release-Folders $base_dir
 }
 
-task ImportModule {
+task importModule {
 	Remove-Module [N]Moneys
 	Import-Module "$base_dir\build\NMoneys.psm1" -DisableNameChecking
 }
 
-task Test -depends EnsureRelease {
-	$core = Test-Assembly $base_dir $configuration "NMoneys"
-	$exchange = Test-Assembly $base_dir $configuration "NMoneys.Exchange"
-	$serialization = Test-Assembly $base_dir $configuration "NMoneys.Serialization"
+task Test -depends ensureRelease {
+	$core = get-test-assembly-name $base_dir $configuration "NMoneys"
+	$exchange = get-test-assembly-name $base_dir $configuration "NMoneys.Exchange"
+	$serialization = get-test-assembly-name $base_dir $configuration "NMoneys.Serialization"
 
-	Run-Tests $base_dir $release_dir ($core, $exchange, $serialization)
-	Report-On-Test-Results $base_dir $release_dir
+	run-tests $base_dir $release_dir ($core, $exchange, $serialization)
+	report-on-test-results $base_dir $release_dir
 }
 
-task CopyArtifacts -depends EnsureRelease {
+task CopyArtifacts -depends ensureRelease {
 	Copy-Artifacts $base_dir $configuration
 }
 
-task BuildArtifacts -depends EnsureRelease {
+task BuildArtifacts -depends ensureRelease {
 	Generate-Packages $base_dir
 	Generate-Zip-Files $base_dir
 }
@@ -54,18 +54,18 @@ task ? -Description "Helper to display task info" {
 	Write-Documentation
 }
 
-function Test-Assembly($base, $config, $name)
+function get-test-assembly-name($base, $config, $name)
 {
 	return "$base\src\$name.Tests\bin\$config\$name.Tests.dll"
 }
 
-function Run-Tests($base, $release, $test_assemblies){
+function run-tests($base, $release, $test_assemblies){
 	$nunit_console = "$base\tools\NUnit.Runners.lite\nunit-console.exe"
 	
 	exec { & $nunit_console $test_assemblies /nologo /nodots /result="$release\TestResult.xml"  }
 }
 
-function Report-On-Test-Results($base, $release)
+function report-on-test-results($base, $release)
 {
 	$nunit_summary_path = "$base\tools\NUnitSummary"
 	$nunit_summary = Join-Path $nunit_summary_path "nunit-summary.exe"

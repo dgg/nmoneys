@@ -17,11 +17,11 @@ function Ensure-Release-Folders($base)
 
 function Build-Documentation($base, $configuration)
 {
-	ImmDocNet $base $configuration "NMoneys"
-	ImmDocNet $base $configuration "NMoneys.Exchange"
+	imm-doc-net $base $configuration "NMoneys"
+	imm-doc-net $base $configuration "NMoneys.Exchange"
 }
 
-function ImmDocNet($base, $configuration, $project)
+function imm-doc-net($base, $configuration, $project)
 {
 	$immDocNet_path = "$base\tools\ImmDoc.NET"
 	$immDocNet = "$immDocNet_path\immDocNet.exe"
@@ -33,13 +33,13 @@ function ImmDocNet($base, $configuration, $project)
 
 function Copy-Artifacts($base, $configuration)
 {
-	CopyBinaries $base $configuration
-	CopySources $base $configuration
-	CopyDoc $base $configuration
-	CopyPackageManifests $base
+	copy-binaries $base $configuration
+	copy-sources $base $configuration
+	copy-doc $base $configuration
+	copy-package-manifests $base
 }
 
-function CopyBinaries($base, $configuration)
+function copy-binaries($base, $configuration)
 {
 	$release_bin_dir = Join-Path $base release\lib\Net40-client
 	
@@ -49,7 +49,7 @@ function CopyBinaries($base, $configuration)
 	Copy-Item $base\src\NMoneys.Exchange\bin\$configuration\NMoneys.Exchange.XML $release_bin_dir
 }
 
-function CopyDoc($base){
+function copy-doc($base){
 	$release_bin_dir = Join-Path $base release\lib\Net40-client
 	$release_doc_dir = Join-Path $base release\doc
 	
@@ -57,14 +57,14 @@ function CopyDoc($base){
 		Copy-Item -Destination $release_bin_dir
 }
 
-function CopyPackageManifests($base){
+function copy-package-manifests($base){
 	$release_dir = Join-Path $base release
 	
 	Get-ChildItem $base -Filter '*.nuspec' |
 		Copy-Item -Destination $release_dir
 }
 
-function CopySources()
+function copy-sources()
 {
 	$src = Join-Path $base src\NMoneys.Serialization\
 	$release_src_dir = Join-Path $base release\content\Infrastructure\Serialization
@@ -93,38 +93,38 @@ function Generate-Packages($base)
 
 function Generate-Zip-Files($base)
 {
-	$version = GetVersionFromPackage $base 'NMoneys'
+	$version = get-version-from-package $base 'NMoneys'
 	('NMoneys.dll', 'NMoneys.XML', 'NMoneys.chm') |
-		% { ZipBin $base $version 'NMoneys' $_ | Out-Null }
+		% { zip-bin $base $version 'NMoneys' $_ | Out-Null }
 		
-	ZipSigned $base $version 'NMoneys' 'NMoneys.dll' | Out-Null
+	zip-signed $base $version 'NMoneys' 'NMoneys.dll' | Out-Null
 
-	$version = GetVersionFromPackage $base 'NMoneys.Exchange'
+	$version = get-version-from-package $base 'NMoneys.Exchange'
 	('NMoneys.Exchange.dll', 'NMoneys.Exchange.XML', 'NMoneys_Exchange.chm') |
-		% { ZipBin $base $version 'NMoneys.Exchange' $_ | Out-Null }
+		% { zip-bin $base $version 'NMoneys.Exchange' $_ | Out-Null }
 }
 
-function ZipBin($base, $version, $zipName, $fileName)
+function zip-bin($base, $version, $zipName, $fileName)
 {
 	$zip_file = Join-Path $base "\release\$zipName.$version-bin.zip"
 	$to_add = Join-Path $base "\release\lib\Net40-client\$fileName"
 	
-	Zip $zip_file $to_add
+	zip $zip_file $to_add
 	
 	return $zip_file
 }
 
-function ZipSigned($base, $version, $zipName, $fileName)
+function zip-signed($base, $version, $zipName, $fileName)
 {
 	$zip_file = Join-Path $base "\release\$zipName.$version-signed.zip"
 	$to_add = Join-Path $base "\release\signed\$fileName"
 	
-	Zip $zip_file $to_add
+	zip $zip_file $to_add
 	
 	return $zip_file
 }
 
-function Zip($zip_file, $to_add)
+function zip($zip_file, $to_add)
 {
 	& "$base\tools\Info-Zip\zip.exe" -jq $zip_file $to_add
 	Throw-If-Error "Cannot add '$to_add' to '$zip_file'"
@@ -132,7 +132,7 @@ function Zip($zip_file, $to_add)
 	return $zip_file
 }
 
-function GetVersionFromPackage($base, $packageFragment)
+function get-version-from-package($base, $packageFragment)
 {
 	$pkgVersion = Get-ChildItem -File "$base\release\$packageFragment*.nupkg" |
 		? { $_.Name -match "$packageFragment\.(\d(?:\.\d){3})" } |
