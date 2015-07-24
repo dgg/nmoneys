@@ -56,17 +56,20 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="JsonString.cs" />
     <Compile Include="Json_Net\DeserializationTester.cs" />
     <Compile Include="Json_Net\SerializationTester.cs" />
+    <Compile Include="Mongo_DB\CustomConventionSerializationTester.cs" />
+    <Compile Include="Mongo_DB\SerializationTester.cs" />
+    <Compile Include="Mongo_DB\Support\ProxySerializer.cs" />
+    <Compile Include="Mongo_DB\Support\TestingConventions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service_Stack\DeserializationTester.cs" />
     <Compile Include="Service_Stack\SerializationTester.cs" />
     <Compile Include="Service_Stack\Support\ConfigScope.cs" />
     <Compile Include="Service_Stack\Support\NullableConfigScope.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Mongo_DB\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
