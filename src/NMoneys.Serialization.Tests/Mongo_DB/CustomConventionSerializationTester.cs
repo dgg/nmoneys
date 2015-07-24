@@ -26,7 +26,7 @@ namespace NMoneys.Serialization.Tests.Mongo_DB
 		}
 
 		[Test]
-		public void CustomCanonicalConverter_CamelCaseConventions_UsesCamelCasedPropertyNamesAndAlphabeticCode()
+		public void CustomCanonicalSerializer_CamelCaseConventions_UsesCamelCasedPropertyNamesAndAlphabeticCode()
 		{
 			var toSerialize = new Money(14.3m, CurrencyIsoCode.XTS);
 
@@ -38,7 +38,7 @@ namespace NMoneys.Serialization.Tests.Mongo_DB
 		}
 
 		[Test]
-		public void CustomCanonicalConverterWithCamelContract_LikeCanonicalJsonSerialization()
+		public void CustomCanonicalSerializerWithCamelConvention_LikeCanonicalJsonSerialization()
 		{
 			using (var serializer = new OneGoDataContractJsonSerializer<Money>())
 			{
@@ -50,6 +50,17 @@ namespace NMoneys.Serialization.Tests.Mongo_DB
 				string actual = toSerialize.ToJson().Replace(" ", string.Empty);
 				Assert.That(actual, Is.EqualTo(canonical));
 			}
+		}
+
+		[Test]
+		public void CustomDefaultSerializer_CamelCaseConvention_UsesCamelCasedPropertyNamesAndAlphabeticCode()
+		{
+			var toSerialize = new Money(14.3m, CurrencyIsoCode.XTS);
+
+			_proxy.Serializer = new DefaultMoneySerializer();
+
+			string actual = toSerialize.ToJson();
+			Assert.That(actual, Is.EqualTo("{ 'amount' : 14.3, 'currency' : 'XTS' }".Jsonify()));
 		}
 	}
 }

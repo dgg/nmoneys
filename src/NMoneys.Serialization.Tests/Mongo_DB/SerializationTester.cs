@@ -37,7 +37,7 @@ namespace NMoneys.Serialization.Tests.Mongo_DB
 		}
 
 		[Test]
-		public void DefaultSerialiation_NotLikeCanonicalJsonSerialization()
+		public void DefaultSerialization_NotLikeCanonicalJsonSerialization()
 		{
 			_proxy.Serializer = _proxy.Default;
 
@@ -53,7 +53,7 @@ namespace NMoneys.Serialization.Tests.Mongo_DB
 		}
 
 		[Test]
-		public void CustomCanonicalConverter_DefaultConventions_UsesPascalCasedPropertyNamesAndAlphabeticCode()
+		public void CustomCanonicalSerializer_DefaultConventions_UsesPascalCasedPropertyNamesAndAlphabeticCode()
 		{
 			var toSerialize = new Money(14.3m, CurrencyIsoCode.XTS);
 
@@ -62,6 +62,18 @@ namespace NMoneys.Serialization.Tests.Mongo_DB
 			string actual = toSerialize.ToJson();
 			
 			Assert.That(actual, Is.EqualTo("{ 'Amount' : 14.3, 'Currency' : { 'IsoCode' : 'XTS' } }".Jsonify()));
+		}
+
+		[Test]
+		public void CustomDefaultSerializer_DefaultConventions_UsesPascalCasedPropertyNamesAndNumericCode()
+		{
+			var toSerialize = new Money(14.3m, CurrencyIsoCode.XTS);
+
+			_proxy.Serializer = new DefaultMoneySerializer();
+
+			string actual = toSerialize.ToJson()
+				;
+			Assert.That(actual, Is.EqualTo("{ 'Amount' : 14.3, 'Currency' : 963 }".Jsonify()));
 		}
 	}
 }

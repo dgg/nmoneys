@@ -40,7 +40,6 @@ namespace NMoneys.Serialization.Tests.Mongo_DB.Support
 
 		public ProxySerializer<T> Register()
 		{
-			//var serializer = BsonSerializer.LookupSerializer(typeof (T));
 			BsonSerializer.RegisterSerializer(typeof (T), this);
 			return this;
 		}
