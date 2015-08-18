@@ -71,9 +71,85 @@ namespace NMoneys.Serialization.Tests.Mongo_DB
 
 			_proxy.Serializer = new DefaultMoneySerializer();
 
-			string actual = toSerialize.ToJson()
-				;
+			string actual = toSerialize.ToJson();
+
 			Assert.That(actual, Is.EqualTo("{ 'Amount' : 14.3, 'Currency' : 963 }".Jsonify()));
 		}
+
+		#region nullables
+
+		[Test]
+		public void CustomCanonicalSerializer_NotNullDefaultConventions_UsesPascalCasedPropertyNamesAndAlphabeticCode()
+		{
+			Money? notNull = new Money(14.3m, CurrencyIsoCode.XTS);
+
+			_proxy.Serializer = new CanonicalMoneySerializer();
+
+			string actual = notNull.ToJson();
+
+			Assert.That(actual, Is.EqualTo("{ 'Amount' : 14.3, 'Currency' : { 'IsoCode' : 'XTS' } }".Jsonify()));
+		}
+		
+		[Test]
+		public void CustomCanonicalSerializer_NullDefaultConventions_UsesPascalCasedPropertyNamesAndAlphabeticCode()
+		{
+			Money? @null = default(Money?);
+
+			_proxy.Serializer = new CanonicalMoneySerializer();
+
+			string actual = @null.ToJson();
+
+			Assert.That(actual, Is.EqualTo("null"));
+		}
+
+		[Test]
+		public void CustomDefaultSerializer_NotNullDefaultConventions_UsesPascalCasedPropertyNamesAndNumericCode()
+		{
+			Money? notNull = new Money(14.3m, CurrencyIsoCode.XTS);
+
+			_proxy.Serializer = new DefaultMoneySerializer();
+
+			string actual = notNull.ToJson();
+
+			Assert.That(actual, Is.EqualTo("{ 'Amount' : 14.3, 'Currency' : 963 }".Jsonify()));
+		}
+
+		[Test]
+		public void CustomDefaultSerializer_NullDefaultConventions_Null()
+		{
+			Money? @null = default(Money?);
+
+			_proxy.Serializer = new DefaultMoneySerializer();
+
+			string actual = @null.ToJson();
+
+			Assert.That(actual, Is.EqualTo("null"));
+		}
+
+		[Test]
+		public void CustomDefaultSerializer_NotNullContainer_NotNullProperty()
+		{
+			var notNull = new NullableMoneyContainer { PropName = new Money(14.3m, CurrencyIsoCode.XTS) };
+
+			_proxy.Serializer = new DefaultMoneySerializer();
+
+			string actual = notNull.ToJson();
+
+			Assert.That(actual, Is.EqualTo("{ 'PropName' : { 'Amount' : 14.3, 'Currency' : 963 } }".Jsonify()));
+		}
+
+		[Test]
+		public void CustomDefaultSerializer_NullContainer_NullProperty()
+		{
+			var @null = new NullableMoneyContainer { PropName = default(Money?) };
+
+			_proxy.Serializer = new DefaultMoneySerializer();
+
+			string actual = @null.ToJson();
+
+			Assert.That(actual, Is.EqualTo("{ 'PropName' : null }".Jsonify()));
+		}
+
+		#endregion
 	}
 }

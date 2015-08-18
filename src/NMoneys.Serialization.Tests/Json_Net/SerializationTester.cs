@@ -181,7 +181,7 @@ namespace NMoneys.Serialization.Tests.Json_Net
 		}
 
 		[Test]
-		public void CustomCanonicalConverter_NullCamelCaseContractResolver_UsesCamelCasedPropertyNamesAndAlphabeticCode()
+		public void CustomCanonicalConverter_NullCamelCaseContractResolver_Null()
 		{
 			Money? @null = default(Money?);
 
@@ -211,7 +211,7 @@ namespace NMoneys.Serialization.Tests.Json_Net
 		}
 
 		[Test]
-		public void CustomCanonicalConverter_NullContainer_UsesCamelCasedPropertyNamesAndAlphabeticCode()
+		public void CustomCanonicalConverter_NullContainer_Null()
 		{
 			var notNull = new NullableMoneyContainer { PropName = default(Money?) };
 
@@ -235,7 +235,7 @@ namespace NMoneys.Serialization.Tests.Json_Net
 		}
 
 		[Test]
-		public void CustomDefaultConverter_NullDefaultContractResolver_UsesPascalCasedPropertyNamesAndAlphabeticCode()
+		public void CustomDefaultConverter_NullDefaultContractResolver_Null()
 		{
 			Money? @null = default(Money?);
 
@@ -259,7 +259,7 @@ namespace NMoneys.Serialization.Tests.Json_Net
 		}
 
 		[Test]
-		public void CustomDefaultConverter_NullCamelCaseContractResolver_UsesCamelCasedPropertyNamesAndAlphabeticCode()
+		public void CustomDefaultConverter_NullCamelCaseContractResolver_Null()
 		{
 			Money? @null = default(Money?);
 
@@ -284,7 +284,7 @@ namespace NMoneys.Serialization.Tests.Json_Net
 		}
 
 		[Test]
-		public void CustomDefaultConverter_NotNullContainer_UsesNumericCode()
+		public void CustomDefaultConverter_NotNullContainer_NotNullProperty()
 		{
 			var notNull = new NullableMoneyContainer { PropName = new Money(14.3m, CurrencyIsoCode.XTS) };
 
@@ -294,7 +294,7 @@ namespace NMoneys.Serialization.Tests.Json_Net
 		}
 
 		[Test]
-		public void CustomDefaultConverter_NullContainer_UsesNumericCode()
+		public void CustomDefaultConverter_NullContainer_NullProperty()
 		{
 			var @null = new NullableMoneyContainer { PropName = default(Money?) };
 
