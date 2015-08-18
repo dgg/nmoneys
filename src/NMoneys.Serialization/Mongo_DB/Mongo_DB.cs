@@ -47,7 +47,10 @@ namespace NMoneys.Serialization.Mongo_DB
 			bsonReader.ReadStartDocument();
 			double amount = bsonReader.ReadDouble();
 			var map = (BsonClassMap<Money>)BsonClassMap.LookupClassMap(typeof(Money));
+
 			var currency = map.GetMemberMap(m => m.CurrencyCode);
+			bsonReader.ReadName("Currency".CapitalizeAs(currency));
+
 			var currencyCode = (CurrencyIsoCode) currency.GetSerializer(typeof (CurrencyIsoCode))
 				.Deserialize(bsonReader, typeof (CurrencyIsoCode), currency.SerializationOptions);
 

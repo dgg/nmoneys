@@ -59,7 +59,9 @@
     <Compile Include="JsonString.cs" />
     <Compile Include="Json_Net\DeserializationTester.cs" />
     <Compile Include="Json_Net\SerializationTester.cs" />
+    <Compile Include="Mongo_DB\CustomConventionDeserializationTester.cs" />
     <Compile Include="Mongo_DB\CustomConventionSerializationTester.cs" />
+    <Compile Include="Mongo_DB\DeserializationTester.cs" />
     <Compile Include="Mongo_DB\SerializationTester.cs" />
     <Compile Include="Mongo_DB\Support\ProxySerializer.cs" />
     <Compile Include="Mongo_DB\Support\TestingConventions.cs" />

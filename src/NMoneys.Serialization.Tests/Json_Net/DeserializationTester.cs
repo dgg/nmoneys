@@ -128,7 +128,7 @@ namespace NMoneys.Serialization.Tests.Json_Net
 		}
 
 		[Test]
-		public void CustomCurrencyLessConverter_WithDefaultContract_ReadsPascalCasedProperties()
+		public void CustomCurrencyLessConverter_WithDefaultContract_PascalCasedProperties()
 		{
 			var expected = new Money(14.3m, CurrencyIsoCode.XXX);
 
@@ -139,12 +139,17 @@ namespace NMoneys.Serialization.Tests.Json_Net
 		}
 
 		[Test]
-		public void CustomCurrencyLessConverter_WithCamelCaseContract_ReadsCamelCasedProperties()
+		public void CustomCurrencyLessConverter_WithCamelCaseContract_CamelCasedProperties()
 		{
 			var expected = new Money(14.3m, CurrencyIsoCode.XXX);
 
-			string json = "{\"Name\": \"something\", \"PropName\":14.3}";
-			var actual = JsonConvert.DeserializeObject<MoneyContainer>(json, new CurrencyLessMoneyConverter());
+			string json = "{\"name\": \"something\", \"propName\":14.3}";
+			var actual = JsonConvert.DeserializeObject<MoneyContainer>(json, 
+				new JsonSerializerSettings
+				{
+					ContractResolver = new CamelCasePropertyNamesContractResolver(),
+					Converters = new[] { new CurrencyLessMoneyConverter() }
+				});
 
 			Assert.That(actual.PropName, Is.EqualTo(expected));
 		}
@@ -246,7 +251,7 @@ namespace NMoneys.Serialization.Tests.Json_Net
 		}
 
 		[Test]
-		public void CustomDefaultConverter_NullWithDefaultContractAndCurrencyStyle_ReadsPascalCasedProperties()
+		public void CustomDefaultConverter_Null_Null()
 		{
 			string json = "null";
 			var actual = JsonConvert.DeserializeObject<Money?>(json, new DefaultNullableMoneyConverter());
