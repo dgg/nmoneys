@@ -8,50 +8,41 @@ namespace NMoneys.Serialization.Mongo_DB
 {
 	#region serializers
 
-	public class CanonicalMoneySerializer : IBsonSerializer
+	public class CanonicalMoneySerializer : MoneySerializer
 	{
-		private readonly Lazy<IMoneyReader> _reader = new Lazy<IMoneyReader>(() =>
-		{
-			var map = (BsonClassMap<Money>) BsonClassMap.LookupClassMap(typeof (Money));
-			return new CanonicalMoneyReader(map);
-		});
-
-		public object Deserialize(BsonReader bsonReader, Type nominalType, IBsonSerializationOptions options)
-		{
-			Money money = _reader.Value.ReadFrom(bsonReader);
-			return money;
-		}
-
-		public object Deserialize(BsonReader bsonReader, Type nominalType, Type actualType, IBsonSerializationOptions options)
-		{
-			return Deserialize(bsonReader, nominalType, options);
-		}
-
-		public IBsonSerializationOptions GetDefaultSerializationOptions()
-		{
-			return new DocumentSerializationOptions();
-		}
-
-		private readonly Lazy<IMoneyWriter> _writer = new Lazy<IMoneyWriter>(() =>
-		{
-			var map = (BsonClassMap<Money>)BsonClassMap.LookupClassMap(typeof(Money));
-			return new CanonicalMoneyWriter(map);
-		});
-
-		public void Serialize(BsonWriter bsonWriter, Type nominalType, object value, IBsonSerializationOptions options)
-		{
-			var money = (Money)value;
-			_writer.Value.WriteTo(money, bsonWriter);
-		}
+		public CanonicalMoneySerializer() : base(
+			m => new CanonicalMoneyReader(m),
+			m => new CanonicalMoneyWriter(m)) { }
 	}
 
-	public class DefaultMoneySerializer : IBsonSerializer
+	public class DefaultMoneySerializer : MoneySerializer
 	{
-		private readonly Lazy<IMoneyReader> _reader = new Lazy<IMoneyReader>(() =>
+		public DefaultMoneySerializer()
+			: base(
+				m => new DefaultMoneyReader(m),
+				m => new DefaultMoneyWriter(m)) { }
+	}
+
+	public abstract class MoneySerializer : IBsonSerializer
+	{
+		private readonly Lazy<IMoneyReader> _reader;
+		private readonly Lazy<IMoneyWriter> _writer;
+
+		internal MoneySerializer(Func<BsonClassMap<Money>, IMoneyReader> reader,
+			Func<BsonClassMap<Money>, IMoneyWriter> writer)
 		{
-			var map = (BsonClassMap<Money>)BsonClassMap.LookupClassMap(typeof(Money));
-			return new DefaultMoneyReader(map);
-		}); 
+			_reader = new Lazy<IMoneyReader>(() =>
+			{
+				var map = (BsonClassMap<Money>)BsonClassMap.LookupClassMap(typeof(Money));
+				return reader(map);
+			});
+
+			_writer = new Lazy<IMoneyWriter>(() =>
+			{
+				var map = (BsonClassMap<Money>)BsonClassMap.LookupClassMap(typeof(Money));
+				return writer(map);
+			});
+		}
 
 		public object Deserialize(BsonReader bsonReader, Type nominalType, IBsonSerializationOptions options)
 		{
@@ -69,11 +60,6 @@ namespace NMoneys.Serialization.Mongo_DB
 			return new DocumentSerializationOptions();
 		}
 
-		private readonly Lazy<IMoneyWriter> _writer = new Lazy<IMoneyWriter>(() =>
-		{
-			var map = (BsonClassMap<Money>)BsonClassMap.LookupClassMap(typeof(Money));
-			return new DefaultMoneyWriter(map);
-		});
 		public void Serialize(BsonWriter bsonWriter, Type nominalType, object value, IBsonSerializationOptions options)
 		{
 			var money = (Money)value;
@@ -229,7 +215,7 @@ namespace NMoneys.Serialization.Mongo_DB
 		{
 			var amountMap = _map.GetMemberMap(m => m.Amount);
 			double amount = reader.ReadDouble(amountMap.ElementName);
-			
+
 			return Convert.ToDecimal(amount);
 		}
 
