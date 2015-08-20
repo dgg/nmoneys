@@ -24,23 +24,29 @@ namespace NMoneys.Serialization.Json_NET
 	/// </example>
 	public class CanonicalMoneyConverter : JsonConverter
 	{
+		private readonly IMoneyWriter _writer;
+		private readonly IMoneyReader _reader;
+
+		public CanonicalMoneyConverter()
+		{
+			_writer = new CanonicalMoneyWriter();
+			_reader = new CanonicalMoneyReader();
+		}
+
 		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
 		{
-			var money = (Money) value;
+			var instance = (Money) value;
 
-			IMoneyWriter canonical = new CanonicalMoneyWriter(money, serializer.ContractResolver);
-			canonical.WriteTo(writer);
+			_writer.WriteTo(instance, serializer.ContractResolver, writer);
 		}
 
 		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
 		{
 			var token = JToken.ReadFrom(reader);
 
-			var canonical = new CanonicalMoneyReader(serializer.ContractResolver as DefaultContractResolver);
-
 			return new Money(
-				canonical.ReadAmount(token),
-				canonical.ReadCurrencyCode(token));
+				_reader.ReadAmount(token, serializer.ContractResolver),
+				_reader.ReadCurrencyCode(token, serializer.ContractResolver));
 		}
 
 		public override bool CanConvert(Type objectType)
@@ -65,14 +71,21 @@ namespace NMoneys.Serialization.Json_NET
 	/// </example>
 	public class CanonicalNullableMoneyConverter : JsonConverter
 	{
+		private readonly IMoneyWriter _writer;
+		private readonly IMoneyReader _reader;
+		public CanonicalNullableMoneyConverter()
+		{
+			_writer = new CanonicalMoneyWriter();
+			_reader = new CanonicalMoneyReader();
+		}
+
 		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
 		{
 			var money = (Money?)value;
 
 			if (money.HasValue)
 			{
-				IMoneyWriter canonical = new CanonicalMoneyWriter(money.Value, serializer.ContractResolver);
-				canonical.WriteTo(writer);
+				_writer.WriteTo(money.Value, serializer.ContractResolver, writer);
 			}
 		}
 
@@ -82,12 +95,9 @@ namespace NMoneys.Serialization.Json_NET
 			Money? read = default(Money?);
 			if (token.HasValues)
 			{
-
-				var canonical = new CanonicalMoneyReader(serializer.ContractResolver as DefaultContractResolver);
-
 				read = new Money(
-					canonical.ReadAmount(token),
-					canonical.ReadCurrencyCode(token));
+					_reader.ReadAmount(token, serializer.ContractResolver),
+					_reader.ReadCurrencyCode(token, serializer.ContractResolver));
 			}
 			return read;
 		}
@@ -117,33 +127,32 @@ namespace NMoneys.Serialization.Json_NET
 	public class DefaultMoneyConverter : JsonConverter
 	{
 		private readonly CurrencyStyle _style;
+		private readonly IMoneyWriter _writer;
+		private readonly IMoneyReader _reader;
 
-		public DefaultMoneyConverter() : this(CurrencyStyle.Alphabetic)
-		{
-		}
+		public DefaultMoneyConverter() : this(CurrencyStyle.Alphabetic) { }
 
 		public DefaultMoneyConverter(CurrencyStyle style)
 		{
 			_style = style;
+			_writer = new DefaultMoneyWriter(style);
+			_reader = new DefaultMoneyReader(style);
 		}
 
 		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
 		{
 			var instance = (Money) value;
 
-			IMoneyWriter @default = new DefaultMoneyWriter(instance, _style, serializer.ContractResolver);
-			@default.WriteTo(writer);
+			_writer.WriteTo(instance, serializer.ContractResolver, writer);
 		}
 
 		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
 		{
 			var token = JToken.ReadFrom(reader);
 
-			IMoneyReader @default = new DefaultMoneyReader(_style, serializer.ContractResolver);
-
 			return new Money(
-				@default.ReadAmount(token),
-				@default.ReadCurrencyCode(token));
+				_reader.ReadAmount(token, serializer.ContractResolver),
+				_reader.ReadCurrencyCode(token, serializer.ContractResolver));
 		}
 
 		public override bool CanConvert(Type objectType)
@@ -171,6 +180,8 @@ namespace NMoneys.Serialization.Json_NET
 	public class DefaultNullableMoneyConverter : JsonConverter
 	{
 		private readonly CurrencyStyle _style;
+		private readonly IMoneyWriter _writer;
+		private readonly IMoneyReader _reader;
 
 		public DefaultNullableMoneyConverter()
 			: this(CurrencyStyle.Alphabetic)
@@ -180,6 +191,8 @@ namespace NMoneys.Serialization.Json_NET
 		public DefaultNullableMoneyConverter(CurrencyStyle style)
 		{
 			_style = style;
+			_writer = new DefaultMoneyWriter(style);
+			_reader = new DefaultMoneyReader(style);
 		}
 
 		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
@@ -187,8 +200,7 @@ namespace NMoneys.Serialization.Json_NET
 			var instance = (Money?)value;
 			if (instance.HasValue)
 			{
-				IMoneyWriter @default = new DefaultMoneyWriter(instance.Value, _style, serializer.ContractResolver);
-				@default.WriteTo(writer);
+				_writer.WriteTo(instance.Value, serializer.ContractResolver, writer);
 			}
 		}
 
@@ -198,11 +210,9 @@ namespace NMoneys.Serialization.Json_NET
 			Money? read = default(Money?);
 			if (token.HasValues)
 			{
-				IMoneyReader @default = new DefaultMoneyReader(_style, serializer.ContractResolver);
-
 				read = new Money(
-					@default.ReadAmount(token),
-					@default.ReadCurrencyCode(token));
+					_reader.ReadAmount(token, serializer.ContractResolver),
+					_reader.ReadCurrencyCode(token, serializer.ContractResolver));
 			}
 			return read;
 		}
@@ -230,12 +240,14 @@ namespace NMoneys.Serialization.Json_NET
 	public class CurrencyLessMoneyConverter : JsonConverter
 	{
 		private readonly CurrencyIsoCode _defaultCurrency;
+		private readonly IMoneyReader _reader;
 
 		public CurrencyLessMoneyConverter() : this(CurrencyIsoCode.XXX) { }
 
 		public CurrencyLessMoneyConverter(CurrencyIsoCode defaultCurrency)
 		{
 			_defaultCurrency = defaultCurrency;
+			_reader = new CurrencyLessMoneyReader(defaultCurrency);
 		}
 
 		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
@@ -248,11 +260,9 @@ namespace NMoneys.Serialization.Json_NET
 		{
 			var token = JToken.ReadFrom(reader);
 
-			IMoneyReader @default = new CurrencyLessMoneyReader(_defaultCurrency, serializer.ContractResolver);
-
 			return new Money(
-				@default.ReadAmount(token),
-				@default.ReadCurrencyCode(token));
+				_reader.ReadAmount(token, serializer.ContractResolver),
+				_reader.ReadCurrencyCode(token, serializer.ContractResolver));
 		}
 
 		public override bool CanConvert(Type objectType)
@@ -269,23 +279,29 @@ namespace NMoneys.Serialization.Json_NET
 		Numeric
 	}
 
-	internal abstract class MoneyOperator
+	internal static class ElementName
 	{
-		protected readonly string _amount, _currency, _money, _isoCode;
-		protected MoneyOperator(IContractResolver resolver)
-		{
-			_amount = "Amount";
-			_currency = "Currency";
-			_money = "Money";
-			_isoCode = "IsoCode";
+		private static readonly string _amount = "Amount", _currency = "Currency", _isoCode = "IsoCode";
 
-			var contractResolver = resolver as DefaultContractResolver;
-			if (contractResolver != null)
-			{
-				_amount = contractResolver.GetResolvedPropertyName(_amount);
-				_currency = contractResolver.GetResolvedPropertyName(_currency);
-				_isoCode = contractResolver.GetResolvedPropertyName(_isoCode);
-			}
+		private static string name(string element, IContractResolver resolver)
+		{
+			var @default = resolver as DefaultContractResolver;
+			return @default != null ? @default.GetResolvedPropertyName(element) : element;
+		}
+
+		public static string Amount(IContractResolver resolver)
+		{
+			return name(_amount, resolver);
+		}
+
+		public static string Currency(IContractResolver resolver)
+		{
+			return name(_currency, resolver);
+		}
+
+		public static string IsoCode(IContractResolver resolver)
+		{
+			return name(_isoCode, resolver);
 		}
 	}
 
@@ -293,67 +309,63 @@ namespace NMoneys.Serialization.Json_NET
 
 	internal interface IMoneyReader
 	{
-		decimal ReadAmount(JToken token);
-		CurrencyIsoCode ReadCurrencyCode(JToken token);
+		decimal ReadAmount(JToken token, IContractResolver resolver);
+		CurrencyIsoCode ReadCurrencyCode(JToken token, IContractResolver resolver);
 	}
 
-	internal class DefaultMoneyReader : MoneyOperator, IMoneyReader
+	internal class DefaultMoneyReader : IMoneyReader
 	{
 		private readonly CurrencyStyle _style;
 
-		public DefaultMoneyReader(CurrencyStyle style, IContractResolver resolver)
-			: base(resolver)
+		public DefaultMoneyReader(CurrencyStyle style)
 		{
 			_style = style;
 		}
 
-		public decimal ReadAmount(JToken token)
+		public decimal ReadAmount(JToken token, IContractResolver resolver)
 		{
-			return token[_amount].Value<decimal>();
+			return token[ElementName.Amount(resolver)].Value<decimal>();
 		}
 
-		public CurrencyIsoCode ReadCurrencyCode(JToken token)
+		public CurrencyIsoCode ReadCurrencyCode(JToken token, IContractResolver resolver)
 		{
-			JToken currency = token[_currency];
+			JToken currency = token[ElementName.Currency(resolver)];
 			return currency.GetValue(_style);
 		}
 	}
 
-	internal class CanonicalMoneyReader : MoneyOperator, IMoneyReader
+	internal class CanonicalMoneyReader : IMoneyReader
 	{
-		public CanonicalMoneyReader(IContractResolver resolver) : base(resolver)
+
+		public decimal ReadAmount(JToken token, IContractResolver resolver)
 		{
+			return token[ElementName.Amount(resolver)].Value<decimal>();
 		}
 
-		public decimal ReadAmount(JToken token)
+		public CurrencyIsoCode ReadCurrencyCode(JToken token, IContractResolver resolver)
 		{
-			return token[_amount].Value<decimal>();
-		}
-
-		public CurrencyIsoCode ReadCurrencyCode(JToken token)
-		{
-			JToken isoCode = token[_currency][_isoCode];
+			JToken isoCode = token[ElementName.Currency(resolver)][ElementName.IsoCode(resolver)];
 			return isoCode.GetValue(CurrencyStyle.Alphabetic);
 		}
 	}
 
-	internal class CurrencyLessMoneyReader : MoneyOperator, IMoneyReader
+	internal class CurrencyLessMoneyReader : IMoneyReader
 	{
 		private readonly CurrencyIsoCode _defaultCurrency;
 
-		public CurrencyLessMoneyReader(CurrencyIsoCode defaultCurrency, IContractResolver resolver) : base(resolver)
+		public CurrencyLessMoneyReader(CurrencyIsoCode defaultCurrency)
 		{
 			_defaultCurrency = defaultCurrency;
 		}
 
-		public decimal ReadAmount(JToken token)
+		public decimal ReadAmount(JToken token, IContractResolver resolver)
 		{
 			return token.Type == JTokenType.Object && token.HasValues
 				? token.Values().First().Value<decimal>()
 				: token.Value<decimal>();
 		}
 
-		public CurrencyIsoCode ReadCurrencyCode(JToken token)
+		public CurrencyIsoCode ReadCurrencyCode(JToken token, IContractResolver resolver)
 		{
 			return _defaultCurrency;
 		}
@@ -387,74 +399,59 @@ namespace NMoneys.Serialization.Json_NET
 
 	internal interface IMoneyWriter
 	{
-		void WriteTo(JsonWriter writer);
+		void WriteTo(Money instance, IContractResolver resolver, JsonWriter writer);
 	}
 
-	internal abstract class MoneyWriter : MoneyOperator, IMoneyWriter
+	internal abstract class MoneyWriter : IMoneyWriter
 	{
-		protected MoneyWriter(IContractResolver resolver) : base(resolver)
-		{
-		}
-
-		public void WriteTo(JsonWriter writer)
+		public void WriteTo(Money instance, IContractResolver resolver, JsonWriter writer)
 		{
 			writer.WriteStartObject();
-			writeAmount(writer);
-			writeCurrency(writer);
+			writeAmount(instance, resolver, writer);
+			writeCurrency(instance, resolver, writer);
 			writer.WriteEndObject();
 		}
 
-		protected abstract void writeAmount(JsonWriter writer);
-		protected abstract void writeCurrency(JsonWriter writer);
+		protected abstract void writeAmount(Money instance, IContractResolver contractResolver, JsonWriter writer);
+		protected abstract void writeCurrency(Money instance, IContractResolver resolver, JsonWriter writer);
 	}
 
 	internal class DefaultMoneyWriter : MoneyWriter
 	{
-		private readonly Money _instance;
 		private readonly CurrencyStyle _style;
 
-		public DefaultMoneyWriter(Money instance, CurrencyStyle style, IContractResolver resolver)
-			: base(resolver)
+		public DefaultMoneyWriter(CurrencyStyle style)
 		{
-			_instance = instance;
 			_style = style;
 		}
 
-		protected override void writeAmount(JsonWriter writer)
+		protected override void writeAmount(Money instance, IContractResolver resolver, JsonWriter writer)
 		{
-			writer.WritePropertyName(_amount);
-			writer.WriteValue(_instance.Amount);
+			writer.WritePropertyName(ElementName.Amount(resolver));
+			writer.WriteValue(instance.Amount);
 		}
 
-		protected override void writeCurrency(JsonWriter writer)
+		protected override void writeCurrency(Money instance, IContractResolver resolver, JsonWriter writer)
 		{
-			writer.WritePropertyName(_currency);
-			writer.WriteValue(_instance.CurrencyCode, _style);
+			writer.WritePropertyName(ElementName.Currency(resolver));
+			writer.WriteValue(instance.CurrencyCode, _style);
 		}
 	}
 
 	internal class CanonicalMoneyWriter : MoneyWriter
 	{
-		private readonly Money _instance;
-
-		public CanonicalMoneyWriter(Money instance, IContractResolver resolver)
-			: base(resolver)
+		protected override void writeAmount(Money instance, IContractResolver resolver, JsonWriter writer)
 		{
-			_instance = instance;
+			writer.WritePropertyName(ElementName.Amount(resolver));
+			writer.WriteValue(instance.Amount);
 		}
 
-		protected override void writeAmount(JsonWriter writer)
+		protected override void writeCurrency(Money instance, IContractResolver resolver, JsonWriter writer)
 		{
-			writer.WritePropertyName(_amount);
-			writer.WriteValue(_instance.Amount);
-		}
-
-		protected override void writeCurrency(JsonWriter writer)
-		{
-			writer.WritePropertyName(_currency);
+			writer.WritePropertyName(ElementName.Currency(resolver));
 			writer.WriteStartObject();
-			writer.WritePropertyName(_isoCode);
-			writer.WriteValue(_instance.CurrencyCode.AlphabeticCode());
+			writer.WritePropertyName(ElementName.IsoCode(resolver));
+			writer.WriteValue(instance.CurrencyCode.AlphabeticCode());
 			writer.WriteEndObject();
 		}
 	}
