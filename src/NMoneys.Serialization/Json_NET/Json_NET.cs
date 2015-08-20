@@ -126,7 +126,6 @@ namespace NMoneys.Serialization.Json_NET
 	/// </example>
 	public class DefaultMoneyConverter : JsonConverter
 	{
-		private readonly CurrencyStyle _style;
 		private readonly IMoneyWriter _writer;
 		private readonly IMoneyReader _reader;
 
@@ -134,7 +133,6 @@ namespace NMoneys.Serialization.Json_NET
 
 		public DefaultMoneyConverter(CurrencyStyle style)
 		{
-			_style = style;
 			_writer = new DefaultMoneyWriter(style);
 			_reader = new DefaultMoneyReader(style);
 		}
@@ -179,18 +177,13 @@ namespace NMoneys.Serialization.Json_NET
 	/// </example>
 	public class DefaultNullableMoneyConverter : JsonConverter
 	{
-		private readonly CurrencyStyle _style;
 		private readonly IMoneyWriter _writer;
 		private readonly IMoneyReader _reader;
 
-		public DefaultNullableMoneyConverter()
-			: this(CurrencyStyle.Alphabetic)
-		{
-		}
+		public DefaultNullableMoneyConverter() : this(CurrencyStyle.Alphabetic) { }
 
 		public DefaultNullableMoneyConverter(CurrencyStyle style)
 		{
-			_style = style;
 			_writer = new DefaultMoneyWriter(style);
 			_reader = new DefaultMoneyReader(style);
 		}
@@ -239,14 +232,12 @@ namespace NMoneys.Serialization.Json_NET
 	/// </example>
 	public class CurrencyLessMoneyConverter : JsonConverter
 	{
-		private readonly CurrencyIsoCode _defaultCurrency;
 		private readonly IMoneyReader _reader;
 
 		public CurrencyLessMoneyConverter() : this(CurrencyIsoCode.XXX) { }
 
 		public CurrencyLessMoneyConverter(CurrencyIsoCode defaultCurrency)
 		{
-			_defaultCurrency = defaultCurrency;
 			_reader = new CurrencyLessMoneyReader(defaultCurrency);
 		}
 
@@ -336,7 +327,6 @@ namespace NMoneys.Serialization.Json_NET
 
 	internal class CanonicalMoneyReader : IMoneyReader
 	{
-
 		public decimal ReadAmount(JToken token, IContractResolver resolver)
 		{
 			return token[ElementName.Amount(resolver)].Value<decimal>();
@@ -412,7 +402,7 @@ namespace NMoneys.Serialization.Json_NET
 			writer.WriteEndObject();
 		}
 
-		protected abstract void writeAmount(Money instance, IContractResolver contractResolver, JsonWriter writer);
+		protected abstract void writeAmount(Money instance, IContractResolver resolver, JsonWriter writer);
 		protected abstract void writeCurrency(Money instance, IContractResolver resolver, JsonWriter writer);
 	}
 
