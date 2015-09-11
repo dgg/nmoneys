@@ -10,7 +10,6 @@ namespace NMoneys.Serialization.Mongo_DB
 {
 	#region serializers
 
-
 	/// <summary>
 	/// Converts a <see cref="Money"/> (or <see cref="Nullable{T}"/>) instance to and from JSON in the canonical way.
 	/// </summary>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NMoneys", "src\NMoneys\NMoneys.csproj", "{5408F146-6F8A-406C-9E90-292662018F72}"
 EndProject
@@ -32,6 +32,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{2E7E61
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NMoneys.Serialization", "src\NMoneys.Serialization\NMoneys.Serialization.csproj", "{A30FA2A1-CE95-4CA9-A786-8C5616F98B57}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NMoneys.Serialization.Mongo_DB", "src\NMoneys.Serialization.Mongo_DB\NMoneys.Serialization.Mongo_DB.csproj", "{7A926A2D-D194-4C53-8A69-F295E71B3EF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NMoneys.Serialization.Mongo_DB.Tests", "src\NMoneys.Serialization.Mongo_DB.Tests\NMoneys.Serialization.Mongo_DB.Tests.csproj", "{F36F6A65-890E-45CD-A0DF-916B06720761}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -103,6 +107,30 @@ Global
 		{A30FA2A1-CE95-4CA9-A786-8C5616F98B57}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{A30FA2A1-CE95-4CA9-A786-8C5616F98B57}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{A30FA2A1-CE95-4CA9-A786-8C5616F98B57}.Release|x86.ActiveCfg = Release|Any CPU
+		{7A926A2D-D194-4C53-8A69-F295E71B3EF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A926A2D-D194-4C53-8A69-F295E71B3EF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A926A2D-D194-4C53-8A69-F295E71B3EF2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{7A926A2D-D194-4C53-8A69-F295E71B3EF2}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{7A926A2D-D194-4C53-8A69-F295E71B3EF2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7A926A2D-D194-4C53-8A69-F295E71B3EF2}.Debug|x86.Build.0 = Debug|Any CPU
+		{7A926A2D-D194-4C53-8A69-F295E71B3EF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A926A2D-D194-4C53-8A69-F295E71B3EF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A926A2D-D194-4C53-8A69-F295E71B3EF2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{7A926A2D-D194-4C53-8A69-F295E71B3EF2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{7A926A2D-D194-4C53-8A69-F295E71B3EF2}.Release|x86.ActiveCfg = Release|Any CPU
+		{7A926A2D-D194-4C53-8A69-F295E71B3EF2}.Release|x86.Build.0 = Release|Any CPU
+		{F36F6A65-890E-45CD-A0DF-916B06720761}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F36F6A65-890E-45CD-A0DF-916B06720761}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F36F6A65-890E-45CD-A0DF-916B06720761}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F36F6A65-890E-45CD-A0DF-916B06720761}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F36F6A65-890E-45CD-A0DF-916B06720761}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F36F6A65-890E-45CD-A0DF-916B06720761}.Debug|x86.Build.0 = Debug|Any CPU
+		{F36F6A65-890E-45CD-A0DF-916B06720761}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F36F6A65-890E-45CD-A0DF-916B06720761}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F36F6A65-890E-45CD-A0DF-916B06720761}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F36F6A65-890E-45CD-A0DF-916B06720761}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F36F6A65-890E-45CD-A0DF-916B06720761}.Release|x86.ActiveCfg = Release|Any CPU
+		{F36F6A65-890E-45CD-A0DF-916B06720761}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
