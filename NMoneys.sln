@@ -15,6 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		NMoneys.nuspec = NMoneys.nuspec
 		build\NMoneys.psm1 = build\NMoneys.psm1
 		NMoneys.Serialization.Json_NET.nuspec = NMoneys.Serialization.Json_NET.nuspec
+		NMoneys.Serialization.Mongo_DB.nuspec = NMoneys.Serialization.Mongo_DB.nuspec
 		NMoneys.Serialization.Mongo_DB_legacy.nuspec = NMoneys.Serialization.Mongo_DB_legacy.nuspec
 		NMoneys.Serialization.Raven_DB.nuspec = NMoneys.Serialization.Raven_DB.nuspec
 		NMoneys.Serialization.Service_Stack.nuspec = NMoneys.Serialization.Service_Stack.nuspec

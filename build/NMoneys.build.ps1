@@ -36,8 +36,9 @@ task Test -depends ensureRelease {
 	$core = get-test-assembly-name $base_dir $configuration "NMoneys"
 	$exchange = get-test-assembly-name $base_dir $configuration "NMoneys.Exchange"
 	$serialization = get-test-assembly-name $base_dir $configuration "NMoneys.Serialization"
+	$mongo_db = get-test-assembly-name $base_dir $configuration "NMoneys.Serialization.Mongo_DB"
 
-	run-tests $base_dir $release_dir ($core, $exchange, $serialization)
+	run-tests $base_dir $release_dir ($core, $exchange, $serialization, $mongo_db)
 	report-on-test-results $base_dir $release_dir
 }
 

@@ -205,7 +205,7 @@ namespace NMoneys.Tests
 			Assert.That(fast.TotalMilliseconds * 5, Is.LessThan(@default.Milliseconds), "{0} << {1}", fast, @default);
 		}
 
-		[Test, NUnit.Framework.Category("Performance")]
+		[Test, NUnit.Framework.Category("Performance"), Explicit]
 		public void Comparer_SlightlyBetterPerformance_ThanDefaultComparer()
 		{
 			CurrencyIsoCode[] values = Enumeration.GetValues<CurrencyIsoCode>();

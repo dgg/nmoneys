@@ -24,6 +24,8 @@ push-package-artifact 'NMoneys.Serialization.Raven_DB' 'nmoneys_serialization_ra
 
 push-package-artifact 'NMoneys.Serialization.Mongo_DB.mongocsharpdriver' 'nmoneys_serialization_mongo_db_legacy'
 
+push-package-artifact 'NMoneys.Serialization.Mongo_DB' 'nmoneys_serialization_mongo_db'
+
 push-zip-artifact 'NMoneys' 'nmoneys_zip' 'bin'
 
 push-zip-artifact 'NMoneys' 'nmoneys_signed_zip' 'signed'

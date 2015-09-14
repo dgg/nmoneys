@@ -77,6 +77,11 @@ function copy-sources()
 		% {$_ -replace "Newtonsoft", "Raven.Imports.Newtonsoft"} | 
 		% {$_ -replace ".Json_NET", ".Raven_DB"} |
 		Set-Content "$release_src_dir\Raven_DB.cs"
+
+	$src = Join-Path $base src\NMoneys.Serialization.Mongo_DB\
+	
+	Get-ChildItem -Path "$src\" -Filter "*.cs" |
+		Copy-Item -Destination $release_src_dir
 }
 
 function Generate-Packages($base)
