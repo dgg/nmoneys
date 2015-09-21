@@ -4,6 +4,7 @@ using NMoneys.Support;
 using NMoneys.Tests.CustomConstraints;
 using NMoneys.Tests.Support;
 using NUnit.Framework;
+using Testing.Commons.Serialization;
 
 namespace NMoneys.Tests
 {
@@ -29,7 +30,7 @@ namespace NMoneys.Tests
 		[Test]
 		public void XmlSerialization_OfObsoleteCurrency_Exception()
 		{
-			using (var serializer = new OneGoXmlSerializer<CurrencyIsoCode>())
+			using (var serializer = new XmlRoundtripSerializer<CurrencyIsoCode>())
 			{
 				var obsolete = CurrencyIsoCode.EEK;
 				Assert.That(() => serializer.Serialize(obsolete), Throws.InstanceOf<InvalidOperationException>());
@@ -39,7 +40,7 @@ namespace NMoneys.Tests
 		[Test]
 		public void XmlDeserialization_DoesNotPreserveInstanceUniqueness()
 		{
-			using (var serializer = new OneGoXmlSerializer<CurrencyIsoCode>())
+			using (var serializer = new XmlRoundtripSerializer<CurrencyIsoCode>())
 			{
 				CurrencyIsoCode usd = CurrencyIsoCode.USD;
 				serializer.Serialize(usd);

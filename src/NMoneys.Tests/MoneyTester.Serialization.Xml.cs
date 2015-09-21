@@ -2,6 +2,7 @@
 using NMoneys.Tests.CustomConstraints;
 using NMoneys.Tests.Support;
 using NUnit.Framework;
+using Testing.Commons.Serialization;
 
 namespace NMoneys.Tests
 {
@@ -29,7 +30,7 @@ namespace NMoneys.Tests
 		public void XmlSerialization_ObsoleteCurrency_RaisesEvent(string threeLetterIsoCode)
 		{
 			var obsolete = new Money(2m, threeLetterIsoCode);
-			using (var serializer = new OneGoXmlSerializer<Money>())
+			using (var serializer = new XmlRoundtripSerializer<Money>())
 			{
 				serializer.Serialize(obsolete);
 				Action deserializeObsolete = () => serializer.Deserialize();
@@ -71,7 +72,7 @@ namespace NMoneys.Tests
 		{
 			var @default = new Money();
 
-			var serializer = new OneGoXmlSerializer<Money>();
+			var serializer = new XmlRoundtripSerializer<Money>();
 			serializer.Serialize(@default);
 
 			Money deserialized = serializer.Deserialize();
