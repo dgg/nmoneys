@@ -2,6 +2,7 @@
 using NMoneys.Tests.CustomConstraints;
 using NMoneys.Tests.Support;
 using NUnit.Framework;
+using Testing.Commons.Serialization;
 
 namespace NMoneys.Tests
 {
@@ -17,7 +18,7 @@ namespace NMoneys.Tests
 		[Test, TestCaseSource(typeof(Obsolete), "ThreeLetterIsoCodes")]
 		public void BinaryDeserialization_OfObsoleteCurrency_RaisesEvent(string threeLetterIsoCode)
 		{
-			using (var serializer = new OneGoBinarySerializer<Currency>())
+			using (var serializer = new BinaryRoundtripSerializer<Currency>())
 			{
 				var obsolete = Currency.Get(threeLetterIsoCode);
 				serializer.Serialize(obsolete);
@@ -29,7 +30,7 @@ namespace NMoneys.Tests
 		[Test]
 		public void BinaryDeserialization_DoesNotPreservesInstanceUniqueness()
 		{
-			using (var serializer = new OneGoBinarySerializer<Currency>())
+			using (var serializer = new BinaryRoundtripSerializer<Currency>())
 			{
 				Currency usd = Currency.Get("USD");
 				serializer.Serialize(usd);

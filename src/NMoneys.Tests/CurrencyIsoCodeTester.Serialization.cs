@@ -2,6 +2,7 @@
 using NMoneys.Tests.CustomConstraints;
 using NMoneys.Tests.Support;
 using NUnit.Framework;
+using Testing.Commons.Serialization;
 
 namespace NMoneys.Tests
 {
@@ -17,7 +18,7 @@ namespace NMoneys.Tests
 		[Test, TestCaseSource(typeof(Obsolete), "IsoCodes")]
 		public void BinaryDeserialization_OfObsoleteCurrency_DoesNotRaiseEvent(CurrencyIsoCode obsolete)
 		{
-			using (var serializer = new OneGoBinarySerializer<CurrencyIsoCode>())
+			using (var serializer = new BinaryRoundtripSerializer<CurrencyIsoCode>())
 			{
 				serializer.Serialize(obsolete);
 				Action deserializeObsolete = () => serializer.Deserialize();
@@ -28,7 +29,7 @@ namespace NMoneys.Tests
 		[Test]
 		public void BinaryDeserialization_DoesNotPreservesInstanceUniqueness()
 		{
-			using (var serializer = new OneGoBinarySerializer<CurrencyIsoCode>())
+			using (var serializer = new BinaryRoundtripSerializer<CurrencyIsoCode>())
 			{
 				CurrencyIsoCode usd = CurrencyIsoCode.USD;
 				serializer.Serialize(CurrencyIsoCode.USD);
