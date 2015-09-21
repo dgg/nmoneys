@@ -38,6 +38,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NMoneys.Serialization.Mongo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NMoneys.Serialization.Mongo_DB.Tests", "src\NMoneys.Serialization.Mongo_DB.Tests\NMoneys.Serialization.Mongo_DB.Tests.csproj", "{F36F6A65-890E-45CD-A0DF-916B06720761}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Serialization", "Serialization", "{2CA4C504-FDB9-4EE6-B343-96769FC1A9EB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Exchange", "Exchange", "{40F54352-6154-4660-8D0D-4B0289EF7945}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -135,6 +139,14 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8C7ADB2F-BD47-4235-BA7C-B9328D54D1C2} = {40F54352-6154-4660-8D0D-4B0289EF7945}
+		{EDEFC425-4EE1-432A-B2CF-835088E5DEBF} = {40F54352-6154-4660-8D0D-4B0289EF7945}
+		{407F2075-27A6-485F-9CD0-FC392043C9E5} = {2CA4C504-FDB9-4EE6-B343-96769FC1A9EB}
+		{A30FA2A1-CE95-4CA9-A786-8C5616F98B57} = {2CA4C504-FDB9-4EE6-B343-96769FC1A9EB}
+		{7A926A2D-D194-4C53-8A69-F295E71B3EF2} = {2CA4C504-FDB9-4EE6-B343-96769FC1A9EB}
+		{F36F6A65-890E-45CD-A0DF-916B06720761} = {2CA4C504-FDB9-4EE6-B343-96769FC1A9EB}
 	EndGlobalSection
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
