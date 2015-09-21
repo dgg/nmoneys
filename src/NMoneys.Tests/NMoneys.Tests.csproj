@@ -159,7 +159,6 @@
     <Compile Include="Support\MoneyContainer.cs" />
     <Compile Include="Support\NullableMoneyContainer.cs" />
     <Compile Include="Support\ObsoleteCurrencies.cs" />
-    <Compile Include="Support\CultureReseter.cs" />
     <Compile Include="Support\CurrencyInfoBuilder.cs" />
     <Compile Include="Support\EnumerationTester.cs" />
     <Compile Include="Support\ExtensionsTester.cs" />

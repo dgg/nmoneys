@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using NMoneys.Allocations;
-using NMoneys.Tests.Support;
 using NUnit.Framework;
+using Testing.Commons.Globalization;
 
 namespace NMoneys.Tests.Allocations
 {
