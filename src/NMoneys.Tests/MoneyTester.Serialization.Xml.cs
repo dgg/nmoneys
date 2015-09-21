@@ -59,7 +59,7 @@ namespace NMoneys.Tests
 		public void DataContractSerialization_ObsoleteCurrency_RaisesEvent(string threeLetterIsoCode)
 		{
 			var obsolete = new Money(2m, threeLetterIsoCode);
-			using (var serializer = new OneGoDataContractSerializer<Money>())
+			using (var serializer = new DataContractRoundtripSerializer<Money>())
 			{
 				serializer.Serialize(obsolete);
 				Action deserializeObsolete = () => serializer.Deserialize();
@@ -85,7 +85,7 @@ namespace NMoneys.Tests
 		{
 			var @default = new Money();
 
-			var serializer = new OneGoDataContractSerializer<Money>();
+			var serializer = new DataContractRoundtripSerializer<Money>();
 			serializer.Serialize(@default);
 
 			Money deserialized = serializer.Deserialize();

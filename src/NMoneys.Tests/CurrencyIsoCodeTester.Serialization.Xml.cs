@@ -75,7 +75,7 @@ namespace NMoneys.Tests
 		[Test]
 		public void DataContractDeserialization_OfObsoleteCurrency_DoesNotRaiseEvent()
 		{
-			using (var serializer = new OneGoDataContractSerializer<CurrencyIsoCode>())
+			using (var serializer = new DataContractRoundtripSerializer<CurrencyIsoCode>())
 			{
 				var obsolete = CurrencyIsoCode.EEK;
 				serializer.Serialize(obsolete);
@@ -87,7 +87,7 @@ namespace NMoneys.Tests
 		[Test]
 		public void DataContractDeserialization_DoesNotPreserveInstanceUniqueness()
 		{
-			using (var serializer = new OneGoDataContractSerializer<CurrencyIsoCode>())
+			using (var serializer = new DataContractRoundtripSerializer<CurrencyIsoCode>())
 			{
 				CurrencyIsoCode usd = CurrencyIsoCode.USD;
 				serializer.Serialize(usd);
