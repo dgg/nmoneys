@@ -5,6 +5,7 @@ using NMoneys.Tests.CustomConstraints;
 using NMoneys.Tests.Support;
 using NUnit.Framework;
 using Newtonsoft.Json;
+using Testing.Commons.Serialization;
 
 namespace NMoneys.Serialization.Tests.Json_Net
 {
@@ -26,11 +27,10 @@ namespace NMoneys.Serialization.Tests.Json_Net
 		public void DefaultDeserialiation_NotLikeCanonicalJsonSerialization()
 		{
 			string customValue = "{\"amount\":14.3,\"currency\":963}";
-			using (var serializer = new OneGoDataContractJsonSerializer<Money>())
-			{
-				Assert.That(() => JsonConvert.DeserializeObject<Money>(customValue), Throws.Nothing);
-				Assert.That(() => serializer.Deserialize(customValue), Throws.InstanceOf<SerializationException>());
-			}
+			var serializer = new DataContractJsonDeserializer();
+			Assert.That(() => JsonConvert.DeserializeObject<Money>(customValue), Throws.Nothing);
+			Assert.That(() => serializer.Deserialize<Money>(customValue), Throws.InstanceOf<SerializationException>());
+
 		}
 
 		[Test]
@@ -63,7 +63,7 @@ namespace NMoneys.Serialization.Tests.Json_Net
 		[Test]
 		public void CustomCanonicalConverter_WithCamelCaseContract_LikeCanonicalJsonSerialization()
 		{
-			using (var serializer = new OneGoDataContractJsonSerializer<Money>())
+			using (var serializer = new DataContractJsonRoundtripSerializer<Money>(dataContractSurrogate: new DataContractSurrogate()))
 			{
 				var toSerialize = new Money(14.3m, CurrencyIsoCode.XTS);
 				string canonical = serializer.Serialize(toSerialize);
@@ -111,12 +111,12 @@ namespace NMoneys.Serialization.Tests.Json_Net
 			var expected = new Money(14.3m, CurrencyIsoCode.XTS);
 
 			string json = "{\"Amount\":14.3,\"Currency\":963}";
-			
+
 			var actual = JsonConvert.DeserializeObject<Money>(json, new DefaultMoneyConverter(CurrencyStyle.Numeric));
 
 			Assert.That(actual, Is.EqualTo(expected));
 		}
-		
+
 		[Test]
 		public void CustomCurrencyLessConverter_OnlyMoney_ReadsPascalCasedProperties()
 		{
@@ -144,7 +144,7 @@ namespace NMoneys.Serialization.Tests.Json_Net
 			var expected = new Money(14.3m, CurrencyIsoCode.XXX);
 
 			string json = "{\"name\": \"something\", \"propName\":14.3}";
-			var actual = JsonConvert.DeserializeObject<MoneyContainer>(json, 
+			var actual = JsonConvert.DeserializeObject<MoneyContainer>(json,
 				new JsonSerializerSettings
 				{
 					ContractResolver = new CamelCasePropertyNamesContractResolver(),
@@ -318,14 +318,14 @@ namespace NMoneys.Serialization.Tests.Json_Net
 
 			string actualNotNull = "{\"Name\":null,\"PropName\":{\"Amount\":14.3,\"Currency\":\"XTS\"}}";
 
-			var container = JsonConvert.DeserializeObject<MoneyContainer>(actualNotNull, 
+			var container = JsonConvert.DeserializeObject<MoneyContainer>(actualNotNull,
 				new DefaultMoneyConverter(),
 				new CanonicalNullableMoneyConverter());
 			Assert.That(container.PropName, Is.EqualTo(notNull));
 
 
 			string actualNull = "{\"PropName\":null}";
-			var nullableContainer = JsonConvert.DeserializeObject<NullableMoneyContainer>(actualNull, 
+			var nullableContainer = JsonConvert.DeserializeObject<NullableMoneyContainer>(actualNull,
 				new DefaultMoneyConverter(),
 				new CanonicalNullableMoneyConverter());
 

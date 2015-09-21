@@ -3,6 +3,7 @@ using NMoneys.Serialization.Tests.Service_Stack.Support;
 using NMoneys.Tests.Support;
 using NUnit.Framework;
 using ServiceStack.Text;
+using Testing.Commons.Serialization;
 
 namespace NMoneys.Serialization.Tests.Service_Stack
 {
@@ -48,7 +49,7 @@ namespace NMoneys.Serialization.Tests.Service_Stack
 		[Test]
 		public void CustomCanonicalConverter_WithCamelCase_LikeCanonicalJsonSerialization()
 		{
-			using (var serializer = new OneGoDataContractJsonSerializer<Money>())
+			using (var serializer = new DataContractJsonRoundtripSerializer<Money>(dataContractSurrogate: new DataContractSurrogate()))
 			{
 				var toSerialize = new Money(14.3m, CurrencyIsoCode.XTS);
 				string canonical = serializer.Serialize(toSerialize);

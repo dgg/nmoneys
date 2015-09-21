@@ -5,6 +5,7 @@ using NMoneys.Serialization.Mongo_DB;
 using NMoneys.Serialization.Tests.Mongo_DB.Support;
 using NMoneys.Tests.Support;
 using NUnit.Framework;
+using Testing.Commons.Serialization;
 
 namespace NMoneys.Serialization.Tests.Mongo_DB
 {
@@ -43,7 +44,7 @@ namespace NMoneys.Serialization.Tests.Mongo_DB
 		{
 			_proxy.Serializer = _proxy.Default;
 
-			using (var serializer = new OneGoDataContractJsonSerializer<Money>())
+			using (var serializer = new DataContractJsonRoundtripSerializer<Money>(dataContractSurrogate: new DataContractSurrogate()))
 			{
 				var toSerialize = new Money(14.3m, CurrencyIsoCode.XTS);
 

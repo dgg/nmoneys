@@ -1,4 +1,5 @@
 ﻿using System;
+using NMoneys.Serialization;
 using NMoneys.Tests.CustomConstraints;
 using NMoneys.Tests.Support;
 using NUnit.Framework;
@@ -55,7 +56,7 @@ namespace NMoneys.Tests
 		[Test, TestCaseSource(typeof(Obsolete), "IsoCodes")]
 		public void DataContractJsonDeserialization_OfObsoleteCurrency_DoesNotRaiseEvent(CurrencyIsoCode obsolete)
 		{
-			using (var serializer = new OneGoDataContractJsonSerializer<CurrencyIsoCode>())
+			using (var serializer = new DataContractJsonRoundtripSerializer<CurrencyIsoCode>(dataContractSurrogate: new DataContractSurrogate()))
 			{
 				serializer.Serialize(obsolete);
 				Action deserializeObsolete = () => serializer.Deserialize();

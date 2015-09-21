@@ -5,6 +5,7 @@ using NMoneys.Tests.Support;
 using NUnit.Framework;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Testing.Commons.Serialization;
 
 namespace NMoneys.Serialization.Tests.Json_Net
 {
@@ -26,7 +27,7 @@ namespace NMoneys.Serialization.Tests.Json_Net
 		[Test]
 		public void DefaultSerialiation_NotLikeCanonicalJsonSerialization()
 		{
-			using (var serializer = new OneGoDataContractJsonSerializer<Money>())
+			using (var serializer = new DataContractJsonRoundtripSerializer<Money>(dataContractSurrogate: new DataContractSurrogate()))
 			{
 				var toSerialize = new Money(14.3m, CurrencyIsoCode.XTS);
 
@@ -64,7 +65,7 @@ namespace NMoneys.Serialization.Tests.Json_Net
 		[Test]
 		public void CustomCanonicalConverterWithCamelContract_LikeCanonicalJsonSerialization()
 		{
-			using (var serializer = new OneGoDataContractJsonSerializer<Money>())
+			using (var serializer = new DataContractJsonRoundtripSerializer<Money>(dataContractSurrogate: new DataContractSurrogate()))
 			{
 				var toSerialize = new Money(14.3m, CurrencyIsoCode.XTS);
 				string canonical = serializer.Serialize(toSerialize);
