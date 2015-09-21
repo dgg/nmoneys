@@ -2,6 +2,7 @@
 using NMoneys.Tests.CustomConstraints;
 using NMoneys.Tests.Support;
 using NUnit.Framework;
+using Testing.Commons;
 using Testing.Commons.Serialization;
 
 namespace NMoneys.Tests
@@ -34,7 +35,7 @@ namespace NMoneys.Tests
 			{
 				serializer.Serialize(obsolete);
 				Action deserializeObsolete = () => serializer.Deserialize();
-				Assert.That(deserializeObsolete, Must.RaiseObsoleteEvent.Once());
+				Assert.That(deserializeObsolete, Must.Raise.ObsoleteEvent());
 			}
 		}
 
@@ -63,7 +64,7 @@ namespace NMoneys.Tests
 			{
 				serializer.Serialize(obsolete);
 				Action deserializeObsolete = () => serializer.Deserialize();
-				Assert.That(deserializeObsolete, Must.RaiseObsoleteEvent.Once());
+				Assert.That(deserializeObsolete, Must.Raise.ObsoleteEvent());
 			}
 		}
 

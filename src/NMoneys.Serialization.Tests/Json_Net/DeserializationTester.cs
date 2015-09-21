@@ -5,6 +5,7 @@ using NMoneys.Tests.CustomConstraints;
 using NMoneys.Tests.Support;
 using NUnit.Framework;
 using Newtonsoft.Json;
+using Testing.Commons;
 using Testing.Commons.Serialization;
 
 namespace NMoneys.Serialization.Tests.Json_Net

@@ -4,6 +4,7 @@ using System.Globalization;
 using NMoneys.Extensions;
 using NMoneys.Tests.CustomConstraints;
 using NUnit.Framework;
+using Testing.Commons;
 
 namespace NMoneys.Tests
 {
@@ -32,7 +33,7 @@ namespace NMoneys.Tests
 		public void ForCulture_CultureWithObsoleteCulture_EventRaised()
 		{
 			Action moneyWithObsoleteCurrency = () => Money.ForCulture(decimal.Zero, CultureInfo.GetCultureInfo("et-EE"));
-			Assert.That(moneyWithObsoleteCurrency, Must.RaiseObsoleteEvent.Once());
+			Assert.That(moneyWithObsoleteCurrency, Must.Raise.ObsoleteEvent());
 		}
 
 		[Test]
@@ -65,7 +66,7 @@ namespace NMoneys.Tests
 		public void ForCurrentCulture_CultureWithObsoleteCulture_EventRaised()
 		{
 			Action moneyWithObsoleteCurrency = () => Money.ForCurrentCulture(decimal.Zero);
-			Assert.That(moneyWithObsoleteCurrency, Must.RaiseObsoleteEvent.Once());
+			Assert.That(moneyWithObsoleteCurrency, Must.Raise.ObsoleteEvent());
 		}
 
 		#endregion

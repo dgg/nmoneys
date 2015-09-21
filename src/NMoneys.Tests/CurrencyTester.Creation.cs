@@ -6,6 +6,7 @@ using NMoneys.Support;
 using NMoneys.Tests.CustomConstraints;
 using NMoneys.Tests.Support;
 using NUnit.Framework;
+using Testing.Commons;
 
 namespace NMoneys.Tests
 {
@@ -96,28 +97,28 @@ namespace NMoneys.Tests
 		public void Get_ObsoleteCurrencyIsoCode_EventRaised(string threeLetterIsoCode)
 		{
 			Action getObsolete = () => Currency.Get(Enumeration.Parse<CurrencyIsoCode>(threeLetterIsoCode));
-			Assert.That(getObsolete, Must.RaiseObsoleteEvent.Once());
+			Assert.That(getObsolete, Must.Raise.ObsoleteEvent());
 		}
 
 		[Test, TestCaseSource(typeof(Obsolete), "ThreeLetterIsoCodes")]
 		public void Get_ObsoleteCurrencyCode_EventRaised(string threeLetterIsoCode)
 		{
 			Action getObsolete = () => Currency.Get(threeLetterIsoCode);
-			Assert.That(getObsolete, Must.RaiseObsoleteEvent.Once());
+			Assert.That(getObsolete, Must.Raise.ObsoleteEvent());
 		}
 
 		[Test, Platform(Include = "Net-2.0", Reason = "updated culture uses non-deprecated currency")]
 		public void Get_ObsoleteCulture_EventRaised()
 		{
 			Action getObsolete = () => Currency.Get(CultureInfo.GetCultureInfo("et-EE"));
-			Assert.That(getObsolete, Must.RaiseObsoleteEvent.Once());
+			Assert.That(getObsolete, Must.Raise.ObsoleteEvent());
 		}
 
 		[Test, Platform(Include = "Net-2.0", Reason = "updated culture uses non-deprecated currency")]
 		public void Get_ObsoleteRegion_EventRaised()
 		{
 			Action getObsolete = () => Currency.Get(new RegionInfo("EE"));
-			Assert.That(getObsolete, Must.RaiseObsoleteEvent.Once());
+			Assert.That(getObsolete, Must.Raise.ObsoleteEvent());
 		}
 
 		#endregion
@@ -208,7 +209,7 @@ namespace NMoneys.Tests
 		{
 			Currency c;
 			Action tryGetObsolete = () => Currency.TryGet(Enumeration.Parse<CurrencyIsoCode>(threeLetterIsoCode), out c);
-			Assert.That(tryGetObsolete, Must.RaiseObsoleteEvent.Once());
+			Assert.That(tryGetObsolete, Must.Raise.ObsoleteEvent());
 		}
 
 		[Test, TestCaseSource(typeof(Obsolete), "ThreeLetterIsoCodes")]
@@ -216,7 +217,7 @@ namespace NMoneys.Tests
 		{
 			Currency c;
 			Action tryGetObsolete = () => Currency.TryGet(threeLetterIsoCode, out c);
-			Assert.That(tryGetObsolete, Must.RaiseObsoleteEvent.Once());
+			Assert.That(tryGetObsolete, Must.Raise.ObsoleteEvent());
 		}
 
 		[Test, Platform(Include = "Net-2.0", Reason = "updated culture uses non-deprecated currency")]
@@ -224,7 +225,7 @@ namespace NMoneys.Tests
 		{
 			Currency c;
 			Action tryGetObsolete = () => Currency.TryGet(CultureInfo.GetCultureInfo("et-EE"), out c);
-			Assert.That(tryGetObsolete, Must.RaiseObsoleteEvent.Once());
+			Assert.That(tryGetObsolete, Must.Raise.ObsoleteEvent());
 		}
 
 		[Test, Platform(Include = "Net-2.0", Reason = "updated culture uses non-deprecated currency")]
@@ -232,7 +233,7 @@ namespace NMoneys.Tests
 		{
 			Currency c;
 			Action tryGetObsolete = () => Currency.TryGet(new RegionInfo("EE"), out c);
-			Assert.That(tryGetObsolete, Must.RaiseObsoleteEvent.Once());
+			Assert.That(tryGetObsolete, Must.Raise.ObsoleteEvent());
 		}
 
 		#endregion
@@ -259,7 +260,7 @@ namespace NMoneys.Tests
 		public void FindAll_ReturnsObsoleteCurrencies()
 		{
 			Action iterateAllCurrencies = () => Currency.FindAll().ToArray();
-			Assert.That(iterateAllCurrencies, Must.RaiseObsoleteEvent.Times(ObsoleteCurrencies.Count));
+			Assert.That(iterateAllCurrencies, Must.Raise.ObsoleteEvent(ObsoleteCurrencies.Count));
 		}
 
 		#endregion

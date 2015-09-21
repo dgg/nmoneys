@@ -166,7 +166,6 @@
     <Compile Include="Support\GuardTester.cs" />
     <Compile Include="CustomConstraints\PropertyConstraint.cs" />
     <Compile Include="CustomConstraints\MoneyConstraint.cs" />
-    <Compile Include="CustomConstraints\Must.cs" />
     <Compile Include="Support\RangeTester.cs" />
     <Compile Include="Support\RemainderAllocatorDoubles.cs" />
     <Compile Include="Support\UnicodeSymbolTester.cs" />

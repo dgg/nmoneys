@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using NMoneys.Tests.CustomConstraints;
 using NUnit.Framework;
+using Testing.Commons;
 
 namespace NMoneys.Tests
 {

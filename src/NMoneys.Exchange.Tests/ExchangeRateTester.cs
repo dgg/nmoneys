@@ -4,6 +4,7 @@ using System.ComponentModel;
 using NMoneys.Extensions;
 using NMoneys.Tests.CustomConstraints;
 using NUnit.Framework;
+using Testing.Commons;
 
 namespace NMoneys.Exchange.Tests
 {

@@ -5,6 +5,7 @@ using NMoneys.Support;
 using NMoneys.Tests.CustomConstraints;
 using NMoneys.Tests.Support;
 using NUnit.Framework;
+using Testing.Commons;
 
 namespace NMoneys.Tests
 {
@@ -48,7 +49,7 @@ namespace NMoneys.Tests
 		{
 			var obsolete = Enumeration.Parse<CurrencyIsoCode>(threeLetterIsoCode);
 			Action moneyWithObsoleteCurrency = () => new Money(10, obsolete);
-			Assert.That(moneyWithObsoleteCurrency, Must.RaiseObsoleteEvent.Once());
+			Assert.That(moneyWithObsoleteCurrency, Must.Raise.ObsoleteEvent());
 		}
 
 		[Test]
@@ -63,7 +64,7 @@ namespace NMoneys.Tests
 		public void Ctor_ObsoleteIsoSymbol_EventRaised(string threeLetterIsoCode)
 		{
 			Action moneyWithObsoleteCurrency = () => new Money(10, threeLetterIsoCode);
-			Assert.That(moneyWithObsoleteCurrency, Must.RaiseObsoleteEvent.Once());
+			Assert.That(moneyWithObsoleteCurrency, Must.Raise.ObsoleteEvent());
 		}
 
 		[Test]
@@ -77,7 +78,7 @@ namespace NMoneys.Tests
 		{
 			Currency obsolete = Currency.Get(threeLetterIsoCode);
 			Action moneyWithObsoleteCurrency = () => new Money(10, obsolete);
-			Assert.That(moneyWithObsoleteCurrency, Must.RaiseObsoleteEvent.Once());
+			Assert.That(moneyWithObsoleteCurrency, Must.Raise.ObsoleteEvent());
 		}
 
 		[Test]

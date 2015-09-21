@@ -4,6 +4,7 @@ using NMoneys.Support;
 using NMoneys.Tests.CustomConstraints;
 using NMoneys.Tests.Support;
 using NUnit.Framework;
+using Testing.Commons;
 using Testing.Commons.Serialization;
 
 namespace NMoneys.Tests

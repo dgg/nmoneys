@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework.Constraints;
+using Testing.Commons;
 
 namespace NMoneys.Tests.CustomConstraints
 {
@@ -50,17 +51,17 @@ namespace NMoneys.Tests.CustomConstraints
 			return new DataContractJsonDeserializationConstraint<T>(to);
 		}
 
-		public static Constraint Once(this Must.RaiseObsoleteEventEntryPoint entryPoint)
+		public static Constraint ObsoleteEvent(this Must.RaiseEntryPoint entryPoint)
 		{
 			return new ObsoleteCurrencyRaisedConstraint(1);
 		}
 
-		public static Constraint Times(this Must.RaiseObsoleteEventEntryPoint entryPoint, uint times)
+		public static Constraint ObsoleteEvent(this Must.RaiseEntryPoint entryPoint, uint times)
 		{
 			return new ObsoleteCurrencyRaisedConstraint(times);
 		}
 
-		public static Constraint ObsoleteEvent(this Must.NotRaiseObsoleteEventEntryPoint entryPoint)
+		public static Constraint ObsoleteEvent(this Must.NotRaiseEntryPoint entryPoint)
 		{
 			return new ObsoleteCurrencyRaisedConstraint(0);
 		}
