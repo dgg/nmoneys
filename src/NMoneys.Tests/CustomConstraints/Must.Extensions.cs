@@ -25,7 +25,7 @@ namespace NMoneys.Tests.CustomConstraints
 
 		public static Constraint XmlSerializable<T>(this Must.BeEntryPoint entryPoint)
 		{
-			return new XmlSerializationConstraint<T>();
+			return new SerializationConstraint<T>(new XmlRoundtripSerializer<T>(), NUnit.Framework.Is.Not.Null);
 		}
 
 		public static Constraint XmlDeserializableInto<T>(this Must.BeEntryPoint entryPoint, T to)

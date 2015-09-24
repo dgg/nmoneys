@@ -135,7 +135,6 @@
     <Compile Include="CustomConstraints\PropertyConstraintTester.cs" />
     <Compile Include="CustomConstraints\QuasiCompleteAllocationConstraint.cs" />
     <Compile Include="CustomConstraints\XmlDeserializationConstraint.cs" />
-    <Compile Include="CustomConstraints\XmlSerializationConstraint.cs" />
     <Compile Include="ExtensionsTester.cs" />
     <Compile Include="MoneyTester.cs" />
     <Compile Include="MoneyTester.Formatting.cs">

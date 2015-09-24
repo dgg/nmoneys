@@ -3,7 +3,6 @@ using NMoneys.Serialization;
 using NMoneys.Tests.CustomConstraints;
 using NMoneys.Tests.Support;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
 using Testing.Commons;
 using Testing.Commons.Serialization;
 
