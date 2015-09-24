@@ -4,7 +4,7 @@ using NUnit.Framework.Constraints;
 
 namespace NMoneys.Tests.CustomConstraints
 {
-	internal class DataContractSerializationConstraint<T> : CustomConstraint<T>
+	/*internal class DataContractSerializationConstraint<T> : CustomConstraint<T>
 	{
 		protected override bool matches(T current)
 		{
@@ -36,5 +36,5 @@ namespace NMoneys.Tests.CustomConstraints
 				}
 			}
 		}
-	}
+	}*/
 }

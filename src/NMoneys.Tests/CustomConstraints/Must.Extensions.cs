@@ -35,7 +35,7 @@ namespace NMoneys.Tests.CustomConstraints
 
 		public static Constraint DataContractSerializable<T>(this Must.BeEntryPoint entryPoint)
 		{
-			return new DataContractSerializationConstraint<T>();
+			return new SerializationConstraint<T>(new DataContractRoundtripSerializer<T>(), NUnit.Framework.Is.Not.Null);
 		}
 
 		public static Constraint DataContractDeserializableInto<T>(this Must.BeEntryPoint entryPoint, T to)
