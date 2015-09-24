@@ -1,13 +1,14 @@
 ﻿using System;
 using NUnit.Framework;
+using Testing.Commons.NUnit.Constraints;
 
 namespace NMoneys.Tests.CustomConstraints
 {
-	internal class ObsoleteCurrencyRaisedConstraint : CustomConstraint<Action>
+	internal class ObsoleteCurrencyRaisedConstraint : DelegatingConstraint<Action>
 	{
 		public ObsoleteCurrencyRaisedConstraint(uint timesRaised)
 		{
-			_inner = Is.EqualTo(timesRaised);
+			Delegate = Is.EqualTo(timesRaised);
 		}
 
 		protected override bool matches(Action current)
@@ -24,7 +25,7 @@ namespace NMoneys.Tests.CustomConstraints
 			{
 				Currency.ObsoleteCurrency -= callback;
 			}
-			return _inner.Matches(counter);
+			return Delegate.Matches(counter);
 		}
 	}
 }

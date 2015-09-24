@@ -122,7 +122,6 @@
     <Compile Include="CurrencyTester.cs" />
     <Compile Include="CustomConstraints\CompleteAllocationConstraint.cs" />
     <Compile Include="CustomConstraints\CurrencyInfoConstraint.cs" />
-    <Compile Include="CustomConstraints\CustomConstraint.cs" />
     <Compile Include="CustomConstraints\CharacterReferenceConstraint.cs" />
     <Compile Include="CustomConstraints\IncompleteAllocationConstraint.cs" />
     <Compile Include="CustomConstraints\MoneyConstraintTester.cs" />

@@ -4,9 +4,9 @@ using Testing.Commons.NUnit.Constraints;
 
 namespace NMoneys.Tests.CustomConstraints
 {
-	internal class CurrencyInfoConstraint : CustomConstraint<CurrencyInfo>
+	internal class CurrencyInfoConstraint : DelegatingConstraint<CurrencyInfo>
 	{
-		class AlwaysPassing : CustomConstraint<CurrencyInfo>
+		class AlwaysPassing : DelegatingConstraint<CurrencyInfo>
 		{
 			protected override bool matches(CurrencyInfo current)
 			{
@@ -22,16 +22,16 @@ namespace NMoneys.Tests.CustomConstraints
 
 		protected override bool matches(CurrencyInfo current)
 		{
-			_inner = null;
+			Delegate = null;
 			foreach (var constraint in _constraints)
 			{
-				if (_inner == null) _inner = constraint;
+				if (Delegate == null) Delegate = constraint;
 				else
 				{
-					_inner = _inner & constraint;
+					Delegate = Delegate & constraint;
 				}
 			}
-			return _inner.Matches(current);
+			return Delegate.Matches(current);
 		}
 
 		public CurrencyInfoConstraint WithCode(CurrencyIsoCode code)
