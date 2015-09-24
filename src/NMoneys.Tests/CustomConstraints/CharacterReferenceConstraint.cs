@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework.Constraints;
+using Testing.Commons.NUnit.Constraints;
 
 namespace NMoneys.Tests.CustomConstraints
 {
@@ -6,8 +7,8 @@ namespace NMoneys.Tests.CustomConstraints
 	{
 		public CharacterReferenceConstraint(string entityName, string entityNumber)
 		{
-			_inner = new PropertyConstraint<CharacterReference>(r => r.EntityName, new EqualConstraint(entityName)) &
-				new PropertyConstraint<CharacterReference>(r => r.EntityNumber, new EqualConstraint(entityNumber));
+			_inner = new LambdaPropertyConstraint<CharacterReference>(r => r.EntityName, new EqualConstraint(entityName)) &
+				new LambdaPropertyConstraint<CharacterReference>(r => r.EntityNumber, new EqualConstraint(entityNumber));
 		}
 
 		protected override bool matches(CharacterReference current)

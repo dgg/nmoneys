@@ -1,5 +1,6 @@
 using NMoneys.Allocations;
 using NUnit.Framework;
+using Testing.Commons.NUnit.Constraints;
 
 namespace NMoneys.Tests.CustomConstraints
 {
@@ -9,10 +10,10 @@ namespace NMoneys.Tests.CustomConstraints
 
 		protected override bool matches(Allocation current)
 		{
-			_inner = new PropertyConstraint<Allocation>(a => a.IsComplete, Is.True) &
-			new PropertyConstraint<Allocation>(a => a.IsQuasiComplete, Is.False) &
-			new PropertyConstraint<Allocation>(a => a.TotalAllocated, Is.EqualTo(Allocated)) &
-			new PropertyConstraint<Allocation>(a => a.Remainder, Is.EqualTo(Money.Zero(Allocated.CurrencyCode)));
+			_inner = new LambdaPropertyConstraint<Allocation>(a => a.IsComplete, Is.True) &
+			new LambdaPropertyConstraint<Allocation>(a => a.IsQuasiComplete, Is.False) &
+			new LambdaPropertyConstraint<Allocation>(a => a.TotalAllocated, Is.EqualTo(Allocated)) &
+			new LambdaPropertyConstraint<Allocation>(a => a.Remainder, Is.EqualTo(Money.Zero(Allocated.CurrencyCode)));
 
 			return _inner.Matches(current);
 		}

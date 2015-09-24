@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using NUnit.Framework.Constraints;
+using Testing.Commons.NUnit.Constraints;
 
 namespace NMoneys.Tests.CustomConstraints
 {
@@ -8,8 +9,8 @@ namespace NMoneys.Tests.CustomConstraints
 		public MoneyConstraint(decimal amount, Currency currency)
 		{
 			_inner = new AndConstraint(
-				new PropertyConstraint<Money>(m => m.Amount, Is.EqualTo(amount)),
-				new PropertyConstraint<Money>(m => m.CurrencyCode, Is.EqualTo(currency.IsoCode)));
+				new LambdaPropertyConstraint<Money>(m => m.Amount, Is.EqualTo(amount)),
+				new LambdaPropertyConstraint<Money>(m => m.CurrencyCode, Is.EqualTo(currency.IsoCode)));
 		}
 
 		protected override bool matches(Money current)

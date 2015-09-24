@@ -128,7 +128,6 @@
     <Compile Include="CustomConstraints\MoneyConstraintTester.cs" />
     <Compile Include="CustomConstraints\EventRaisedConstraint.cs" />
     <Compile Include="CustomConstraints\NoAllocationConstraint.cs" />
-    <Compile Include="CustomConstraints\PropertyConstraintTester.cs" />
     <Compile Include="CustomConstraints\QuasiCompleteAllocationConstraint.cs" />
     <Compile Include="ExtensionsTester.cs" />
     <Compile Include="MoneyTester.cs" />
@@ -156,7 +155,6 @@
     <Compile Include="Support\ExtensionsTester.cs" />
     <Compile Include="Support\GroupSizesTester.cs" />
     <Compile Include="Support\GuardTester.cs" />
-    <Compile Include="CustomConstraints\PropertyConstraint.cs" />
     <Compile Include="CustomConstraints\MoneyConstraint.cs" />
     <Compile Include="Support\RangeTester.cs" />
     <Compile Include="Support\RemainderAllocatorDoubles.cs" />
