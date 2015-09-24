@@ -30,7 +30,7 @@ namespace NMoneys.Tests.CustomConstraints
 
 		public static Constraint XmlDeserializableInto<T>(this Must.BeEntryPoint entryPoint, T to)
 		{
-			return new XmlDeserializationConstraint<T>(to);
+			return new DeserializationConstraint<T>(new XmlDeserializer(), NUnit.Framework.Is.EqualTo(to));
 		}
 
 		public static Constraint DataContractSerializable<T>(this Must.BeEntryPoint entryPoint)
