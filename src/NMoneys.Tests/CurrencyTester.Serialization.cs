@@ -14,7 +14,7 @@ namespace NMoneys.Tests
 		[Test]
 		public void CanBe_BinarySerialized()
 		{
-			Assert.That(Currency.Dollar, Must.Be.BinarySerializable<Currency>(Is.EqualTo));
+			Assert.That(Currency.Dollar, Must.Be.BinarySerializable<Currency>(Is.EqualTo(Currency.Dollar)));
 		}
 
 		[Test, TestCaseSource(typeof(Obsolete), "ThreeLetterIsoCodes")]

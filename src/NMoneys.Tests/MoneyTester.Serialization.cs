@@ -14,7 +14,8 @@ namespace NMoneys.Tests
 		[Test]
 		public void CanBe_BinarySerialized()
 		{
-			Assert.That(new Money(3.757m), Must.Be.BinarySerializable<Money>(m => Is.EqualTo(m)));
+			var money = new Money(3.757m);
+			Assert.That(money, Must.Be.BinarySerializable<Money>(Is.EqualTo(money)));
 		}
 
 		[Test, TestCaseSource(typeof(Obsolete), "ThreeLetterIsoCodes")]

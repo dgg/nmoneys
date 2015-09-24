@@ -133,9 +133,7 @@
     <Compile Include="CustomConstraints\EventRaisedConstraint.cs" />
     <Compile Include="CustomConstraints\NoAllocationConstraint.cs" />
     <Compile Include="CustomConstraints\PropertyConstraintTester.cs" />
-    <Compile Include="CustomConstraints\BinarySerializationConstraint.cs" />
     <Compile Include="CustomConstraints\QuasiCompleteAllocationConstraint.cs" />
-    <Compile Include="CustomConstraints\SerializationContraintTester.cs" />
     <Compile Include="CustomConstraints\XmlDeserializationConstraint.cs" />
     <Compile Include="CustomConstraints\XmlSerializationConstraint.cs" />
     <Compile Include="ExtensionsTester.cs" />

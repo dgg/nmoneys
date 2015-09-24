@@ -1,6 +1,8 @@
 ﻿using System;
 using NUnit.Framework.Constraints;
 using Testing.Commons;
+using Testing.Commons.NUnit.Constraints;
+using Testing.Commons.Serialization;
 
 namespace NMoneys.Tests.CustomConstraints
 {
@@ -16,9 +18,9 @@ namespace NMoneys.Tests.CustomConstraints
 			return new CurrencyInfoConstraint();
 		}
 
-		public static Constraint BinarySerializable<T>(this Must.BeEntryPoint entryPoint, Func<T, Constraint> constraintOverDeserialized)
+		public static Constraint BinarySerializable<T>(this Must.BeEntryPoint entryPoint, Constraint constraintOverDeserialized)
 		{
-			return new BinarySerializationConstraint<T>(constraintOverDeserialized);
+			return new SerializationConstraint<T>(new BinaryRoundtripSerializer<T>(), constraintOverDeserialized);
 		}
 
 		public static Constraint XmlSerializable<T>(this Must.BeEntryPoint entryPoint)

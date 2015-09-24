@@ -3,6 +3,7 @@ using NMoneys.Serialization;
 using NMoneys.Tests.CustomConstraints;
 using NMoneys.Tests.Support;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 using Testing.Commons;
 using Testing.Commons.Serialization;
 
@@ -14,7 +15,7 @@ namespace NMoneys.Tests
 		[Test]
 		public void CanBe_BinarySerialized()
 		{
-			Assert.That(CurrencyIsoCode.USD, Must.Be.BinarySerializable<CurrencyIsoCode>(c => Is.EqualTo(c)));
+			Assert.That(CurrencyIsoCode.USD, Must.Be.BinarySerializable<CurrencyIsoCode>(Is.EqualTo(CurrencyIsoCode.USD)));
 		}
 
 		[Test, TestCaseSource(typeof(Obsolete), "IsoCodes")]
