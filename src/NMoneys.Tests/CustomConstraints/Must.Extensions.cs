@@ -51,7 +51,7 @@ namespace NMoneys.Tests.CustomConstraints
 
 		public static Constraint DataContractJsonDeserializableInto<T>(this Must.BeEntryPoint entryPoint, T to)
 		{
-			return new DataContractJsonDeserializationConstraint<T>(to);
+			return new DeserializationConstraint<T>(new DataContractJsonDeserializer(dataContractSurrogate: new DataContractSurrogate()), NUnit.Framework.Is.EqualTo(to));
 		}
 
 		public static Constraint ObsoleteEvent(this Must.RaiseEntryPoint entryPoint)

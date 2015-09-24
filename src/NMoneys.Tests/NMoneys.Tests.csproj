@@ -91,7 +91,6 @@
     <Compile Include="CurrencyTester.Comparisons.cs">
       <DependentUpon>CurrencyTester.cs</DependentUpon>
     </Compile>
-    <Compile Include="CustomConstraints\DataContractJsonDeserializationConstraint.cs" />
     <Compile Include="MoneyTester.Creation.cs">
       <DependentUpon>MoneyTester.cs</DependentUpon>
     </Compile>
