@@ -7,12 +7,12 @@ properties {
 task default -depends Clean, Compile, Sign, Document, Test, CopyArtifacts, BuildArtifacts
 
 task Clean {
-	Exec { msbuild "$base_dir\NMoneys.sln" /t:clean /p:configuration=$configuration /m /v:m }
+	Exec { msbuild "$base_dir\NMoneys.sln" /t:clean /p:configuration=$configuration /m /v:m /clp:Summary }
 	Remove-Item $release_dir -Recurse -Force -ErrorAction SilentlyContinue | out-null
 }
 
 task Compile { 
-	Exec { msbuild "$base_dir\NMoneys.sln" /p:configuration=$configuration /m /v:m }
+	Exec { msbuild "$base_dir\NMoneys.sln" /p:configuration=$configuration /m /v:m /clp:Summary }
 }
 
 task Sign -depends ensureRelease, Compile { 

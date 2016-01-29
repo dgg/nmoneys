@@ -61,7 +61,7 @@ function copy-sources()
 	$src = Join-Path $base src\NMoneys.Serialization\
 	$release_src_dir = Join-Path $base release\content\Infrastructure\Serialization
 	
-	Get-ChildItem -Path ("$src\Json_NET", "$src\Service_Stack", "$src\Mongo_DB") -Filter "*.cs" |
+	Get-ChildItem -Path ("$src\Json_NET", "$src\Service_Stack", "$src\Mongo_DB", "$src\Entity_Framework") -Filter "*.cs" |
 		Copy-Item -Destination $release_src_dir
 
 	Get-ChildItem -Path "$src\Json_Net" -Filter "*.cs" |
