@@ -14,6 +14,6 @@ namespace NMoneys.Serialization.Entity_Framework
 		}
 
 		public string Currency { get; private set; }
-		public decimal Amount { get; private set; }
+		public decimal? Amount { get; private set; }
 	}
 }

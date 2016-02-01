@@ -16,7 +16,7 @@ namespace NMoneys.Serialization.Tests.Entity_Framework
 		[TestFixtureSetUp]
 		public void SetupDb()
 		{
-			_dbFile = new FileInfo("Test.sdf");
+			_dbFile = new FileInfo("Persistence.sdf");
 			_dbFile.Delete();
 		}
 
