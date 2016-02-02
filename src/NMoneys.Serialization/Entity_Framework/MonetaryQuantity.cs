@@ -15,5 +15,10 @@ namespace NMoneys.Serialization.Entity_Framework
 
 		public string Currency { get; private set; }
 		public decimal? Amount { get; private set; }
+
+		public static MonetaryQuantity From(Money? money)
+		{
+			return money.HasValue ? new MonetaryQuantity(money.Value) : null;
+		}
 	}
 }
