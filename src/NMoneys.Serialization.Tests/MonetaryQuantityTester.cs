@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using NMoneys.Extensions;
+﻿using NMoneys.Extensions;
 using NMoneys.Serialization.Entity_Framework;
 using NUnit.Framework;
 using Testing.Commons;
@@ -22,12 +21,11 @@ namespace NMoneys.Serialization.Tests
 		[Test]
 		public void Factory_Null_Null()
 		{
-			Money? @null = default(Money?);
-			Assert.That(MonetaryQuantity.From(@null), Is.Null);
+			Assert.That(MonetaryQuantity.From(default(Money?)), Is.Null);
 		}
 
 		[Test]
-		public void Factory_NotNull_InstanceWithMoeyValues()
+		public void Factory_NotNull_InstanceWithMoneyValues()
 		{
 			Money? notNull = 42.74m.Eur();
 			MonetaryQuantity quantity = MonetaryQuantity.From(notNull);
@@ -35,6 +33,82 @@ namespace NMoneys.Serialization.Tests
 
 			Assert.That(quantity, Must.Have.Property<MonetaryQuantity>(q => q.Amount, Is.EqualTo(42.74m)) &
 				Must.Have.Property<MonetaryQuantity>(q => q.Currency, Is.EqualTo(CurrencyIsoCode.EUR.AlphabeticCode())));
+		}
+
+		[Test]
+		public void Factory_NotNullable_InstanceWithMoneyValues()
+		{
+			Money notNullable = 42.74m.Eur();
+			MonetaryQuantity quantity = MonetaryQuantity.From(notNullable);
+			Assert.That(quantity, Is.Not.Null);
+
+			Assert.That(quantity, Must.Have.Property<MonetaryQuantity>(q => q.Amount, Is.EqualTo(42.74m)) &
+				Must.Have.Property<MonetaryQuantity>(q => q.Currency, Is.EqualTo(CurrencyIsoCode.EUR.AlphabeticCode())));
+		}
+
+		[Test]
+		public void ExplicitConversion_Null_NullInstance()
+		{
+			MonetaryQuantity @explicit = (MonetaryQuantity) default(Money?);
+			Assert.That(@explicit, Is.Null);
+		}
+
+		[Test]
+		public void ExplicitConversion_NotNull_InstanceWithMoneyValues()
+		{
+			Money? notNull = 42.74m.Eur();
+			MonetaryQuantity quantity = (MonetaryQuantity)notNull;
+			Assert.That(quantity, Is.Not.Null);
+
+			Assert.That(quantity, Must.Have.Property<MonetaryQuantity>(q => q.Amount, Is.EqualTo(42.74m)) &
+				Must.Have.Property<MonetaryQuantity>(q => q.Currency, Is.EqualTo(CurrencyIsoCode.EUR.AlphabeticCode())));
+		}
+
+		[Test]
+		public void ExplicitConversion_NotNullable_InstanceWithMoneyValues()
+		{
+			Money notNullable = 42.74m.Eur();
+			MonetaryQuantity quantity = (MonetaryQuantity)notNullable;
+			Assert.That(quantity, Is.Not.Null);
+
+			Assert.That(quantity, Must.Have.Property<MonetaryQuantity>(q => q.Amount, Is.EqualTo(42.74m)) &
+				Must.Have.Property<MonetaryQuantity>(q => q.Currency, Is.EqualTo(CurrencyIsoCode.EUR.AlphabeticCode())));
+		}
+
+		[Test]
+		public void ImplicitConversion_Null_NullInstance()
+		{
+			MonetaryQuantity @implicit = default(Money?);
+			Assert.That(@implicit, Is.Null);
+		}
+
+		[Test]
+		public void ImplicitConversion_NotNull_InstanceWithMoneyValues()
+		{
+			Money? notNull = 42.74m.Eur();
+			MonetaryQuantity quantity = notNull;
+			Assert.That(quantity, Is.Not.Null);
+
+			Assert.That(quantity, Must.Have.Property<MonetaryQuantity>(q => q.Amount, Is.EqualTo(42.74m)) &
+				Must.Have.Property<MonetaryQuantity>(q => q.Currency, Is.EqualTo(CurrencyIsoCode.EUR.AlphabeticCode())));
+		}
+
+		[Test]
+		public void ImplictConversion_NotNullable_InstanceWithMoneyValues()
+		{
+			Money notNullable = 42.74m.Eur();
+			MonetaryQuantity quantity = notNullable;
+			Assert.That(quantity, Is.Not.Null);
+
+			Assert.That(quantity, Must.Have.Property<MonetaryQuantity>(q => q.Amount, Is.EqualTo(42.74m)) &
+				Must.Have.Property<MonetaryQuantity>(q => q.Currency, Is.EqualTo(CurrencyIsoCode.EUR.AlphabeticCode())));
+		}
+
+		[Test]
+		public void subject_scenario_outcome()
+		{
+			Money? notNull = 42.74m.Eur();
+			object quantity = System.Convert.ChangeType(notNull, typeof (MonetaryQuantity));
 		}
 	}
 }

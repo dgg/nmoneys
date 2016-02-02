@@ -2,6 +2,7 @@
 
 namespace NMoneys.Serialization.Entity_Framework
 {
+	// TODO: implement IConvertible
 	public class MonetaryQuantity
 	{
 		[Obsolete("serialization only")]
@@ -19,6 +20,11 @@ namespace NMoneys.Serialization.Entity_Framework
 		public static MonetaryQuantity From(Money? money)
 		{
 			return money.HasValue ? new MonetaryQuantity(money.Value) : null;
+		}
+
+		public static implicit operator MonetaryQuantity(Money? money)
+		{
+			return From(money);
 		}
 	}
 }
