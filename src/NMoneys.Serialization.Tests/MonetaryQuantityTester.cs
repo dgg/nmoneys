@@ -105,10 +105,17 @@ namespace NMoneys.Serialization.Tests
 		}
 
 		[Test]
-		public void subject_scenario_outcome()
+		public void ToMoney_Null_Null()
 		{
-			Money? notNull = 42.74m.Eur();
-			object quantity = System.Convert.ChangeType(notNull, typeof (MonetaryQuantity));
+			MonetaryQuantity @null = null;
+			Assert.That(MonetaryQuantity.ToMoney(@null), Is.Null);
+		}
+
+		[Test]
+		public void ToMoney_NullAmount_Null()
+		{
+			MonetaryQuantity noAmount = new MonetaryQuantity(null, "XXX");
+			Assert.That(MonetaryQuantity.ToMoney(noAmount), Is.Null);
 		}
 	}
 }

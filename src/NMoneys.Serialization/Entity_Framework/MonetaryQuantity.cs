@@ -8,10 +8,13 @@ namespace NMoneys.Serialization.Entity_Framework
 		[Obsolete("serialization only")]
 		private MonetaryQuantity() { }
 
-		public MonetaryQuantity(Money money)
+		public MonetaryQuantity(Money money) :
+			this(money.Amount, money.CurrencyCode.AlphabeticCode()) { }
+
+		public MonetaryQuantity(decimal? amount, string currency)
 		{
-			Currency = money.CurrencyCode.AlphabeticCode();
-			Amount = money.Amount;
+			Amount = amount;
+			Currency = currency;
 		}
 
 		public string Currency { get; private set; }
@@ -20,6 +23,16 @@ namespace NMoneys.Serialization.Entity_Framework
 		public static MonetaryQuantity From(Money? money)
 		{
 			return money.HasValue ? new MonetaryQuantity(money.Value) : null;
+		}
+
+		public static Money? ToMoney(MonetaryQuantity quantity)
+		{
+			Money? money = default(Money?);
+			if (quantity?.Amount != null)
+			{
+				money = new Money(quantity.Amount.Value, quantity.Currency);
+			}
+			return money;
 		}
 
 		public static implicit operator MonetaryQuantity(Money? money)
