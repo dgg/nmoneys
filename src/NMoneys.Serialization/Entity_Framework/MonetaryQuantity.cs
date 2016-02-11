@@ -42,5 +42,10 @@ namespace NMoneys.Serialization.Entity_Framework
 		{
 			return From(money);
 		}
+
+		public static explicit operator Money? (MonetaryQuantity quantity)
+		{
+			return ToMoney(quantity);
+		}
 	}
 }
