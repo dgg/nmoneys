@@ -1,15 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace NMoneys.Serialization.Entity_Framework
 {
-	// TODO: implement IConvertible
-	public class MonetaryQuantity
+	public sealed class MonetaryQuantity : IEquatable<MonetaryQuantity>
 	{
 		[Obsolete("serialization only")]
 		private MonetaryQuantity() { }
 
 		public MonetaryQuantity(Money money) :
-			this(money.Amount, money.CurrencyCode.AlphabeticCode()) { }
+			this(money.Amount, money.CurrencyCode.AlphabeticCode())
+		{ }
 
 		public MonetaryQuantity(decimal? amount, string currency)
 		{
@@ -38,14 +39,44 @@ namespace NMoneys.Serialization.Entity_Framework
 			return money;
 		}
 
-		public static implicit operator MonetaryQuantity(Money? money)
+		public static explicit operator MonetaryQuantity(Money? money)
 		{
 			return From(money);
 		}
 
-		public static implicit operator Money? (MonetaryQuantity quantity)
+		public static explicit operator Money? (MonetaryQuantity quantity)
 		{
 			return ToMoney(quantity);
+		}
+
+		public bool Equals(MonetaryQuantity other)
+		{
+			if (ReferenceEquals(null, other)) return false;
+			if (ReferenceEquals(this, other)) return true;
+			return EqualityComparer<Money?>.Default.Equals(ToMoney(this), ToMoney(other));
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(null, obj)) return false;
+			if (ReferenceEquals(this, obj)) return true;
+			if (obj.GetType() != GetType()) return false;
+			return Equals((MonetaryQuantity)obj);
+		}
+
+		public override int GetHashCode()
+		{
+			return EqualityComparer<Money?>.Default.GetHashCode(ToMoney(this));
+		}
+
+		public static bool operator ==(MonetaryQuantity left, MonetaryQuantity right)
+		{
+			return Equals(left, right);
+		}
+
+		public static bool operator !=(MonetaryQuantity left, MonetaryQuantity right)
+		{
+			return !Equals(left, right);
 		}
 	}
 }
