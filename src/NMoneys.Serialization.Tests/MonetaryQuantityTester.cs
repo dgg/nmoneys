@@ -117,5 +117,15 @@ namespace NMoneys.Serialization.Tests
 			MonetaryQuantity noAmount = new MonetaryQuantity(null, "XXX");
 			Assert.That(MonetaryQuantity.ToMoney(noAmount), Is.Null);
 		}
+
+
+		[Test]
+		public void ToMoney_NullCurrency_MissingCurrency()
+		{
+			MonetaryQuantity noCurrency = new MonetaryQuantity(12, null);
+			Money? money = MonetaryQuantity.ToMoney(noCurrency);
+			Assert.That(money.HasValue, Is.True);
+			Assert.That(money.Value.CurrencyCode, Is.EqualTo(CurrencyIsoCode.XXX));
+		}
 	}
 }

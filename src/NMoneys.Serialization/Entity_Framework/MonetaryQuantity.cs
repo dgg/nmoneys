@@ -30,7 +30,10 @@ namespace NMoneys.Serialization.Entity_Framework
 			Money? money = default(Money?);
 			if (quantity?.Amount != null)
 			{
-				money = new Money(quantity.Amount.Value, quantity.Currency);
+				string currency = string.IsNullOrWhiteSpace(quantity.Currency) ?
+					CurrencyIsoCode.XXX.AlphabeticCode() :
+					quantity.Currency;
+				money = new Money(quantity.Amount.Value, currency);
 			}
 			return money;
 		}
