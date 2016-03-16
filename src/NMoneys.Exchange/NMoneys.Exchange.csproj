@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExchangeRate.cs" />
+    <Compile Include="Properties\Exchange_AssemblyInfo.cs" />
     <Compile Include="TabulatedExchangeRateProvider.cs" />
     <Compile Include="ExchangeSafeConversion.cs" />
     <Compile Include="IExchangeConversion.cs" />
