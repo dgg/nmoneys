@@ -77,6 +77,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+  <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\NMoneys\Properties\NMoneys_AssemblyInfo.cs">
+      <Link>Properties\NMoneys_AssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Allocations\AllocationTester.cs" />
     <Compile Include="Allocations\RatioTester.Formatting.cs" />
     <Compile Include="Allocations\EvenAllocatorTester.cs" />
@@ -159,7 +163,6 @@
     <Compile Include="MoneyTester.Allocations.Split.cs">
       <DependentUpon>MoneyTester.cs</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProvidersTesters.cs" />
     <Compile Include="Quickstart.cs" />
     <Compile Include="Support\ActionTimer.cs" />

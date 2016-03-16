@@ -1127,8 +1127,8 @@
 		<negativePattern>10</negativePattern>
 	</currency>
 	<currency code="MWK">
-		<englishName>Kwacha</englishName>
-		<nativeName>Kwacha</nativeName>
+		<englishName>Malawi Kwacha</englishName>
+		<nativeName>Malawi Kwacha</nativeName>
 		<symbol>77 75</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>.</decimalSeparator>
@@ -1270,8 +1270,8 @@
 		<negativePattern>14</negativePattern>
 	</currency>
 	<currency code="PEN">
-		<englishName>Nuevo Sol</englishName>
-		<nativeName>Nuevo Sol</nativeName>
+		<englishName>Sol</englishName>
+		<nativeName>Sol</nativeName>
 		<symbol>83 47 46</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>.</decimalSeparator>
@@ -1745,7 +1745,7 @@
 		<negativePattern>8</negativePattern>
 	</currency>
 	<currency code="VEF">
-		<englishName>Bolivar</englishName>
+		<englishName>Bolívar</englishName>
 		<nativeName>Bolívar</nativeName>
 		<symbol>66 115 46 70 46</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>

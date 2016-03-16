@@ -138,6 +138,7 @@
     <Compile Include="ObsoleteCurrencies.cs" />
     <Compile Include="ObsoleteCurrencyEventArgs.cs" />
     <Compile Include="ObsoleteCurrencyEventBehavior.cs" />
+    <Compile Include="Properties\NMoneys_AssemblyInfo.cs" />
     <Compile Include="Providers.cs" />
     <Compile Include="RemainderAllocator.cs" />
     <Compile Include="Serialization\Data.cs" />
