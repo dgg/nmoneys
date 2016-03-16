@@ -1,3 +1,5 @@
+Framework "4.6"
+
 properties {
   $configuration = 'Release'
   $base_dir  = resolve-path ..
