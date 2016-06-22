@@ -13,25 +13,25 @@ namespace NMoneys.Tests
 		#region Parse
 
 		[Test]
-		public void Code_Defined_UpperCased_AlphabeticCode_CodeParsed()
+		public void Parse_Defined_UpperCased_AlphabeticCode_CodeParsed()
 		{
 			Assert.That(Currency.Code.Parse("USD"), Is.EqualTo(CurrencyIsoCode.USD));
 		}
 
 		[Test]
-		public void Code_Defined_LowerCased_AlphabeticCode_CodeParsed()
+		public void Parse_Defined_LowerCased_AlphabeticCode_CodeParsed()
 		{
 			Assert.That(Currency.Code.Parse("eur"), Is.EqualTo(CurrencyIsoCode.EUR));
 		}
 
 		[Test]
-		public void Code_Defined_MixedCased_AlphabeticCode_CodeParsed()
+		public void Parse_Defined_MixedCased_AlphabeticCode_CodeParsed()
 		{
 			Assert.That(Currency.Code.Parse("NoK"), Is.EqualTo(CurrencyIsoCode.NOK));
 		}
 
 		[Test]
-		public void Code_Defined_NumericCode_CodeParsed()
+		public void Parse_Defined_NumericCode_CodeParsed()
 		{
 			Assert.That(Currency.Code.Parse("999"), Is.EqualTo(CurrencyIsoCode.XXX));
 		}
@@ -65,6 +65,61 @@ namespace NMoneys.Tests
 		{
 			long overflowingCode = short.MinValue + 1L;
 			Assert.That(() => Currency.Code.Parse(overflowingCode.ToString()), Throws.InstanceOf<InvalidEnumArgumentException>());
+		}
+
+		[Test]
+		public void DefaultParse_Defined_UpperCased_AlphabeticCode_CodeParsed()
+		{
+			Assert.That(Currency.Code.Parse("USD", CurrencyIsoCode.XTS), Is.EqualTo(CurrencyIsoCode.USD));
+		}
+
+		[Test]
+		public void DefaultParse_Defined_LowerCased_AlphabeticCode_CodeParsed()
+		{
+			Assert.That(Currency.Code.Parse("eur", CurrencyIsoCode.XTS), Is.EqualTo(CurrencyIsoCode.EUR));
+		}
+
+		[Test]
+		public void DefaultParse_Defined_MixedCased_AlphabeticCode_CodeParsed()
+		{
+			Assert.That(Currency.Code.Parse("NoK", CurrencyIsoCode.XTS), Is.EqualTo(CurrencyIsoCode.NOK));
+		}
+
+		[Test]
+		public void DefaultParse_Defined_NumericCode_CodeParsed()
+		{
+			Assert.That(Currency.Code.Parse("999", CurrencyIsoCode.XTS), Is.EqualTo(CurrencyIsoCode.XXX));
+		}
+
+		[Test]
+		public void DefaultParse_Defined_PadedNumericCode_CodeParsed()
+		{
+			Assert.That(Currency.Code.Parse("036", CurrencyIsoCode.XTS), Is.EqualTo(CurrencyIsoCode.AUD));
+		}
+
+		[Test]
+		public void DefaultParse_Null_Exception()
+		{
+			Assert.That(() => Currency.Code.Parse(null, CurrencyIsoCode.XTS), Is.EqualTo(CurrencyIsoCode.XTS));
+		}
+
+		[Test]
+		public void DefaultParse_Undefined_AlphabeticCode_Default()
+		{
+			Assert.That(() => Currency.Code.Parse("notAnIsoCode", CurrencyIsoCode.XTS), Is.EqualTo(CurrencyIsoCode.XTS));
+		}
+
+		[Test]
+		public void DefaultParse_Undefined_NumericCode_Default()
+		{
+			Assert.That(() => Currency.Code.Parse("0", CurrencyIsoCode.XTS), Is.EqualTo(CurrencyIsoCode.XTS));
+		}
+
+		[Test]
+		public void DefaultParse_Overflowing_NumericCode_Default()
+		{
+			long overflowingCode = short.MinValue + 1L;
+			Assert.That(() => Currency.Code.Parse(overflowingCode.ToString(), CurrencyIsoCode.XTS), Is.EqualTo(CurrencyIsoCode.XTS));
 		}
 
 		#endregion

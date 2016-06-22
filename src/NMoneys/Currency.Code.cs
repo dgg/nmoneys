@@ -31,6 +31,27 @@ namespace NMoneys
 
 			/// <summary>
 			/// Converts the string representation of the name or numeric value of one or more enumerated constants to an equivalent <see cref="CurrencyIsoCode"/>.
+			/// </summary>
+			/// <remarks>The <paramref name="isoCode"/> can represent an alphabetic or a numeric currency code.
+			/// <para>In the case of alphabetic codes, parsing is case-insensitive.</para>
+			/// <para>Only defined numeric codes can be parsed.</para></remarks>
+			/// <para>If the convertion fails, <paramref name="defaultValue"/> will be returned.</para>
+			/// <param name="isoCode">A string containing the name or value to convert.</param>
+			/// <param name="defaultValue">The value to return if the convertion fails.</param>
+			/// <returns>An object of type <see cref="CurrencyIsoCode"/> whose value is represented by value.</returns>
+			/// <exception cref="ArgumentNullException"><paramref name="isoCode"/> is null.</exception>
+			/// <exception cref="System.ComponentModel.InvalidEnumArgumentException"><paramref name="isoCode"/> does not represent a defined alphabetic or numeric code.</exception>
+			/// <seealso cref="IsoCodeExtensions.AlphabeticCode"/>
+			/// <seealso cref="IsoCodeExtensions.NumericCode"/>
+			public static CurrencyIsoCode Parse(string isoCode, CurrencyIsoCode defaultValue)
+			{
+				CurrencyIsoCode? parsed;
+				TryParse(isoCode, out parsed);
+				return parsed.GetValueOrDefault(defaultValue);
+			}
+
+			/// <summary>
+			/// Converts the string representation of the name or numeric value of one or more enumerated constants to an equivalent <see cref="CurrencyIsoCode"/>.
 			/// The return value indicates whether the conversion succeeded.
 			/// </summary>
 			/// <remarks>The <paramref name="isoCode"/> can represent an alphabetic or a numeric currency code.
