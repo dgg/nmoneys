@@ -18,19 +18,19 @@
 		<nativeName>افغانى</nativeName>
 		<symbol>1547</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
-		<decimalSeparator>.</decimalSeparator>
-		<groupSeparator>,</groupSeparator>
+		<decimalSeparator>,</decimalSeparator>
+		<groupSeparator>.</groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>0</positivePattern>
-		<negativePattern>3</negativePattern>
+		<positivePattern>3</positivePattern>
+		<negativePattern>8</negativePattern>
 	</currency>
 	<currency code="ALL">
 		<englishName>Lek</englishName>
-		<nativeName>Lek</nativeName>
-		<symbol>76 101 107</symbol>
+		<nativeName>Leku Shqiptar</nativeName>
+		<symbol>76</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>,</decimalSeparator>
-		<groupSeparator>.</groupSeparator>
+		<groupSeparator> </groupSeparator>
 		<groupSizes>3</groupSizes>
 		<positivePattern>3</positivePattern>
 		<negativePattern>8</negativePattern>
@@ -193,14 +193,14 @@
 	</currency>
 	<currency code="BND">
 		<englishName>Brunei Dollar</englishName>
-		<nativeName>Ringgit</nativeName>
+		<nativeName>ringgit Brunei</nativeName>
 		<symbol>36</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>,</decimalSeparator>
 		<groupSeparator>.</groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<positivePattern>2</positivePattern>
+		<negativePattern>9</negativePattern>
 	</currency>
 	<currency code="BOB">
 		<englishName>Boliviano</englishName>
@@ -226,7 +226,7 @@
 	</currency>
 	<currency code="BRL">
 		<englishName>Brazilian Real</englishName>
-		<nativeName>Real brasileiro</nativeName>
+		<nativeName>Real</nativeName>
 		<symbol>82 36</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>,</decimalSeparator>
@@ -263,10 +263,10 @@
 		<symbol>80</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>.</decimalSeparator>
-		<groupSeparator>,</groupSeparator>
+		<groupSeparator> </groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>2</positivePattern>
-		<negativePattern>2</negativePattern>
+		<positivePattern>0</positivePattern>
+		<negativePattern>1</negativePattern>
 	</currency>
 	<currency code="BYN">
 		<englishName>Belarusian Ruble</englishName>
@@ -320,8 +320,8 @@
 		<decimalSeparator>,</decimalSeparator>
 		<groupSeparator> </groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>1</positivePattern>
-		<negativePattern>4</negativePattern>
+		<positivePattern>3</positivePattern>
+		<negativePattern>8</negativePattern>
 	</currency>
 	<currency code="CHE">
 		<englishName>WIR Euro</englishName>
@@ -543,7 +543,7 @@
 		<decimalSeparator>.</decimalSeparator>
 		<groupSeparator>,</groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>1</positivePattern>
+		<positivePattern>0</positivePattern>
 		<negativePattern>1</negativePattern>
 	</currency>
 	<currency code="ETB">
@@ -607,7 +607,7 @@
 	<currency code="GEL">
 		<englishName>Lari</englishName>
 		<nativeName>ლარი</nativeName>
-		<symbol>4314 46</symbol>
+		<symbol>8382</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>,</decimalSeparator>
 		<groupSeparator> </groupSeparator>
@@ -707,7 +707,7 @@
 	</currency>
 	<currency code="HRK">
 		<englishName>Kuna</englishName>
-		<nativeName>kuna</nativeName>
+		<nativeName>hrvatska kuna</nativeName>
 		<symbol>107 110</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>,</decimalSeparator>
@@ -724,8 +724,8 @@
 		<decimalSeparator>,</decimalSeparator>
 		<groupSeparator> </groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>1</positivePattern>
-		<negativePattern>4</negativePattern>
+		<positivePattern>3</positivePattern>
+		<negativePattern>8</negativePattern>
 	</currency>
 	<currency code="HUF">
 		<englishName>Forint</englishName>
@@ -747,7 +747,7 @@
 		<groupSeparator>.</groupSeparator>
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<negativePattern>1</negativePattern>
 	</currency>
 	<currency code="ILS">
 		<englishName>New Israeli Sheqel</englishName>
@@ -847,7 +847,7 @@
 		<groupSeparator>,</groupSeparator>
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<negativePattern>1</negativePattern>
 	</currency>
 	<currency code="KGS">
 		<englishName>Som</englishName>
@@ -931,22 +931,22 @@
 		<nativeName>теңге</nativeName>
 		<symbol>8376</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
-		<decimalSeparator>-</decimalSeparator>
+		<decimalSeparator>,</decimalSeparator>
 		<groupSeparator> </groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>0</positivePattern>
-		<negativePattern>1</negativePattern>
+		<positivePattern>3</positivePattern>
+		<negativePattern>8</negativePattern>
 	</currency>
 	<currency code="LAK">
 		<englishName>Kip</englishName>
 		<nativeName>ກີບ</nativeName>
 		<symbol>8365</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
-		<decimalSeparator>.</decimalSeparator>
-		<groupSeparator>,</groupSeparator>
-		<groupSizes>3 0</groupSizes>
-		<positivePattern>3</positivePattern>
-		<negativePattern>8</negativePattern>
+		<decimalSeparator>,</decimalSeparator>
+		<groupSeparator>.</groupSeparator>
+		<groupSizes>3</groupSizes>
+		<positivePattern>0</positivePattern>
+		<negativePattern>2</negativePattern>
 	</currency>
 	<currency code="LBP">
 		<englishName>Lebanese Pound</englishName>
@@ -967,8 +967,8 @@
 		<decimalSeparator>.</decimalSeparator>
 		<groupSeparator>,</groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>2</positivePattern>
-		<negativePattern>14</negativePattern>
+		<positivePattern>0</positivePattern>
+		<negativePattern>1</negativePattern>
 	</currency>
 	<currency code="LRD">
 		<englishName>Liberian Dollar</englishName>
@@ -1046,8 +1046,8 @@
 		<decimalSeparator>,</decimalSeparator>
 		<groupSeparator>.</groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>1</positivePattern>
-		<negativePattern>5</negativePattern>
+		<positivePattern>3</positivePattern>
+		<negativePattern>8</negativePattern>
 	</currency>
 	<currency code="MGA">
 		<englishName>Malagasy Ariary</englishName>
@@ -1063,13 +1063,13 @@
 	<currency code="MKD">
 		<englishName>Denar</englishName>
 		<nativeName>денар</nativeName>
-		<symbol>1076 1077 1085 46</symbol>
+		<symbol>1076 1077 1085</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>,</decimalSeparator>
 		<groupSeparator>.</groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>3</positivePattern>
-		<negativePattern>8</negativePattern>
+		<positivePattern>2</positivePattern>
+		<negativePattern>9</negativePattern>
 	</currency>
 	<currency code="MMK">
 		<englishName>Kyat</englishName>
@@ -1079,19 +1079,19 @@
 		<decimalSeparator>.</decimalSeparator>
 		<groupSeparator>,</groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>3</positivePattern>
+		<positivePattern>2</positivePattern>
 		<negativePattern>9</negativePattern>
 	</currency>
 	<currency code="MNT">
 		<englishName>Tugrik</englishName>
-		<nativeName>Төгрөг</nativeName>
+		<nativeName>төгрөг</nativeName>
 		<symbol>8366</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
-		<decimalSeparator>,</decimalSeparator>
-		<groupSeparator> </groupSeparator>
+		<decimalSeparator>.</decimalSeparator>
+		<groupSeparator>,</groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>3</positivePattern>
-		<negativePattern>8</negativePattern>
+		<positivePattern>2</positivePattern>
+		<negativePattern>9</negativePattern>
 	</currency>
 	<currency code="MOP">
 		<englishName>Pataca</englishName>
@@ -1179,7 +1179,7 @@
 		<groupSeparator>,</groupSeparator>
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<negativePattern>1</negativePattern>
 	</currency>
 	<currency code="MZN">
 		<englishName>Mozambique Metical</englishName>
@@ -1212,7 +1212,7 @@
 		<groupSeparator>,</groupSeparator>
 		<groupSizes>3</groupSizes>
 		<positivePattern>2</positivePattern>
-		<negativePattern>2</negativePattern>
+		<negativePattern>9</negativePattern>
 	</currency>
 	<currency code="NIO">
 		<englishName>Cordoba Oro</englishName>
@@ -1233,8 +1233,8 @@
 		<decimalSeparator>,</decimalSeparator>
 		<groupSeparator> </groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>2</positivePattern>
-		<negativePattern>12</negativePattern>
+		<positivePattern>3</positivePattern>
+		<negativePattern>8</negativePattern>
 	</currency>
 	<currency code="NPR">
 		<englishName>Nepalese Rupee</englishName>
@@ -1304,14 +1304,14 @@
 	</currency>
 	<currency code="PHP">
 		<englishName>Philippine Peso</englishName>
-		<nativeName>Philippine Peso</nativeName>
+		<nativeName>Piso ng Pilipinas</nativeName>
 		<symbol>8369</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>.</decimalSeparator>
 		<groupSeparator>,</groupSeparator>
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<negativePattern>1</negativePattern>
 	</currency>
 	<currency code="PKR">
 		<englishName>Pakistan Rupee</englishName>
@@ -1382,7 +1382,7 @@
 	<currency code="RUB">
 		<englishName>Russian Ruble</englishName>
 		<nativeName>рубль</nativeName>
-		<symbol>1088 46</symbol>
+		<symbol>8381</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>,</decimalSeparator>
 		<groupSeparator> </groupSeparator>
@@ -1393,13 +1393,13 @@
 	<currency code="RWF">
 		<englishName>Rwanda Franc</englishName>
 		<nativeName>Ifaranga</nativeName>
-		<symbol>82 87 70</symbol>
+		<symbol>82 70</symbol>
 		<significantDecimalDigits>0</significantDecimalDigits>
 		<decimalSeparator>,</decimalSeparator>
-		<groupSeparator> </groupSeparator>
+		<groupSeparator>.</groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>3</positivePattern>
-		<negativePattern>8</negativePattern>
+		<positivePattern>2</positivePattern>
+		<negativePattern>9</negativePattern>
 	</currency>
 	<currency code="SAR">
 		<englishName>Saudi Riyal</englishName>
@@ -1452,7 +1452,7 @@
 		<symbol>107 114</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>,</decimalSeparator>
-		<groupSeparator> </groupSeparator>
+		<groupSeparator>.</groupSeparator>
 		<groupSizes>3</groupSizes>
 		<positivePattern>3</positivePattern>
 		<negativePattern>8</negativePattern>
@@ -1735,7 +1735,7 @@
 	</currency>
 	<currency code="UYU">
 		<englishName>Peso Uruguayo</englishName>
-		<nativeName>Peso</nativeName>
+		<nativeName>Peso uruguayo</nativeName>
 		<symbol>36 85</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>,</decimalSeparator>
@@ -1745,26 +1745,26 @@
 		<negativePattern>9</negativePattern>
 	</currency>
 	<currency code="UZS">
-		<englishName>Uzbekistan Som</englishName>
-		<nativeName>so‘m</nativeName>
-		<symbol>115 111 39 109</symbol>
+		<englishName>Uzbekistan Sum</englishName>
+		<nativeName>soʻm</nativeName>
+		<symbol>115 111 699 109</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>,</decimalSeparator>
 		<groupSeparator> </groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>3</positivePattern>
-		<negativePattern>8</negativePattern>
+		<positivePattern>2</positivePattern>
+		<negativePattern>9</negativePattern>
 	</currency>
 	<currency code="VEF">
 		<englishName>Bolívar</englishName>
 		<nativeName>Bolívar</nativeName>
-		<symbol>66 115 46 70 46</symbol>
+		<symbol>66 115 46</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>,</decimalSeparator>
 		<groupSeparator>.</groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>2</positivePattern>
-		<negativePattern>12</negativePattern>
+		<positivePattern>0</positivePattern>
+		<negativePattern>2</negativePattern>
 	</currency>
 	<currency code="VND">
 		<englishName>Dong</englishName>
@@ -1801,14 +1801,14 @@
 	</currency>
 	<currency code="XAF">
 		<englishName>CFA Franc BEAC</englishName>
-		<nativeName>CFA Franc BEAC</nativeName>
+		<nativeName>franc CFA</nativeName>
 		<symbol>70 67 70 65</symbol>
 		<significantDecimalDigits>0</significantDecimalDigits>
 		<decimalSeparator>,</decimalSeparator>
 		<groupSeparator> </groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>1</positivePattern>
-		<negativePattern>4</negativePattern>
+		<positivePattern>3</positivePattern>
+		<negativePattern>8</negativePattern>
 	</currency>
 	<currency code="XAG">
 		<englishName>Silver</englishName>
@@ -1899,8 +1899,8 @@
 		<decimalSeparator>.</decimalSeparator>
 		<groupSeparator>,</groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>0</positivePattern>
-		<negativePattern>1</negativePattern>
+		<positivePattern>2</positivePattern>
+		<negativePattern>9</negativePattern>
 		<entity>curren</entity>
 	</currency>
 	<currency code="XOF">
