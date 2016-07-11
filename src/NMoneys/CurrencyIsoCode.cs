@@ -125,7 +125,7 @@ namespace NMoneys
 		/// <summary>
 		/// Ngultrum
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("dz-BT")]
 		BTN = 064,
 		/// <summary>
 		/// Pula
@@ -860,12 +860,12 @@ namespace NMoneys
 		/// <summary>
 		/// East Caribbean Dollar
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("en-029")]
 		XCD = 951,
 		/// <summary>
 		/// SDR (Special Drawing Right)
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("es-419")]
 		XDR = 960,
 		/// <summary>
 		/// CFA Franc BCEAO
