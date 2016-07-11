@@ -19,7 +19,7 @@ namespace NMoneys.Tests
 		}
 
 #pragma warning disable 169
-		private static readonly object[] shortcuts_info = new object[]
+		private static readonly object[] shortcuts_info = 
 		{
 			new object[] {Currency.Aud, CurrencyIsoCode.AUD, "AUD", "$", "Australian Dollar"},
 			new object[] {Currency.Cad, CurrencyIsoCode.CAD, "CAD", "$", "Canadian Dollar"},
@@ -38,7 +38,7 @@ namespace NMoneys.Tests
 			new object[] {Currency.Myr, CurrencyIsoCode.MYR, "MYR", "RM", "Malaysian Ringgit"},
 			new object[] {Currency.Nok, CurrencyIsoCode.NOK, "NOK", "kr", "Norwegian Krone"},
 			new object[] {Currency.Nzd, CurrencyIsoCode.NZD, "NZD", "$", "New Zealand Dollar"},
-			new object[] {Currency.Rub, CurrencyIsoCode.RUB, "RUB", "р.", "Russian Ruble"},
+			new object[] {Currency.Rub, CurrencyIsoCode.RUB, "RUB", "₽", "Russian Ruble"},
 			new object[] {Currency.Sek, CurrencyIsoCode.SEK, "SEK", "kr", "Swedish Krona"},
 			new object[] {Currency.Sgd, CurrencyIsoCode.SGD, "SGD", "$", "Singapore Dollar"},
 			new object[] {Currency.Thb, CurrencyIsoCode.THB, "THB", "฿", "Baht"},

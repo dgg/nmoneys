@@ -138,11 +138,11 @@ namespace NMoneys.Tests
 		#region change SEK formatting
 
 		[Test]
-		public void ToString_BigSEK_ThousandSeparatorIsNotDotAnymore()
+		public void ToString_BigSEK_ThousandSeparatorIsDotAgain()
 		{
 			var big = new Money(12345.67m, Currency.Sek);
 
-			Assert.That(big.ToString(), Is.EqualTo("12 345,67 kr"));
+			Assert.That(big.ToString(), Is.EqualTo("12.345,67 kr"));
 		}
 
 		#endregion
