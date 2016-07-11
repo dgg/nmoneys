@@ -133,6 +133,11 @@ namespace NMoneys
 		[EnumMember, CanonicalCulture("tn-BW")]
 		BWP = 072,
 		/// <summary>
+		/// Belarusian Ruble
+		/// </summary>
+		[EnumMember, CanonicalCulture("be-BY")]
+		BYN = 933,
+		/// <summary>
 		/// Belarussian Ruble
 		/// </summary>
 		[EnumMember, CanonicalCulture("be-BY")]
