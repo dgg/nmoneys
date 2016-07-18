@@ -25,7 +25,7 @@ namespace NMoneys
 		public void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
 			info.AddValue(Serialization.Data.Money.AMOUNT, Amount);
-			info.AddValue(Serialization.Data.Money.CURRENCY, CurrencyCode, typeof(Currency));
+			info.AddValue(Serialization.Data.Money.CURRENCY, CurrencyCode, typeof(CurrencyIsoCode));
 		}
 	}
 }
