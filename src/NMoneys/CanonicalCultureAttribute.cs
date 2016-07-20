@@ -7,7 +7,7 @@ namespace NMoneys
 	/// Represents that a .NET Framework culture is suitable for representing an ISO currency
 	/// </summary>
 	/// <remarks>For internal verification purposes, it does not have any effect on currency runtime.</remarks>
-	[AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
+	[AttributeUsage(AttributeTargets.Field)]
 	internal sealed class CanonicalCultureAttribute : Attribute
 	{
 		public CanonicalCultureAttribute(string cultureName)
@@ -19,7 +19,7 @@ namespace NMoneys
 		/// <summary>
 		/// Name of the <see cref="CultureInfo"/> that is source of the information
 		/// </summary>
-		public string Name { get { return _name; } }
+		public string Name => _name;
 
 		/// <summary>
 		/// Indicates whether one or more values of the currency are different from ones specified by the <see cref="CultureInfo"/>.

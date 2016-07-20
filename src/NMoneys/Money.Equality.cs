@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 
 namespace NMoneys
 {
@@ -12,6 +13,7 @@ namespace NMoneys
 		/// otherwise, false.
 		/// </returns>
 		/// <param name="other">An money to compare with this instance.</param>
+		[Pure]
 		public bool Equals(Money other)
 		{
 			return Equals(other.CurrencyCode, CurrencyCode) && other.Amount == Amount;
@@ -25,6 +27,7 @@ namespace NMoneys
 		/// true if <paramref name="obj"/> and this instance are the same type and represent the same value; otherwise, false.
 		/// </returns>
 		/// <param name="obj">Another object to compare to.</param>
+		[Pure]
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(null, obj)) return false;
@@ -38,6 +41,7 @@ namespace NMoneys
 		/// <returns>
 		/// A 32-bit signed integer that is the hash code for this instance.
 		/// </returns>
+		[Pure]
 		public override int GetHashCode()
 		{
 			unchecked
@@ -52,6 +56,7 @@ namespace NMoneys
 		/// <param name="left">The first value to compare.</param>
 		/// <param name="right">The second value to compare.</param>
 		/// <returns>true if <paramref name="left"/> and <paramref name="right"/> are equal; otherwise, false.</returns>
+		[Pure]
 		public static bool operator ==(Money left, Money right)
 		{
 			return Equals(left, right);
@@ -63,6 +68,7 @@ namespace NMoneys
 		/// <param name="left">The first value to compare.</param>
 		/// <param name="right">The second value to compare.</param>
 		/// <returns>true if <paramref name="left"/> and <paramref name="right"/> are not equal; otherwise, false.</returns>
+		[Pure]
 		public static bool operator !=(Money left, Money right)
 		{
 			return !Equals(left, right);

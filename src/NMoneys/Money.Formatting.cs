@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 
 namespace NMoneys
 {
@@ -10,6 +11,7 @@ namespace NMoneys
 		/// </summary>
 		/// <remarks>The return value is formatted with the currency numeric format specifier ("C").</remarks>
 		/// <returns>The string representation of the value of this instance as specified by the <c>"Currency"</c> format specifier.</returns>
+		[Pure]
 		public override string ToString()
 		{
 			return ToString("C");
@@ -22,6 +24,7 @@ namespace NMoneys
 		/// <param name="format">A numeric format string</param>
 		/// <returns>The string representation of the value of this instance as specified by the format specifier and an instance of the <see cref="Currency"/>
 		/// identified by <see cref="CurrencyCode"/> as the provider.</returns>
+		[Pure]
 		public string ToString(string format)
 		{
 			Currency currency = Currency.Get(CurrencyCode);
@@ -36,6 +39,7 @@ namespace NMoneys
 		/// <param name="provider">An object that supplies culture-specific formatting information.</param>
 		/// <returns>The string representation of the value of this instance as specified by the<c>"Currency"</c> format specifier and 
 		/// <paramref name="provider"/>.</returns>
+		[Pure]
 		public string ToString(IFormatProvider provider)
 		{
 			return ToString("C", provider);
@@ -49,6 +53,7 @@ namespace NMoneys
 		/// <param name="provider">An object that supplies culture-specific formatting information.</param>
 		/// <returns>The string representation of the value of this instance as specified by <paramref name="format"/>the<c>"Currency"</c> format specifier and 
 		/// and <paramref name="provider"/>.</returns>
+		[Pure]
 		public string ToString(string format, IFormatProvider provider)
 		{
 			return Amount.ToString(format, provider);
@@ -91,6 +96,7 @@ namespace NMoneys
 		/// <param name="format">A composite format string that can contain tokens to be replaced by properties of the <see cref="Currency"/>
 		/// identified by the instance's <see cref="CurrencyCode"/>.</param>
 		/// <returns>A copy of <paramref name="format"/> in which the format items have been replaced by the string representation of the corresponding tokens.</returns>
+		[Pure]
 		public string Format(string format)
 		{
 			Currency currency = Currency.Get(CurrencyCode);
@@ -135,6 +141,7 @@ namespace NMoneys
 		/// identified by the instance's <see cref="CurrencyCode"/>.</param>
 		/// <param name="provider">An object that supplies culture-specific formatting information.</param>
 		/// <returns>A copy of <paramref name="format"/> in which the format items have been replaced by the string representation of the corresponding tokens.</returns>
+		[Pure]
 		public string Format(string format, IFormatProvider provider)
 		{
 			Currency currency = Currency.Get(CurrencyCode);

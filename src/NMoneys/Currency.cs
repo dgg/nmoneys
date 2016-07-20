@@ -21,12 +21,12 @@ namespace NMoneys
 		/// <summary>
 		/// The numeric ISO 4217 code of the <see cref="Currency"/>
 		/// </summary>
-		public short NumericCode { get { return IsoCode.NumericCode(); } }
+		public short NumericCode => IsoCode.NumericCode();
 
 		/// <summary>
 		/// Returns a padded three digit string representation of the <see cref="NumericCode"/>.
 		/// </summary>
-		public string PaddedNumericCode { get { return IsoCode.PaddedNumericCode(); } }
+		public string PaddedNumericCode => IsoCode.PaddedNumericCode();
 
 		/// <summary>
 		/// Gets the name, in English, of the <see cref="Currency"/>.
@@ -61,7 +61,7 @@ namespace NMoneys
 		/// Represents the smalles amount that can be represented for the currency according to its <see cref="SignificantDecimalDigits"/>.
 		/// </summary>
 		[XmlIgnore]
-		public decimal MinAmount { get { return PowerOfTen.Negative(this); } }
+		public decimal MinAmount => PowerOfTen.Negative(this);
 
 		/// <summary>
 		/// Gets the name of the currency formatted in the native language of the country/region where the currency is used. 
@@ -393,15 +393,6 @@ namespace NMoneys
 			Test = Xts;
 		}
 
-		/// <summary>
-		/// Stores the currency in both symbol and code caches
-		/// </summary>
-		/*private static void fillCaches(Currency currency)
-		{
-			_byIsoCode.Add(currency.IsoCode, currency);
-			_byIsoSymbol.Add(currency.IsoSymbol, currency);
-		}*/
-
 		private static Currency init(CurrencyIsoCode isoCode, Func<CurrencyIsoCode, CurrencyInfo> infoReading)
 		{
 			return new Currency(infoReading(isoCode));
@@ -464,7 +455,7 @@ namespace NMoneys
 			if (ObsoleteCurrencies.IsObsolete(code))
 			{
 				EventHandler<ObsoleteCurrencyEventArgs> handler = ObsoleteCurrency;
-				if (handler != null) handler(null, new ObsoleteCurrencyEventArgs(code));
+				handler?.Invoke(null, new ObsoleteCurrencyEventArgs(code));
 			}
 		}
 
@@ -472,8 +463,7 @@ namespace NMoneys
 		{
 			if (ObsoleteCurrencies.IsObsolete(currency))
 			{
-				EventHandler<ObsoleteCurrencyEventArgs> handler = ObsoleteCurrency;
-				if (handler != null) handler(null, new ObsoleteCurrencyEventArgs(currency.IsoCode));
+				ObsoleteCurrency?.Invoke(null, new ObsoleteCurrencyEventArgs(currency.IsoCode));
 			}
 		}
 

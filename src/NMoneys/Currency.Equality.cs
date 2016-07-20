@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 
 namespace NMoneys
 {
@@ -12,6 +13,7 @@ namespace NMoneys
 		/// true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
 		/// </returns>
 		/// <param name="other">A <see cref="Currency"/> to compare with this object.</param>
+		[Pure]
 		public bool Equals(Currency other)
 		{
 			if (ReferenceEquals(null, other)) return false;
@@ -27,6 +29,7 @@ namespace NMoneys
 		/// true if the specified <see cref="object"/> is equal to the current <see cref="Currency"/>; otherwise, false.
 		/// </returns>
 		/// <param name="obj">The <see cref="object"/> to compare with the current <see cref="Currency"/>.</param> 
+		[Pure]
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(null, obj)) return false;
@@ -41,8 +44,10 @@ namespace NMoneys
 		/// <returns>
 		/// A hash code for the current <see cref="Currency"/>.
 		/// </returns>
+		[Pure]
 		public override int GetHashCode()
 		{
+			// it is ok to use writable IsoCode as it is assigned once at initialization
 			return IsoCode.GetHashCode();
 		}
 
@@ -52,6 +57,7 @@ namespace NMoneys
 		///<param name="left">The first <see cref="Currency"/> to compare, or null.</param>
 		///<param name="right">The second <see cref="Currency"/> to compare, or null.</param>
 		///<returns>true if <paramref name="left"/> is equal to <paramref name="right"/>; otherwise, false.</returns>
+		[Pure]
 		public static bool operator ==(Currency left, Currency right)
 		{
 			return Equals(left, right);
@@ -63,6 +69,7 @@ namespace NMoneys
 		///<param name="left">The first <see cref="Currency"/> to compare, or null.</param>
 		///<param name="right">The second <see cref="Currency"/> to compare, or null.</param>
 		///<returns>true if <paramref name="left"/> is not equal to <paramref name="right"/>; otherwise, false.</returns>
+		[Pure]
 		public static bool operator !=(Currency left, Currency right)
 		{
 			return !Equals(left, right);

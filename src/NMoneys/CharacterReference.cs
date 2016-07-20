@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 using NMoneys.Support;
 
@@ -46,7 +47,7 @@ namespace NMoneys
 		/// <exception cref="ArgumentNullException"><paramref name="entityName"/> is null.</exception>
 		internal CharacterReference(string entityName)
 		{
-			Guard.AgainstNullArgument("entityName", entityName);
+			Guard.AgainstNullArgument(nameof(entityName), entityName);
 
 			if (IsEntityName(entityName))
 			{
@@ -83,37 +84,43 @@ namespace NMoneys
 		/// The "simple name" form of a character reference.
 		/// </summary>
 		/// <example>new CharacterReference("&amp;pound;").SimpleName --> "pound"</example>
-		public string SimpleName { get; private set; }
+		[Pure]
+		public string SimpleName { get; }
 
 		/// <summary>
 		/// The "entity name" form of a character reference.
 		/// </summary>
 		/// <example>new CharacterReference("&amp;pound;").EntityName --> "&amp;pound;"</example>
-		public string EntityName { get; private set; }
+		[Pure]
+		public string EntityName { get; }
 
 		/// <summary>
 		/// The "entity number" form of a character reference.
 		/// </summary>
 		/// <example>new CharacterReference("&amp;pound;").EntityNumber --> "&amp;163;"</example>
-		public string EntityNumber { get; private set; }
+		[Pure]
+		public string EntityNumber { get; }
 
 		/// <summary>
 		/// The unicode code point of a character reference.
 		/// </summary>
 		/// <example>new CharacterReference("&amp;pound;").CodePoint --> 163</example>
-		public int CodePoint { get; private set; }
+		[Pure]
+		public int CodePoint { get; }
 
 		/// <summary>
 		/// The character of a character reference.
 		/// </summary>
 		/// <example>new CharacterReference("&amp;pound;").Character --> "£"</example>
-		public string Character { get; private set; }
+		[Pure]
+		public string Character { get; }
 
 		/// <summary>
 		/// Returns wheter the instance is empty or not.
 		/// </summary>
 		/// <remarks>To discourage the use of null, a "null object" pattern is used. "Null objects" are empty.</remarks>
-		public bool IsEmpty { get; private set; }
+		[Pure]
+		public bool IsEmpty { get; }
 
 		/// <summary>
 		/// Returns a <see cref="string"/> that represents the current <see cref="CharacterReference"/>.
@@ -121,6 +128,7 @@ namespace NMoneys
 		/// <returns>
 		/// The <see cref="SimpleName"/> of the current instance.
 		/// </returns>
+		[Pure]
 		public override string ToString()
 		{
 			return SimpleName;
@@ -136,9 +144,10 @@ namespace NMoneys
 		/// <returns>true if <paramref name="entityName"/> does starts with <code>'&amp;'</code> and ends with <code>';'</code>;
 		/// otherwise, false</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="entityName"/> is null.</exception>
+		[Pure]
 		public static bool IsEntityName(string entityName)
 		{
-			Guard.AgainstNullArgument("entityName", entityName);
+			Guard.AgainstNullArgument(nameof(entityName), entityName);
 
 			return entityName.StartsWith(AMP, StringComparison.Ordinal) &&
 				entityName.EndsWith(SEMICOLON, StringComparison.Ordinal);
@@ -151,6 +160,7 @@ namespace NMoneys
 		/// true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
 		/// </returns>
 		/// <param name="other">A character reference to compare with this character reference.</param>
+		[Pure]
 		public bool Equals(CharacterReference other)
 		{
 			if (ReferenceEquals(null, other)) return false;
@@ -166,6 +176,7 @@ namespace NMoneys
 		/// </returns>
 		/// <param name="obj">The <see cref="T:System.Object"/> to compare with the current <see cref="T:System.Object"/>.</param>
 		/// <exception cref="NullReferenceException">The <paramref name="obj"/> parameter is null.</exception>
+		[Pure]
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(null, obj)) return false;
@@ -180,6 +191,7 @@ namespace NMoneys
 		/// <returns>
 		/// A hash code for the current <see cref="CharacterReference"/>.
 		/// </returns>
+		[Pure]
 		public override int GetHashCode()
 		{
 			return CodePoint;
@@ -189,6 +201,7 @@ namespace NMoneys
 		///<param name="left">The first character reference to compare, or null</param>
 		///<param name="right">The second character reference to compare, or null</param>
 		///<returns>true if the value of <paramref name="left"/> is the same as the value of <paramref name="right"/>; otherwise, false.</returns>
+		[Pure]
 		public static bool operator ==(CharacterReference left, CharacterReference right)
 		{
 			return Equals(left, right);
@@ -198,6 +211,7 @@ namespace NMoneys
 		///<param name="left">The first character reference to compare, or null</param>
 		///<param name="right">The second character reference to compare, or null</param>
 		///<returns>true if the value of <paramref name="left"/> is is different from the value of <paramref name="right"/>; otherwise, false.</returns>
+		[Pure]
 		public static bool operator !=(CharacterReference left, CharacterReference right)
 		{
 			return !Equals(left, right);

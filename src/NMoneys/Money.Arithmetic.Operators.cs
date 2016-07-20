@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 
 namespace NMoneys
 {
@@ -9,6 +10,7 @@ namespace NMoneys
 		/// </summary>
 		/// <param name="money">The value to negate.</param>
 		/// <returns>A <see cref="Money"/> with the <see cref="Amount"/> of <paramref name="money"/>, but multiplied by negative one (-1).</returns>
+		[Pure]
 		public static Money operator -(Money money)
 		{
 			return new Money(-(money.Amount), money.CurrencyCode);
@@ -26,6 +28,7 @@ namespace NMoneys
 		/// as <paramref name="second"/>.</exception>
 		/// <exception cref="OverflowException">The <see cref="Amount"/> of the result is less than
 		/// <see cref="decimal.MinValue"/> or greater than <see cref="decimal.MaxValue"/>.</exception>
+		[Pure]
 		public static Money operator +(Money first, Money second)
 		{
 			first.AssertSameCurrency(second);
@@ -44,12 +47,13 @@ namespace NMoneys
 		/// as <paramref name="second"/>.</exception>
 		/// <exception cref="OverflowException">The <see cref="Amount"/> of the result is less than
 		/// <see cref="decimal.MinValue"/> or greater than <see cref="decimal.MaxValue"/>.</exception>
+		[Pure]
 		public static Money operator -(Money first, Money second)
 		{
 			first.AssertSameCurrency(second);
 			return new Money(first.Amount - second.Amount, first.CurrencyCode);
 		}
-		
+
 		/// <summary>
 		/// Multiplies the specified <see cref="Money"/> by an integral factor.
 		/// </summary>
@@ -61,6 +65,7 @@ namespace NMoneys
 		/// and the same <see cref="CurrencyCode"/> as <paramref name="money"/>.</returns>
 		/// <exception cref="OverflowException">The <see cref="Amount"/> of the result is less than
 		/// <see cref="decimal.MinValue"/> or greater than <see cref="decimal.MaxValue"/>.</exception>
+		[Pure]
 		public static Money operator *(Money money, long factor)
 		{
 			return new Money(money.Amount * factor, money.CurrencyCode);

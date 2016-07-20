@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 using NMoneys.Support;
 
@@ -21,6 +22,7 @@ namespace NMoneys
 		/// <returns>The instance of <see cref="Currency"/> represented by the <paramref name="isoCode"/>.</returns>
 		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The <paramref name="isoCode"/> does not exist in the <see cref="CurrencyIsoCode"/> enumeration.</exception>
 		/// <exception cref="MisconfiguredCurrencyException">The currency represented by <paramref name="isoCode"/> has not been properly configured by the library implementor. Please, log a issue.</exception>
+		[Pure]
 		public static Currency Get(CurrencyIsoCode isoCode)
 		{
 			Enumeration.AssertDefined(isoCode);
@@ -50,11 +52,12 @@ namespace NMoneys
 		/// <returns>The instance of <see cref="Currency"/> represented by the <paramref name="threeLetterIsoCode"/>.</returns>
 		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The <paramref name="threeLetterIsoCode"/> does not exist in the <see cref="CurrencyIsoCode"/> enumeration.</exception>
 		/// <exception cref="MisconfiguredCurrencyException">The currency represented by <paramref name="threeLetterIsoCode"/> has not been properly configured by the library implementor. Please, log a issue.</exception>
+		[Pure]
 		public static Currency Get(string threeLetterIsoCode)
 		{
 			Currency currency = _cache.GetOrAdd(threeLetterIsoCode, () =>
 			{
-				var isoCode = Code.ParseArgument(threeLetterIsoCode, "threeLetterIsoCode");
+				var isoCode = Code.ParseArgument(threeLetterIsoCode, nameof(threeLetterIsoCode));
 				var built = init(isoCode, _provider.Get);
 				if (built == null) throw new MisconfiguredCurrencyException(isoCode);
 				return built;
@@ -83,9 +86,10 @@ namespace NMoneys
 		/// <exception cref="ArgumentException"><paramref name="culture"/> is either an invariant, custom or neutral culture, or a <see cref="RegionInfo"/> cannot be instantiated from it.</exception>
 		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The ISO symbol associated to the <paramref name="culture"/> does not exist in the <see cref="CurrencyIsoCode"/> enumeration.</exception>
 		/// <exception cref="MisconfiguredCurrencyException">The currency associated to the <paramref name="culture"/> has not been properly configured by the library implementor. Please, log a issue.</exception>
+		[Pure]
 		public static Currency Get(CultureInfo culture)
 		{
-			Guard.AgainstNullArgument("culture", culture);
+			Guard.AgainstNullArgument(nameof(culture), culture);
 			return Get(new RegionInfo(culture.LCID));
 		}
 
@@ -107,9 +111,10 @@ namespace NMoneys
 		/// <exception cref="ArgumentNullException"><paramref name="region"/> is null.</exception>
 		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The ISO symbol associated to the <paramref name="region"/> does not exist in the <see cref="CurrencyIsoCode"/> enumeration.</exception>
 		/// <exception cref="MisconfiguredCurrencyException">The currency associated to the <paramref name="region"/> has not been properly configured by the library implementor. Please, log a issue.</exception>
+		[Pure]
 		public static Currency Get(RegionInfo region)
 		{
-			Guard.AgainstNullArgument("region", region);
+			Guard.AgainstNullArgument(nameof(region), region);
 			return Get(region.ISOCurrencySymbol);
 		}
 
@@ -128,6 +133,7 @@ namespace NMoneys
 		/// <param name="currency">When this method returns, contains the <see cref="Currency"/> instance represented by the <paramref name="isoCode"/> if the
 		/// lookup suceeds, or null if the lookup fails.</param>
 		/// <returns>true if <paramref name="isoCode"/> was looked up successfully; otherwise, false.</returns>
+		[Pure]
 		public static bool TryGet(CurrencyIsoCode isoCode, out Currency currency)
 		{
 			bool tryGet = false;
@@ -157,6 +163,7 @@ namespace NMoneys
 		/// <param name="currency">When this method returns, contains the <see cref="Currency"/> instance represented by the <paramref name="threeLetterIsoSymbol"/> if the
 		/// lookup suceeds, or null if the lookup fails.</param>
 		/// <returns>true if <paramref name="threeLetterIsoSymbol"/> was looked up successfully; otherwise, false.</returns>
+		[Pure]
 		public static bool TryGet(string threeLetterIsoSymbol, out Currency currency)
 		{
 			bool tryGet = false;
@@ -192,6 +199,7 @@ namespace NMoneys
 		/// <param name="currency">When this method returns, contains the <see cref="Currency"/> instance from the region associated to 
 		/// the <paramref name="culture"/> if the lookup suceeds, or null if the lookup fails.</param>
 		/// <returns>true if <paramref name="currency"/> was looked up successfully; otherwise, false.</returns>
+		[Pure]
 		public static bool TryGet(CultureInfo culture, out Currency currency)
 		{
 			bool tryGet = false;
@@ -223,6 +231,7 @@ namespace NMoneys
 		/// <param name="currency">When this method returns, contains the <see cref="Currency"/> instance from the region associated to 
 		/// the <paramref name="region"/> if the lookup suceeds, or null if the lookup fails.</param>
 		/// <returns>true if <paramref name="currency"/> was looked up successfully; otherwise, false.</returns>
+		[Pure]
 		public static bool TryGet(RegionInfo region, out Currency currency)
 		{
 			bool tryGet = false;
@@ -240,6 +249,7 @@ namespace NMoneys
 		/// </summary>
 		/// <remarks>Since all currencies are visited, caches are initialized with all values.</remarks>
 		/// <returns>List of all currencies defined.</returns>
+		[Pure]
 		public static IEnumerable<Currency> FindAll()
 		{
 			CurrencyIsoCode[] isoCodes = Enumeration.GetValues<CurrencyIsoCode>();

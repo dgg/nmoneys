@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using NMoneys.Support;
 
 namespace NMoneys
@@ -23,9 +24,10 @@ namespace NMoneys
 		/// <seealso cref="Curren"/>
 		/// <seealso cref="Yen"/>
 		/// <seealso cref="Fnof"/>
+		[Pure]
 		public static CharacterReference Get(string entityName)
 		{
-			Guard.AgainstNullArgument("entityName", entityName);
+			Guard.AgainstNullArgument(nameof(entityName), entityName);
 			return _currencyReferences[entityName];
 		}
 

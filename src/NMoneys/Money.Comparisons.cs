@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 
 namespace NMoneys
 {
@@ -31,6 +32,7 @@ namespace NMoneys
 		/// </list>
 		/// </returns>
 		/// <exception cref="T:System.ArgumentException"><paramref name="obj"/> is not a <see cref="Money"/>.</exception>
+		[Pure]
 		public int CompareTo(object obj)
 		{
 			if (obj == null)
@@ -39,7 +41,7 @@ namespace NMoneys
 			}
 			if (!(obj is Money))
 			{
-				throw new ArgumentException("obj", string.Format("Argument must be of type {0}.", typeof(Money).Name));
+				throw new ArgumentException(nameof(obj), $"Argument must be of type {typeof(Money).Name}.");
 			}
 			return CompareTo((Money)obj);
 		}
@@ -71,6 +73,7 @@ namespace NMoneys
 		/// </list>
 		/// </returns>
 		/// <exception cref="DifferentCurrencyException">If <paramref name="other"/> does not have the same <see cref="CurrencyCode"/>.</exception>
+		[Pure]
 		public int CompareTo(Money other)
 		{
 			AssertSameCurrency(other);
@@ -84,6 +87,7 @@ namespace NMoneys
 		/// <param name="left">The first value to compare.</param>
 		/// <param name="right">The second value to compare.</param>
 		/// <returns>true if <paramref name="left"/> is greater than <paramref name="right"/>; otherwise, false.</returns>
+		[Pure]
 		public static bool operator >(Money left, Money right)
 		{
 			return left.CompareTo(right) > 0;
@@ -95,6 +99,7 @@ namespace NMoneys
 		/// <param name="left">The first value to compare.</param>
 		/// <param name="right">The second value to compare.</param>
 		/// <returns>true if <paramref name="left"/> is less than <paramref name="right"/>; otherwise, false.</returns>
+		[Pure]
 		public static bool operator <(Money left, Money right)
 		{
 			return left.CompareTo(right) < 0;
@@ -106,6 +111,7 @@ namespace NMoneys
 		/// <param name="left">The first value to compare.</param>
 		/// <param name="right">The second value to compare.</param>
 		/// <returns>true if <paramref name="left"/> is greater than or equal to <paramref name="right"/>; otherwise, false.</returns>
+		[Pure]
 		public static bool operator >=(Money left, Money right)
 		{
 			return left.CompareTo(right) >= 0;
@@ -117,6 +123,7 @@ namespace NMoneys
 		/// <param name="left">The first value to compare.</param>
 		/// <param name="right">The second value to compare.</param>
 		/// <returns>true if <paramref name="left"/> is less than or equal to <paramref name="right"/>; otherwise, false.</returns>
+		[Pure]
 		public static bool operator <=(Money left, Money right)
 		{
 			return left.CompareTo(right) <= 0;
@@ -126,6 +133,7 @@ namespace NMoneys
 		/// Returns a value indicating whether the <see cref="Amount"/> is strictly less than <see cref="decimal.Zero"/>.
 		/// </summary>
 		/// <returns>true if <see cref="Amount"/> is less than <see cref="decimal.Zero"/>; otherwise, false.</returns>
+		[Pure]
 		public bool IsNegative()
 		{
 			return Amount < decimal.Zero;
@@ -135,6 +143,7 @@ namespace NMoneys
 		/// Returns a value indicating whether the <see cref="Amount"/> is stricly greater than <see cref="decimal.Zero"/>.
 		/// </summary>
 		/// <returns>true if <see cref="Amount"/> is greater than <see cref="decimal.Zero"/>; otherwise, false.</returns>
+		[Pure]
 		public bool IsPositive()
 		{
 			return Amount > decimal.Zero;
@@ -144,6 +153,7 @@ namespace NMoneys
 		/// Returns a value indicating whether the <see cref="Amount"/> is stricly equal to <see cref="decimal.Zero"/>.
 		/// </summary>
 		/// <returns>true if <see cref="Amount"/> is equal to <see cref="decimal.Zero"/>; otherwise, false.</returns>
+		[Pure]
 		public bool IsZero()
 		{
 			return Amount.Equals(decimal.Zero);
@@ -155,6 +165,7 @@ namespace NMoneys
 		/// <returns>true if <see cref="Amount"/> is less or equal than <see cref="decimal.Zero"/>; otherwise, false.</returns>
 		/// <seealso cref="IsNegative()"/>
 		/// <seealso cref="IsZero()"/>
+		[Pure]
 		public bool IsNegativeOrZero()
 		{
 			return IsNegative() || IsZero();
@@ -166,6 +177,7 @@ namespace NMoneys
 		/// <returns>true if <see cref="Amount"/> is greater or equal than <see cref="decimal.Zero"/>; otherwise, false.</returns>
 		/// <seealso cref="IsPositive()"/>
 		/// <seealso cref="IsZero()"/>
+		[Pure]
 		public bool IsPositiveOrZero()
 		{
 			return IsPositive() || IsZero();

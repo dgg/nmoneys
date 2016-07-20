@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using NMoneys.Support.Ext;
@@ -15,8 +16,8 @@ namespace NMoneys.Support
 			if (!tEnum.IsEnum)
 			{
 				throw new ArgumentException(
-					string.Format("The type {0} is not an enumeration", tEnum.Name),
-					"TEnum");
+					$"The type {tEnum.Name} is not an enumeration",
+					nameof(TEnum));
 			}
 		}
 
@@ -25,7 +26,7 @@ namespace NMoneys.Support
 			Guard.AgainstNullArgument("text", text);
 			assertEnum<TEnum>();
 			Type tEnum = typeof(TEnum);
-			Func<string> message = () => string.Format("Value {0} was not defined for type {1}", text, tEnum);
+			Func<string> message = () => $"Value {text} was not defined for type {tEnum}";
 			try
 			{
 				if (!Enum.IsDefined(tEnum, text))
@@ -52,7 +53,7 @@ namespace NMoneys.Support
 			Type tEnum = typeof(TEnum);
 			if (!Enum.IsDefined(tEnum, value))
 			{
-				throw new InvalidEnumArgumentException(string.Format("Value {0} was not defined for type {1}", value, tEnum));
+				throw new InvalidEnumArgumentException($"Value {value} was not defined for type {tEnum}");
 			}
 		}
 
@@ -151,7 +152,7 @@ namespace NMoneys.Support
 
 		private static FieldInfo fieldOf<TEnum>(TEnum value) where TEnum : struct, IComparable, IFormattable, IConvertible
 		{
-			return typeof(TEnum).GetField(value.ToString());
+			return typeof(TEnum).GetField(value.ToString(CultureInfo.InvariantCulture));
 		}
 
 		public static IEqualityComparer<TEnum> Comparer<TEnum>() where TEnum : struct, IComparable, IFormattable, IConvertible
@@ -172,7 +173,7 @@ namespace NMoneys.Support
 			bool result = TryCast(value, out casted);
 			if (!result)
 			{
-				throw new InvalidEnumArgumentException(string.Format("'{0}' is not defined within type {1}.", value, typeof(TEnum).Name));
+				throw new InvalidEnumArgumentException($"'{value}' is not defined within type {typeof(TEnum).Name}.");
 			}
 			return casted.Value;
 		}

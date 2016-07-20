@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using NMoneys.Allocations;
 using NMoneys.Extensions;
 using NMoneys.Support;
@@ -18,6 +19,7 @@ namespace NMoneys
 		/// <exception cref="ArgumentOutOfRangeException"><paramref name="numberOfRecipients"/> is less than 1 or more than <see cref="int.MaxValue"/>.</exception>
 		/// <seealso cref="Allocate(int, IRemainderAllocator)"/>
 		/// <seealso cref="Allocation"/>
+		[Pure]
 		public Allocation Allocate(int numberOfRecipients)
 		{
 			return Allocate(numberOfRecipients, RemainderAllocator.FirstToLast);
@@ -44,9 +46,10 @@ namespace NMoneys
 		/// <exception cref="ArgumentOutOfRangeException"><paramref name="numberOfRecipients"/> is less than 1 or more than <see cref="int.MaxValue"/>.</exception>
 		/// <seealso cref="IRemainderAllocator"/>
 		/// <seealso cref="Allocation"/>
+		[Pure]
 		public Allocation Allocate(int numberOfRecipients, IRemainderAllocator allocator)
 		{
-			EvenAllocator.AssertNumberOfRecipients("numberOfRecipients", numberOfRecipients);
+			EvenAllocator.AssertNumberOfRecipients(nameof(numberOfRecipients), numberOfRecipients);
 
 			if (notEnoughToAllocate()) return Allocation.Zero(this, numberOfRecipients);
 
@@ -62,7 +65,7 @@ namespace NMoneys
 		{
 			var currency = this.GetCurrency();
 			decimal minimumToAllocate = currency.MinAmount;
-			return (Amount < minimumToAllocate);
+			return Amount < minimumToAllocate;
 		}
 
 		private Allocation allocateRemainderIfNeeded(IRemainderAllocator allocator, Allocation allocatedSoFar)
@@ -84,9 +87,10 @@ namespace NMoneys
 		/// <returns>The results of the allocation with a length equal to <paramref name="ratios"/>.</returns>
 		/// <seealso cref="Allocation"/>
 		/// <seealso cref="IRemainderAllocator"/>
+		[Pure]
 		public Allocation Allocate(RatioCollection ratios, IRemainderAllocator allocator)
 		{
-			Guard.AgainstNullArgument("ratios", ratios);
+			Guard.AgainstNullArgument(nameof(ratios), ratios);
 
 			if (notEnoughToAllocate()) return Allocation.Zero(this, ratios.Count);
 
@@ -108,6 +112,7 @@ namespace NMoneys
 		/// <returns>The results of the allocation with a length equal to <paramref name="ratios"/>.</returns>
 		/// <seealso cref="Allocate(RatioCollection, IRemainderAllocator)"/>
 		/// <seealso cref="Allocation"/>
+		[Pure]
 		public Allocation Allocate(RatioCollection ratios)
 		{
 			return Allocate(ratios, RemainderAllocator.FirstToLast);

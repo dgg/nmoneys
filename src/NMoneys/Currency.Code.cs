@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.Contracts;
 using NMoneys.Support;
 
 namespace NMoneys
@@ -21,12 +22,13 @@ namespace NMoneys
 			/// <param name="isoCode">A string containing the name or value to convert.</param>
 			/// <returns>An object of type <see cref="CurrencyIsoCode"/> whose value is represented by value.</returns>
 			/// <exception cref="ArgumentNullException"><paramref name="isoCode"/> is null.</exception>
-			/// <exception cref="System.ComponentModel.InvalidEnumArgumentException"><paramref name="isoCode"/> does not represent a defined alphabetic or numeric code.</exception>
+			/// <exception cref="InvalidEnumArgumentException"><paramref name="isoCode"/> does not represent a defined alphabetic or numeric code.</exception>
 			/// <seealso cref="IsoCodeExtensions.AlphabeticCode"/>
 			/// <seealso cref="IsoCodeExtensions.NumericCode"/>
+			[Pure]
 			public static CurrencyIsoCode Parse(string isoCode)
 			{
-				return ParseArgument(isoCode, "isoCode");
+				return ParseArgument(isoCode, nameof(isoCode));
 			}
 
 			/// <summary>

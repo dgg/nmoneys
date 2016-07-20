@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Reflection;
 using System.Xml;
@@ -16,7 +17,7 @@ namespace NMoneys
 		/// When implementing the <see cref="IXmlSerializable"/> interface, you should return null from this method, and instead, if specifying a custom schema is required, apply the <see cref="T:System.Xml.Serialization.XmlSchemaProviderAttribute"/> to the class.
 		/// </summary>
 		/// <returns>null</returns>
-		[Obsolete("deprecated, use SchemaProviders instead")]
+		[Pure, Obsolete("deprecated, use SchemaProviders instead")]
 		XmlSchema IXmlSerializable.GetSchema()
 		{
 			return null;
@@ -28,9 +29,10 @@ namespace NMoneys
 		/// <param name="xs">A cache of XML Schema definition language (XSD) schemas.</param>
 		/// <returns>Represents the complexType element from XML Schema as specified by the <paramref name="xs"/>.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="xs"/> is null.</exception>
+		[Pure]
 		public static XmlSchemaComplexType GetSchema(XmlSchemaSet xs)
 		{
-			Guard.AgainstNullArgument("xs", xs);
+			Guard.AgainstNullArgument(nameof(xs), xs);
 
 			XmlSchemaComplexType complex = null;
 			var schemaSerializer = new XmlSerializer(typeof(XmlSchema));
@@ -54,7 +56,7 @@ namespace NMoneys
 		/// <exception cref="ArgumentNullException"><paramref name="reader"/> is null.</exception>
 		public void ReadXml(XmlReader reader)
 		{
-			Guard.AgainstNullArgument("reader", reader);
+			Guard.AgainstNullArgument(nameof(reader), reader);
 
 			reader.ReadStartElement();
 			setAllFields(reader.ReadElementContentAsDecimal(Serialization.Data.Money.AMOUNT, Serialization.Data.NAMESPACE),
@@ -69,7 +71,7 @@ namespace NMoneys
 		/// <exception cref="ArgumentNullException"><paramref name="writer"/> is null.</exception>
 		public void WriteXml(XmlWriter writer)
 		{
-			Guard.AgainstNullArgument("writer", writer);
+			Guard.AgainstNullArgument(nameof(writer), writer);
 
 			writer.WriteStartElement(Serialization.Data.Money.AMOUNT, Serialization.Data.NAMESPACE);
 			writer.WriteValue(Amount);

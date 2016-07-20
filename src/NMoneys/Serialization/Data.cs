@@ -18,7 +18,7 @@ namespace NMoneys.Serialization
 				IsoCode = surrogated.IsoSymbol;
 			}
 
-			public Currency(NMoneys.CurrencyIsoCode surrogated)
+			public Currency(CurrencyIsoCode surrogated)
 			{
 				IsoCode = surrogated.AlphabeticCode();
 			}

@@ -20,6 +20,7 @@ namespace NMoneys
 		/// and the same <see cref="CurrencyCode"/> this instance.</returns>
 		/// <exception cref="DifferentCurrencyException">If <paramref name="money"/> does not have the same <see cref="CurrencyCode"/> as this instance.</exception>
 		/// <exception cref="OverflowException">The <see cref="Amount"/> of the result is less than  <see cref="decimal.MinValue"/> or greater than <see cref="decimal.MaxValue"/>.</exception>
+		[Pure]
 		public Money Plus(Money money)
 		{
 			return this + money;
@@ -69,8 +70,8 @@ namespace NMoneys
 		/// <exception cref="DifferentCurrencyException">If any of the currencies of <paramref name="moneys"/> differ.</exception>
 		public static Money Total(IEnumerable<Money> moneys)
 		{
-			Guard.AgainstNullArgument("moneys", moneys);
-			Guard.AgainstArgument("moneys", !moneys.Any(), "The collection of moneys cannot be empty.");
+			Guard.AgainstNullArgument(nameof(moneys), moneys);
+			Guard.AgainstArgument(nameof(moneys), !moneys.Any(), "The collection of moneys cannot be empty.");
 
 			return moneys.Aggregate((a, b) => a + b);
 		}
@@ -87,6 +88,7 @@ namespace NMoneys
 		/// and the same <see cref="CurrencyCode"/> as this instance.</returns>
 		/// <exception cref="DifferentCurrencyException">If <paramref name="money"/> does not have the same <see cref="CurrencyCode"/> as this instance.</exception>
 		/// <exception cref="OverflowException">The <see cref="Amount"/> of the result is less than <see cref="decimal.MinValue"/> or greater than <see cref="decimal.MaxValue"/>.</exception>
+		[Pure]
 		public Money Minus(Money money)
 		{
 			return this - money;
@@ -110,13 +112,14 @@ namespace NMoneys
 		}
 
 		#endregion
-		
+
 		/// <summary>
 		/// Returns the absolute value of a <see cref="Money"/>.
 		/// </summary>
 		/// <remarks>The absolute value of a <see cref="Money"/> is another <see cref="Money"/> which <see cref="Amount"/> is the numeric value without its sign.
 		/// For example, the absolute value of both $1.2 and ($1.2) is $1.2.</remarks>
 		/// <returns>A <see cref="Money"/> with <see cref="Amount"/> as the absolute value of this instance's.</returns>
+		[Pure]
 		public Money Abs()
 		{
 			return new Money(Math.Abs(Amount), CurrencyCode);
@@ -126,6 +129,7 @@ namespace NMoneys
 		/// Returns the result of multiplying this instance of <see cref="Money"/> by negative one.
 		/// </summary>
 		/// <returns>A <see cref="Money"/> with the <see cref="Amount"/> of this instance's, but the opposite sign.</returns>
+		[Pure]
 		public Money Negate()
 		{
 			return new Money(decimal.Negate(Amount), CurrencyCode);
@@ -136,6 +140,7 @@ namespace NMoneys
 		/// identified this <see cref="CurrencyCode"/>.
 		/// </summary>
 		/// <returns>A <see cref="Money"/> with the <see cref="Amount"/> truncated to the significant number of decimal digits of its currency.</returns>
+		[Pure]
 		public Money TruncateToSignificantDecimalDigits()
 		{
 			Currency currency = Currency.Get(CurrencyCode);
@@ -148,9 +153,10 @@ namespace NMoneys
 		/// <param name="numberFormat">Specifies the number of significant decimal digits.</param>
 		/// <returns>A <see cref="Money"/> with the <see cref="Amount"/> truncated to the significant number of decimal digits of <paramref name="numberFormat"/>.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="numberFormat"/> is null.</exception>
+		[Pure]
 		public Money TruncateToSignificantDecimalDigits(NumberFormatInfo numberFormat)
 		{
-			Guard.AgainstNullArgument("numberFormat", numberFormat);
+			Guard.AgainstNullArgument(nameof(numberFormat), numberFormat);
 
 			return new Money(truncateAmountFor(numberFormat.CurrencyDecimalDigits), CurrencyCode);
 		}
@@ -167,6 +173,7 @@ namespace NMoneys
 		/// </summary>
 		/// <remarks>This method rounds <see cref="Amount"/> toward zero, to the nearest whole number, which corresponds to discarding any digits after the decimal point.</remarks>
 		/// <returns>A <see cref="Money"/> with <see cref="Amount"/> the result of <see cref="Amount"/> rounded toward zero, to the nearest whole number.</returns>
+		[Pure]
 		public Money Truncate()
 		{
 			return new Money(decimal.Truncate(Amount), CurrencyCode);
@@ -179,6 +186,7 @@ namespace NMoneys
 		/// A <see cref="Money"/> with an integer <see cref="Amount"/> that is nearest to the old value.
 		/// <para>If <see cref="Amount"/> is halfway between two integers, one of which is even and the other odd, the even number is chosen.</para>
 		/// </returns>
+		[Pure]
 		public Money RoundToNearestInt()
 		{
 			return new Money(decimal.Round(Amount), CurrencyCode);
@@ -192,6 +200,7 @@ namespace NMoneys
 		/// A <see cref="Money"/> with an integer <see cref="Amount"/> that is nearest to the previous <see cref="Amount"/> value.
 		/// <para>If <see cref="Amount"/> is halfway between two numbers, one of which is even and the other odd, the mode parameter determines which of the two numbers is chosen.</para>
 		/// </returns>
+		[Pure]
 		public Money RoundToNearestInt(MidpointRounding mode)
 		{
 			return new Money(decimal.Round(Amount, mode), CurrencyCode);
@@ -207,6 +216,7 @@ namespace NMoneys
 		/// When <see cref="Amount"/> is exactly halfway between two rounded values, the resultant <see cref="Amount"/> is the rounded value that has an even digit in the far right decimal position. For example, when rounded to two <see cref="Amount"/>s, the value <c>2.345</c> becomes <c>2.34</c> and the value <c>2.355</c> becomes 2.36. This process is known as rounding toward even, or rounding to nearest.
 		/// <para>The behavior of this method follows IEEE Standard 754, section 4. This kind of rounding is sometimes called rounding to nearest or banker's rounding.</para>
 		/// </remarks>
+		[Pure]
 		public Money Round()
 		{
 			Currency currency = Currency.Get(CurrencyCode);
@@ -229,6 +239,7 @@ namespace NMoneys
 		/// <para>The behavior of this method follows IEEE Standard 754, section 4. This kind of rounding is sometimes called rounding to nearest or banker's rounding.</para>
 		/// <para>If <see cref="Currency.SignificantDecimalDigits"/> is zero, this kind of rounding is sometimes called rounding toward zero.</para>
 		/// </remarks>
+		[Pure]
 		public Money Round(MidpointRounding mode)
 		{
 			Currency currency = Currency.Get(CurrencyCode);
@@ -245,6 +256,7 @@ namespace NMoneys
 		/// <remarks>
 		/// The behavior of this method follows IEEE Standard 754, section 4. This kind of rounding is sometimes called rounding to nearest or banker's rounding.
 		/// </remarks>
+		[Pure]
 		public Money Round(int decimals)
 		{
 			return new Money(decimal.Round(Amount, decimals), CurrencyCode);
@@ -266,6 +278,7 @@ namespace NMoneys
 		/// <para>The behavior of this method follows IEEE Standard 754, section 4. This kind of rounding is sometimes called rounding to nearest or banker's rounding.</para>
 		/// <para>If <paramref name="decimals"/> is zero, this kind of rounding is sometimes called rounding toward zero.</para>
 		/// </remarks>
+		[Pure]
 		public Money Round(int decimals, MidpointRounding mode)
 		{
 			return new Money(decimal.Round(Amount, decimals, mode), CurrencyCode);
@@ -278,6 +291,7 @@ namespace NMoneys
 		/// <para>if <see cref="Amount"/> has a fractional part, the next whole decimal number toward negative infinity that is less than <see cref="Amount"/>.</para>
 		///<para>-or-</para>
 		///<para>If <see cref="Amount"/> doesn't have a fractional part, is remains unchanged.</para></returns>
+		[Pure]
 		public Money Floor()
 		{
 			return new Money(decimal.Floor(Amount), CurrencyCode);
@@ -290,6 +304,7 @@ namespace NMoneys
 		/// <para>if <see cref="Amount"/> has a fractional part, the next whole decimal number toward positive infinity that is more than <see cref="Amount"/>.</para>
 		///<para>-or-</para>
 		///<para>If <see cref="Amount"/> doesn't have a fractional part, is remains unchanged.</para></returns>
+		[Pure]
 		public Money Ceiling()
 		{
 			return new Money(decimal.Ceiling(Amount), CurrencyCode);
@@ -303,9 +318,10 @@ namespace NMoneys
 		/// <returns>A <see cref="Money"/> with <see cref="Amount"/> as the result of applying <paramref name="binaryOperation"/> to he old amount and
 		/// <paramref name="operand"/>'s amount.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="binaryOperation"/> is null.</exception>
+		[Pure]
 		public Money Perform(Money operand, Func<decimal, decimal, decimal> binaryOperation)
 		{
-			Guard.AgainstNullArgument("binaryOperation", binaryOperation);
+			Guard.AgainstNullArgument(nameof(binaryOperation), binaryOperation);
 
 			AssertSameCurrency(operand);
 			return new Money(binaryOperation(Amount, operand.Amount), CurrencyCode);
@@ -317,9 +333,10 @@ namespace NMoneys
 		/// <param name="unaryOperation">Arithmetical operation to perform.</param>
 		/// <returns>a <see cref="Money"/> with <see cref="Amount"/> as the result of applying <paramref name="unaryOperation"/> to the previous <see cref="Amount"/>.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="unaryOperation"/> is null.</exception>
+		[Pure]
 		public Money Perform(Func<decimal, decimal> unaryOperation)
 		{
-			Guard.AgainstNullArgument("unaryOperation", unaryOperation);
+			Guard.AgainstNullArgument(nameof(unaryOperation), unaryOperation);
 
 			return new Money(unaryOperation(Amount), CurrencyCode);
 		}
@@ -335,6 +352,7 @@ namespace NMoneys
 		/// <returns>A <see cref="Money"/> with <see cref="Amount"/> as the product of <see cref="Amount"/> and <paramref name="factor"/>.</returns>
 		/// <exception cref="OverflowException">The <see cref="Amount"/> of the result is less than
 		/// <see cref="decimal.MinValue"/> or greater than <see cref="decimal.MaxValue"/>.</exception>
+		[Pure]
 		public Money Times(long factor)
 		{
 			return this * factor;
@@ -351,6 +369,7 @@ namespace NMoneys
 		/// and the same <see cref="CurrencyCode"/> as <paramref name="money"/>.</returns>
 		/// <exception cref="OverflowException">The <see cref="Amount"/> of the result is less than
 		/// <see cref="decimal.MinValue"/> or greater than <see cref="decimal.MaxValue"/>.</exception>
+		[Pure]
 		public static Money Multiply(Money money, long factor)
 		{
 			return money * factor;

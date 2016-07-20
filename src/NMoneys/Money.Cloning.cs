@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 
 namespace NMoneys
 {
@@ -10,6 +11,7 @@ namespace NMoneys
 		/// <returns>
 		/// A new object that is a copy of this instance.
 		/// </returns>
+		[Pure]
 		public object Clone()
 		{
 			return new Money(Amount, CurrencyCode);

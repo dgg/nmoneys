@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Globalization;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using NMoneys.Support;
 
@@ -116,10 +115,7 @@ namespace NMoneys
 		/// <remarks>This method returns the monetary amount in terms of the major units of the currency, truncating the <see cref="Amount"/> if necessary.
 		/// <para>For example, 'EUR 2.35' will return a major amount of 2, since EUR has 2 significant decimal values. 
 		/// 'BHD -1.345' will return -1.</para></remarks>
-		public decimal MajorAmount
-		{
-			get { return Truncate().Amount; }
-		}
+		public decimal MajorAmount => Truncate().Amount;
 
 		/// <summary>
 		/// Gets the amount in major units as a <see cref="long"/>.
@@ -127,10 +123,7 @@ namespace NMoneys
 		/// <remarks>This property returns the monetary amount in terms of the major units of the currency, truncating the amount if necessary.
 		/// <para>For example, 'EUR 2.35' will return a major amount of 2, since EUR has 2 significant decimal values. 
 		/// 'BHD -1.345' will return -1.</para></remarks>
-		public long MajorIntegralAmount
-		{
-			get { return Convert.ToInt64(MajorAmount); }
-		}
+		public long MajorIntegralAmount => Convert.ToInt64(MajorAmount);
 
 		/// <summary>
 		/// Gets the amount in minor units.
@@ -153,10 +146,7 @@ namespace NMoneys
 		/// <remarks>This property return the monetary amount in terms of the minor units of the currency, truncating the amount if necessary.
 		/// <para>For example, 'EUR 2.35' will return a minor amount of 235, since EUR has 2 significant decimal values. 
 		/// 'BHD -1.345' will return -1345.</para></remarks>
-		public long MinorIntegralAmount
-		{
-			get { return Convert.ToInt64(MinorAmount); }
-		}
+		public long MinorIntegralAmount => Convert.ToInt64(MinorAmount);
 
 		/// <summary>
 		/// Represents the smallest quantity that couldn be represented using the currency corresponding to <see cref="CurrencyCode"/>.
@@ -202,9 +192,10 @@ namespace NMoneys
 		/// <param name="moneys">Collection of <see cref="Money"/> instances to check against.</param>
 		/// <returns>true if <see cref="CurrencyCode"/> is equal to each of <paramref name="moneys"/>'s; otherwise, false.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="moneys"/> is null.</exception>
+		[Pure]
 		public bool HasSameCurrencyAs(IEnumerable<Money> moneys)
 		{
-			Guard.AgainstNullArgument("moneys", moneys);
+			Guard.AgainstNullArgument(nameof(moneys), moneys);
 			var self = this;
 			return moneys.All(self.HasSameCurrencyAs);
 		}
@@ -226,7 +217,7 @@ namespace NMoneys
 		/// <exception cref="DifferentCurrencyException">At least one of the <paramref name="moneys"/> has a different currency from the instance's.</exception>
 		public void AssertSameCurrency(IEnumerable<Money> moneys)
 		{
-			Guard.AgainstNullArgument("arg", moneys);
+			Guard.AgainstNullArgument(nameof(moneys), moneys);
 			foreach (var money in moneys)
 			{
 				if (!HasSameCurrencyAs(money)) throw new DifferentCurrencyException(CurrencyCode.ToString(), money.CurrencyCode.ToString());	

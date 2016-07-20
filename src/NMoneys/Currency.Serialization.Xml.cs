@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Reflection;
 using System.Xml;
@@ -30,9 +31,10 @@ namespace NMoneys
 		/// <param name="xs">A cache of XML Schema definition language (XSD) schemas.</param>
 		/// <returns>Represents the complexType element from XML Schema as specified by the <paramref name="xs"/>.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="xs"/> is null.</exception>
+		[Pure]
 		public static XmlSchemaComplexType GetSchema(XmlSchemaSet xs)
 		{
-			Guard.AgainstNullArgument("xs", xs);
+			Guard.AgainstNullArgument(nameof(xs), xs);
 
 			XmlSchemaComplexType complex = null;
 			var schemaSerializer = new XmlSerializer(typeof(XmlSchema));
@@ -79,7 +81,7 @@ namespace NMoneys
 		/// <exception cref="ArgumentNullException"><paramref name="writer"/> is null.</exception>
 		public void WriteXml(XmlWriter writer)
 		{
-			Guard.AgainstNullArgument("writer", writer);
+			Guard.AgainstNullArgument(nameof(writer), writer);
 			writer.WriteElementString(Serialization.Data.Currency.ISO_CODE, Serialization.Data.NAMESPACE, IsoSymbol);
 		}
 

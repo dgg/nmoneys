@@ -43,7 +43,7 @@ namespace NMoneys.Support
 		/// <exception cref="ArgumentNullException"><paramref name="tokenizedCodePoints"/> is null.</exception>
 		public static UnicodeSymbol FromTokenizedCodePoints(string tokenizedCodePoints)
 		{
-			Guard.AgainstNullArgument("tokenizedCodePoints", tokenizedCodePoints);
+			Guard.AgainstNullArgument(nameof(tokenizedCodePoints), tokenizedCodePoints);
 
 			UnicodeSymbol unicode = Empty;
 
@@ -68,8 +68,8 @@ namespace NMoneys.Support
 		/// <exception cref="ArgumentNullException"><paramref name="symbol"/> is null.</exception>
 		public static UnicodeSymbol FromSymbol(string symbol)
 		{
-			Guard.AgainstNullArgument("symbol", symbol);
-			Guard.AgainstArgument("symbol", string.IsNullOrEmpty(symbol));
+			Guard.AgainstNullArgument(nameof(symbol), symbol);
+			Guard.AgainstArgument(nameof(symbol), string.IsNullOrEmpty(symbol));
 
 			int[] codePoints = new int[symbol.Length];
 			for (int i = 0; i < symbol.Length; i++)

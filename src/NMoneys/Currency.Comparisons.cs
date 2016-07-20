@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using NMoneys.Support;
 
 namespace NMoneys
@@ -32,6 +33,7 @@ namespace NMoneys
 		/// </list>
 		/// </returns>
 		/// <exception cref="T:System.ArgumentException"><paramref name="obj"/> is not a <see cref="Currency"/>.</exception>
+		[Pure]
 		public int CompareTo(object obj)
 		{
 			if (obj == null)
@@ -40,7 +42,7 @@ namespace NMoneys
 			}
 			if (!(obj is Currency))
 			{
-				throw new ArgumentException("obj", string.Format("Argument must be of type {0}.", typeof(Currency).Name));
+				throw new ArgumentException("obj", $"Argument must be of type {typeof(Currency).Name}.");
 			}
 			return CompareTo((Currency)obj);
 		}
@@ -70,6 +72,7 @@ namespace NMoneys
 		/// </item>
 		/// </list>
 		/// </returns>
+		[Pure]
 		public int CompareTo(Currency other)
 		{
 			if (other == null) return 1;
@@ -83,9 +86,10 @@ namespace NMoneys
 		/// <param name="right">The second value to compare.</param>
 		/// <returns>true if <paramref name="left"/> is less than <paramref name="right"/>; otherwise, false.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="left"/> is null.</exception>
+		[Pure]
 		public static bool operator <(Currency left, Currency right)
 		{
-			Guard.AgainstNullArgument("left", left);
+			Guard.AgainstNullArgument(nameof(left), left);
 			return left.CompareTo(right) < 0;
 		}
 
@@ -96,9 +100,10 @@ namespace NMoneys
 		/// <param name="right">The second value to compare.</param>
 		/// <returns>true if <paramref name="left"/> is greater than or equal to <paramref name="right"/>; otherwise, false.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="left"/> is null.</exception>
+		[Pure]
 		public static bool operator >(Currency left, Currency right)
 		{
-			Guard.AgainstNullArgument("left", left);
+			Guard.AgainstNullArgument(nameof(left), left);
 			return left.CompareTo(right) > 0;
 		}
 	}

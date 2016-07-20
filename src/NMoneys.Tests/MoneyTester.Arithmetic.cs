@@ -265,7 +265,7 @@ namespace NMoneys.Tests
 
 		#region Truncate
 
-		[TestCaseSource(nameof(truncate))]
+		[TestCaseSource(nameof(_truncate))]
 		public void Truncate_Spec(decimal amount, decimal truncatedAmount)
 		{
 			var subject = new Money(amount, CurrencyIsoCode.XTS);
@@ -276,7 +276,7 @@ namespace NMoneys.Tests
 		}
 
 #pragma warning disable 169
-		private static readonly object truncate = new[]
+		private static readonly object _truncate = new[]
 		{
 			new [] {0m, 0m},
 			new []{123.456m, 123m},
@@ -290,7 +290,7 @@ namespace NMoneys.Tests
 
 		#region Round
 
-		[TestCaseSource(nameof(roundToNearestInt))]
+		[TestCaseSource(nameof(_roundToNearestInt))]
 		public void RoundToNearestInt_Spec(decimal amount, decimal roundedAmount)
 		{
 			var subject = new Money(amount, CurrencyIsoCode.XTS);
@@ -302,7 +302,7 @@ namespace NMoneys.Tests
 		}
 
 #pragma warning disable 169
-		private static readonly TestCaseData[] roundToNearestInt =
+		private static readonly TestCaseData[] _roundToNearestInt =
 		{
 			new TestCaseData(2m /3, 1m),
 			new TestCaseData(0.5m, 0m).SetName("the closest even number is 0"),
@@ -311,7 +311,7 @@ namespace NMoneys.Tests
 		};
 #pragma warning restore 169
 
-		[TestCaseSource(nameof(roundToNearestInt_WithMode))]
+		[TestCaseSource(nameof(_roundToNearestInt_WithMode))]
 		public void RoundToNearestInt_WithMode_Spec(decimal amount, MidpointRounding mode, decimal roundedAmount)
 		{
 			var subject = new Money(amount, CurrencyIsoCode.XTS);
@@ -323,7 +323,7 @@ namespace NMoneys.Tests
 		}
 
 #pragma warning disable 169
-		private static readonly TestCaseData[] roundToNearestInt_WithMode = 
+		private static readonly TestCaseData[] _roundToNearestInt_WithMode = 
 		{
 			new TestCaseData(2m /3, MidpointRounding.ToEven, 1m),
 			new TestCaseData(2m /3, MidpointRounding.AwayFromZero, 1m),
@@ -336,7 +336,7 @@ namespace NMoneys.Tests
 		};
 #pragma warning restore 169
 
-		[TestCaseSource(nameof(round))]
+		[TestCaseSource(nameof(_round))]
 		public void Round_Spec(CurrencyIsoCode currency, decimal amount, decimal roundedAmount)
 		{
 			var subject = new Money(amount, currency);
@@ -349,7 +349,7 @@ namespace NMoneys.Tests
 
 #pragma warning disable 169
 		// TODO: check commented code
-		private static readonly TestCaseData[] round =
+		private static readonly TestCaseData[] _round =
 		{
 			/*new TestCaseData(CurrencyIsoCode.XTS, 2.345m, 2.34m).SetName("2 decimal places"),
 			new TestCaseData(CurrencyIsoCode.USD, 2.345m, 2.34m).SetName("2 decimal places"),

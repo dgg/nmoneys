@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 
 namespace NMoneys
@@ -17,6 +18,7 @@ namespace NMoneys
 		/// <exception cref="OverflowException"><paramref name="s"/> representes a montary quantity less than <see cref="decimal.MinValue"/> or greater than <see cref="decimal.MaxValue"/>.</exception>
 		/// <exception cref="ArgumentNullException"><paramref name="s"/> is null.</exception>
 		/// <seealso cref="decimal.Parse(string, NumberStyles, IFormatProvider)" />
+		[Pure]
 		public static Money Parse(string s, Currency currency)
 		{
 			return Parse(s, NumberStyles.Currency, currency);
@@ -40,6 +42,7 @@ namespace NMoneys
 		/// <paramref name="style"/> is the <see cref="NumberStyles.AllowHexSpecifier"/> value.
 		/// </exception>
 		/// <seealso cref="decimal.Parse(string, NumberStyles, IFormatProvider)" />
+		[Pure]
 		public static Money Parse(string s, NumberStyles style, Currency currency)
 		{
 			decimal amount = decimal.Parse(s, style, currency);
@@ -61,6 +64,7 @@ namespace NMoneys
 		/// This parameter is passed uninitialized. </param>
 		/// <returns>true if s was converted successfully; otherwise, false.</returns>
 		/// <seealso cref="decimal.TryParse(string, NumberStyles, IFormatProvider, out decimal)" />
+		[Pure]
 		public static bool TryParse(string s, Currency currency, out Money? money)
 		{
 			return TryParse(s, NumberStyles.Currency, currency, out money);
@@ -86,6 +90,7 @@ namespace NMoneys
 		/// <paramref name="style"/> is the <see cref="NumberStyles.AllowHexSpecifier"/> value.
 		/// </exception>
 		/// <seealso cref="decimal.TryParse(string, NumberStyles, IFormatProvider, out decimal)" />
+		[Pure]
 		public static bool TryParse(string s, NumberStyles style, Currency currency, out Money? money)
 		{
 			money = tryParse(s, style, currency.FormatInfo, currency.IsoCode);
@@ -120,6 +125,7 @@ namespace NMoneys
 		/// This parameter is passed uninitialized.
 		/// </param>
 		/// <returns> true if s was converted successfully; otherwise, false. </returns>
+		[Pure]
 		public static bool TryParse(string s, NumberStyles style, NumberFormatInfo numberFormatInfo, Currency currency, out Money? money)
 		{
 			var mergedNumberFormatInfo = (NumberFormatInfo)numberFormatInfo.Clone();

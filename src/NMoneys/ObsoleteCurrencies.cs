@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using NMoneys.Support;
 
 namespace NMoneys
@@ -23,16 +24,19 @@ namespace NMoneys
 #pragma warning restore 612,618
 		}
 
+		[Pure]
 		public static bool IsObsolete(CurrencyIsoCode code)
 		{
 			return _set.Contains(code);
 		}
 
+		[Pure]
 		public static bool IsObsolete(Currency currency)
 		{
 			return currency == null || IsObsolete(currency.IsoCode);
 		}
 
-		public static uint Count { get { return Convert.ToUInt32(_set.Count); } }
+		[Pure]
+		public static uint Count => Convert.ToUInt32(_set.Count);
 	}
 }

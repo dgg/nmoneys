@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 using NMoneys.Support;
 
@@ -21,6 +22,7 @@ namespace NMoneys
 		/// /// <exception cref="ArgumentException">The current is either an invariant or custom, or a <see cref="RegionInfo"/> cannot be instantiated from it.</exception>
 		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The ISO symbol associated to the current culture does not exist in the <see cref="CurrencyIsoCode"/> enumeration.</exception>
 		/// <exception cref="MisconfiguredCurrencyException">The currency associated to the current culture has not been properly configured by the library implementor. Please, log a issue.</exception>
+		[Pure]
 		public static Money ForCurrentCulture(decimal amount)
 		{
 			return ForCulture(amount, CultureInfo.CurrentCulture);
@@ -40,9 +42,10 @@ namespace NMoneys
 		/// <exception cref="ArgumentException"><paramref name="culture"/> is either an invariant, custom or neutral culture, or a <see cref="RegionInfo"/> cannot be instantiated from it.</exception>
 		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The ISO symbol associated to the <paramref name="culture"/> does not exist in the <see cref="CurrencyIsoCode"/> enumeration.</exception>
 		/// <exception cref="MisconfiguredCurrencyException">The currency associated to the <paramref name="culture"/> has not been properly configured by the library implementor. Please, log a issue.</exception>
+		[Pure]
 		public static Money ForCulture(decimal amount, CultureInfo culture)
 		{
-			Guard.AgainstNullArgument("culture", culture);
+			Guard.AgainstNullArgument(nameof(culture), culture);
 			return new Money(amount, Currency.Get(culture), ObsoleteCurrencyEventBehavior.Ignore);
 		}
 
@@ -51,6 +54,7 @@ namespace NMoneys
 		/// </summary>
 		/// <returns>An <see cref="Money"/> instance with zero <see cref="Amount"/> and unspecified currency (<see cref="CurrencyIsoCode.XXX"/>).</returns>
 		/// <seealso cref="Money(decimal)"/>
+		[Pure]
 		public static Money Zero()
 		{
 			return new Money(decimal.Zero);
@@ -63,6 +67,7 @@ namespace NMoneys
 		/// <returns>An <see cref="Money"/> instance with zero <see cref="Amount"/> and the specified <paramref name="currency"/>.</returns>
 		/// <seealso cref="Money(decimal, CurrencyIsoCode)"/>
 		/// <exception cref="InvalidEnumArgumentException"><paramref name="currency"/> is not defined.</exception>
+		[Pure]
 		public static Money Zero(CurrencyIsoCode currency)
 		{
 			return new Money(decimal.Zero, currency);
@@ -77,11 +82,13 @@ namespace NMoneys
 		/// <seealso cref="Money.Zero(CurrencyIsoCode)"/>
 		/// <exception cref="InvalidEnumArgumentException"><paramref name="currency"/> is not defined.</exception>
 		/// <exception cref="OverflowException"><paramref name="numberOfElements"/> is not a valid array length.</exception>
+		[Pure]
 		public static Money[] Zero(CurrencyIsoCode currency, int numberOfElements)
 		{
 			return initArray(numberOfElements, () => Zero(currency));
 		}
 
+		[Pure]
 		private static Money[] initArray(int length, Func<Money> aMoney)
 		{
 			var results = new Money[length];
@@ -102,6 +109,7 @@ namespace NMoneys
 		/// <returns>An <see cref="Money"/> instance with zero <see cref="Amount"/> and the specified <paramref name="currency"/>.</returns>
 		/// <seealso cref="Money(decimal, Currency)"/>
 		/// <exception cref="ArgumentNullException"><paramref name="currency"/> is null.</exception>
+		[Pure]
 		public static Money Zero(Currency currency)
 		{
 			return new Money(decimal.Zero, currency);
@@ -116,6 +124,7 @@ namespace NMoneys
 		/// <seealso cref="Money.Zero(Currency)"/>
 		/// <exception cref="ArgumentNullException"><paramref name="currency"/> is null.</exception>
 		/// <exception cref="OverflowException"><paramref name="numberOfElements"/> is not a valid array length.</exception>
+		[Pure]
 		public static Money[] Zero(Currency currency, int numberOfElements)
 		{
 			return initArray(numberOfElements, () => Zero(currency));
@@ -129,6 +138,7 @@ namespace NMoneys
 		/// <seealso cref="Money(decimal, string)"/>
 		/// <exception cref="ArgumentNullException"><paramref name="threeLetterIsoCode"/> is null.</exception>
 		/// <exception cref="InvalidEnumArgumentException"><paramref name="threeLetterIsoCode"/> is not defined.</exception>
+		[Pure]
 		public static Money Zero(string threeLetterIsoCode)
 		{
 			return new Money(decimal.Zero, threeLetterIsoCode);
@@ -144,6 +154,7 @@ namespace NMoneys
 		/// <exception cref="OverflowException"><paramref name="numberOfElements"/> is not a valid array length.</exception>
 		/// <exception cref="ArgumentNullException"><paramref name="threeLetterIsoCode"/> is null.</exception>
 		/// <exception cref="InvalidEnumArgumentException"><paramref name="threeLetterIsoCode"/> is not defined.</exception>
+		[Pure]
 		public static Money[] Zero(string threeLetterIsoCode, int numberOfElements)
 		{
 			return initArray(numberOfElements, () => Zero(threeLetterIsoCode));
@@ -157,6 +168,7 @@ namespace NMoneys
 		/// <param name="amountMajor">The <see cref="Amount"/> in the major division of the currency.</param>
 		/// <returns>A <see cref="Money"/> with the specified <paramref name="amountMajor"/> and unspecified currency (<see cref="CurrencyIsoCode.XXX"/>).</returns>
 		/// <seealso cref="Money(decimal)"/>
+		[Pure]
 		public static Money ForMajor(long amountMajor)
 		{
 			return ForMajor(amountMajor, CurrencyIsoCode.XXX);
@@ -171,6 +183,7 @@ namespace NMoneys
 		/// <param name="currency">The <see cref="CurrencyCode"/> of the monetary quantity.</param>
 		/// <returns>A <see cref="Money"/> with the specified <paramref name="amountMajor"/> and <paramref name="currency"/>.</returns>
 		/// <seealso cref="Money(decimal)"/>
+		[Pure]
 		public static Money ForMajor(long amountMajor, CurrencyIsoCode currency)
 		{
 			return ForMajor(amountMajor, Currency.Get(currency));
@@ -184,9 +197,10 @@ namespace NMoneys
 		/// <param name="currency">The incarnation of the <see cref="CurrencyCode"/>.</param>
 		/// <returns>A <see cref="Money"/> with the specified <paramref name="amountMajor"/> and <paramref name="currency"/>.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="currency"/> is null.</exception>
+		[Pure]
 		public static Money ForMajor(long amountMajor, Currency currency)
 		{
-			Guard.AgainstNullArgument("currency", currency);
+			Guard.AgainstNullArgument(nameof(currency), currency);
 			return new Money(decimal.Truncate(amountMajor), currency);
 		}
 
@@ -197,6 +211,7 @@ namespace NMoneys
 		/// <param name="amountMajor">The <see cref="Amount"/> in the major division of the currency.</param>
 		/// <param name="threeLetterIsoCode">Textual representation of the ISO 4217 <see cref="CurrencyCode"/>.</param>
 		/// <returns>A <see cref="Money"/> with the specified <paramref name="amountMajor"/> and <paramref name="threeLetterIsoCode"/>.</returns>
+		[Pure]
 		public static Money ForMajor(long amountMajor, string threeLetterIsoCode)
 		{
 			return ForMajor(amountMajor, Currency.Get(threeLetterIsoCode));
@@ -209,6 +224,7 @@ namespace NMoneys
 		/// For the unspecified currency the input to this method represents cents.</remarks>
 		/// <param name="amountMinor">The <see cref="Amount"/> in the minor division of the currency.</param>
 		/// <returns>A <see cref="Money"/> with the specified <paramref name="amountMinor"/> and unspecified currency (<see cref="CurrencyIsoCode.XXX"/>).</returns>
+		[Pure]
 		public static Money ForMinor(long amountMinor)
 		{
 			return ForMinor(amountMinor, CurrencyIsoCode.XXX);
@@ -225,6 +241,7 @@ namespace NMoneys
 		/// <param name="amountMinor">The <see cref="Amount"/> in the minor division of the currency.</param>
 		/// <param name="currency">The <see cref="CurrencyCode"/> of the monetary quantity.</param>
 		/// <returns>A <see cref="Money"/> with the specified <paramref name="amountMinor"/> and <paramref name="currency"/>.</returns>
+		[Pure]
 		public static Money ForMinor(long amountMinor, CurrencyIsoCode currency)
 		{
 			return ForMinor(amountMinor, Currency.Get(currency));
@@ -242,6 +259,7 @@ namespace NMoneys
 		/// <param name="currency">The incarnation of the <see cref="CurrencyCode"/>.</param>
 		/// <returns>A <see cref="Money"/> with the specified <paramref name="amountMinor"/> and <paramref name="currency"/>.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="currency"/> is null.</exception>
+		[Pure]
 		public static Money ForMinor(long amountMinor, Currency currency)
 		{
 			Guard.AgainstNullArgument("currency", currency);
@@ -262,6 +280,7 @@ currency);
 		/// <param name="amountMinor">The <see cref="Amount"/> in the minor division of the currency.</param>
 		/// <param name="threeLetterIsoCode">Textual representation of the ISO 4217 <see cref="CurrencyCode"/>.</param>
 		/// <returns>A <see cref="Money"/> with the specified <paramref name="amountMinor"/> and <paramref name="threeLetterIsoCode"/>.</returns>
+		[Pure]
 		public static Money ForMinor(long amountMinor, string threeLetterIsoCode)
 		{
 			return ForMinor(amountMinor, Currency.Get(threeLetterIsoCode));
@@ -277,6 +296,7 @@ currency);
 		/// <seealso cref="Money(decimal, CurrencyIsoCode)"/>
 		/// <exception cref="InvalidEnumArgumentException"><paramref name="currency"/> is not defined.</exception>
 		/// <exception cref="OverflowException"><paramref name="numberOfElements"/> is not a valid array length.</exception>
+		[Pure]
 		public static Money[] Some(decimal amount, CurrencyIsoCode currency, int numberOfElements)
 		{
 			return initArray(numberOfElements, () => new Money(amount, currency));
@@ -292,6 +312,7 @@ currency);
 		/// <seealso cref="Money(decimal, Currency)"/>
 		/// <exception cref="InvalidEnumArgumentException"><paramref name="currency"/> is not defined.</exception>
 		/// <exception cref="OverflowException"><paramref name="numberOfElements"/> is not a valid array length.</exception>
+		[Pure]
 		public static Money[] Some(decimal amount, Currency currency, int numberOfElements)
 		{
 			return initArray(numberOfElements, () => new Money(amount, currency));
@@ -308,6 +329,7 @@ currency);
 		/// <exception cref="OverflowException"><paramref name="numberOfElements"/> is not a valid array length.</exception>
 		/// <exception cref="ArgumentNullException"><paramref name="threeLetterIsoCode"/> is null.</exception>
 		/// <exception cref="InvalidEnumArgumentException"><paramref name="threeLetterIsoCode"/> is not defined.</exception>
+		[Pure]
 		public static Money[] Some(decimal amount, string threeLetterIsoCode, int numberOfElements)
 		{
 			return initArray(numberOfElements, () => new Money(amount, threeLetterIsoCode));

@@ -10,13 +10,13 @@ namespace NMoneys.Support
 	{
 		public static readonly IEqualityComparer<TEnum> Instance;
 
-		private static readonly Func<TEnum, TEnum, bool> equals;
-		private static readonly Func<TEnum, int> getHashCode;
+		private static readonly Func<TEnum, TEnum, bool> _equals;
+		private static readonly Func<TEnum, int> _getHashCode;
 
 		static FastEnumComparer()
 		{
-			getHashCode = generateGetHashCode();
-			equals = generateEquals();
+			_getHashCode = generateGetHashCode();
+			_equals = generateEquals();
 			Instance = new FastEnumComparer<TEnum>();
 		}
 		/// <summary>
@@ -29,16 +29,16 @@ namespace NMoneys.Support
 		public bool Equals(TEnum x, TEnum y)
 		{
 			// call the generated method
-			return equals(x, y);
+			return _equals(x, y);
 		}
 
 		public int GetHashCode(TEnum obj)
 		{
 			// call the generated method
-			return getHashCode(obj);
+			return _getHashCode(obj);
 		}
 
-		private static readonly ICollection<Type> supportedTypes = new[]
+		private static readonly ICollection<Type> _supportedTypes = new[]
 			{
 				typeof (byte), typeof (sbyte),
 				typeof (short), typeof (ushort),
@@ -50,13 +50,11 @@ namespace NMoneys.Support
 			var underlyingType = Enum.GetUnderlyingType(typeof(TEnum));
 			
 
-			if (!supportedTypes.Contains(underlyingType))
+			if (!_supportedTypes.Contains(underlyingType))
 			{
 				throw new NotSupportedException(
-					string.Format("The underlying type of '{0}' is {1}. Only enums with underlying type of [{2}] are supported.",
-					typeof(TEnum).Name,
-					underlyingType.Name,
-					supportedTypes.ToDelimitedString(t => t.Name)));
+					$@"The underlying type of '{typeof(TEnum).Name}' is {underlyingType.Name}. 
+Only enums with underlying type of [{_supportedTypes.ToDelimitedString(t => t.Name)}] are supported.");
 			}
 		}
 
@@ -65,7 +63,7 @@ namespace NMoneys.Support
 			var xParam = Expression.Parameter(typeof(TEnum), "x");
 			var yParam = Expression.Parameter(typeof(TEnum), "y");
 			var equalExpression = Expression.Equal(xParam, yParam);
-			return Expression.Lambda<Func<TEnum, TEnum, bool>>(equalExpression, new[] { xParam, yParam }).Compile();
+			return Expression.Lambda<Func<TEnum, TEnum, bool>>(equalExpression, xParam, yParam).Compile();
 		}
 
 		private static Func<TEnum, int> generateGetHashCode()
@@ -75,7 +73,7 @@ namespace NMoneys.Support
 			var convertExpression = Expression.Convert(objParam, underlyingType);
 			var getHashCodeMethod = underlyingType.GetMethod("GetHashCode");
 			var getHashCodeExpression = Expression.Call(convertExpression, getHashCodeMethod);
-			return Expression.Lambda<Func<TEnum, int>>(getHashCodeExpression, new[] { objParam }).Compile();
+			return Expression.Lambda<Func<TEnum, int>>(getHashCodeExpression, objParam).Compile();
 		}
 	}
 }

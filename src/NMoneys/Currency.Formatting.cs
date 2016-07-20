@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 
 namespace NMoneys
@@ -12,6 +13,7 @@ namespace NMoneys
 		/// <returns>
 		/// A <see cref="string"/> that represents the current <see cref="Currency"/>.
 		/// </returns>
+		[Pure]
 		public override string ToString()
 		{
 			return IsoCode.ToString();
@@ -25,6 +27,7 @@ namespace NMoneys
 		/// if the <see cref="IFormatProvider"/> implementation is <see cref="NumberFormatInfo"/>; otherwise, null.
 		/// </returns>
 		/// <param name="formatType">An object that specifies the type of format object to return.</param>
+		[Pure]
 		public object GetFormat(Type formatType)
 		{
 			return formatType == typeof(NumberFormatInfo) ? FormatInfo : null;

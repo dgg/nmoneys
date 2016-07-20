@@ -45,7 +45,7 @@ namespace NMoneys.Support
 	internal struct Closed<T> : IBound<T> where T : struct, IComparable<T>
 	{
 		private readonly T _value;
-		public T Value { get { return _value; } }
+		public T Value => _value;
 
 		public Closed(T value)
 		{
@@ -74,14 +74,14 @@ namespace NMoneys.Support
 
 		public string ToAssertion()
 		{
-			return Value.ToString() + " (inclusive)";
+			return Value + " (inclusive)";
 		}
 	}
 
 	internal struct Open<T> : IBound<T> where T : struct, IComparable<T>
 	{
 		private readonly T _value;
-		public T Value { get { return _value; } }
+		public T Value => _value;
 
 		public Open(T value)
 		{
@@ -110,7 +110,7 @@ namespace NMoneys.Support
 
 		public string ToAssertion()
 		{
-			return Value.ToString() + " (not inclusive)";
+			return Value + " (not inclusive)";
 		}
 	}
 
@@ -122,15 +122,15 @@ namespace NMoneys.Support
 		public Range(IBound<T> lowerBound, IBound<T> upperBound)
 		{
 			if (lowerBound.MoreThan(upperBound.Value))
-				throw new ArgumentOutOfRangeException("upperBound", upperBound.Value, "The start value of the range must not be greater than its end value.");
+				throw new ArgumentOutOfRangeException(nameof(upperBound), upperBound.Value, "The start value of the range must not be greater than its end value.");
 
 			_lowerBound = lowerBound;
 			_upperBound = upperBound;
 		}
 
-		public T LowerBound { get { return _lowerBound.Value; } }
+		public T LowerBound => _lowerBound.Value;
 
-		public T UpperBound { get { return _upperBound.Value; } }
+		public T UpperBound => _upperBound.Value;
 
 		public virtual bool Contains(T item)
 		{
@@ -139,7 +139,7 @@ namespace NMoneys.Support
 
 		public override string ToString()
 		{
-			return string.Format("{0}..{1}", _lowerBound.Lower(), _upperBound.Upper());
+			return $"{_lowerBound.Lower()}..{_upperBound.Upper()}";
 		}
 
 		public void AssertArgument(string paramName, T value)
@@ -147,16 +147,13 @@ namespace NMoneys.Support
 			if (!Contains(value))
 			{
 				throw new ArgumentOutOfRangeException(paramName, value,
-					string.Format("The value must be between {0} and {1}. That is, contained within {2}.",
-						_lowerBound.ToAssertion(),
-						_upperBound.ToAssertion(),
-						this));
+					$"The value must be between {_lowerBound.ToAssertion()} and {_upperBound.ToAssertion()}. That is, contained within {this}.");
 			}
 		}
 
 		public void AssertArgument(string paramName, IEnumerable<T> values)
 		{
-			Guard.AgainstNullArgument("values", values);
+			Guard.AgainstNullArgument(nameof(values), values);
 			foreach (var value in values)
 			{
 				AssertArgument(paramName, value);

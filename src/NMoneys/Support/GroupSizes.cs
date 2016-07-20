@@ -33,7 +33,7 @@ namespace NMoneys.Support
 		/// /// <exception cref="ArgumentNullException"><paramref name="tokenizedSizes"/> is null.</exception>
 		public static GroupSizes FromTokenizedSizes(string tokenizedSizes)
 		{
-			Guard.AgainstNullArgument("tokenizedSizes", tokenizedSizes);
+			Guard.AgainstNullArgument(nameof(tokenizedSizes), tokenizedSizes);
 
 			int[] sizes = new int[0];
 			if (!string.IsNullOrEmpty(tokenizedSizes))
@@ -69,7 +69,7 @@ namespace NMoneys.Support
 			}
 			catch (ArgumentException ex)
 			{
-				throw new ArgumentException(ex.Message, "sizes");
+				throw new ArgumentException(ex.Message, nameof(sizes));
 			}
 		}
 	}

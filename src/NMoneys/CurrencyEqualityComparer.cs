@@ -15,19 +15,19 @@ namespace NMoneys
 	{
 		/// <summary>Default string comparison for the <see cref="Currency.EnglishName"/> member.</summary>
 		/// <remarks>A case-sensitive string comparison using the word comparison rules of a neutral-english culture (LCID 0009, <c>en</c>) is used.</remarks>
-		public static IEqualityComparer<string> DefaultEnglishComparer { get { return StringComparer.Create(CultureInfo.GetCultureInfo(9), false); } }
+		public static IEqualityComparer<string> DefaultEnglishComparer => StringComparer.Create(CultureInfo.GetCultureInfo(9), false);
 
 		/// <summary>Default string comparison for the <see cref="Currency.NativeName"/> member.</summary>
 		/// <remarks>A case-sensitive string comparison using the word comparison rules of the invariant culture is used.</remarks>
-		public static IEqualityComparer<string> DefaultNativeComparer { get { return StringComparer.InvariantCulture; } }
+		public static IEqualityComparer<string> DefaultNativeComparer => StringComparer.InvariantCulture;
 
 		/// <summary>Default string comparison for the <see cref="Currency.Symbol"/> member.</summary>
 		/// <remarks>A case-sensitive string comparison using the word comparison rules of the invariant culture is used.</remarks>
-		public static IEqualityComparer<string> DefaultSymbolComparer { get { return StringComparer.InvariantCulture; } }
+		public static IEqualityComparer<string> DefaultSymbolComparer => StringComparer.InvariantCulture;
 
 		/// <summary>Default string comparison for the <see cref="Currency.DecimalSeparator"/> and <see cref="Currency.GroupSeparator"/> members.</summary>
 		/// <remarks>An case-sensitive ordinal string comparison is used.</remarks>
-		public static IEqualityComparer<string> DefaultSeparatorComparer { get { return StringComparer.Ordinal; } }
+		public static IEqualityComparer<string> DefaultSeparatorComparer => StringComparer.Ordinal;
 
 		private readonly IEqualityComparer<string> _englishNameComparer, _nativeNameComparer, _symbolComparer, _separatorComparer;
 

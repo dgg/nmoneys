@@ -14,7 +14,7 @@ namespace NMoneys
 		/// </summary>
 		/// <param name="isoCode">The currency which is missconfigured.</param>
 		public MisconfiguredCurrencyException(CurrencyIsoCode isoCode) :
-			this(string.Format("Currency with code {0} was not properly configured", isoCode)) { }
+			this($"Currency with code {isoCode} was not properly configured") { }
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="MisconfiguredCurrencyException"/>.
@@ -91,7 +91,8 @@ namespace NMoneys
 		/// <returns>A string that contains the default message for a <see cref="DifferentCurrencyException"/> to be thrown.</returns>
 		public static string DefaultMessage(string expectedIsoSymbol, string actualIsoSymbol)
 		{
-			return string.Format("Expected a currency with symbol \"{0}\", but currency with symbol \"{1}\" was passed.", expectedIsoSymbol, actualIsoSymbol);
+			return
+				$"Expected a currency with symbol \"{expectedIsoSymbol}\", but currency with symbol \"{actualIsoSymbol}\" was passed.";
 		}
 	}
 }
