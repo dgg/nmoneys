@@ -1,4 +1,6 @@
-﻿namespace NMoneys.Exchange
+﻿using System.Diagnostics.Contracts;
+
+namespace NMoneys.Exchange
 {
 	/// <summary>
 	/// Implements the conversions of monetary quantities into other monetary quantities with different currencies.
@@ -15,6 +17,7 @@
 			_from = from;
 		}
 
+		[Pure]
 		public Money? To(CurrencyIsoCode to)
 		{
 			Money? converted = null;
@@ -26,6 +29,7 @@
 			return converted;
 		}
 
+		[Pure]
 		public Money? To(Currency to)
 		{
 			Money? converted = null;
@@ -37,6 +41,6 @@
 			return converted;
 		}
 
-		public Money From { get { return _from; } }
+		public Money From => _from;
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using NMoneys.Support;
 
 namespace NMoneys.Exchange
@@ -38,8 +39,8 @@ namespace NMoneys.Exchange
 			/// <exception cref="DifferentCurrencyException">The rates are not consistent.</exception>
 			public static void AssertConsistentcy(ExchangeRate direct, ExchangeRate inverse)
 			{
-				Guard.AgainstNullArgument("direct", direct);
-				Guard.AgainstNullArgument("inverse", inverse);
+				Guard.AgainstNullArgument(nameof(direct), direct);
+				Guard.AgainstNullArgument(nameof(inverse), inverse);
 
 				if (direct.From != inverse.To) throw new DifferentCurrencyException(direct.From.AlphabeticCode(), inverse.To.AlphabeticCode());
 				if (direct.To != inverse.From) throw new DifferentCurrencyException(direct.To.AlphabeticCode(), inverse.From.AlphabeticCode());
@@ -48,12 +49,14 @@ namespace NMoneys.Exchange
 			/// <summary>
 			/// Conversion from currency X into currency Y.
 			/// </summary>
-			public ExchangeRate Direct { get; private set; }
+			[Pure]
+			public ExchangeRate Direct { get; }
 
 			/// <summary>
 			/// Conversion from currency Y into currency X.
 			/// </summary>
-			public ExchangeRate Inverse { get; private set; }
+			[Pure]
+			public ExchangeRate Inverse { get; }
 
 
 			/// <summary>
@@ -61,6 +64,7 @@ namespace NMoneys.Exchange
 			/// </summary>
 			/// <returns>The string representation of the value of this instance, consisting of the string representation of the <see cref="Direct"/> rate and the 
 			/// string representation of the <see cref="Inverse"/> rate.</returns>
+			[Pure]
 			public override string ToString()
 			{
 				return Direct + " " + Inverse;
@@ -92,6 +96,7 @@ namespace NMoneys.Exchange
 		/// <param name="to">Quote currency, the currency which the conversion is performed to.</param>
 		/// <param name="rate">A non-negative <see cref="decimal"/> instance representing the relative vaue of <paramref name="from"/> against <paramref name="to"/>.</param>
 		/// <returns>The <see cref="ExchangeRate"/> just added as per the rules specified in the constructor.</returns>
+		[Pure]
 		public ExchangeRate Add(CurrencyIsoCode from, CurrencyIsoCode to, decimal rate)
 		{
 			Dictionary<CurrencyIsoCode, ExchangeRate> columns;
@@ -112,6 +117,7 @@ namespace NMoneys.Exchange
 		/// <param name="to">Quote currency, the currency which the conversion is performed to.</param>
 		/// <param name="rate">A non-negative <see cref="decimal"/> instance representing the relative vaue of <paramref name="from"/> against <paramref name="to"/>.</param>
 		/// <returns>The <see cref="ExchangeRatePair"/> just added as per the rules specified in the constructor.</returns>
+		[Pure]
 		public ExchangeRatePair MultiAdd(CurrencyIsoCode from, CurrencyIsoCode to, decimal rate)
 		{
 			Add(to, to, 1m);
@@ -129,6 +135,7 @@ namespace NMoneys.Exchange
 		/// <param name="to">Quote currency, the currency which the conversion is performed to.</param>
 		/// <returns>A rate at which one currency will be exchanged for another.</returns>
 		/// <exception cref="KeyNotFoundException">A rate converting <paramref name="from"/> into <paramref name="to"/> could not be provided.</exception>
+		[Pure]
 		public ExchangeRate Get(CurrencyIsoCode from, CurrencyIsoCode to)
 		{
 			return _rows[from][to];
@@ -141,6 +148,7 @@ namespace NMoneys.Exchange
 		/// <param name="to">Quote currency, the currency which the conversion is performed to.</param>
 		/// <param name="rate">A rate at which one currency will be exchanged for another or null if one cannot be provided.</param>
 		/// <returns>true if an applicable rate can be provided; otherwise, false.</returns>
+		[Pure]
 		public bool TryGet(CurrencyIsoCode from, CurrencyIsoCode to, out ExchangeRate rate)
 		{
 			bool isThere = false;

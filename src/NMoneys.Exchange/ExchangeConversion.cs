@@ -27,7 +27,7 @@ namespace NMoneys.Exchange
 
 		public Money To(Currency to)
 		{
-			Guard.AgainstNullArgument("to", to);
+			Guard.AgainstNullArgument(nameof(to), to);
 
 			if (_from.CurrencyCode == to.IsoCode) return _from;
 
@@ -35,6 +35,6 @@ namespace NMoneys.Exchange
 			return rate.Apply(_from);
 		}
 
-		public Money From { get { return _from; } }
+		public Money From => _from;
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 using NMoneys.Support;
 
@@ -22,7 +23,7 @@ namespace NMoneys.Exchange
 		/// <exception cref="ArgumentException"><paramref name="rate"/> is negative.</exception>
 		public ExchangeRate(CurrencyIsoCode from, CurrencyIsoCode to, decimal rate)
 		{
-			Guard.AgainstArgument("rate", rate < 0, "Non-negative");
+			Guard.AgainstArgument(nameof(rate), rate < 0, "Non-negative");
 			Enumeration.AssertDefined(from);
 			Enumeration.AssertDefined(to);
 
@@ -34,17 +35,20 @@ namespace NMoneys.Exchange
 		/// <summary>
 		/// Base currency, the currency from which the conversion is performed.
 		/// </summary>
-		public CurrencyIsoCode From { get; private set; }
+		[Pure]
+		public CurrencyIsoCode From { get; }
 
 		/// <summary>
 		/// Quote currency, the currency which the conversion is performed to.
 		/// </summary>
-		public CurrencyIsoCode To { get; private set; }
+		[Pure]
+		public CurrencyIsoCode To { get; }
 
 		/// <summary>
 		/// A <see cref="decimal"/> instance representing the relative vaue of <see cref="From"/> against <see cref="To"/>.
 		/// </summary>
-		public decimal Rate { get; private set; }
+		[Pure]
+		public decimal Rate { get; }
 
 		/// <summary>
 		/// Creates a new <see cref="ExchangeRate"/> in which the order of the currencies has been "swapped" that is, the <see cref="From"/> currency
@@ -52,6 +56,7 @@ namespace NMoneys.Exchange
 		/// </summary>
 		/// <remarks>The instance on which the method is called remains unchanged.</remarks>
 		/// <returns>A new <see cref="ExchangeRate"/> with swapped currencies and inverted rate.</returns>
+		[Pure]
 		public virtual ExchangeRate Invert()
 		{
 			return new ExchangeRate(To, From, 1m / Rate);
@@ -65,6 +70,7 @@ namespace NMoneys.Exchange
 		/// <param name="from">The monetary quantity to be exchanged.</param>
 		/// <returns>A new monetary quantity which has the currency as specified in the <see cref="To"/> and its amount the result of the application of the exchange rate to its previous amount.</returns>
 		/// <exception cref="DifferentCurrencyException">The rate cannot be applied to <paramref name="from"/>.</exception>
+		[Pure]
 		public virtual Money Apply(Money from)
 		{
 			assertCompatibility(from.CurrencyCode);
@@ -87,9 +93,10 @@ namespace NMoneys.Exchange
 		/// </summary>
 		/// <returns>The string representation of the value of this instance, consisting of the three letter code of the base currency, a forward slash <c>/</c>,
 		/// the three letter code of the quote currency and the rate formatted as per the rules of the invariant culture.</returns>
+		[Pure]
 		public override string ToString()
 		{
-			return string.Format("{0}/{1} {2}", From, To, Rate.ToString(CultureInfo.InvariantCulture));
+			return $"{From}/{To} {Rate.ToString(CultureInfo.InvariantCulture)}";
 		}
 
 		/// <summary>
@@ -99,9 +106,10 @@ namespace NMoneys.Exchange
 		/// <returns>A <see cref="ExchangeRate"/> instance equivalent to the rate represented by <paramref name="rateRepresentation"/>.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="rateRepresentation"/> is null.</exception>
 		/// <exception cref="FormatException"><paramref name="rateRepresentation"/> is not in the correct format.</exception>
+		[Pure]
 		public static ExchangeRate Parse(string rateRepresentation)
 		{
-			Guard.AgainstNullArgument("rate", rateRepresentation);
+			Guard.AgainstNullArgument(nameof(rateRepresentation), rateRepresentation);
 
 			try
 			{
@@ -127,6 +135,7 @@ namespace NMoneys.Exchange
 		/// <param name="from">Base currency, the currency from which the conversion is performed.</param>
 		/// <param name="to">Quote currency, the currency which the conversion is performed to.</param>
 		/// <returns>An identity exchange rate for the currencies provided.</returns>
+		[Pure]
 		public static ExchangeRate Identity(CurrencyIsoCode from, CurrencyIsoCode to)
 		{
 			return new ExchangeRate(from, to, decimal.One);
@@ -138,6 +147,7 @@ namespace NMoneys.Exchange
 		/// <remarks>An identity exchange rate is one which rate is 1, as such applying it to some monetary quantity merely changes the currency while leaving its amount unchanged.</remarks>
 		/// <param name="single">This currency will become  both the base currency, and the quote currency.</param>
 		/// <returns>An identity exchange rate for the currency provided.</returns>
+		[Pure]
 		public static ExchangeRate Identity(CurrencyIsoCode single)
 		{
 			return new ExchangeRate(single, single, decimal.One);
@@ -152,6 +162,7 @@ namespace NMoneys.Exchange
 		/// true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
 		/// </returns>
 		/// <param name="other">An object to compare with this rate.</param>
+		[Pure]
 		public bool Equals(ExchangeRate other)
 		{
 			if (ReferenceEquals(null, other)) return false;
@@ -181,6 +192,7 @@ namespace NMoneys.Exchange
 		/// <returns>
 		/// A hash code for the current <see cref="ExchangeRate"/>.
 		/// </returns>
+		[Pure]
 		public override int GetHashCode()
 		{
 			unchecked
@@ -198,6 +210,7 @@ namespace NMoneys.Exchange
 		/// <param name="left">The first value to compare.</param>
 		/// <param name="right">The second value to compare.</param>
 		/// <returns>true if <paramref name="left"/> and <paramref name="right"/> are equal; otherwise, false.</returns>
+		[Pure]
 		public static bool operator ==(ExchangeRate left, ExchangeRate right)
 		{
 			return Equals(left, right);
@@ -209,6 +222,7 @@ namespace NMoneys.Exchange
 		/// <param name="left">The first value to compare.</param>
 		/// <param name="right">The second value to compare.</param>
 		/// <returns>true if <paramref name="left"/> and <paramref name="right"/> are not equal; otherwise, false.</returns>
+		[Pure]
 		public static bool operator !=(ExchangeRate left, ExchangeRate right)
 		{
 			return !Equals(left, right);

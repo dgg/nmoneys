@@ -7,13 +7,11 @@ namespace NMoneys.Exchange
 	/// </summary>
 	public static class ExchangeRateProvider
 	{
-		private static readonly Func<IExchangeRateProvider> _default = () => new ProviderOfIdentities();
-
 		/// <summary>
 		/// Default rate provider.
 		/// </summary>
 		/// <remarks>Return a provider that always return identity rates: rates with the rate of one.</remarks>
-		public static Func<IExchangeRateProvider> Default { get { return _default; } }
+		public static Func<IExchangeRateProvider> Default { get; } = () => new ProviderOfIdentities();
 
 		/// <summary>
 		/// Gets or sets the provider to be used when performing exchange conversions.
