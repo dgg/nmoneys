@@ -150,4 +150,12 @@ function Sign-Assemblies($base, $configuration)
 	Throw-If-Error "Could not assemble $il_file"
 }
 
-export-modulemember -function Throw-If-Error, Ensure-Release-Folders, Build-Documentation, Copy-Artifacts, Generate-Packages, Generate-Zip-Files, Sign-Assemblies
+function Find-Versioned-Folder($base, $beginning)
+{
+	$dir = Get-ChildItem (Join-Path $base *) -Directory | where {$_.Name.StartsWith($beginning, [System.StringComparison]::OrdinalIgnoreCase)}
+	Write-Host (Join-Path $base *)
+    # get first directory
+    return  $dir[0]
+}
+
+export-modulemember -function Throw-If-Error, Ensure-Release-Folders, Build-Documentation, Copy-Artifacts, Generate-Packages, Generate-Zip-Files, Sign-Assemblies, Find-Versioned-Folder

@@ -62,19 +62,19 @@ function get-test-assembly-name($base, $config, $name)
 	return "$base\src\$name.Tests\bin\$config\$name.Tests.dll"
 }
 
-function run-tests($base, $release, $test_assemblies){
-	$console_dir = Get-ChildItem $base\tools\* -Directory | where {$_.Name.StartsWith('NUnit.ConsoleRunner')}
-    # get first directory
-    $console_dir = $console_dir[0]
+function run-tests($base, $release, $test_assemblies)
+{
+	$runner_dir = Find-Versioned-Folder -base $base\tools -beginning 'NUnit.ConsoleRunner'
+	$nunit_console = Join-Path $runner_dir tools\nunit3-console.exe
 
-	$nunit_console = Join-Path $console_dir tools\nunit3-console.exe
-	
 	exec { & $nunit_console $test_assemblies --result:"$release\TestResult.xml" --noheader  }
 }
 
 function report-on-test-results($base, $release)
 {
-	$nunit_orange = Join-Path $base tools\NUnitOrange\NUnitOrange.exe
+	$orange_dir = Find-Versioned-Folder -base $base\tools -beginning 'NUnitOrange'
+	$nunit_orange = Join-Path $orange_dir tools\NUnitOrange.exe
+	
 	$input_xml = Join-Path $release TestResult.xml
 	$output_html = Join-Path $release TestResult.html
 	
