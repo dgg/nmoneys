@@ -96,7 +96,6 @@ namespace NMoneys.Exchange
 		/// <param name="to">Quote currency, the currency which the conversion is performed to.</param>
 		/// <param name="rate">A non-negative <see cref="decimal"/> instance representing the relative vaue of <paramref name="from"/> against <paramref name="to"/>.</param>
 		/// <returns>The <see cref="ExchangeRate"/> just added as per the rules specified in the constructor.</returns>
-		[Pure]
 		public ExchangeRate Add(CurrencyIsoCode from, CurrencyIsoCode to, decimal rate)
 		{
 			Dictionary<CurrencyIsoCode, ExchangeRate> columns;
@@ -117,7 +116,6 @@ namespace NMoneys.Exchange
 		/// <param name="to">Quote currency, the currency which the conversion is performed to.</param>
 		/// <param name="rate">A non-negative <see cref="decimal"/> instance representing the relative vaue of <paramref name="from"/> against <paramref name="to"/>.</param>
 		/// <returns>The <see cref="ExchangeRatePair"/> just added as per the rules specified in the constructor.</returns>
-		[Pure]
 		public ExchangeRatePair MultiAdd(CurrencyIsoCode from, CurrencyIsoCode to, decimal rate)
 		{
 			Add(to, to, 1m);
