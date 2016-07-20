@@ -63,19 +63,20 @@ function get-test-assembly-name($base, $config, $name)
 }
 
 function run-tests($base, $release, $test_assemblies){
-	$nunit_console = "$base\tools\NUnit.Runners.lite\nunit-console.exe"
+	$console_dir = Get-ChildItem $base\tools\* -Directory | where {$_.Name.StartsWith('NUnit.ConsoleRunner')}
+    # get first directory
+    $console_dir = $console_dir[0]
+
+	$nunit_console = Join-Path $console_dir tools\nunit3-console.exe
 	
-	exec { & $nunit_console $test_assemblies /nologo /nodots /result="$release\TestResult.xml"  }
+	exec { & $nunit_console $test_assemblies --result:"$release\TestResult.xml" --noheader  }
 }
 
 function report-on-test-results($base, $release)
 {
-	$nunit_summary_path = "$base\tools\NUnitSummary"
-	$nunit_summary = Join-Path $nunit_summary_path "nunit-summary.exe"
-
-	$alternative_details = Join-Path $nunit_summary_path "AlternativeNUnitDetails.xsl"
-	$alternative_details = "-xsl=" + $alternative_details
-
-	exec { & $nunit_summary $release\TestResult.xml -html -o="$release\TestSummary.htm" }
-	exec { & $nunit_summary $release\TestResult.xml -html -o="$release\TestDetails.htm" $alternative_details -noheader }
+	$nunit_orange = Join-Path $base tools\NUnitOrange\NUnitOrange.exe
+	$input_xml = Join-Path $release TestResult.xml
+	$output_html = Join-Path $release TestResult.html
+	
+	exec { & $nunit_orange $input_xml $output_html }
 }

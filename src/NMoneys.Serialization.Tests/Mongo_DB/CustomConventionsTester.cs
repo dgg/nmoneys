@@ -14,7 +14,7 @@ namespace NMoneys.Serialization.Tests.Mongo_DB
 	{
 		private ProxySerializer<Money> _proxy;
 
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void Setup()
 		{
 			new TestingConventions(

@@ -12,7 +12,7 @@ namespace NMoneys.Serialization.Tests.Entity_Framework
 	public class MonetaryQuantityCanonicalConfiguratorTester
 	{
 		private FileInfo _dbFile;
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void SetupDb()
 		{
 			_dbFile = new FileInfo("Schema.sdf");
@@ -22,7 +22,7 @@ namespace NMoneys.Serialization.Tests.Entity_Framework
 			ctx.Database.CreateIfNotExists();
 		}
 
-		[TestFixtureTearDown]
+		[OneTimeTearDown]
 		public void TearDownDb()
 		{
 			_dbFile.Delete();

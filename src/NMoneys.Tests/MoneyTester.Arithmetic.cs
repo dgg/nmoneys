@@ -79,14 +79,14 @@ namespace NMoneys.Tests
 			IEnumerable<Money> nullMoneys = null;
 
 			Assert.That(() => Money.Total(nullMoneys), Throws.InstanceOf<ArgumentNullException>()
-				.With.Message.StringContaining("moneys"));
+				.With.Message.Contains("moneys"));
 		}
 
 		[Test]
 		public void Total_EmptyMoneys_Exception()
 		{
-			Assert.That(() => Money.Total(), Throws.ArgumentException.With.Message.StringContaining("empty"));
-			Assert.That(() => Money.Total(new Money[0]), Throws.ArgumentException.With.Message.StringContaining("empty"));
+			Assert.That(() => Money.Total(), Throws.ArgumentException.With.Message.Contains("empty"));
+			Assert.That(() => Money.Total(new Money[0]), Throws.ArgumentException.With.Message.Contains("empty"));
 		}
 
 		[Test]
@@ -265,7 +265,7 @@ namespace NMoneys.Tests
 
 		#region Truncate
 
-		[TestCaseSource("truncate")]
+		[TestCaseSource(nameof(truncate))]
 		public void Truncate_Spec(decimal amount, decimal truncatedAmount)
 		{
 			var subject = new Money(amount, CurrencyIsoCode.XTS);
@@ -290,7 +290,7 @@ namespace NMoneys.Tests
 
 		#region Round
 
-		[TestCaseSource("roundToNearestInt")]
+		[TestCaseSource(nameof(roundToNearestInt))]
 		public void RoundToNearestInt_Spec(decimal amount, decimal roundedAmount)
 		{
 			var subject = new Money(amount, CurrencyIsoCode.XTS);
@@ -302,7 +302,7 @@ namespace NMoneys.Tests
 		}
 
 #pragma warning disable 169
-		private static readonly TestCaseData[] roundToNearestInt = new[]
+		private static readonly TestCaseData[] roundToNearestInt =
 		{
 			new TestCaseData(2m /3, 1m),
 			new TestCaseData(0.5m, 0m).SetName("the closest even number is 0"),
@@ -311,7 +311,7 @@ namespace NMoneys.Tests
 		};
 #pragma warning restore 169
 
-		[TestCaseSource("roundToNearestInt_WithMode")]
+		[TestCaseSource(nameof(roundToNearestInt_WithMode))]
 		public void RoundToNearestInt_WithMode_Spec(decimal amount, MidpointRounding mode, decimal roundedAmount)
 		{
 			var subject = new Money(amount, CurrencyIsoCode.XTS);
@@ -323,7 +323,7 @@ namespace NMoneys.Tests
 		}
 
 #pragma warning disable 169
-		private static readonly TestCaseData[] roundToNearestInt_WithMode = new[]
+		private static readonly TestCaseData[] roundToNearestInt_WithMode = 
 		{
 			new TestCaseData(2m /3, MidpointRounding.ToEven, 1m),
 			new TestCaseData(2m /3, MidpointRounding.AwayFromZero, 1m),
@@ -336,7 +336,7 @@ namespace NMoneys.Tests
 		};
 #pragma warning restore 169
 
-		[TestCaseSource("round")]
+		[TestCaseSource(nameof(round))]
 		public void Round_Spec(CurrencyIsoCode currency, decimal amount, decimal roundedAmount)
 		{
 			var subject = new Money(amount, currency);
@@ -348,7 +348,8 @@ namespace NMoneys.Tests
 		}
 
 #pragma warning disable 169
-		private static readonly TestCaseData[] round = new[]
+		// TODO: check commented code
+		private static readonly TestCaseData[] round =
 		{
 			/*new TestCaseData(CurrencyIsoCode.XTS, 2.345m, 2.34m).SetName("2 decimal places"),
 			new TestCaseData(CurrencyIsoCode.USD, 2.345m, 2.34m).SetName("2 decimal places"),
@@ -376,7 +377,7 @@ namespace NMoneys.Tests
 		};
 #pragma warning restore 169
 
-		[TestCaseSource("round_WithMode")]
+		[TestCaseSource(nameof(round_WithMode))]
 		public void Round_WithMode_Spec(CurrencyIsoCode currency, MidpointRounding mode, decimal amount, decimal roundedAmount)
 		{
 			var subject = new Money(amount, currency);
@@ -388,7 +389,7 @@ namespace NMoneys.Tests
 		}
 
 #pragma warning disable 169
-		private static readonly object[] round_WithMode = new object[]
+		private static readonly object[] round_WithMode =
 		{
 		    new object[] {CurrencyIsoCode.XTS, MidpointRounding.ToEven, 2.345m, 2.34m},
 		    new object[] {CurrencyIsoCode.XTS, MidpointRounding.AwayFromZero, 2.345m, 2.35m},
@@ -434,7 +435,7 @@ namespace NMoneys.Tests
 		};
 #pragma warning restore 169
 
-		[TestCaseSource("round_WithDecimals")]
+		[TestCaseSource(nameof(round_WithDecimals))]
 		public void Round_WithDecimals_Spec(int decimals, decimal amount, decimal roundedAmount)
 		{
 			var subject = new Money(amount, CurrencyIsoCode.XTS);
@@ -446,7 +447,7 @@ namespace NMoneys.Tests
 		}
 
 #pragma warning disable 169
-		private static readonly object[] round_WithDecimals = new object[]
+		private static readonly object[] round_WithDecimals =
 		{
 		    new object[] {2, 2.345m, 2.34m},
 		    new object[] {4, 2.345m, 2.345m},
@@ -474,7 +475,7 @@ namespace NMoneys.Tests
 		};
 #pragma warning restore 169
 
-		[TestCaseSource("round_WithDecimalsAndMode")]
+		[TestCaseSource(nameof(round_WithDecimalsAndMode))]
 		public void Round_WithDecimalsAndMode_Spec(int decimals, MidpointRounding mode, decimal amount, decimal roundedAmount)
 		{
 			var subject = new Money(amount, CurrencyIsoCode.XTS);
@@ -486,7 +487,7 @@ namespace NMoneys.Tests
 		}
 
 #pragma warning disable 169
-		private static readonly object[] round_WithDecimalsAndMode = new object[]
+		private static readonly object[] round_WithDecimalsAndMode =
 		{
 			new object[] {2, MidpointRounding.ToEven, 2.345m, 2.34m},
 		    new object[] {2, MidpointRounding.AwayFromZero, 2.345m, 2.35m},
@@ -536,7 +537,7 @@ namespace NMoneys.Tests
 
 		#region Floor
 
-		[TestCaseSource("floor")]
+		[TestCaseSource(nameof(floor))]
 		public void Floor_Spec(decimal amount, decimal flooredAmount)
 		{
 			var subject = new Money(amount, CurrencyIsoCode.XTS);
@@ -561,7 +562,7 @@ namespace NMoneys.Tests
 
 		#region Floor
 
-		[TestCaseSource("ceiling")]
+		[TestCaseSource(nameof(ceiling))]
 		public void Ceiling_Spec(decimal amount, decimal ceiledAmount)
 		{
 			var subject = new Money(amount, CurrencyIsoCode.XTS);

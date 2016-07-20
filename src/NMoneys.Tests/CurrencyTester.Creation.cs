@@ -19,7 +19,7 @@ namespace NMoneys.Tests
 		public void Get_UndefinedIsoCode_Exception()
 		{
 			var notDefined = (CurrencyIsoCode) 5000;
-			Assert.That(() => Currency.Get(notDefined), Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.StringContaining("5000"));
+			Assert.That(() => Currency.Get(notDefined), Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.Contains("5000"));
 		}
 
 		[Test]
@@ -37,7 +37,7 @@ namespace NMoneys.Tests
 		public void Get_UndefinedIsoSymbol_Exception()
 		{
 			string notDefined = "5000";
-			Assert.That(() => Currency.Get(notDefined), Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.StringContaining("5000"));
+			Assert.That(() => Currency.Get(notDefined), Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.Contains("5000"));
 		}
 
 		[Test]
@@ -60,7 +60,7 @@ namespace NMoneys.Tests
 			CultureInfo bulgarian = CultureInfo.GetCultureInfo("bg-BG");
 			var bulgaria = new RegionInfo(bulgarian.LCID);
 
-			Assert.That(() => Currency.Get(bulgarian), Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.StringContaining("BGL"), "Framework returns wrong ISOCurrencySymbol (BGL instead of BGN)");
+			Assert.That(() => Currency.Get(bulgarian), Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.Contains("BGL"), "Framework returns wrong ISOCurrencySymbol (BGL instead of BGN)");
 			Currency lev = Currency.Get(CurrencyIsoCode.BGN);
 
 			Assert.That(lev.IsoSymbol, Is.Not.EqualTo(bulgaria.ISOCurrencySymbol));
@@ -78,7 +78,7 @@ namespace NMoneys.Tests
 		public void Get_RegionWithOutdatedInformation_Exception()
 		{
 			var SerbiaAndMontenegro = new RegionInfo("CS");
-			Assert.That(() => Currency.Get(SerbiaAndMontenegro), Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.StringContaining("CSD"));
+			Assert.That(() => Currency.Get(SerbiaAndMontenegro), Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.Contains("CSD"));
 		}
 
 		[Test]
@@ -93,14 +93,14 @@ namespace NMoneys.Tests
 			Assert.That(notAShortcut.EnglishName, Is.EqualTo("Namibia Dollar"));
 		}
 
-		[Test, TestCaseSource(typeof(Obsolete), "ThreeLetterIsoCodes")]
+		[Test, TestCaseSource(typeof(Obsolete), nameof(Obsolete.ThreeLetterIsoCodes))]
 		public void Get_ObsoleteCurrencyIsoCode_EventRaised(string threeLetterIsoCode)
 		{
 			Action getObsolete = () => Currency.Get(Enumeration.Parse<CurrencyIsoCode>(threeLetterIsoCode));
 			Assert.That(getObsolete, Must.Raise.ObsoleteEvent());
 		}
 
-		[Test, TestCaseSource(typeof(Obsolete), "ThreeLetterIsoCodes")]
+		[Test, TestCaseSource(typeof(Obsolete), nameof(Obsolete.ThreeLetterIsoCodes))]
 		public void Get_ObsoleteCurrencyCode_EventRaised(string threeLetterIsoCode)
 		{
 			Action getObsolete = () => Currency.Get(threeLetterIsoCode);
@@ -204,7 +204,7 @@ namespace NMoneys.Tests
 			Assert.That(rsd, Is.Null);
 		}
 
-		[Test, TestCaseSource(typeof(Obsolete), "ThreeLetterIsoCodes")]
+		[Test, TestCaseSource(typeof(Obsolete), nameof(Obsolete.ThreeLetterIsoCodes))]
 		public void TryGet_ObsoleteCurrencyIsoCode_EventRaised(string threeLetterIsoCode)
 		{
 			Currency c;
@@ -212,7 +212,7 @@ namespace NMoneys.Tests
 			Assert.That(tryGetObsolete, Must.Raise.ObsoleteEvent());
 		}
 
-		[Test, TestCaseSource(typeof(Obsolete), "ThreeLetterIsoCodes")]
+		[Test, TestCaseSource(typeof(Obsolete), nameof(Obsolete.ThreeLetterIsoCodes))]
 		public void TryGet_ObsoleteCurrencyCode_EventRaised(string threeLetterIsoCode)
 		{
 			Currency c;

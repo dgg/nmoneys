@@ -25,7 +25,7 @@ namespace NMoneys.Tests
 		public void ForCulture_OutdatedCulture_Exception()
 		{
 			Assert.That(() => Money.ForCulture(decimal.Zero, CultureInfo.GetCultureInfo("bg-BG")),
-				Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.StringContaining("BGL"),
+				Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.Contains("BGL"),
 				"Framework returns wrong ISOCurrencySymbol (BGL instead of BGN)");
 		}
 
@@ -58,7 +58,7 @@ namespace NMoneys.Tests
 		public void ForCurrentCulture_OutdatedCulture_Exception()
 		{
 			Assert.That(() => Money.ForCurrentCulture(decimal.Zero),
-				Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.StringContaining("BGL"),
+				Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.Contains("BGL"),
 				"Framework returns wrong ISOCurrencySymbol (BGL instead of BGN)");
 		}
 
@@ -80,7 +80,7 @@ namespace NMoneys.Tests
 			Assert.That(Money.ForMajor(234, Currency.Gbp), Must.Be.MoneyWith(234, Currency.Gbp));
 		}
 
-		[TestCaseSource("forMinorAllowingDecimals")]
+		[TestCaseSource(nameof(forMinorAllowingDecimals))]
 		public void ForMinor_Currency_AllowingDecimals_AmountShiftedAsManyDigitsAsCurrencySpecifies(Currency currency, int decimalDigits, long minorAmount, decimal amount)
 		{
 			Assert.That(currency.SignificantDecimalDigits, Is.EqualTo(decimalDigits));
@@ -88,7 +88,7 @@ namespace NMoneys.Tests
 		}
 
 #pragma warning disable 169
-		private static TestCaseData[] forMinorAllowingDecimals = new[]
+		private static readonly TestCaseData[] forMinorAllowingDecimals =
 		{
 			new TestCaseData(Currency.Gbp, 2, 234, 2.34m).SetName("bigger than cent factor"),
 			new TestCaseData(Currency.Gbp, 2, 34, .34m).SetName("same as cent factor"),
@@ -228,7 +228,7 @@ namespace NMoneys.Tests
 		{
 			var nonExistingCode = (CurrencyIsoCode)(-7);
 
-			Assert.That(() => Money.Zero(nonExistingCode), Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.StringContaining("-7"));
+			Assert.That(() => Money.Zero(nonExistingCode), Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.Contains("-7"));
 		}
 
 		[Test]

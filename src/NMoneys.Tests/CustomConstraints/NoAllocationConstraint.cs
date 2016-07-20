@@ -1,21 +1,24 @@
 using NMoneys.Allocations;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
+using Testing.Commons;
 using Testing.Commons.NUnit.Constraints;
 
 namespace NMoneys.Tests.CustomConstraints
 {
-	public class NoAllocationConstraint : DelegatingConstraint<Allocation>
+	public class NoAllocationConstraint : DelegatingConstraint
 	{
 		public Money Remainder { get; set; }
 
-		protected override bool matches(Allocation current)
+		protected override ConstraintResult matches(object current)
 		{
-			Delegate = new LambdaPropertyConstraint<Allocation>(a => a.IsComplete, Is.False) &
-				new LambdaPropertyConstraint<Allocation>(a => a.IsQuasiComplete, Is.False) &
-				new LambdaPropertyConstraint<Allocation>(a => a.TotalAllocated, Is.EqualTo(Money.Zero(Remainder.CurrencyCode))) &
-				new LambdaPropertyConstraint<Allocation>(a => a.Remainder, Is.EqualTo(Remainder));
+			Delegate = Must.Satisfy.Conjunction(
+				Must.Have.Property(nameof(Allocation.IsComplete), Is.False),
+				Must.Have.Property(nameof(Allocation.IsQuasiComplete), Is.False),
+				Must.Have.Property(nameof(Allocation.TotalAllocated), Is.EqualTo(Money.Zero(Remainder.CurrencyCode))),
+				Must.Have.Property(nameof(Allocation.Remainder), Is.EqualTo(Remainder)));
 
-			return Delegate.Matches(current);
+			return Delegate.ApplyTo(current);
 		}
 	}
 }

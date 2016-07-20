@@ -22,14 +22,14 @@ namespace NMoneys.Exchange.Tests
 			}
 		}
 
-		[TestFixtureSetUp]
-		public void setupRateOfTwoProvider()
+		[OneTimeSetUp]
+		public void SetupRateOfTwoProvider()
 		{
 			ExchangeRateProvider.Factory = () => new RateOfTwoProvider();
 		}
 
-		[TestFixtureTearDown]
-		public void resetProvider()
+		[OneTimeTearDown]
+		public void ResetProvider()
 		{
 			ExchangeRateProvider.Factory = ExchangeRateProvider.Default;
 		}

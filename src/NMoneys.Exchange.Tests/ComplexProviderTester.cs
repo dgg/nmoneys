@@ -6,15 +6,15 @@ namespace NMoneys.Exchange.Tests
 	[TestFixture]
 	public class ComplexProviderTester
 	{
-		[TestFixtureSetUp]
-		public void setupNegatedProvider()
+		[OneTimeSetUp]
+		public void SetupNegatedProvider()
 		{
 			IExchangeRateProvider provider = new UsdEurGbpAs20110519();
 			ExchangeRateProvider.Factory = () => provider;
 		}
 
-		[TestFixtureTearDown]
-		public void resetProvider()
+		[OneTimeTearDown]
+		public void ResetProvider()
 		{
 			ExchangeRateProvider.Factory = ExchangeRateProvider.Default;
 		}

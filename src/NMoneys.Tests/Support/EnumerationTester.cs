@@ -27,8 +27,8 @@ namespace NMoneys.Tests.Support
 		{
 			Test1 notDefined = (Test1)50;
 			Assert.That(() => Enumeration.AssertDefined(notDefined), Throws.InstanceOf<InvalidEnumArgumentException>()
-				.With.Property("Message").StringContaining("50")
-				.And.With.Property("Message").StringContaining(typeof(Test1).Name));
+				.With.Property("Message").Contains("50")
+				.And.With.Property("Message").Contains(typeof(Test1).Name));
 		}
 
 		[Test]
@@ -42,7 +42,7 @@ namespace NMoneys.Tests.Support
 		{
 			// for strings, use the representation
 			Assert.That(() => Enumeration.AssertDefined<Test1>("notDefined"),
-				Throws.InstanceOf<InvalidEnumArgumentException>().With.Property("Message").StringContaining("notDefined"));
+				Throws.InstanceOf<InvalidEnumArgumentException>().With.Property("Message").Contains("notDefined"));
 		}
 
 		[Test]
@@ -56,7 +56,7 @@ namespace NMoneys.Tests.Support
 		public void AssertDefined_WrongCase_Exception()
 		{
 			Assert.That(() => Enumeration.AssertDefined<Test1>("value1"),
-				Throws.InstanceOf<InvalidEnumArgumentException>().With.Property("Message").StringContaining("value1"));
+				Throws.InstanceOf<InvalidEnumArgumentException>().With.Property("Message").Contains("value1"));
 		}
 
 		#endregion

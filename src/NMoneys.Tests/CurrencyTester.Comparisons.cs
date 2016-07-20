@@ -22,7 +22,7 @@ namespace NMoneys.Tests
 			var notACurrency = new Exception();
 			Assert.That(() => Currency.Xts.CompareTo(notACurrency), Throws
 				.ArgumentException
-				.With.Message.StringContaining("Currency"));
+				.With.Message.Contains("Currency"));
 		}
 
 		[Test]

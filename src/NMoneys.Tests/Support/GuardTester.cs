@@ -44,7 +44,7 @@ namespace NMoneys.Tests.Support
 			bool trueCondition = 3 > 2;
 
 			Assert.That(() => Guard.AgainstArgument(param, trueCondition, message),
-				Throws.ArgumentException.With.Property("Message").StringContaining(message).And.With.Property("ParamName").EqualTo(param));
+				Throws.ArgumentException.With.Property("Message").Contains(message).And.With.Property("ParamName").EqualTo(param));
 		}
 
 		[Test]

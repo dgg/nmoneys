@@ -11,7 +11,7 @@ namespace NMoneys.Tests
 	[TestFixture]
 	public partial class MoneyTester
 	{
-		[TestCaseSource("ProvidedAllocators")]
+		[TestCaseSource(nameof(ProvidedAllocators))]
 		public void Allocate_FairAllocation_EveryoneGetTheSameQuantity(IRemainderAllocator allocator)
 		{
 			Allocation allocated = 8m.Usd().Allocate(4, allocator);
@@ -19,7 +19,7 @@ namespace NMoneys.Tests
 			Assert.That(allocated, Is.EqualTo(new[] { 2m.Usd(), 2m.Usd(), 2m.Usd(), 2m.Usd() }));
 		}
 
-		internal IEnumerable<IRemainderAllocator> ProvidedAllocators
+		private static IEnumerable<IRemainderAllocator> ProvidedAllocators
 		{
 			get
 			{
@@ -75,7 +75,7 @@ namespace NMoneys.Tests
 				Throws.InstanceOf<ArgumentOutOfRangeException>());
 		}
 
-		[TestCaseSource("ProvidedAllocators")]
+		[TestCaseSource(nameof(ProvidedAllocators))]
 		public void Allocate_SingleAllocation_SameQuantity(IRemainderAllocator remainder)
 		{
 			Allocation allocated = 8.3m.Eur().Allocate(1, remainder);

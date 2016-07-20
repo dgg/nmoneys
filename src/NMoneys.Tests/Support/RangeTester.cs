@@ -268,9 +268,9 @@ namespace NMoneys.Tests.Support
 
 			Assert.That(() => subject.AssertArgument("arg", 6),
 				Throws.InstanceOf<ArgumentOutOfRangeException>()
-				.With.Message.StringContaining("[1..5]").And
-				.With.Message.StringContaining("1 (inclusive)").And
-				.With.Message.StringContaining("5 (inclusive)")
+				.With.Message.Contains("[1..5]").And
+				.With.Message.Contains("1 (inclusive)").And
+				.With.Message.Contains("5 (inclusive)")
 				.With.Property("ParamName").EqualTo("arg").And
 				.With.Property("ActualValue").EqualTo(6));
 		}
@@ -290,9 +290,9 @@ namespace NMoneys.Tests.Support
 
 			Assert.That(() => subject.AssertArgument("arg", 6),
 				Throws.InstanceOf<ArgumentOutOfRangeException>()
-				.With.Message.StringContaining("(1..5)").And
-				.With.Message.StringContaining("1 (not inclusive)").And
-				.With.Message.StringContaining("5 (not inclusive)")
+				.With.Message.Contains("(1..5)").And
+				.With.Message.Contains("1 (not inclusive)").And
+				.With.Message.Contains("5 (not inclusive)")
 				.With.Property("ParamName").EqualTo("arg").And
 				.With.Property("ActualValue").EqualTo(6));
 		}
@@ -312,9 +312,9 @@ namespace NMoneys.Tests.Support
 
 			Assert.That(() => subject.AssertArgument("arg", 6),
 				Throws.InstanceOf<ArgumentOutOfRangeException>()
-				.With.Message.StringContaining("[1..5)").And
-				.With.Message.StringContaining("1 (inclusive)").And
-				.With.Message.StringContaining("5 (not inclusive)")
+				.With.Message.Contains("[1..5)").And
+				.With.Message.Contains("1 (inclusive)").And
+				.With.Message.Contains("5 (not inclusive)")
 				.With.Property("ParamName").EqualTo("arg").And
 				.With.Property("ActualValue").EqualTo(6));
 		}
@@ -334,9 +334,9 @@ namespace NMoneys.Tests.Support
 
 			Assert.That(() => subject.AssertArgument("arg", 6),
 				Throws.InstanceOf<ArgumentOutOfRangeException>()
-				.With.Message.StringContaining("(1..5]").And
-				.With.Message.StringContaining("1 (not inclusive)").And
-				.With.Message.StringContaining("5 (inclusive)")
+				.With.Message.Contains("(1..5]").And
+				.With.Message.Contains("1 (not inclusive)").And
+				.With.Message.Contains("5 (inclusive)")
 				.With.Property("ParamName").EqualTo("arg").And
 				.With.Property("ActualValue").EqualTo(6));
 		}
@@ -368,9 +368,9 @@ namespace NMoneys.Tests.Support
 		{
 			Assert.That(() => new Range<int>(1.Close(), 5.Close()).AssertArgument("arg", new[] { 2, 6, 4 }),
 				Throws.InstanceOf<ArgumentOutOfRangeException>()
-				.With.Message.StringContaining("[1..5]").And
-				.With.Message.StringContaining("1 (inclusive)").And
-				.With.Message.StringContaining("5 (inclusive)")
+				.With.Message.Contains("[1..5]").And
+				.With.Message.Contains("1 (inclusive)").And
+				.With.Message.Contains("5 (inclusive)")
 				.With.Property("ParamName").EqualTo("arg").And
 				.With.Property("ActualValue").EqualTo(6)
 				);

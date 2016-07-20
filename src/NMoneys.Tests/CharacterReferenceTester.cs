@@ -6,7 +6,7 @@ namespace NMoneys.Tests
 	[TestFixture]
 	public class CharacterReferenceTester
 	{
-		[Test, TestCaseSource("Spec")]
+		[Test, TestCaseSource(nameof(Spec))]
 		public void CanBeConstructed_WithSimpleOrEntityNames(string ctorName, string entityName, string simpleName, string entityNumber, int codePoint, string character)
 		{
 			var reference = new CharacterReference(ctorName);
@@ -18,7 +18,7 @@ namespace NMoneys.Tests
 			Assert.That(reference.IsEmpty, Is.False);
 		}
 
-		public object[] Spec = new[]
+		private static readonly object[] Spec =
 		{
 			new object[]{ "&cent;", "&cent;", "cent", "&#162;", 162, "¢"},
 			new object[]{ "cent", "&cent;", "cent", "&#162;", 162, "¢"},
@@ -38,7 +38,7 @@ namespace NMoneys.Tests
 		public void Ctor_NullName_Exception()
 		{
 			Assert.That(()=> new CharacterReference(null), Throws.InstanceOf<ArgumentNullException>()
-				.With.Message.StringContaining("entityName"));
+				.With.Message.Contain("entityName"));
 		}
 
 		[Test]

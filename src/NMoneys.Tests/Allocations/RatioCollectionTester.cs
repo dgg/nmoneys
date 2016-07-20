@@ -13,7 +13,7 @@ namespace NMoneys.Tests.Allocations
 			Assert.That(() => new RatioCollection(new Ratio[] { }), Throws.InstanceOf<ArgumentOutOfRangeException>()
 				.With.Property("ParamName").EqualTo("ratios").And
 				.With.Property("ActualValue").EqualTo(0m)
-				.With.Message.StringContaining("1.0"));
+				.With.Message.Contains("1.0"));
 		}
 
 		[Test]
@@ -22,7 +22,7 @@ namespace NMoneys.Tests.Allocations
 			Assert.That(() => new RatioCollection(new decimal[] { }), Throws.InstanceOf<ArgumentOutOfRangeException>()
 				.With.Property("ParamName").EqualTo("ratios").And
 				.With.Property("ActualValue").EqualTo(0m)
-				.With.Message.StringContaining("1.0"));
+				.With.Message.Contains("1.0"));
 		}
 
 		[Test]
@@ -30,7 +30,7 @@ namespace NMoneys.Tests.Allocations
 		{
 			Assert.That(() => new RatioCollection(-.5m), Throws.InstanceOf<ArgumentOutOfRangeException>()
 				.With.Property("ActualValue").EqualTo(-.5m).And
-				.With.Message.StringContaining("[0..1]"));
+				.With.Message.Contains("[0..1]"));
 		}
 
 		[Test]
@@ -39,7 +39,7 @@ namespace NMoneys.Tests.Allocations
 			Assert.That(() => new RatioCollection(new Ratio(.3m), new Ratio(.2m)), Throws.InstanceOf<ArgumentOutOfRangeException>()
 				.With.Property("ParamName").EqualTo("ratios").And
 				.With.Property("ActualValue").EqualTo(.5m)
-				.With.Message.StringContaining("1.0"));
+				.With.Message.Contains("1.0"));
 		}
 
 		[Test]
@@ -48,7 +48,7 @@ namespace NMoneys.Tests.Allocations
 			Assert.That(() => new RatioCollection(.3m, .2m), Throws.InstanceOf<ArgumentOutOfRangeException>()
 				.With.Property("ParamName").EqualTo("ratios").And
 				.With.Property("ActualValue").EqualTo(.5m)
-				.With.Message.StringContaining("1.0"));
+				.With.Message.Contains("1.0"));
 		}
 
 		[Test]

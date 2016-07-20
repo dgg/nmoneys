@@ -1,17 +1,18 @@
 ﻿using System;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 using Testing.Commons.NUnit.Constraints;
 
 namespace NMoneys.Tests.CustomConstraints
 {
-	internal class ObsoleteCurrencyRaisedConstraint : DelegatingConstraint<Action>
+	internal class ObsoleteCurrencyRaisedConstraint : DelegatingConstraint
 	{
 		public ObsoleteCurrencyRaisedConstraint(uint timesRaised)
 		{
 			Delegate = Is.EqualTo(timesRaised);
 		}
 
-		protected override bool matches(Action current)
+		protected override ConstraintResult matches(object current)
 		{
 			uint counter = 0;
 			EventHandler<ObsoleteCurrencyEventArgs> callback = (sender, e) => { counter++; };
@@ -19,13 +20,13 @@ namespace NMoneys.Tests.CustomConstraints
 
 			try
 			{
-				current();
+				((Action)current)();
 			}
 			finally
 			{
 				Currency.ObsoleteCurrency -= callback;
 			}
-			return Delegate.Matches(counter);
+			return Delegate.ApplyTo(counter);
 		}
 	}
 }

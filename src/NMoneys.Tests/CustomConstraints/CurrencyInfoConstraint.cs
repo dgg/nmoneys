@@ -1,89 +1,75 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
+using Testing.Commons;
 using Testing.Commons.NUnit.Constraints;
 
 namespace NMoneys.Tests.CustomConstraints
 {
-	internal class CurrencyInfoConstraint : DelegatingConstraint<CurrencyInfo>
+	internal class CurrencyInfoConstraint : DelegatingConstraint
 	{
-		class AlwaysPassing : DelegatingConstraint<CurrencyInfo>
-		{
-			protected override bool matches(CurrencyInfo current)
-			{
-				return true;
-			}
-		}
-
-		private readonly Queue<LambdaPropertyConstraint<CurrencyInfo>> _constraints;
+		private readonly Queue<ComposablePropertyConstraint> _constraints;
 		public CurrencyInfoConstraint()
 		{
-			_constraints = new Queue<LambdaPropertyConstraint<CurrencyInfo>>(10);
-		}
-
-		protected override bool matches(CurrencyInfo current)
-		{
-			Delegate = null;
-			foreach (var constraint in _constraints)
-			{
-				if (Delegate == null) Delegate = constraint;
-				else
-				{
-					Delegate = Delegate & constraint;
-				}
-			}
-			return Delegate.Matches(current);
+			_constraints = new Queue<ComposablePropertyConstraint>(10);
 		}
 
 		public CurrencyInfoConstraint WithCode(CurrencyIsoCode code)
 		{
-			_constraints.Enqueue(new LambdaPropertyConstraint<CurrencyInfo>(ci => ci.Code, Is.EqualTo(code)));
+			_constraints.Enqueue(Must.Have.Property(nameof(CurrencyInfo.Code), Is.EqualTo(code)));
 			return this;
 		}
 		public CurrencyInfoConstraint WithEnglishName(string englishName)
 		{
-			_constraints.Enqueue(new LambdaPropertyConstraint<CurrencyInfo>(ci => ci.EnglishName, Is.EqualTo(englishName)));
+			_constraints.Enqueue(Must.Have.Property(nameof(CurrencyInfo.EnglishName), Is.EqualTo(englishName)));
 			return this;
 		}
 		public CurrencyInfoConstraint WithNativeName(string nativeName)
 		{
-			_constraints.Enqueue(new LambdaPropertyConstraint<CurrencyInfo>(ci => ci.NativeName, Is.EqualTo(nativeName)));
+			_constraints.Enqueue(Must.Have.Property(nameof(CurrencyInfo.NativeName), Is.EqualTo(nativeName)));
 			return this;
 		}
 		public CurrencyInfoConstraint WithSymbol(string symbol)
 		{
-			_constraints.Enqueue(new LambdaPropertyConstraint<CurrencyInfo>(ci => ci.Symbol,
+			_constraints.Enqueue(Must.Have.Property(nameof(CurrencyInfo.Symbol),
 				Is.EqualTo(symbol)));
 			return this;
 		}
 		public CurrencyInfoConstraint WithSignificantDecimalDigits(int decimalDigits)
 		{
-			_constraints.Enqueue(new LambdaPropertyConstraint<CurrencyInfo>(ci => ci.SignificantDecimalDigits, Is.EqualTo(decimalDigits)));
+			_constraints.Enqueue(Must.Have.Property(nameof(CurrencyInfo.SignificantDecimalDigits), Is.EqualTo(decimalDigits)));
 			return this;
 		}
 		public CurrencyInfoConstraint WithDecimalSeparator(string decimalSeparator)
 		{
-			_constraints.Enqueue(new LambdaPropertyConstraint<CurrencyInfo>(ci => ci.DecimalSeparator, Is.EqualTo(decimalSeparator)));
+			_constraints.Enqueue(Must.Have.Property(nameof(CurrencyInfo.DecimalSeparator), Is.EqualTo(decimalSeparator)));
 			return this;
 		}
 		public CurrencyInfoConstraint WithGroupSeparator(string groupSeparator)
 		{
-			_constraints.Enqueue(new LambdaPropertyConstraint<CurrencyInfo>(ci => ci.GroupSeparator, Is.EqualTo(groupSeparator)));
+			_constraints.Enqueue(Must.Have.Property(nameof(CurrencyInfo.GroupSeparator), Is.EqualTo(groupSeparator)));
 			return this;
 		}
 		public CurrencyInfoConstraint WithGroupSizes(int[] groupSizes)
 		{
-			_constraints.Enqueue(new LambdaPropertyConstraint<CurrencyInfo>(ci => ci.GroupSizes, Is.EqualTo(groupSizes)));
+			_constraints.Enqueue(Must.Have.Property(nameof(CurrencyInfo.GroupSizes), Is.EqualTo(groupSizes)));
 			return this;
 		}
 		public CurrencyInfoConstraint WithPositivePattern(int positivePattern)
 		{
-			_constraints.Enqueue(new LambdaPropertyConstraint<CurrencyInfo>(ci => ci.PositivePattern, Is.EqualTo(positivePattern)));
+			_constraints.Enqueue(Must.Have.Property(nameof(CurrencyInfo.PositivePattern), Is.EqualTo(positivePattern)));
 			return this;
 		}
 		public CurrencyInfoConstraint WithNegativePattern(int negativePattern)
 		{
-			_constraints.Enqueue(new LambdaPropertyConstraint<CurrencyInfo>(ci => ci.NegativePattern, Is.EqualTo(negativePattern)));
+			_constraints.Enqueue(Must.Have.Property(nameof(CurrencyInfo.NegativePattern), Is.EqualTo(negativePattern)));
 			return this;
+		}
+
+		protected override ConstraintResult matches(object current)
+		{
+			Delegate = Must.Satisfy.Conjunction(_constraints.ToArray());
+			return Delegate.ApplyTo(current);
 		}
 	}
 }

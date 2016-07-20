@@ -29,19 +29,19 @@ namespace NMoneys.Exchange.Tests
 			Assert.That(() => new ExchangeRate(CurrencyIsoCode.XXX, CurrencyIsoCode.XTS, -0.1m), Throws.ArgumentException);
 		}
 
-		[TestCaseSource("undefinedCurrencies")]
+		[TestCaseSource(nameof(undefinedCurrencies))]
 		public void Ctor_UndefinedCurrency_Exception(CurrencyIsoCode from, CurrencyIsoCode to)
 		{
 			Assert.That(() => new ExchangeRate(from, to, 1m), Throws.InstanceOf<InvalidEnumArgumentException>());
 		}
 
-		protected IEnumerable undefinedCurrencies
+		private static IEnumerable undefinedCurrencies
 		{
 			get
 			{
-				yield return new[] { CurrencyIsoCode.USD, ((CurrencyIsoCode)1) };
-				yield return new[] { ((CurrencyIsoCode)1), CurrencyIsoCode.USD };
-				yield return new[] { ((CurrencyIsoCode)1), ((CurrencyIsoCode)1) };
+				yield return new[] { CurrencyIsoCode.USD, (CurrencyIsoCode)1 };
+				yield return new[] { (CurrencyIsoCode)1, CurrencyIsoCode.USD };
+				yield return new[] { (CurrencyIsoCode)1, (CurrencyIsoCode)1 };
 			}
 		}
 
@@ -64,8 +64,8 @@ namespace NMoneys.Exchange.Tests
 
 			Assert.That(() => subject.Apply(incompatible), Throws
 				.InstanceOf<DifferentCurrencyException>()
-				.With.Message.StringContaining("EUR")
-				.And.Message.StringContaining("CAD"));
+				.With.Message.Contains("EUR")
+				.And.Message.Contains("CAD"));
 		}
 
 		[Test]

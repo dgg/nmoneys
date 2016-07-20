@@ -34,7 +34,7 @@ namespace NMoneys.Tests.Allocations
 
 		}
 
-		[TestCaseSource("allocationResults")]
+		[TestCaseSource(nameof(allocationResults))]
 		public void Ctor_AllocatedIsWrappedIntoAnEnumerable(Money moreThanAllocated, Money[] allocated)
 		{
 			var subject = new Allocation(moreThanAllocated, allocated);
@@ -42,7 +42,7 @@ namespace NMoneys.Tests.Allocations
 			Assert.That(subject, Is.EqualTo(allocated));
 		}
 
-		[TestCaseSource("allocationResults")]
+		[TestCaseSource(nameof(allocationResults))]
 		public void Ctor_AllocatedIsWrappedIntoAnIndexable(Money moreThanAllocated, Money[] allocated)
 		{
 			var subject = new Allocation(moreThanAllocated, allocated);
@@ -55,7 +55,7 @@ namespace NMoneys.Tests.Allocations
 			}
 		}
 
-		protected IEnumerable<TestCaseData> allocationResults = new[]
+		private static readonly IEnumerable<TestCaseData> allocationResults = new[]
 		{
 			new TestCaseData(10m.Dkk(), new[]{8m.Dkk(), 2m.Dkk()}).SetName("All money allocated"), 
 			new TestCaseData(10m.Dkk(), new[]{6m.Dkk(), 2m.Dkk()}).SetName("Some money not allocated"), 

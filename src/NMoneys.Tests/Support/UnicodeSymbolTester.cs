@@ -35,15 +35,13 @@ namespace NMoneys.Tests.Support
 			Assert.That(() => UnicodeSymbol.FromTokenizedCodePoints(wrongTokenizer), Throws.InstanceOf<FormatException>());
 		}
 
-		[TestCase("a b", ExpectedException = typeof(FormatException))]
-		[TestCase("A", ExpectedException = typeof(FormatException))]
-		[TestCase("-4 -3", ExpectedException = typeof(ArgumentOutOfRangeException))]
-		[TestCase(null, ExpectedException = typeof(ArgumentNullException))]
-		public void FromTokenizedCodePoints_NotACodePointChain_Exception(string notAChainOfCodePoints)
+		[TestCase("a b", typeof(FormatException))]
+		[TestCase("A", typeof(FormatException))]
+		[TestCase("-4 -3", typeof(ArgumentOutOfRangeException))]
+		[TestCase(null, typeof(ArgumentNullException))]
+		public void FromTokenizedCodePoints_NotACodePointChain_Exception(string notAChainOfCodePoints, Type expectedException)
 		{
-			UnicodeSymbol.FromTokenizedCodePoints(notAChainOfCodePoints);
-
-			Assert.Fail("An exception should have been thrown before");
+			Assert.That(()=> UnicodeSymbol.FromTokenizedCodePoints(notAChainOfCodePoints), Throws.InstanceOf(expectedException));
 		}
 
 		[Test]
@@ -77,13 +75,11 @@ namespace NMoneys.Tests.Support
 			Assert.That(subject.CodePoints, Is.EqualTo(codePoints));
 		}
 
-		[TestCase(null, ExpectedException = typeof(ArgumentNullException))]
-		[TestCase("", ExpectedException = typeof(ArgumentException))]
-		public void FromSymbol_NotASymbol_Exception(string notASymbol)
+		[TestCase(null, typeof(ArgumentNullException))]
+		[TestCase("", typeof(ArgumentException))]
+		public void FromSymbol_NotASymbol_Exception(string notASymbol, Type expectedException)
 		{
-			UnicodeSymbol.FromSymbol(notASymbol);
-
-			Assert.Fail("An exception should have been thrown before");
+			Assert.That(()=> UnicodeSymbol.FromSymbol(notASymbol), Throws.InstanceOf(expectedException));
 		}
 
 		#endregion

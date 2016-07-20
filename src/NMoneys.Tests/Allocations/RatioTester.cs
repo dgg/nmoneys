@@ -7,7 +7,7 @@ namespace NMoneys.Tests.Allocations
 	[TestFixture]
 	public partial class RatioTester
 	{
-		[TestCaseSource("properValues")]
+		[TestCaseSource(nameof(properValues))]
 		public void Ctor_ProperRatio_ValueSet(decimal properValue)
 		{
 			var proper = new Ratio(properValue);
@@ -15,7 +15,7 @@ namespace NMoneys.Tests.Allocations
 			Assert.That(proper.Value, Is.EqualTo(properValue));
 		}
 
-		protected decimal[] properValues = new[] {0m, .001m, .5m, .73m, 1m};
+		private static readonly decimal[] properValues = {0m, .001m, .5m, .73m, 1m};
 
 		[Test, SetCulture("")]
 		public void Ctor_NegativeRatio_Exception()
@@ -23,8 +23,8 @@ namespace NMoneys.Tests.Allocations
 			Assert.That(() => new Ratio(-0.3m), Throws.InstanceOf<ArgumentOutOfRangeException>()
 				.With.Property("ParamName").EqualTo("value").And
 				.With.Property("ActualValue").EqualTo(-0.3m)
-				.With.Message.StringContaining("0")
-				.With.Message.StringContaining("1"));
+				.With.Message.Contains("0")
+				.With.Message.Contains("1"));
 		}
 
 		[Test, SetCulture("")]
@@ -33,8 +33,8 @@ namespace NMoneys.Tests.Allocations
 			Assert.That(() => new Ratio(2.3m), Throws.InstanceOf<ArgumentOutOfRangeException>()
 				.With.Property("ParamName").EqualTo("value").And
 				.With.Property("ActualValue").EqualTo(2.3m)
-				.With.Message.StringContaining("0")
-				.With.Message.StringContaining("1"));
+				.With.Message.Contains("0")
+				.With.Message.Contains("1"));
 		}
 
 		[Test]

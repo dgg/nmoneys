@@ -1,21 +1,23 @@
 ﻿using NUnit.Framework;
 using NUnit.Framework.Constraints;
+using Testing.Commons;
 using Testing.Commons.NUnit.Constraints;
 
 namespace NMoneys.Tests.CustomConstraints
 {
-	internal class MoneyConstraint : DelegatingConstraint<Money>
+	internal class MoneyConstraint : DelegatingConstraint
 	{
 		public MoneyConstraint(decimal amount, Currency currency)
 		{
 			Delegate = new AndConstraint(
-				new LambdaPropertyConstraint<Money>(m => m.Amount, Is.EqualTo(amount)),
-				new LambdaPropertyConstraint<Money>(m => m.CurrencyCode, Is.EqualTo(currency.IsoCode)));
+				Must.Have.Property(nameof(Money.Amount), Is.EqualTo(amount)),
+				Must.Have.Property(nameof(Money.CurrencyCode), Is.EqualTo(currency.IsoCode)));
 		}
+		
 
-		protected override bool matches(Money current)
+		protected override ConstraintResult matches(object current)
 		{
-			return Delegate.Matches(current);
+			return Delegate.ApplyTo(current);
 		}
 	}
 }

@@ -33,7 +33,9 @@ namespace NMoneys.Tests
 		{
 			using (var serializer = new XmlRoundtripSerializer<CurrencyIsoCode>())
 			{
+#pragma warning disable 618
 				var obsolete = CurrencyIsoCode.EEK;
+#pragma warning restore 618
 				Assert.That(() => serializer.Serialize(obsolete), Throws.InstanceOf<InvalidOperationException>());
 			}
 		}
@@ -78,7 +80,9 @@ namespace NMoneys.Tests
 		{
 			using (var serializer = new DataContractRoundtripSerializer<CurrencyIsoCode>())
 			{
+#pragma warning disable 618
 				var obsolete = CurrencyIsoCode.EEK;
+#pragma warning restore 618
 				serializer.Serialize(obsolete);
 				Action deserializeObsolete = () => serializer.Deserialize();
 				Assert.That(deserializeObsolete, Must.Not.Raise.ObsoleteEvent());

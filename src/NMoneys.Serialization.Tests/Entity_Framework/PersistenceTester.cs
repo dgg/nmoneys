@@ -13,14 +13,14 @@ namespace NMoneys.Serialization.Tests.Entity_Framework
 	public class PersistenceTester
 	{
 		private FileInfo _dbFile;
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void SetupDb()
 		{
 			_dbFile = new FileInfo("Persistence.sdf");
 			_dbFile.Delete();
 		}
 
-		[TestFixtureTearDown]
+		[OneTimeTearDown]
 		public void TearDownDb()
 		{
 			_dbFile.Delete();

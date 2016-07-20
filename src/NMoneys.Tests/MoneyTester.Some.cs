@@ -46,7 +46,7 @@ namespace NMoneys.Tests
 		{
 			var nonExistingCode = (CurrencyIsoCode)(-7);
 
-			Assert.That(() => Money.Some(13, nonExistingCode, 2), Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.StringContaining("-7"));
+			Assert.That(() => Money.Some(13, nonExistingCode, 2), Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.Contains("-7"));
 		}
 
 		[Test]

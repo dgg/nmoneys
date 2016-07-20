@@ -1,37 +1,29 @@
-﻿using System;
-using NMoneys.Extensions;
+﻿using NMoneys.Extensions;
 using NUnit.Framework;
+using Testing.Commons.NUnit.Constraints.Support;
 
 namespace NMoneys.Tests.CustomConstraints
 {
 	[TestFixture]
-	public class MoneyConstraintTester
+	public class MoneyConstraintTester : ConstraintTesterBase
 	{
 		private static readonly MoneyConstraint _threeTests = new MoneyConstraint(3m, Currency.Test);
-
-		[Test]
-		public void Matches_DifferentType_Exception()
-		{
-			var subject = new MoneyConstraint(decimal.Zero, Currency.Test);
-			decimal notAMoney = 3m;
-			Assert.That(() => subject.Matches(notAMoney), Throws.InstanceOf<InvalidCastException>());
-		}
 
 		[Test]
 		public void Matches_MatchingMoney_True()
 		{
 			Money matching = 3m.Xts();
-			Assert.That(_threeTests.Matches(matching), Is.True);
+			Assert.That(matches(_threeTests, matching), Is.True);
 		}
 
-		[TestCaseSource("nonMatching")]
+		[TestCaseSource(nameof(nonMatching))]
 		public void Matches_NonMatchingMoney_False(decimal amount, Currency currency)
 		{
 			Money notMatching = new Money(amount, currency);
-			Assert.That(_threeTests.Matches(notMatching), Is.False);
+			Assert.That(matches(_threeTests, notMatching), Is.False);
 		}
 
-		private static readonly object[] nonMatching = new object[]
+		private static readonly object[] nonMatching =
 		{
 			new object[] { 3m, Currency.Euro },
 			new object[] { 5m , Currency.Test },
@@ -41,37 +33,28 @@ namespace NMoneys.Tests.CustomConstraints
 		[Test]
 		public void WriteMessage_NonMatchingCurrency_ContainsUsefulInformation()
 		{
-			TextMessageWriter writer = new TextMessageWriter();
-
-			_threeTests.Matches(3m.Euros());
-			_threeTests.WriteMessageTo(writer);
-
-			Assert.That(writer.ToString(), Is.StringContaining("Currency").And.StringContaining("EUR").And.StringContaining("XTS"));
+			Assert.That(getMessage(_threeTests, 3m.Euros()), Does.Contain("Currency")
+				.And.Contain("EUR")
+				.And.Contain("XTS"));
 		}
 
 		[Test]
 		public void WriteMessage_NonMatchingAmount_ContainsUsefulInformation()
 		{
-			TextMessageWriter writer = new TextMessageWriter();
-
-			_threeTests.Matches(5m.Xts());
-			_threeTests.WriteMessageTo(writer);
-
-			Assert.That(writer.ToString(), Is.StringContaining("Amount").And.StringContaining("3m").And.StringContaining("5m"));
+			Assert.That(getMessage(_threeTests, 5m.Xts()), Does.Contain("Amount")
+				.And.Contain("3m")
+				.And.Contain("5m"));
 		}
 
 		[Test]
 		public void WriteMessage_NonMatchingBothMembers_ContainsUsefulInformation()
 		{
-			TextMessageWriter writer = new TextMessageWriter();
-
-			_threeTests.Matches(1.5m.Usd());
-			_threeTests.WriteMessageTo(writer);
-
-			Assert.That(writer.ToString(), Is
-				.StringContaining("Amount").And.StringContaining("3m").And.StringContaining("1.5m")
-				.And.StringContaining("Currency").And.StringContaining("XTS")
-				.And.Not.StringContaining("USD"),
+			Assert.That(getMessage(_threeTests, 11.5m.Usd()), Does.Contain("Amount")
+				.And.Contain("3m")
+				.And.Contain("1.5m")
+				.And.Contain("Currency")
+				.And.Contain("XTS")
+				.And.Not.Contains("USD"),
 				"AndConstraint() does not include all information in the message");
 		}
 	}

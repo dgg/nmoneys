@@ -215,8 +215,8 @@ namespace NMoneys.Tests
 		{
 			Assert.That(() => Currency.Code.Cast(46),
 				Throws.InstanceOf<InvalidEnumArgumentException>()
-					.With.Message.StringContaining("46")
-					.And.Message.StringContaining("CurrencyIsoCode"));
+					.With.Message.Contains("46")
+					.And.Message.Contains("CurrencyIsoCode"));
 		}
 
 		#endregion

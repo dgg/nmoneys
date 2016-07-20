@@ -32,15 +32,13 @@ namespace NMoneys.Tests.Support
 			Assert.That(() => GroupSizes.FromTokenizedSizes(wrongTokenizer), Throws.InstanceOf<FormatException>());
 		}
 
-		[TestCase("0 3", ExpectedException = typeof(ArgumentException))]
-		[TestCase("-4 -3", ExpectedException = typeof(ArgumentException))]
-		[TestCase("a b", ExpectedException = typeof(FormatException))]
-		[TestCase(null, ExpectedException = typeof(ArgumentNullException))]
-		public void FromTokenizedSizes_NotASizeChain_Exception(string notAChainOfSizes)
+		[TestCase("0 3", typeof(ArgumentException))]
+		[TestCase("-4 -3", typeof(ArgumentException))]
+		[TestCase("a b", typeof(FormatException))]
+		[TestCase(null, typeof(ArgumentNullException))]
+		public void FromTokenizedSizes_NotASizeChain_Exception(string notAChainOfSizes, Type expectedException)
 		{
-			GroupSizes.FromTokenizedSizes(notAChainOfSizes);
-
-			Assert.Fail("An exception should have been thrown before");
+			Assert.That(() => GroupSizes.FromTokenizedSizes(notAChainOfSizes), Throws.InstanceOf(expectedException));
 		}
 
 		#endregion
@@ -61,14 +59,12 @@ namespace NMoneys.Tests.Support
 			Assert.That(subject.TokenizedSizes, Is.EqualTo(tokenizedSizes));
 		}
 
-		[TestCase(null, ExpectedException = typeof(ArgumentNullException))]
-		[TestCase(new[] { -3 }, ExpectedException = typeof(ArgumentException))]
-		[TestCase(new[] { 0, 3 }, ExpectedException = typeof(ArgumentException))]
-		public void FromSizes_IncorrectSizes_Exception(int[] incorrectSizes)
+		[TestCase(null, typeof(ArgumentNullException))]
+		[TestCase(new[] { -3 }, typeof(ArgumentException))]
+		[TestCase(new[] { 0, 3 }, typeof(ArgumentException))]
+		public void FromSizes_IncorrectSizes_Exception(int[] incorrectSizes, Type expectedException)
 		{
-			GroupSizes.FromSizes(incorrectSizes);
-
-			Assert.Fail("An exception should have been thrown before");
+			Assert.That(()=> GroupSizes.FromSizes(incorrectSizes), Throws.InstanceOf(expectedException));
 		}
 
 		#endregion

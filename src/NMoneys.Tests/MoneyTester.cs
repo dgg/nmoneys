@@ -99,7 +99,7 @@ namespace NMoneys.Tests
 		{
 			CurrencyIsoCode nonExistingCode = (CurrencyIsoCode)(-7);
 
-			Assert.That(() => new Money(decimal.Zero, nonExistingCode), Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.StringContaining("-7"));
+			Assert.That(() => new Money(decimal.Zero, nonExistingCode), Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.Contains("-7"));
 		}
 
 		[Test]
@@ -165,42 +165,42 @@ namespace NMoneys.Tests
 			Assert.That(new Money(3.0000001m, Currency.Usd).HasDecimals, Is.True);
 		}
 
-		[TestCaseSource("sameCurrency")]
+		[TestCaseSource(nameof(sameCurrency))]
 		public void HasSameCurrency_SameCurrency_True(Money subject, Money argument)
 		{
 			Assert.That(subject.HasSameCurrencyAs(argument), Is.True);
 		}
 
-		[TestCaseSource("differentCurrency")]
+		[TestCaseSource(nameof(differentCurrency))]
 		public void HasSameCurrency_DifferentCurrency_False(Money subject, Money argument)
 		{
 			Assert.That(subject.HasSameCurrencyAs(argument), Is.False);
 		}
 
-		[TestCaseSource("sameCurrency")]
+		[TestCaseSource(nameof(sameCurrency))]
 		public void AssertSameCurrency_SameCurrency_NoException(Money subject, Money argument)
 		{
 			Assert.That(() => subject.AssertSameCurrency(argument), Throws.Nothing);
 		}
 
-		[TestCaseSource("differentCurrency")]
+		[TestCaseSource(nameof(differentCurrency))]
 		public void AssertSameCurrency_DifferentCurrency_Exception(Money subject, Money argument)
 		{
 			Assert.That(() => subject.AssertSameCurrency(argument), Throws.InstanceOf<DifferentCurrencyException>());
 		}
 
 #pragma warning disable 169
-		private static readonly object[] sameCurrency = new object[]
+		private static readonly object[] sameCurrency =
 		{
 			new object[] {fiver, fiver},
-			new object[] {fiver, tenner},			
-			new object[] {tenner, fiver},
+			new object[] {fiver, tenner},
+			new object[] {tenner, fiver}
 		};
 
-		private static readonly object[] differentCurrency = new object[]
+		private static readonly object[] differentCurrency =
 		{
 			new object[] {fiver, hund },
-			new object[] {hund, fiver },
+			new object[] {hund, fiver }
 		};
 #pragma warning restore 169
 
