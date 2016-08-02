@@ -158,4 +158,15 @@ function Find-Versioned-Folder($base, $beginning)
     return  $dir[0]
 }
 
-export-modulemember -function Throw-If-Error, Ensure-Release-Folders, Build-Documentation, Copy-Artifacts, Generate-Packages, Generate-Zip-Files, Sign-Assemblies, Find-Versioned-Folder
+function Fetch-Tools($base)
+{
+	$tools_dir = Join-Path $base tools
+	
+	$nuget = Join-Path $tools_dir Nuget\Nuget.exe
+	& "$nuget" install opencover -OutputDirectory $tools_dir
+	
+	$codecov = Join-Path (Resolve-Path $tools_dir) codecov.sh
+	(New-Object System.Net.WebClient).DownloadFile("https://codecov.io/bash", $codecov)
+}
+
+export-modulemember -function Throw-If-Error, Ensure-Release-Folders, Build-Documentation, Copy-Artifacts, Generate-Packages, Generate-Zip-Files, Sign-Assemblies, Find-Versioned-Folder, Fetch-Tools
