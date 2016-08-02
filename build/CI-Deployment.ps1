@@ -20,7 +20,7 @@ function push-coverage($base)
 	$codecov = Join-Path (Resolve-Path $tools_dir) codecov.sh
 	Write-Host $codecov
 	
-	$coverage_result = release/CoverageResult.xml
+	$coverage_result = 'release/CoverageResult.xml'
 	
 	& "$codecov" -f $coverage_result -t $token.Value -X gcov
 	Throw-If-Error "Could not upload coverage"
