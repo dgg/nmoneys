@@ -20,6 +20,7 @@ function push-coverage($base)
 	$coverage_result = Join-Path $base release\CoverageResult.xml
 	
 	& "$codecov" -f $coverage_result -t $token -X gcov
+	Throw-If-Error "Could not upload coverage"
 }
 
 push-package-artifact 'NMoneys' 'nmoneys'
