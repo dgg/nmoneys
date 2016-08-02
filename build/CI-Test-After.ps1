@@ -1,6 +1,6 @@
 $configuration = Get-ChildItem Env:CONFIGURATION
 
-Generate-Coverage . $configuration
+Generate-Coverage . $configuration.Value
 
 Generate-Packages .
 
