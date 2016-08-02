@@ -15,9 +15,13 @@ function push-zip-artifact($zipFragment, $artifactName, $zipType)
 function push-coverage($base)
 {
 	$token = Get-ChildItem Env:CODECOV_TOKEN
+	Write-Host $token
 	$tools_dir = Join-Path $base tools
 	$codecov = Join-Path (Resolve-Path $tools_dir) codecov.sh
+	Write-Host $codecov
+	
 	$coverage_result = Join-Path $base release\CoverageResult.xml
+	Write-Host $coverage_result
 	
 	& "$codecov" -f $coverage_result -t $token -X gcov
 	Throw-If-Error "Could not upload coverage"
