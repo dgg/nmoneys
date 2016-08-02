@@ -2,23 +2,25 @@ function push-package-artifact($packageFragment, $artifactName)
 {
 	$pkg = Get-ChildItem -File ".\release\$packageFragment*.nupkg" |
 		? { $_.Name -match "$packageFragment\.(\d(?:\.\d){3})" }
-	Push-AppveyorArtifact $pkg -DeploymentName $artifactName
+	#Push-AppveyorArtifact $pkg -DeploymentName $artifactName
 }
 
 function push-zip-artifact($zipFragment, $artifactName, $zipType)
 {
 	$zip = Get-ChildItem -File ".\release\$zipFragment*-$zipType.zip" |
 		? { $_.Name -match "$zipFragment\.(\d(?:\.\d){3})" }
-	Push-AppveyorArtifact $zip -DeploymentName $artifactName
+	#Push-AppveyorArtifact $zip -DeploymentName $artifactName
 }
 
 function push-coverage($base)
 {
 	$token = Get-ChildItem Env:CODECOV_TOKEN
+	Write-Host $token.Value
 	$tools_dir = Join-Path $base tools
 	$codecov = Join-Path (Resolve-Path $tools_dir) codecov.sh
-		
-	$coverage_result = Join-Path $base release\CoverageResult.xml
+	Write-Host $codecov
+	
+	$coverage_result = release/CoverageResult.xml
 	
 	& "$codecov" -f $coverage_result -t $token.Value -X gcov
 	Throw-If-Error "Could not upload coverage"
