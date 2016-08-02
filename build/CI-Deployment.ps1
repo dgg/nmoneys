@@ -12,6 +12,16 @@ function push-zip-artifact($zipFragment, $artifactName, $zipType)
 	Push-AppveyorArtifact $zip -DeploymentName $artifactName
 }
 
+function push-coverage($base)
+{
+	$token = Get-ChildItem Env:CODECOV_TOKEN
+	$tools_dir = Join-Path $base tools
+	$codecov = Join-Path (Resolve-Path $tools_dir) codecov.sh
+	$coverage_result = Join-Path $base release\CoverageResult.xml
+	
+	& "$codecov" -f $coverage_result -t $token -X gcov
+}
+
 push-package-artifact 'NMoneys' 'nmoneys'
 
 push-package-artifact 'NMoneys.Exchange' 'nmoneys_exchange'
@@ -33,3 +43,5 @@ push-zip-artifact 'NMoneys' 'nmoneys_zip' 'bin'
 push-zip-artifact 'NMoneys' 'nmoneys_signed_zip' 'signed'
 
 push-zip-artifact 'NMoneys.Exchange' 'nmoneys_exchange_zip' 'bin'
+
+push-coverage .
