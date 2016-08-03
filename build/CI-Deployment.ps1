@@ -17,16 +17,15 @@ function push-coverage($base)
 	$coveralls_dir = Find-Versioned-Folder -base $base\tools -beginning 'coveralls'
 	$coveralls = Join-Path $coveralls_dir tools\csmacnz.Coveralls.exe
 	
-	$token = Get-ChildItem Env:COVERALLS_TOKEN
 	$coverage_result = Join-Path $base release\CoverageResult.xml
 	
 	& $coveralls --opencover -i $coverage_result --repoToken $env:COVERALLS_TOKEN --useRelativePaths --serviceName appveyor --commitId $env:APPVEYOR_REPO_COMMIT --commitBranch $env:APPVEYOR_REPO_BRANCH --commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE --jobId $env:APPVEYOR_BUILD_NUMBER
-	Throw-If-Error "Could not upload coverage"
+	Throw-If-Error "Could not upload coverage to Coveralls.io"
 	
 	$env:Path = "C:\\Python34;C:\\Python34\\Scripts;" + $env:Path
-	Write-Host $env.Path
 	pip install codecov
-	& "codecov" --file $coverage_result --token "4a14c6dd-42bd-45d4-88db-f804e53a4082"
+	& "codecov" --file $coverage_result --token "$env:CODECOV_TOKEN" -x gcov
+	Throw-If-Error "Could not upload coverage to Codecov.io"
 }
 
 push-package-artifact 'NMoneys' 'nmoneys'
