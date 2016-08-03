@@ -1,6 +1,3 @@
-Remove-Module [N]Moneys
-Import-Module .\build\NMoneys.psm1 -DisableNameChecking
-
 function push-package-artifact($packageFragment, $artifactName)
 {
 	$pkg = Get-ChildItem -File ".\release\$packageFragment*.nupkg" |
@@ -27,7 +24,7 @@ function push-coverage($base)
 	Throw-If-Error "Could not upload coverage"
 }
 
-<#push-package-artifact 'NMoneys' 'nmoneys'
+push-package-artifact 'NMoneys' 'nmoneys'
 
 push-package-artifact 'NMoneys.Exchange' 'nmoneys_exchange'
 
@@ -47,6 +44,6 @@ push-zip-artifact 'NMoneys' 'nmoneys_zip' 'bin'
 
 push-zip-artifact 'NMoneys' 'nmoneys_signed_zip' 'signed'
 
-push-zip-artifact 'NMoneys.Exchange' 'nmoneys_exchange_zip' 'bin'#>
+push-zip-artifact 'NMoneys.Exchange' 'nmoneys_exchange_zip' 'bin'
 
 push-coverage .
