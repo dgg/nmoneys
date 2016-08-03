@@ -26,7 +26,7 @@ function push-coverage($base)
 	$env:Path = "C:\\Python34;C:\\Python34\\Scripts;" + $env:Path
 	Write-Host $env.Path
 	pip install codecov
-	& "codecov" -f $coverage_result -token "4a14c6dd-42bd-45d4-88db-f804e53a4082"
+	& "codecov" --file $coverage_result --token "4a14c6dd-42bd-45d4-88db-f804e53a4082"
 }
 
 push-package-artifact 'NMoneys' 'nmoneys'
