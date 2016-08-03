@@ -4,6 +4,8 @@ Implementation of the Money Value Object to support representing moneys in the c
 
 [![Build status](https://ci.appveyor.com/api/projects/status/n8378j7abyui3hwb?svg=true)](https://ci.appveyor.com/project/dgg/nmoneys)
 [![Coverage Status](https://coveralls.io/repos/github/dgg/nmoneys/badge.svg?branch=master)](https://coveralls.io/github/dgg/nmoneys?branch=master)
+[![codecov](https://codecov.io/gh/dgg/nmoneys/branch/master/graph/badge.svg)](https://codecov.io/gh/dgg/nmoneys)
+
 
 # What
 
