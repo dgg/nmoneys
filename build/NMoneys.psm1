@@ -158,38 +158,19 @@ function Find-Versioned-Folder($base, $beginning)
     return  $dir[0]
 }
 
-function Fetch-Tools($base)
+function Find-Test-Assemblies($base, $configuration)
 {
-	$tools_dir = Join-Path $base tools
-	
-	$nuget = Join-Path $tools_dir Nuget\Nuget.exe
-	& "$nuget" install opencover -OutputDirectory $tools_dir
-	
-	$codecov = Join-Path (Resolve-Path $tools_dir) codecov.sh
-	(New-Object System.Net.WebClient).DownloadFile("https://codecov.io/bash", $codecov)
+	$core = get-test-assembly $base $configuration "NMoneys"
+	$exchange = get-test-assembly $base $configuration "NMoneys.Exchange"
+	$serialization = get-test-assembly $base $configuration "NMoneys.Serialization"
+	$mongo_db = get-test-assembly $base $configuration "NMoneys.Serialization.Mongo_DB"
+
+	return ($core, $exchange, $serialization, $mongo_db)
 }
 
-function Get-Test-Assembly($base, $config, $name)
+function get-test-assembly($base, $config, $name)
 {
 	return "$base\src\$name.Tests\bin\$config\$name.Tests.dll"
 }
 
-function Generate-Coverage($base, $configuration)
-{
-	$core = Get-Test-Assembly $base $configuration "NMoneys"
-	$exchange = Get-Test-Assembly $base $configuration "NMoneys.Exchange"
-	$serialization = Get-Test-Assembly $base $configuration "NMoneys.Serialization"
-	$mongo_db = Get-Test-Assembly $base $configuration "NMoneys.Serialization.Mongo_DB"
-	$test_assemblies = ($core, $exchange, $serialization, $mongo_db) -join " "
-	
-	$runner_dir = Find-Versioned-Folder -base $base\tools -beginning 'NUnit.ConsoleRunner'
-	$nunit_console = Join-Path $runner_dir tools\nunit3-console.exe
-	
-	$coverage_dir = Find-Versioned-Folder -base $base\tools -beginning 'OpenCover'
-	$opencover = Join-Path $coverage_dir tools\OpenCover.Console.exe
-	$coverage_result = Join-Path $base release\CoverageResult.xml
-	
-	& "$opencover" -target:$nunit_console -targetargs:"$test_assemblies" -filter:"+[*]* -[*.Tests*]* -[*]*.*Config" -mergebyhash -skipautoprops -register:path64 -output:$coverage_result
-}
-
-export-modulemember -function Throw-If-Error, Ensure-Release-Folders, Build-Documentation, Copy-Artifacts, Generate-Packages, Generate-Zip-Files, Sign-Assemblies, Find-Versioned-Folder, Fetch-Tools, Get-Test-Assembly, Generate-Coverage
+export-modulemember -function Throw-If-Error, Ensure-Release-Folders, Build-Documentation, Copy-Artifacts, Generate-Packages, Generate-Zip-Files, Sign-Assemblies, Find-Versioned-Folder, Find-Test-Assemblies

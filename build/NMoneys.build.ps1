@@ -35,12 +35,9 @@ task importModule {
 }
 
 task Test -depends ensureRelease {
-	$core = Get-Test-Assembly $base_dir $configuration "NMoneys"
-	$exchange = Get-Test-Assembly $base_dir $configuration "NMoneys.Exchange"
-	$serialization = Get-Test-Assembly $base_dir $configuration "NMoneys.Serialization"
-	$mongo_db = Get-Test-Assembly $base_dir $configuration "NMoneys.Serialization.Mongo_DB"
+	$test_assemblies = Find-Test-Assemblies $base_dir $configuration
 
-	run-tests $base_dir $release_dir ($core, $exchange, $serialization, $mongo_db)
+	run-tests $base_dir $release_dir $test_assemblies
 	report-on-test-results $base_dir $release_dir
 }
 

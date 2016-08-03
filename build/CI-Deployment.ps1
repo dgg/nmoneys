@@ -1,3 +1,6 @@
+Remove-Module [N]Moneys
+Import-Module .\build\NMoneys.psm1 -DisableNameChecking
+
 function push-package-artifact($packageFragment, $artifactName)
 {
 	$pkg = Get-ChildItem -File ".\release\$packageFragment*.nupkg" |
@@ -14,16 +17,17 @@ function push-zip-artifact($zipFragment, $artifactName, $zipType)
 
 function push-coverage($base)
 {
-	$token = Get-ChildItem Env:CODECOV_TOKEN
-	$tools_dir = Join-Path $base tools
-	$codecov = Join-Path (Resolve-Path $tools_dir) codecov.sh
-	$coverage_result = 'release/CoverageResult.xml'
+	$coveralls_dir = Find-Versioned-Folder -base $base\tools -beginning 'coveralls'
+	$coveralls = Join-Path $coveralls_dir tools\csmacnz.Coveralls.exe
 	
-	& "$codecov" -f $coverage_result -t $token.Value -X gcov
-	#Throw-If-Error "Could not upload coverage"
+	$token = Get-ChildItem Env:COVERALLS_TOKEN
+	$coverage_result = Join-Path $base release\CoverageResult.xml
+	
+	& $coveralls --opencover -i $coverage_result --repoToken $env:COVERALLS_TOKEN --useRelativePaths --serviceName appveyor --commitId $env:APPVEYOR_REPO_COMMIT --commitBranch $env:APPVEYOR_REPO_BRANCH --commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE --jobId $env:APPVEYOR_BUILD_NUMBER
+	Throw-If-Error "Could not upload coverage"
 }
 
-push-package-artifact 'NMoneys' 'nmoneys'
+<#push-package-artifact 'NMoneys' 'nmoneys'
 
 push-package-artifact 'NMoneys.Exchange' 'nmoneys_exchange'
 
@@ -43,6 +47,6 @@ push-zip-artifact 'NMoneys' 'nmoneys_zip' 'bin'
 
 push-zip-artifact 'NMoneys' 'nmoneys_signed_zip' 'signed'
 
-push-zip-artifact 'NMoneys.Exchange' 'nmoneys_exchange_zip' 'bin'
+push-zip-artifact 'NMoneys.Exchange' 'nmoneys_exchange_zip' 'bin'#>
 
 push-coverage .
