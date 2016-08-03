@@ -14,7 +14,7 @@ function generate-coverage($base, $configuration)
 	
 	& "$opencover" -target:$nunit_console -targetargs:"$test_args" -filter:"+[*]* -[*.Tests*]* -[*]*.*Config" -mergebyhash -skipautoprops -register:path64 -output:"$coverage_result"
 }
-generate-coverage . $env.CONFIGURATION
+generate-coverage . $env:CONFIGURATION
 
 Generate-Packages .
 
