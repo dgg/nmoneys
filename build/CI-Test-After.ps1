@@ -1,5 +1,3 @@
-$configuration = Get-ChildItem Env:CONFIGURATION
-
 function generate-coverage($base, $configuration)
 {
 	$runner_dir = Find-Versioned-Folder -base $base\tools -beginning 'NUnit.ConsoleRunner'
@@ -16,7 +14,7 @@ function generate-coverage($base, $configuration)
 	
 	& "$opencover" -target:$nunit_console -targetargs:"$test_args" -filter:"+[*]* -[*.Tests*]* -[*]*.*Config" -mergebyhash -skipautoprops -register:path64 -output:"$coverage_result"
 }
-generate-coverage . $configuration.Value
+generate-coverage . $env.CONFIGURATION
 
 Generate-Packages .
 

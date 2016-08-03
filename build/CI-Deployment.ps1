@@ -24,7 +24,7 @@ function push-coverage($base)
 	
 	$env:Path = "C:\\Python34;C:\\Python34\\Scripts;" + $env:Path
 	pip install codecov
-	& "codecov" --file $coverage_result --token "$env:CODECOV_TOKEN" -x gcov
+	& "codecov" --file $coverage_result --token "$env:CODECOV_TOKEN" -X gcov
 	Throw-If-Error "Could not upload coverage to Codecov.io"
 }
 
