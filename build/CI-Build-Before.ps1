@@ -14,5 +14,4 @@ function fetch-extra-tools($base)
 
 Ensure-Release-Folders .
 fetch-extra-tools .
-Write-Host $env:Path
 

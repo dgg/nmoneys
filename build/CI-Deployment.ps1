@@ -23,7 +23,8 @@ function push-coverage($base)
 	& $coveralls --opencover -i $coverage_result --repoToken $env:COVERALLS_TOKEN --useRelativePaths --serviceName appveyor --commitId $env:APPVEYOR_REPO_COMMIT --commitBranch $env:APPVEYOR_REPO_BRANCH --commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE --jobId $env:APPVEYOR_BUILD_NUMBER
 	Throw-If-Error "Could not upload coverage"
 	
-	$env:Path += ";C:\\Python34;C:\\Python34\\Scripts;"
+	$env:Path = "C:\\Python34;C:\\Python34\\Scripts;" + $env:Path
+	Write-Host $env.Path
 	pip install codecov
 	& "codecov" -f $coverage_result -token "4a14c6dd-42bd-45d4-88db-f804e53a4082"
 }
