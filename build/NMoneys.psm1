@@ -142,11 +142,12 @@ function Sign-Assemblies($base, $configuration)
 {
 	$assembly = Join-Path $base \src\NMoneys\bin\$configuration\NMoneys.dll
 	$il_file = Join-Path $base \release\signed\NMoneys.il
+	$res_file = Join-Path $Base \release\signed\NMoneys.res
 	$signed_assembly = Join-Path $base \release\signed\NMoneys.dll
 	
 	ildasm $assembly /out:$il_file
 	Throw-If-Error "Could disassemble $assembly_file"
-	ilasm $il_file /dll /key=$base\NMoneys.key.snk /output=$signed_assembly /quiet
+	ilasm $il_file /dll /key=$base\NMoneys.key.snk /output=$signed_assembly /quiet /res=$res_file
 	Throw-If-Error "Could not assemble $il_file"
 }
 
