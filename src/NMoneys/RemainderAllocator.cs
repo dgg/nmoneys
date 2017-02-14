@@ -22,7 +22,7 @@ namespace NMoneys
 		/// the first recipient until the remainder has been fully allocated.
 		/// </summary>
 		/// <remarks>
-		/// In the case of a dollar split three ways the extra penny to the first receipient 
+		/// In the case of a dollar split three ways the extra penny to the last receipient 
 		/// and the allocation is done.
 		/// </remarks>
 		public static readonly IRemainderAllocator LastToFirst = new LastToFirstAllocator();
