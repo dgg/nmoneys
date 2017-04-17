@@ -20,7 +20,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
@@ -29,7 +29,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;NET</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\NMoneys.XML</DocumentationFile>
@@ -44,10 +44,10 @@
   <ItemGroup>
     <Compile Include="Allocations\Allocation.cs" />
     <Compile Include="Allocations\EvenAllocator.cs" />
-    <Compile Include="Allocations\FirstToLastAllocator.cs"/>
+    <Compile Include="Allocations\FirstToLastAllocator.cs" />
     <Compile Include="Allocations\IRemainderAllocator.cs" />
     <Compile Include="Allocations\ProRataAllocator.cs" />
-    <Compile Include="Allocations\RandomAllocator.cs"/>
+    <Compile Include="Allocations\RandomAllocator.cs" />
     <Compile Include="Allocations\Ratio.cs" />
     <Compile Include="Allocations\RatioCollection.cs" />
     <Compile Include="Allocations\RemainderAllocatorBase.cs" />
