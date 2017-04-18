@@ -52,8 +52,7 @@ namespace NMoneys.Support
 				int[] codePoints = split(tokenizedCodePoints)
 					.Select(cp => Convert.ToInt32(cp.Trim(), CultureInfo.InvariantCulture))
 					.ToArray();
-				string symbol = string.Empty;
-				Array.ForEach(codePoints, cp => symbol += char.ConvertFromUtf32(cp));
+				string symbol = codePoints.Aggregate(string.Empty, (current, codePoint) => current + char.ConvertFromUtf32(codePoint));
 				unicode = new UnicodeSymbol(codePoints, symbol);
 			}
 
