@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using NMoneys.Support;
 
@@ -15,15 +14,15 @@ namespace NMoneys
 	{
 		/// <summary>Default string comparison for the <see cref="Currency.EnglishName"/> member.</summary>
 		/// <remarks>A case-sensitive string comparison using the word comparison rules of a neutral-english culture (LCID 0009, <c>en</c>) is used.</remarks>
-		public static IEqualityComparer<string> DefaultEnglishComparer => StringComparer.Create(Culture.Get("en"), false);
+		public static IEqualityComparer<string> DefaultEnglishComparer => Comparer.Build(Culture.Get("en"));
 
 		/// <summary>Default string comparison for the <see cref="Currency.NativeName"/> member.</summary>
 		/// <remarks>A case-sensitive string comparison using the word comparison rules of the invariant culture is used.</remarks>
-		public static IEqualityComparer<string> DefaultNativeComparer => StringComparer.InvariantCulture;
+		public static IEqualityComparer<string> DefaultNativeComparer => Comparer.Invariant;
 
 		/// <summary>Default string comparison for the <see cref="Currency.Symbol"/> member.</summary>
 		/// <remarks>A case-sensitive string comparison using the word comparison rules of the invariant culture is used.</remarks>
-		public static IEqualityComparer<string> DefaultSymbolComparer => StringComparer.InvariantCulture;
+		public static IEqualityComparer<string> DefaultSymbolComparer => Comparer.Invariant;
 
 		/// <summary>Default string comparison for the <see cref="Currency.DecimalSeparator"/> and <see cref="Currency.GroupSeparator"/> members.</summary>
 		/// <remarks>An case-sensitive ordinal string comparison is used.</remarks>
