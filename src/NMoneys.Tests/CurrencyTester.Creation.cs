@@ -47,13 +47,6 @@ namespace NMoneys.Tests
 			Assert.That(Currency.Get(spanish), Is.SameAs(Currency.Eur));
 		}
 
-		[Test]
-		public void Get_NoRegionForCulture_Exception()
-		{
-			CultureInfo neutralSpanish = CultureInfo.GetCultureInfo("es");
-			Assert.That(() => Currency.Get(neutralSpanish), Throws.ArgumentException);
-		}
-
 		[Test, Platform(Include = "Net-2.0")]
 		public void Get_OutdateFrameworkCurrencySymbol_Exception()
 		{
