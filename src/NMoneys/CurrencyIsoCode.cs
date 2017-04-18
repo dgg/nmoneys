@@ -7,9 +7,11 @@ namespace NMoneys
 	/// <summary>
 	/// Currency codes as stated by the ISO 4217 standard 
 	/// </summary>
-	/// <seealso href="http://www.iso.org/iso/support/currency_codes_list-1.htm" />
+	/// <seealso href="http://www.iso.org/iso/support/currency_codes_list-1.htm" /
+# if NET
 	[XmlRoot(Namespace = Serialization.Data.NAMESPACE, ElementName = Serialization.Data.Currency.ISO_CODE, DataType = Serialization.Data.Currency.DATA_TYPE, IsNullable = false)]
 	[DataContract(Namespace = Serialization.Data.NAMESPACE, Name = Serialization.Data.Currency.ISO_CODE)]
+#endif
 	public enum CurrencyIsoCode : short
 	{
 		///<summary>
