@@ -15,7 +15,7 @@ namespace NMoneys
 	{
 		/// <summary>Default string comparison for the <see cref="Currency.EnglishName"/> member.</summary>
 		/// <remarks>A case-sensitive string comparison using the word comparison rules of a neutral-english culture (LCID 0009, <c>en</c>) is used.</remarks>
-		public static IEqualityComparer<string> DefaultEnglishComparer => StringComparer.Create(CultureInfo.GetCultureInfo(9), false);
+		public static IEqualityComparer<string> DefaultEnglishComparer => StringComparer.Create(Culture.Get("en"), false);
 
 		/// <summary>Default string comparison for the <see cref="Currency.NativeName"/> member.</summary>
 		/// <remarks>A case-sensitive string comparison using the word comparison rules of the invariant culture is used.</remarks>

@@ -120,6 +120,7 @@
     <None Include="Currencies.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Compile Include="Support\Culture.polyfill.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -90,7 +90,7 @@ namespace NMoneys
 		public static Currency Get(CultureInfo culture)
 		{
 			Guard.AgainstNullArgument(nameof(culture), culture);
-			return Get(new RegionInfo(culture.LCID));
+			return Get(new RegionInfo(culture.Name));
 		}
 
 		/// <summary>
@@ -207,7 +207,7 @@ namespace NMoneys
 
 			if (culture != null && !culture.IsNeutralCulture && !culture.Equals(CultureInfo.InvariantCulture))
 			{
-				var region = new RegionInfo(culture.LCID);
+				var region = new RegionInfo(culture.Name);
 				tryGet = TryGet(region, out currency);
 			}
 			return tryGet;
