@@ -111,11 +111,7 @@ namespace NMoneys
 
 		public void Dispose()
 		{
-			if (_stream != null)
-			{
-				_stream.Close();
-				_stream.Dispose();
-			}
+			_stream?.Finalize();
 		}
 	}
 }
