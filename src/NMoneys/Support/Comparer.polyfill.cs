@@ -10,7 +10,7 @@ namespace NMoneys.Support
 #if NET
 			return StringComparer.Create(ci, ignoreCase);
 #else
-			return new CultureComparer(ci, ignoreCase);
+			return new CultureComparer(ci.CompareInfo, ignoreCase);
 #endif
 		}
 

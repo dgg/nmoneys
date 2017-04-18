@@ -13,7 +13,7 @@ namespace NMoneys.Support
 		private static void assertEnum<TEnum>() where TEnum : struct, IComparable, IFormattable, IConvertible
 		{
 			Type tEnum = typeof(TEnum);
-			if (!tEnum.IsEnum)
+			if (!Reflect.IsEnum(tEnum))
 			{
 				throw new ArgumentException(
 					$"The type {tEnum.Name} is not an enumeration",
@@ -141,7 +141,7 @@ namespace NMoneys.Support
 			bool result = false;
 			attribute = null;
 			FieldInfo field = fieldOf(value);
-			object[] attributes = field.GetCustomAttributes(typeof(TAttr), false);
+			Attribute[] attributes = Reflect.Attributes<TAttr>(field, false);
 			if (attributes.Length == 1)
 			{
 				result = true;
@@ -152,7 +152,7 @@ namespace NMoneys.Support
 
 		private static FieldInfo fieldOf<TEnum>(TEnum value) where TEnum : struct, IComparable, IFormattable, IConvertible
 		{
-			return typeof(TEnum).GetField(value.ToString(CultureInfo.InvariantCulture));
+			return Reflect.Field<TEnum>(value.ToString(CultureInfo.InvariantCulture));
 		}
 
 		public static IEqualityComparer<TEnum> Comparer<TEnum>() where TEnum : struct, IComparable, IFormattable, IConvertible

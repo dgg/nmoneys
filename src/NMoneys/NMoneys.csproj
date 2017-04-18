@@ -92,6 +92,7 @@
     <Compile Include="Serialization\Data.net.cs" />
     <Compile Include="Serialization\DataContractSurrogate.net.cs" />
     <Compile Include="Support\Comparer.polyfill.cs" />
+    <Compile Include="Support\Reflect.polyfill.cs" />
     <Compile Include="Support\Stringifier.cs" />
     <Compile Include="Support\GroupSizes.cs" />
     <Compile Include="Support\Enumeration.cs" />

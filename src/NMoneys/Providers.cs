@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
-using System.Reflection;
 using System.Resources;
 using System.Xml.XPath;
+using NMoneys.Support;
 using NMoneys.Support.Ext;
 
 namespace NMoneys
@@ -21,7 +21,7 @@ namespace NMoneys
 
 		internal static Stream GetStream()
 		{
-			Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(_resourceName);
+			Stream stream = Reflect.ResourceInSameAssembly<Currency>(_resourceName);
 			if (stream == null) throw new MissingManifestResourceException(_resourceName);
 			return stream;
 		}

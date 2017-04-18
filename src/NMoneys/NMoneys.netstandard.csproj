@@ -22,6 +22,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Currencies.xml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="Currencies.xml" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <PackageReference Include="System.Diagnostics.Contracts" Version="4.3.0" />
 	  <PackageReference Include="System.Xml.XPath" Version="4.3.0" />
 	</ItemGroup>
