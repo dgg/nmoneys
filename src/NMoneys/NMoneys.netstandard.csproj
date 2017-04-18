@@ -23,5 +23,6 @@
 
 	<ItemGroup>
 	  <PackageReference Include="System.Diagnostics.Contracts" Version="4.3.0" />
+	  <PackageReference Include="System.Xml.XPath" Version="4.3.0" />
 	</ItemGroup>
 </Project>

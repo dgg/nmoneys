@@ -6,8 +6,7 @@ namespace NMoneys
 	/// <summary>
 	/// The exception that is thrown when a currency has not been properly configured.
 	/// </summary>
-	[Serializable]
-	public class MisconfiguredCurrencyException : Exception
+	public partial class MisconfiguredCurrencyException : Exception
 	{
 		/// <summary>
 		/// Initializes a new instance of <see cref="MisconfiguredCurrencyException"/>.
@@ -34,20 +33,12 @@ namespace NMoneys
 		/// <param name="message">A message that describes why this exception was thrown.</param>
 		/// <param name="inner">The exception that caused this exception to be thrown.</param>
 		public MisconfiguredCurrencyException(string message, Exception inner) : base(message, inner) { }
-
-		/// <summary>
-		/// Initializes a new instace of <see cref="MisconfiguredCurrencyException"/> with serialized data
-		/// </summary>
-		/// <param name="info">The <see cref="SerializationInfo"/> that holds the serialized object data about the <see cref="MisconfiguredCurrencyException"/>.</param>
-		/// <param name="context">The <see cref="StreamingContext"/> that contains contextual information about the source or destination.</param>
-		protected MisconfiguredCurrencyException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 	}
 
 	/// <summary>
 	/// Currency that is thrown when two instances of <see cref="Money"/> are passed onto an opeation that can only be performed when they have the same currency.
 	/// </summary>
-	[Serializable]
-	public class DifferentCurrencyException : InvalidOperationException
+	public partial class DifferentCurrencyException : InvalidOperationException
 	{
 		/// <summary>
 		/// Initializes a new instance of <see cref="DifferentCurrencyException"/>.
@@ -75,13 +66,6 @@ namespace NMoneys
 		/// <param name="message">A message that describes why this exception was thrown.</param>
 		/// <param name="inner">The exception that caused this exception to be thrown.</param>
 		public DifferentCurrencyException(string message, Exception inner) : base(message, inner) { }
-
-		/// <summary>
-		/// Initializes a new instace of <see cref="DifferentCurrencyException"/> with serialized data
-		/// </summary>
-		/// <param name="info">The <see cref="SerializationInfo"/> that holds the serialized object data about the <see cref="DifferentCurrencyException"/>.</param>
-		/// <param name="context">The <see cref="StreamingContext"/> that contains contextual information about the source or destination.</param>
-		protected DifferentCurrencyException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 
 		/// <summary>
 		/// Textual template to create the default <see cref="Exception.Message"/> of an instance of <see cref="DifferentCurrencyException"/>

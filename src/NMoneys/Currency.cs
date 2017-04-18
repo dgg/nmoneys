@@ -31,17 +31,13 @@ namespace NMoneys
 		/// <summary>
 		/// Gets the name, in English, of the <see cref="Currency"/>.
 		/// </summary>
-#if NET
 		[XmlIgnore]
-#endif
 		public string EnglishName { get; private set; }
 
 		/// <summary>
 		/// Gets the currency symbol associated with the <see cref="Currency"/>.
 		/// </summary>
-#if NET
 		[XmlIgnore]
-#endif
 		public string Symbol { get; private set; }
 
 		/// <summary>
@@ -52,91 +48,69 @@ namespace NMoneys
 		/// <summary>
 		/// Textual representation of the ISO 4217 code
 		/// </summary>
-#if NET
 		[XmlIgnore]
-#endif
 		public string IsoSymbol { get; private set; }
 
 		/// <summary>
 		/// Indicates the number of decimal places to use in currency values.
 		/// </summary>
-#if NET
 		[XmlIgnore]
-#endif
 		public int SignificantDecimalDigits { get; private set; }
 
 		/// <summary>
 		/// Represents the smalles amount that can be represented for the currency according to its <see cref="SignificantDecimalDigits"/>.
 		/// </summary>
-#if NET
 		[XmlIgnore]
-#endif
 		public decimal MinAmount => PowerOfTen.Negative(this);
 
 		/// <summary>
 		/// Gets the name of the currency formatted in the native language of the country/region where the currency is used. 
 		/// </summary>
-#if NET
 		[XmlIgnore]
-#endif
 		public string NativeName { get; private set; }
 
 		/// <summary>
 		/// Gets the string to use as the decimal separator in currency values. 
 		/// </summary>
-#if NET
 		[XmlIgnore]
-#endif
 		public string DecimalSeparator { get; private set; }
 
 		/// <summary>
 		/// Gets the string that separates groups of digits to the left of the decimal in currency values. 
 		/// </summary>
-#if NET
 		[XmlIgnore]
-#endif
 		public string GroupSeparator { get; private set; }
 
 		/// <summary>
 		/// Gets the number of digits in each group to the left of the decimal in currency values. 
 		/// </summary>
-#if NET
 		[XmlIgnore]
-#endif
 		public int[] GroupSizes { get; private set; }
 
 		/// <summary>
 		/// Gets format pattern for negative currency values. 
 		/// </summary>
 		/// <remarks>For more information about this pattern see <see cref="NumberFormatInfo.CurrencyNegativePattern"/>.</remarks>
-#if NET
 		[XmlIgnore]
-#endif
 		public int NegativePattern { get; private set; }
 
 		/// <summary>
 		/// Gets the format pattern for positive currency values. 
 		/// </summary>
 		/// <remarks>For more information about this pattern see <see cref="NumberFormatInfo.CurrencyPositivePattern"/>.</remarks>
-#if NET
 		[XmlIgnore]
-#endif
 		public int PositivePattern { get; private set; }
 
 		/// <summary>
 		/// Defines how numeric values are formatted and displayed, depending on the culture related to the <see cref="Currency"/>.
 		/// </summary>
-#if NET
 		[XmlIgnore]
-#endif
 		public NumberFormatInfo FormatInfo { get; private set; }
 
 		/// <summary>
 		/// Indicates whether the currency is legal tender or it has been obsoleted
 		/// </summary>
-#if NET
 		[XmlIgnore]
-#endif
 		public bool IsObsolete { get; private set; }
 
 		/// <summary>
@@ -144,9 +118,7 @@ namespace NMoneys
 		/// </summary>
 		/// <remarks>Not all currencies have an character reference.
 		/// For those who does not have one, a <see cref="CharacterReference.Empty"/> instance is returned.</remarks>
-#if NET
 		[XmlIgnore]
-#endif
 		public CharacterReference Entity { get; private set; }
 
 		/// <summary>
