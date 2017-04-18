@@ -68,7 +68,7 @@
     <Compile Include="Money.Allocations.cs" />
     <Compile Include="Money.Arithmetic.Operators.cs" />
     <Compile Include="Money.Parsing.cs" />
-    <Compile Include="Money.Cloning.cs" />
+    <Compile Include="Money.Cloning.net.cs" />
     <Compile Include="Money.Comparisons.cs" />
     <Compile Include="Money.Equality.cs" />
     <Compile Include="Money.Formatting.cs" />
@@ -89,8 +89,8 @@
     <Compile Include="Properties\NMoneys_AssemblyInfo.cs" />
     <Compile Include="Providers.cs" />
     <Compile Include="RemainderAllocator.cs" />
-    <Compile Include="Serialization\Data.cs" />
-    <Compile Include="Serialization\DataContractSurrogate.cs" />
+    <Compile Include="Serialization\Data.net.cs" />
+    <Compile Include="Serialization\DataContractSurrogate.net.cs" />
     <Compile Include="Support\Stringifier.cs" />
     <Compile Include="Support\GroupSizes.cs" />
     <Compile Include="Support\Enumeration.cs" />
