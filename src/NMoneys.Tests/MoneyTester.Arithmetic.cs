@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using NMoneys.Extensions;
+using NMoneys.Support;
 using NMoneys.Tests.CustomConstraints;
 using NUnit.Framework;
 using Testing.Commons;
@@ -241,7 +242,7 @@ namespace NMoneys.Tests
 		public void TruncateToSignificantDecimalDigits_CultureWithSameCurrency_CultureApplied()
 		{
 			var subject = new Money(2m /3, CurrencyIsoCode.EUR);
-			NumberFormatInfo spanishFormatting = CultureInfo.GetCultureInfo("es-ES").NumberFormat;
+			NumberFormatInfo spanishFormatting = Culture.Get("es-ES").NumberFormat;
 
 			Assert.That(subject.Amount, Is.Not.EqualTo(0.66m),
 						"the raw amount has more decimals");
@@ -253,7 +254,7 @@ namespace NMoneys.Tests
 		public void TruncateToSignificantDecimalDigits_CultureWithDifferentCurrency_CultureApplied()
 		{
 			var subject = new Money(2m /3, CurrencyIsoCode.GBP);
-			NumberFormatInfo spanishFormatting = CultureInfo.GetCultureInfo("es-ES").NumberFormat;
+			NumberFormatInfo spanishFormatting = Culture.Get("es-ES").NumberFormat;
 
 			Assert.That(subject.Amount, Is.Not.EqualTo(0.66m),
 						"the raw amount has more decimals");

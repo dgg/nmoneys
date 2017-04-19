@@ -42,7 +42,7 @@ namespace NMoneys.Tests
 		[Test]
 		public void Get_DefinedCurrencyForCulture_Currency()
 		{
-			CultureInfo spanish = CultureInfo.GetCultureInfo("es-ES");
+			CultureInfo spanish = Culture.Get("es-ES");
 			Assert.That(Currency.Get(spanish), Is.SameAs(Currency.Eur));
 		}
 
@@ -112,7 +112,7 @@ namespace NMoneys.Tests
 		[Test]
 		public void TryGet_DefinedCurrencyForCulture_True()
 		{
-			CultureInfo spanish = CultureInfo.GetCultureInfo("es-ES");
+			CultureInfo spanish = Culture.Get("es-ES");
 			Currency tried;
 			Assert.That(Currency.TryGet(spanish, out tried), Is.True);
 			Assert.That(tried, Is.SameAs(Currency.Eur));
@@ -121,7 +121,7 @@ namespace NMoneys.Tests
 		[Test]
 		public void TryGet_NoRegionForCulture_False()
 		{
-			CultureInfo neutralSpanish = CultureInfo.GetCultureInfo("es");
+			CultureInfo neutralSpanish = Culture.Get("es");
 			Currency tried;
 			Assert.That(Currency.TryGet(neutralSpanish, out tried), Is.False);
 			Assert.That(tried, Is.Null);

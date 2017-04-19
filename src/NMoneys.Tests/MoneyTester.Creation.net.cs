@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using NMoneys.Tests.CustomConstraints;
+using NMoneys.Support;
 using NUnit.Framework;
 using Testing.Commons;
 using Testing.Commons.Globalization;
@@ -18,7 +19,7 @@ namespace NMoneys.Tests
 		[Test, Platform(Include = "Net-2.0")]
 		public void ForCulture_OutdatedCulture_Exception()
 		{
-			Assert.That(() => Money.ForCulture(decimal.Zero, CultureInfo.GetCultureInfo("bg-BG")),
+			Assert.That(() => Money.ForCulture(decimal.Zero, Culture.Get("bg-BG")),
 				Throws.ArgumentException.With.Message.Contains("BGL"),
 				"Framework returns wrong ISOCurrencySymbol (BGL instead of BGN)");
 		}
@@ -26,7 +27,7 @@ namespace NMoneys.Tests
 		[Test, Platform(Include = "Net-2.0")]
 		public void ForCulture_CultureWithObsoleteCulture_EventRaised()
 		{
-			Action moneyWithObsoleteCurrency = () => Money.ForCulture(decimal.Zero, CultureInfo.GetCultureInfo("et-EE"));
+			Action moneyWithObsoleteCurrency = () => Money.ForCulture(decimal.Zero, Culture.Get("et-EE"));
 			Assert.That(moneyWithObsoleteCurrency, Must.Raise.ObsoleteEvent());
 		}
 

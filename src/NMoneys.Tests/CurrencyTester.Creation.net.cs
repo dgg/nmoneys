@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using NMoneys.Support;
 using NMoneys.Tests.CustomConstraints;
 using NUnit.Framework;
 using Testing.Commons;
@@ -17,7 +18,7 @@ namespace NMoneys.Tests
 		[Test, Platform(Include = "Net-2.0")]
 		public void Get_OutdateFrameworkCurrencySymbol_Exception()
 		{
-			CultureInfo bulgarian = CultureInfo.GetCultureInfo("bg-BG");
+			CultureInfo bulgarian = Culture.Get("bg-BG");
 			var bulgaria = new RegionInfo(bulgarian.LCID);
 
 			Assert.That(() => Currency.Get(bulgarian), Throws.ArgumentException.With.Message.Contains("BGL"), "Framework returns wrong ISOCurrencySymbol (BGL instead of BGN)");
@@ -37,7 +38,7 @@ namespace NMoneys.Tests
 		[Test, Platform(Include = "Net-2.0", Reason = "updated culture uses non-deprecated currency")]
 		public void Get_ObsoleteCulture_EventRaised()
 		{
-			Action getObsolete = () => Currency.Get(CultureInfo.GetCultureInfo("et-EE"));
+			Action getObsolete = () => Currency.Get(Culture.Get("et-EE"));
 			Assert.That(getObsolete, Must.Raise.ObsoleteEvent());
 		}
 
@@ -55,7 +56,7 @@ namespace NMoneys.Tests
 		[Test, Platform(Include = "Net-2.0")]
 		public void TryGet_OutdateFrameworkCurrencySymbol_False()
 		{
-			CultureInfo bulgarian = CultureInfo.GetCultureInfo("bg-BG");
+			CultureInfo bulgarian = Culture.Get("bg-BG");
 			var bulgaria = new RegionInfo(bulgarian.LCID);
 
 			Currency lev;
@@ -81,7 +82,7 @@ namespace NMoneys.Tests
 		public void TryGet_ObsoleteCulture_EventRaised()
 		{
 			Currency c;
-			Action tryGetObsolete = () => Currency.TryGet(CultureInfo.GetCultureInfo("et-EE"), out c);
+			Action tryGetObsolete = () => Currency.TryGet(Culture.Get("et-EE"), out c);
 			Assert.That(tryGetObsolete, Must.Raise.ObsoleteEvent());
 		}
 

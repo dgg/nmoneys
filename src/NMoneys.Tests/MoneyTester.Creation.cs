@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Globalization;
 using NMoneys.Extensions;
+using NMoneys.Support;
 using NMoneys.Tests.CustomConstraints;
 using NUnit.Framework;
 using Testing.Commons;
@@ -16,7 +16,7 @@ namespace NMoneys.Tests
 		[Test]
 		public void ForCulture_DefinedCulture_PropertiesSet()
 		{
-			Money twentyBucks = Money.ForCulture(20, CultureInfo.GetCultureInfo("en-US"));
+			Money twentyBucks = Money.ForCulture(20, Culture.Get("en-US"));
 			Assert.That(twentyBucks.Amount, Is.EqualTo(20m));
 			Assert.That(twentyBucks.CurrencyCode, Is.EqualTo(CurrencyIsoCode.USD));
 		}
