@@ -243,23 +243,6 @@ namespace NMoneys.Tests
 
 		#region Comparer
 
-		[Test, NUnit.Framework.Category("Performance"), Platform(Include = "Net-2.0")]
-		public void Comparer_BetterPerformance_ThanDefaultComparer()
-		{
-			CurrencyIsoCode[] values = Enumeration.GetValues<CurrencyIsoCode>();
-
-			int iterations = 1000000;
-			TimeSpan fast = run(iterations, i => 
-				populateDictionary(new Dictionary<CurrencyIsoCode, int>(Currency.Code.Comparer), values, i));
-			TimeSpan @default = run(iterations, i => 
-				populateDictionary(new Dictionary<CurrencyIsoCode, int>(EqualityComparer<CurrencyIsoCode>.Default), values, i));
-
-			Assert.That(fast, Is.LessThan(@default), "{0} < {1}", fast, @default);
-
-			// not only faster, more than 5 times faster
-			Assert.That(fast.TotalMilliseconds * 5, Is.LessThan(@default.Milliseconds), "{0} << {1}", fast, @default);
-		}
-
 		[Test, NUnit.Framework.Category("Performance"), Explicit]
 		public void Comparer_SlightlyBetterPerformance_ThanDefaultComparer()
 		{

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Reflection;
 using NUnit.Common;
-using NUnit.Framework;
 using NUnitLite;
 
 namespace NMoneys.Tests

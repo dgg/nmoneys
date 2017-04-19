@@ -22,21 +22,6 @@ namespace NMoneys.Tests
 			Assert.That(twentyBucks.CurrencyCode, Is.EqualTo(CurrencyIsoCode.USD));
 		}
 
-		[Test, Platform(Include = "Net-2.0")]
-		public void ForCulture_OutdatedCulture_Exception()
-		{
-			Assert.That(() => Money.ForCulture(decimal.Zero, CultureInfo.GetCultureInfo("bg-BG")),
-				Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.Contains("BGL"),
-				"Framework returns wrong ISOCurrencySymbol (BGL instead of BGN)");
-		}
-
-		[Test, Platform(Include = "Net-2.0")]
-		public void ForCulture_CultureWithObsoleteCulture_EventRaised()
-		{
-			Action moneyWithObsoleteCurrency = () => Money.ForCulture(decimal.Zero, CultureInfo.GetCultureInfo("et-EE"));
-			Assert.That(moneyWithObsoleteCurrency, Must.Raise.ObsoleteEvent());
-		}
-
 		[Test]
 		public void ForCulture_NullDefaultCulture_Exception()
 		{
@@ -55,27 +40,6 @@ namespace NMoneys.Tests
 				Money subject = Money.ForCurrentCulture(100);
 				Assert.That(subject.Amount, Is.EqualTo(100m));
 				Assert.That(subject.CurrencyCode, Is.EqualTo(CurrencyIsoCode.DKK));
-			}
-		}
-
-		[Test, Platform(Include = "Net-2.0")]
-		public void ForCurrentCulture_OutdatedCulture_Exception()
-		{
-			using (CultureReseter.Set("bg-BG"))
-			{
-				Assert.That(() => Money.ForCurrentCulture(decimal.Zero),
-					Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.Contains("BGL"),
-					"Framework returns wrong ISOCurrencySymbol (BGL instead of BGN)");
-			}
-		}
-
-		[Test, Platform(Include = "Net-2.0")]
-		public void ForCurrentCulture_CultureWithObsoleteCulture_EventRaised()
-		{
-			using (CultureReseter.Set("ee-EE"))
-			{
-				Action moneyWithObsoleteCurrency = () => Money.ForCurrentCulture(decimal.Zero);
-				Assert.That(moneyWithObsoleteCurrency, Must.Raise.ObsoleteEvent());
 			}
 		}
 
