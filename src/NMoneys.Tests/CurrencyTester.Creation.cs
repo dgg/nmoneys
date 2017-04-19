@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using NMoneys.Support;
@@ -19,7 +18,7 @@ namespace NMoneys.Tests
 		public void Get_UndefinedIsoCode_Exception()
 		{
 			var notDefined = (CurrencyIsoCode) 5000;
-			Assert.That(() => Currency.Get(notDefined), Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.Contains("5000"));
+			Assert.That(() => Currency.Get(notDefined), Throws.ArgumentException.With.Message.Contains("5000"));
 		}
 
 		[Test]
@@ -37,7 +36,7 @@ namespace NMoneys.Tests
 		public void Get_UndefinedIsoSymbol_Exception()
 		{
 			string notDefined = "5000";
-			Assert.That(() => Currency.Get(notDefined), Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.Contains("5000"));
+			Assert.That(() => Currency.Get(notDefined), Throws.ArgumentException.With.Message.Contains("5000"));
 		}
 
 		[Test]

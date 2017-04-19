@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Globalization;
 using NMoneys.Tests.CustomConstraints;
 using NUnit.Framework;
@@ -21,7 +20,7 @@ namespace NMoneys.Tests
 			CultureInfo bulgarian = CultureInfo.GetCultureInfo("bg-BG");
 			var bulgaria = new RegionInfo(bulgarian.LCID);
 
-			Assert.That(() => Currency.Get(bulgarian), Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.Contains("BGL"), "Framework returns wrong ISOCurrencySymbol (BGL instead of BGN)");
+			Assert.That(() => Currency.Get(bulgarian), Throws.ArgumentException.With.Message.Contains("BGL"), "Framework returns wrong ISOCurrencySymbol (BGL instead of BGN)");
 			Currency lev = Currency.Get(CurrencyIsoCode.BGN);
 
 			Assert.That(lev.IsoSymbol, Is.Not.EqualTo(bulgaria.ISOCurrencySymbol));
@@ -32,7 +31,7 @@ namespace NMoneys.Tests
 		public void Get_RegionWithOutdatedInformation_Exception()
 		{
 			var SerbiaAndMontenegro = new RegionInfo("CS");
-			Assert.That(() => Currency.Get(SerbiaAndMontenegro), Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.Contains("CSD"));
+			Assert.That(() => Currency.Get(SerbiaAndMontenegro), Throws.ArgumentException.With.Message.Contains("CSD"));
 		}
 
 		[Test, Platform(Include = "Net-2.0", Reason = "updated culture uses non-deprecated currency")]

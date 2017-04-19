@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.ComponentModel;
 using NMoneys.Extensions;
 using NMoneys.Tests.CustomConstraints;
 using NUnit.Framework;
@@ -33,7 +32,7 @@ namespace NMoneys.Exchange.Tests
 		[TestCaseSource(nameof(undefinedCurrencies))]
 		public void Ctor_UndefinedCurrency_Exception(CurrencyIsoCode from, CurrencyIsoCode to)
 		{
-			Assert.That(() => new ExchangeRate(from, to, 1m), Throws.InstanceOf<InvalidEnumArgumentException>());
+			Assert.That(() => new ExchangeRate(from, to, 1m), Throws.ArgumentException);
 		}
 
 		private static IEnumerable undefinedCurrencies

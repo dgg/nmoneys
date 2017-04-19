@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -36,13 +35,13 @@ namespace NMoneys.Support
 					object converted = Convert.ChangeType(text, underlying);
 					if (converted == null || !Enum.IsDefined(tEnum, converted))
 					{
-						throw invalidEnumException(message());
+						throw new ArgumentException(message());
 					}
 				}
 			}
 			catch (Exception ex)
 			{
-				throw invalidEnumException(message(), ex);
+				throw new ArgumentException(message(), ex);
 			}
 
 		}
@@ -53,7 +52,7 @@ namespace NMoneys.Support
 			Type tEnum = typeof(TEnum);
 			if (!Enum.IsDefined(tEnum, value))
 			{
-				throw invalidEnumException($"Value {value} was not defined for type {tEnum}");
+				throw new ArgumentException($"Value {value} was not defined for type {tEnum}");
 			}
 		}
 
@@ -173,7 +172,7 @@ namespace NMoneys.Support
 			bool result = TryCast(value, out casted);
 			if (!result)
 			{
-				throw invalidEnumException($"'{value}' is not defined within type {typeof(TEnum).Name}.");
+				throw new ArgumentException($"'{value}' is not defined within type {typeof(TEnum).Name}.");
 			}
 			return casted.Value;
 		}
@@ -186,23 +185,6 @@ namespace NMoneys.Support
 			return success;
 		}
 
-		private static Exception invalidEnumException(string message)
-		{
-#if NET
-			return new InvalidEnumArgumentException(message);
-#else
-			// InvalidArgumentException does not exist in netstandard, the superclass is used
-			return new ArgumentException(message);
-#endif
-		}
-		private static Exception invalidEnumException(string message, Exception inner)
-		{
-#if NET
-			return new InvalidEnumArgumentException(message, inner);
-#else
-			// InvalidArgumentException does not exist in netstandard, the superclass is used
-			return new ArgumentException(message, inner);
-#endif
-		}
+		
 	}
 }

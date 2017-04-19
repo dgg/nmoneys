@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Globalization;
 using NMoneys.Tests.CustomConstraints;
 using NUnit.Framework;
@@ -20,7 +19,7 @@ namespace NMoneys.Tests
 		public void ForCulture_OutdatedCulture_Exception()
 		{
 			Assert.That(() => Money.ForCulture(decimal.Zero, CultureInfo.GetCultureInfo("bg-BG")),
-				Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.Contains("BGL"),
+				Throws.ArgumentException.With.Message.Contains("BGL"),
 				"Framework returns wrong ISOCurrencySymbol (BGL instead of BGN)");
 		}
 
@@ -41,7 +40,7 @@ namespace NMoneys.Tests
 			using (CultureReseter.Set("bg-BG"))
 			{
 				Assert.That(() => Money.ForCurrentCulture(decimal.Zero),
-					Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.Contains("BGL"),
+					Throws.ArgumentException.With.Message.Contains("BGL"),
 					"Framework returns wrong ISOCurrencySymbol (BGL instead of BGN)");
 			}
 		}

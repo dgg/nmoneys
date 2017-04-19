@@ -1,5 +1,4 @@
 using System;
-using System.ComponentModel;
 using NMoneys.Support;
 using NUnit.Framework;
 
@@ -26,9 +25,9 @@ namespace NMoneys.Tests.Support
 		public void AssertDefined_NotDefinedEnum_Exception()
 		{
 			Test1 notDefined = (Test1)50;
-			Assert.That(() => Enumeration.AssertDefined(notDefined), Throws.InstanceOf<InvalidEnumArgumentException>()
-				.With.Property("Message").Contains("50")
-				.And.With.Property("Message").Contains(typeof(Test1).Name));
+			Assert.That(() => Enumeration.AssertDefined(notDefined), Throws.ArgumentException
+				.With.Message.Contains("50")
+				.And.With.Message.Contains(typeof(Test1).Name));
 		}
 
 		[Test]
@@ -42,7 +41,7 @@ namespace NMoneys.Tests.Support
 		{
 			// for strings, use the representation
 			Assert.That(() => Enumeration.AssertDefined<Test1>("notDefined"),
-				Throws.InstanceOf<InvalidEnumArgumentException>().With.Property("Message").Contains("notDefined"));
+				Throws.ArgumentException.With.Message.Contains("notDefined"));
 		}
 
 		[Test]
@@ -56,7 +55,7 @@ namespace NMoneys.Tests.Support
 		public void AssertDefined_WrongCase_Exception()
 		{
 			Assert.That(() => Enumeration.AssertDefined<Test1>("value1"),
-				Throws.InstanceOf<InvalidEnumArgumentException>().With.Property("Message").Contains("value1"));
+				Throws.InstanceOf<ArgumentException>().With.Message.Contains("value1"));
 		}
 
 		#endregion
@@ -72,13 +71,13 @@ namespace NMoneys.Tests.Support
 		[Test]
 		public void Parse_NonExistingValue_Exception()
 		{
-			Assert.That(() => Enumeration.Parse<PlatformID>("nonExisting"), Throws.InstanceOf<InvalidEnumArgumentException>());
+			Assert.That(() => Enumeration.Parse<PlatformID>("nonExisting"), Throws.ArgumentException);
 		}
 
 		[Test]
 		public void Parse_WrongCaseValue_Exception()
 		{
-			Assert.That(() => Enumeration.Parse<PlatformID>("UniX"), Throws.InstanceOf<InvalidEnumArgumentException>());
+			Assert.That(() => Enumeration.Parse<PlatformID>("UniX"), Throws.ArgumentException);
 		}
 
 		[Test]
@@ -221,7 +220,7 @@ namespace NMoneys.Tests.Support
 		[Test]
 		public void Parse_IsCaseSensitive()
 		{
-			Assert.That(() => Enumeration.Parse<PlatformID>("UNIX"), Throws.InstanceOf<InvalidEnumArgumentException>());
+			Assert.That(() => Enumeration.Parse<PlatformID>("UNIX"), Throws.ArgumentException);
 			Assert.That(Enumeration.Parse<PlatformID>("Unix"), Is.EqualTo(PlatformID.Unix));
 		}
 

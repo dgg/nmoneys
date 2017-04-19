@@ -1,5 +1,4 @@
 using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using NMoneys.Support;
 using NMoneys.Tests.CustomConstraints;
@@ -99,14 +98,14 @@ namespace NMoneys.Tests
 		{
 			CurrencyIsoCode nonExistingCode = (CurrencyIsoCode)(-7);
 
-			Assert.That(() => new Money(decimal.Zero, nonExistingCode), Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.Contains("-7"));
+			Assert.That(() => new Money(decimal.Zero, nonExistingCode), Throws.ArgumentException.With.Message.Contains("-7"));
 		}
 
 		[Test]
 		public void Ctor_NonExistingIsoSymbol_PropertiesSet()
 		{
 			string nonExistentIsoSymbol = "XYZ";
-			Assert.That(() => new Money(decimal.Zero, nonExistentIsoSymbol), Throws.InstanceOf<InvalidEnumArgumentException>());
+			Assert.That(() => new Money(decimal.Zero, nonExistentIsoSymbol), Throws.ArgumentException);
 		}
 
 		#endregion
@@ -220,7 +219,7 @@ namespace NMoneys.Tests
 		[Test]
 		public void CannotBeCreated_WithDefaultCode_AsItIsUndefined()
 		{
-			Assert.That(() => new Money(2, default(CurrencyIsoCode)), Throws.InstanceOf<InvalidEnumArgumentException>());
+			Assert.That(() => new Money(2, default(CurrencyIsoCode)), Throws.ArgumentException);
 		}
 
 		[Test]
