@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace NMoneys.Support
 {
-	public static class Comparer
+	internal static class Comparer
 	{
 		public static StringComparer Build(CultureInfo ci, bool ignoreCase = false)
 		{

@@ -2,7 +2,7 @@
 
 namespace NMoneys.Support
 {
-	public static class IO
+	internal static class IO
 	{
 		public static void Finalize(this Stream stream)
 		{

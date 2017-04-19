@@ -1,0 +1,1202 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Testing.Commons.NUnit</name>
+    </assembly>
+    <members>
+        <member name="T:Testing.Commons.NUnit.ArrangingTest`1">
+            <summary>
+            Eases the "arrange" part of AAA tests
+            </summary>
+            <remarks>Already annotated with the <see cref="T:NUnit.Framework.TestFixtureAttribute"/> which means that inheritors do not need to specify it again.</remarks>
+            <typeparam name="TSubject">Type of the subject (aka. SUT) of the test.</typeparam>
+        </member>
+        <member name="M:Testing.Commons.NUnit.ArrangingTest`1.Arrange">
+            <summary>
+            Invokes the "arrange" part of a AAA test.
+            </summary>
+            <remarks>Annotated with the <see cref="T:NUnit.Framework.SetUpAttribute"/> which means that it will be run before each test.</remarks>
+        </member>
+        <member name="M:Testing.Commons.NUnit.ArrangingTest`1.Cleanup">
+            <summary>
+            Invokes the "cleanup" part after every test.
+            </summary>
+            <remarks>Annotated with the <see cref="T:NUnit.Framework.TearDownAttribute"/> which means that it will be run after each test.</remarks>
+        </member>
+        <member name="P:Testing.Commons.NUnit.ArrangingTest`1.Subject">
+            <summary>
+            The System Under Test (SUT)
+            </summary>
+        </member>
+        <member name="M:Testing.Commons.NUnit.ArrangingTest`1.initSubject">
+            <summary>
+            Implement this method to initialize your System Under Test (SUT).
+            </summary>
+            <returns>An instance of the SUT.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.ArrangingTest`1.doCleanup">
+            <summary>
+            Override thos method to perform cleanup tasks after every test.
+            </summary>
+        </member>
+        <member name="T:Testing.Commons.NUnit.Constraints.Closeness">
+            <summary>
+            Tolerance values for time constraints
+            </summary>
+        </member>
+        <member name="F:Testing.Commons.NUnit.Constraints.Closeness.Default">
+            <summary>
+            20 ms for closeness constraints
+            </summary>
+        </member>
+        <member name="T:Testing.Commons.NUnit.Constraints.ComposablePropertyConstraint">
+            <summary>
+            Extracts a named property and uses its value as the actual value for the provided constraint. 
+            </summary>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.ComposablePropertyConstraint.#ctor(System.String,NUnit.Framework.Constraints.IConstraint)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Testing.Commons.NUnit.Constraints.ComposablePropertyConstraint"/> class.
+            </summary>
+            <param name="name">The name of the property.</param>
+            <param name="constraint">The constraint to apply to the property.</param>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.ComposablePropertyConstraint.New``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}},NUnit.Framework.Constraints.Constraint)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Testing.Commons.NUnit.Constraints.ComposablePropertyConstraint"/> class.
+            </summary>
+            <typeparam name="T">Type of the member container.</typeparam>
+            <param name="property">Expression that represents the name of the property.</param>
+            <param name="constraint"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Testing.Commons.NUnit.Constraints.MustExtensions">
+            <summary>
+            Provides a set of static methods to create custom constraints.
+            </summary>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.Property(Testing.Commons.Must.HaveEntryPoint,System.String,NUnit.Framework.Constraints.Constraint)">
+            <summary>
+            Builds an instance of <see cref="T:Testing.Commons.NUnit.Constraints.ComposablePropertyConstraint"/> to check <paramref name="constraint"/> over the value of the property expressed by <paramref name="name"/>
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="name">The name of the property.</param>
+            <param name="constraint">The constraint to apply to the property.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.Property``1(Testing.Commons.Must.HaveEntryPoint,System.Linq.Expressions.Expression{System.Func{``0,System.Object}},NUnit.Framework.Constraints.Constraint)">
+            <summary>
+            Builds an instance of <see cref="T:Testing.Commons.NUnit.Constraints.ComposablePropertyConstraint"/> to check <paramref name="constraint"/> over the value of the property expressed by <paramref name="property"/>
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="property">Expression that represents the name of the property.</param>
+            <param name="constraint">The constraint to apply to the property.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.Conjunction(Testing.Commons.Must.SatisfyEntryPoint,NUnit.Framework.Constraints.Constraint[])">
+            <summary>
+            Builds an instance of <see cref="T:Testing.Commons.NUnit.Constraints.ConjunctionConstraint"/> that allows joining multiple constraints
+            while reporting the specific constraint that failed.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="constraints">The list of constraints to evaluate.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.Constrained(Testing.Commons.Must.BeEntryPoint,NUnit.Framework.Constraints.Constraint[])">
+            <summary>
+            Builds an instance of <see cref="T:Testing.Commons.NUnit.Constraints.ConstrainedEnumerable"/> with the provided constraints.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="constraints">Constraints to apply to the enumerable elements.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.Deserializable``1(Testing.Commons.Must.BeEntryPoint,Testing.Commons.Serialization.IDeserializer,NUnit.Framework.Constraints.Constraint)">
+            <summary>
+            Builds an instance of <see cref="T:Testing.Commons.NUnit.Constraints.DeserializationConstraint`1"/> that allows checking the deserialization of an object.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="deserializer">Deserializer used to deserialize the tested value.</param>
+            <param name="constraintOverDeserialized">Constraint to apply to the deserialized object.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.XmlDeserializable``1(Testing.Commons.Must.BeEntryPoint,NUnit.Framework.Constraints.Constraint)">
+            <summary>
+            Builds an instance of <see cref="T:Testing.Commons.NUnit.Constraints.DeserializationConstraint`1"/> that allows checking the XML deserialization of an object.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="constraintOverDeserialized">Constraint to apply to the deserialized object.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.DataContractDeserializable``1(Testing.Commons.Must.BeEntryPoint,NUnit.Framework.Constraints.Constraint)">
+            <summary>
+            Builds an instance of <see cref="T:Testing.Commons.NUnit.Constraints.DeserializationConstraint`1"/> that allows checking the data contract deserialization of an object.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="constraintOverDeserialized">Constraint to apply to the deserialized object.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.DataContractJsonDeserializable``1(Testing.Commons.Must.BeEntryPoint,NUnit.Framework.Constraints.Constraint,System.Int32,System.Boolean,System.Runtime.Serialization.IDataContractSurrogate,System.Boolean)">
+            <summary>
+            Builds an instance of <see cref="T:Testing.Commons.NUnit.Constraints.DeserializationConstraint`1"/> that allows checking the data contract deserialization of an object.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="constraintOverDeserialized">Constraint to apply to the deserialized object.</param>
+            <param name="maxItemsInObjectGraph">The maximum number of items in the graph to serialize or deserialize. The default is <c>4</c>.</param>
+            <param name="ignoreExtensionDataObject">true to ignore the <see cref="T:System.Runtime.Serialization.IExtensibleDataObject"/> interface upon serialization and ignore unexpected data upon deserialization; otherwise, false. The default is false.</param>
+            <param name="dataContractSurrogate">An implementation of the <see cref="T:System.Runtime.Serialization.IDataContractSurrogate"/> to customize the serialization process.</param>
+            <param name="alwaysEmitTypeInformation">true to emit type information; otherwise, false. The default is false.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.JsonDeserializable``1(Testing.Commons.Must.BeEntryPoint,NUnit.Framework.Constraints.Constraint,System.Web.Script.Serialization.JavaScriptConverter[])">
+            <summary>
+            Builds an instance of <see cref="T:Testing.Commons.NUnit.Constraints.DeserializationConstraint`1"/> that allows checking the JSON deserialization of an object.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="constraintOverDeserialized">Constraint to apply to the deserialized object.</param>
+            <param name="converters">An array that contains the custom converters to be registered.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.Count(Testing.Commons.Must.HaveEntryPoint,NUnit.Framework.Constraints.Constraint)">
+            <summary>
+            Builds an instance of <see cref="T:Testing.Commons.NUnit.Constraints.EnumerableCountConstraint"/> that allows asserting on the number of elements of any instance of <see cref="T:System.Collections.IEnumerable"/>.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="countConstraint">The constraint to be applied to the element count.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.Json(Testing.Commons.Must.BeEntryPoint,System.String)">
+            <summary>
+            Builds an instance of <see cref="T:Testing.Commons.NUnit.Constraints.JsonEqualConstraint"/> that allows assertions using
+            compact JSON strings.
+            </summary>
+            <remarks>A compact JSON string notation uses single quotes for names and string values instead
+            of double quotes, removing the need to escape such double quotes.
+            <para>A non-compact JSON string uses the canonical double quote style for names an string values.</para>
+            </remarks>
+            <param name="entry">Extension entry point.</param>
+            <param name="expected">The expected value in JSON compact notation.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.Expected(Testing.Commons.Must.MatchEntryPoint,System.Object)">
+            <summary>
+            Builds an instance of <see cref="T:Testing.Commons.NUnit.Constraints.MatchingConstraint"/> to match the provided expected object.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="expected">The object to match the actual value against.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.After(Testing.Commons.Must.BeEntryPoint,System.DateTime)">
+            <summary>
+            Builds an instance of <see cref="T:NUnit.Framework.Constraints.Constraint"/> that tests whether the actual
+            value occurs after the specified <paramref name="date"/>.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="date">The expected date to compare the actual value with.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.After(Testing.Commons.Must.NotBeEntryPoint,System.DateTime)">
+            <summary>
+            Builds an instance of <see cref="T:NUnit.Framework.Constraints.Constraint"/> that tests whether the actual
+            value does not occur after the specified <paramref name="date"/>.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="date">The expected date to compare the actual value with.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.Before(Testing.Commons.Must.BeEntryPoint,System.DateTime)">
+            <summary>
+            Builds an instance of <see cref="T:NUnit.Framework.Constraints.Constraint"/> that tests whether the actual
+            value occurs before the specified <paramref name="date"/>.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="date">The expected date to compare the actual value with.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.Before(Testing.Commons.Must.NotBeEntryPoint,System.DateTime)">
+            <summary>
+            Builds an instance of <see cref="T:NUnit.Framework.Constraints.Constraint"/> that tests whether the actual
+            value does not occur before the specified <paramref name="date"/>.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="date">The expected date to compare the actual value with.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.OnOrAfter(Testing.Commons.Must.BeEntryPoint,System.DateTime)">
+            <summary>
+            Builds an instance of <see cref="T:NUnit.Framework.Constraints.Constraint"/> that tests whether the actual
+            value occurs either on, or after the specified <paramref name="date"/>.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="date">The expected date to compare the actual value with.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.OnOrAfter(Testing.Commons.Must.NotBeEntryPoint,System.DateTime)">
+            <summary>
+            Builds an instance of <see cref="T:NUnit.Framework.Constraints.Constraint"/> that tests whether the actual
+            value does not occur either on, or after the specified <paramref name="date"/>.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="date">The expected date to compare the actual value with.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.OnOrBefore(Testing.Commons.Must.BeEntryPoint,System.DateTime)">
+            <summary>
+            Builds an instance of <see cref="T:NUnit.Framework.Constraints.Constraint"/> that tests whether the actual
+            value occurs either on, or before the specified <paramref name="date"/>.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="date">The expected date to compare the actual value with.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.OnOrBefore(Testing.Commons.Must.NotBeEntryPoint,System.DateTime)">
+            <summary>
+            Builds an instance of <see cref="T:NUnit.Framework.Constraints.Constraint"/> that tests whether the actual
+            value does not occur either on, or before the specified <paramref name="date"/>.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="date">The expected date to compare the actual value with.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.CloseTo(Testing.Commons.Must.BeEntryPoint,System.DateTime,System.UInt32)">
+            <summary>
+            Builds an instance of <see cref="T:NUnit.Framework.Constraints.Constraint"/> that tests whether the actual
+            value occurs within the specified number of milliseconds (20 by default) from
+            the specified <paramref name="date"/>.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="date">The expected date to compare the actual value with.</param>
+            <param name="ms"></param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.CloseTo(Testing.Commons.Must.BeEntryPoint,System.DateTime,System.TimeSpan)">
+            <summary>
+            Builds an instance of <see cref="T:NUnit.Framework.Constraints.Constraint"/> that tests whether the actual
+            value occurs within the specified time span (20 ms by default) from
+            the specified <paramref name="date"/>.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="date">The expected date to compare the actual value with.</param>
+            <param name="within"></param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.CloseTo(Testing.Commons.Must.NotBeEntryPoint,System.DateTime,System.UInt32)">
+            <summary>
+            Builds an instance of <see cref="T:NUnit.Framework.Constraints.Constraint"/> that tests whether the actual
+            value does not occur within the specified number of milliseconds (20ms by default) from
+            the specified <paramref name="date"/>.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="date">The expected date to compare the actual value with.</param>
+            <param name="ms"></param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.CloseTo(Testing.Commons.Must.NotBeEntryPoint,System.DateTime,System.TimeSpan)">
+            <summary>
+            Builds an instance of <see cref="T:NUnit.Framework.Constraints.Constraint"/> that tests whether the actual
+            value does not occur within the specified time span (20 ms by default) from
+            the specified <paramref name="date"/>.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="date">The expected date to compare the actual value with.</param>
+            <param name="within"></param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.Year(Testing.Commons.Must.HaveEntryPoint,System.Int32)">
+            <summary>
+            Builds an instance of <see cref="T:NUnit.Framework.Constraints.Constraint"/> that tests whether the actual
+            value has the provided <paramref name="year"/>.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="year">Expected property of the current date.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.Year(Testing.Commons.Must.NotHaveEntryPoint,System.Int32)">
+            <summary>
+            Builds an instance of <see cref="T:NUnit.Framework.Constraints.Constraint"/> that tests whether the actual
+            value does not have the provided <paramref name="year"/>.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="year">Expected property of the current date.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.Month(Testing.Commons.Must.HaveEntryPoint,System.UInt32)">
+            <summary>
+            Builds an instance of <see cref="T:NUnit.Framework.Constraints.Constraint"/> that tests whether the actual
+            value has the provided <paramref name="month"/>.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="month">Expected property of the current date.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.Month(Testing.Commons.Must.NotHaveEntryPoint,System.UInt32)">
+            <summary>
+            Builds an instance of <see cref="T:NUnit.Framework.Constraints.Constraint"/> that tests whether the actual
+            value does not have the provided <paramref name="month"/>. 
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="month">Expected property of the current date.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.Day(Testing.Commons.Must.HaveEntryPoint,System.UInt32)">
+            <summary>
+            Builds an instance of <see cref="T:NUnit.Framework.Constraints.Constraint"/> that tests whether the actual
+            value has the provided <paramref name="day"/>.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="day">Expected property of the current date.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.Day(Testing.Commons.Must.NotHaveEntryPoint,System.UInt32)">
+            <summary>
+            Builds an instance of <see cref="T:NUnit.Framework.Constraints.Constraint"/> that tests whether the actual
+            value does not have the provided <paramref name="day"/>.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="day">Expected property of the current date.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.Hour(Testing.Commons.Must.HaveEntryPoint,System.UInt32)">
+            <summary>
+            Builds an instance of <see cref="T:NUnit.Framework.Constraints.Constraint"/> that tests whether the actual
+            value has the provided <paramref name="hour"/>.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="hour">Expected property of the current date.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.Hour(Testing.Commons.Must.NotHaveEntryPoint,System.UInt32)">
+            <summary>
+            Builds an instance of <see cref="T:NUnit.Framework.Constraints.Constraint"/> that tests whether the actual
+            value does not have the provided <paramref name="hour"/>.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="hour">Expected property of the current date.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.Minute(Testing.Commons.Must.HaveEntryPoint,System.UInt32)">
+            <summary>
+            Builds an instance of <see cref="T:NUnit.Framework.Constraints.Constraint"/> that tests whether the actual
+            value has the provided <paramref name="minute"/>.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="minute">Expected property of the current date.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.Minute(Testing.Commons.Must.NotHaveEntryPoint,System.UInt32)">
+            <summary>
+            Builds an instance of <see cref="T:NUnit.Framework.Constraints.Constraint"/> that tests whether the actual
+            value does not have the provided <paramref name="minute"/>.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="minute">Expected property of the current date.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.Second(Testing.Commons.Must.HaveEntryPoint,System.UInt32)">
+            <summary>
+            Builds an instance of <see cref="T:NUnit.Framework.Constraints.Constraint"/> that tests whether the actual
+            value has the provided <paramref name="second"/>.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="second">Expected property of the current date.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.Second(Testing.Commons.Must.NotHaveEntryPoint,System.UInt32)">
+            <summary>
+            Builds an instance of <see cref="T:NUnit.Framework.Constraints.Constraint"/> that tests whether the actual
+            value does not have the provided <paramref name="second"/>.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="second">Expected property of the current date.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.Millisecond(Testing.Commons.Must.HaveEntryPoint,System.UInt32)">
+            <summary>
+            Builds an instance of <see cref="T:NUnit.Framework.Constraints.Constraint"/> that tests whether the actual
+            value has the provided <paramref name="millisecond"/>.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="millisecond">Expected property of the current date.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.Millisecond(Testing.Commons.Must.NotHaveEntryPoint,System.UInt32)">
+            <summary>
+            Builds an instance of <see cref="T:NUnit.Framework.Constraints.Constraint"/> that tests whether the actual
+            value does not have the provided <paramref name="millisecond"/>.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="millisecond">Expected property of the current date.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.PropertyChanged``1(Testing.Commons.Must.NotRaiseEntryPoint,``0)">
+            <summary>
+            Builds an instance of <see cref="T:Testing.Commons.NUnit.Constraints.PropertyChangedConstraint`1"/> that allows checking whether a type does not raise a
+            <see cref="E:System.ComponentModel.INotifyPropertyChanged.PropertyChanged"/> when a property is set.
+            </summary>
+            <typeparam name="TSubject">Type that does not raise the <see cref="E:System.ComponentModel.INotifyPropertyChanged.PropertyChanged"/> event.</typeparam>
+            <param name="entry">Extension entry point.</param>
+            <param name="subject"> Instance of the type not raising the event.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.PropertyChanging``1(Testing.Commons.Must.NotRaiseEntryPoint,``0)">
+            <summary>
+            Builds an instance of <see cref="T:Testing.Commons.NUnit.Constraints.PropertyChangingConstraint`1"/> that allows checking whether a type does not raise a
+            <see cref="E:System.ComponentModel.INotifyPropertyChanging.PropertyChanging"/> when a property is set.
+            </summary>
+            <typeparam name="TSubject">Type that does not raise the <see cref="E:System.ComponentModel.INotifyPropertyChanging.PropertyChanging"/> event.</typeparam>
+            <param name="entry">Extension entry point.</param>
+            <param name="subject"> Instance of the type not raising the event.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.PropertyChanged``1(Testing.Commons.Must.RaiseEntryPoint,``0,System.Linq.Expressions.Expression{System.Func{``0,System.Object}})">
+            <summary>
+            Builds an instance of <see cref="T:Testing.Commons.NUnit.Constraints.PropertyChangedConstraint`1"/> that allows checking whether a type raises a
+            <see cref="E:System.ComponentModel.INotifyPropertyChanged.PropertyChanged"/> when a property is set.
+            </summary>
+            <typeparam name="TSubject">Type that raises the <see cref="E:System.ComponentModel.INotifyPropertyChanged.PropertyChanged"/> event.</typeparam>
+            <param name="entry">Extension entry point.</param>
+            <param name="subject"> Instance of the event raising type.</param>
+            <param name="property">Expression that represents the name of a property.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.PropertyChanged``1(Testing.Commons.Must.RaiseEntryPoint,``0,NUnit.Framework.Constraints.Constraint)">
+            <summary>
+            Builds an instance of <see cref="T:Testing.Commons.NUnit.Constraints.PropertyChangedConstraint`1"/> that allows checking whether a type raises a
+            <see cref="E:System.ComponentModel.INotifyPropertyChanged.PropertyChanged"/> when a property is set.
+            </summary>
+            <typeparam name="TSubject">Type that raises the <see cref="E:System.ComponentModel.INotifyPropertyChanged.PropertyChanged"/> event.</typeparam>
+            <param name="entry">Extension entry point.</param>
+            <param name="subject"> Instance of the event raising type.</param>
+            <param name="eventArgsConstraint">Constraint to be applied to the event arg property.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.PropertyChanging``1(Testing.Commons.Must.RaiseEntryPoint,``0,System.Linq.Expressions.Expression{System.Func{``0,System.Object}})">
+            <summary>
+            Builds an instance of <see cref="T:Testing.Commons.NUnit.Constraints.PropertyChangingConstraint`1"/> that allows checking whether a type raises a
+            <see cref="E:System.ComponentModel.INotifyPropertyChanging.PropertyChanging"/> when a property is set.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="subject"> Instance of the event raising type.</param>
+            <param name="property">Expression that represents the name of a property.</param>
+            <typeparam name="TSubject">Type that raises the <see cref="E:System.ComponentModel.INotifyPropertyChanging.PropertyChanging"/> event.</typeparam>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.PropertyChanging``1(Testing.Commons.Must.RaiseEntryPoint,``0,NUnit.Framework.Constraints.Constraint)">
+            <summary>
+            Builds an instance of <see cref="T:Testing.Commons.NUnit.Constraints.PropertyChangingConstraint`1"/> that allows checking whether a type raises a
+            <see cref="E:System.ComponentModel.INotifyPropertyChanging.PropertyChanging"/> when a property is set.
+            </summary>
+            <param name="entry">Extension entry point.</param>
+            <param name="subject"> Instance of the event raising type.</param>
+            <param name="eventArgsConstraint">Constraint to be applied to the event arg property.</param>
+            <typeparam name="TSubject">Type that raises the <see cref="E:System.ComponentModel.INotifyPropertyChanging.PropertyChanging"/> event.</typeparam>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.Serializable``1(Testing.Commons.Must.BeEntryPoint,Testing.Commons.Serialization.IRoundtripSerializer{``0},NUnit.Framework.Constraints.Constraint)">
+            <summary>
+            Builds an instance of <see cref="T:Testing.Commons.NUnit.Constraints.SerializationConstraint`1"/> that allows checking the serialization/deserialization of an object.
+            </summary>
+            <typeparam name="T">Type to be serialized and deserialized.</typeparam>
+            <param name="entry">Extension entry point.</param>
+            <param name="serializer"></param>
+            <param name="constraintOverDeserialized">Constraint to apply to the deserialized object.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.XmlSerializable``1(Testing.Commons.Must.BeEntryPoint,NUnit.Framework.Constraints.Constraint)">
+            <summary>
+            Builds an instance of <see cref="T:Testing.Commons.NUnit.Constraints.SerializationConstraint`1"/> that allows checking the XML serialization/deserialization of an object.
+            </summary>
+            <typeparam name="T">Type to be serialized and deserialized.</typeparam>
+            <param name="entry">Extension entry point.</param>
+            <param name="constraintOverDeserialized">Constraint to apply to the deserialized object.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.DataContractSerializable``1(Testing.Commons.Must.BeEntryPoint,NUnit.Framework.Constraints.Constraint)">
+            <summary>
+            Builds an instance of <see cref="T:Testing.Commons.NUnit.Constraints.SerializationConstraint`1"/> that allows checking the data contract serialization/deserialization of an object.
+            </summary>
+            <typeparam name="T">Type to be serialized and deserialized.</typeparam>
+            <param name="entry">Extension entry point.</param>
+            <param name="constraintOverDeserialized">Constraint to apply to the deserialized object.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.BinarySerializable``1(Testing.Commons.Must.BeEntryPoint,NUnit.Framework.Constraints.Constraint)">
+            <summary>
+            Builds an instance of <see cref="T:Testing.Commons.NUnit.Constraints.SerializationConstraint`1"/> that allows checking the binary serialization/deserialization of an object.
+            </summary>
+            <typeparam name="T">Type to be serialized and deserialized.</typeparam>
+            <param name="entry">Extension entry point.</param>
+            <param name="constraintOverDeserialized">Constraint to apply to the deserialized object.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.JsonSerializable``1(Testing.Commons.Must.BeEntryPoint,NUnit.Framework.Constraints.Constraint,System.Web.Script.Serialization.JavaScriptConverter[])">
+            <summary>
+            Builds an instance of <see cref="T:Testing.Commons.NUnit.Constraints.SerializationConstraint`1"/> that allows checking the JSON serialization/deserialization of an object.
+            </summary>
+            <typeparam name="T">Type to be serialized and deserialized.</typeparam>
+            <param name="entry">Extension entry point.</param>
+            <param name="constraintOverDeserialized">Constraint to apply to the deserialized object.</param>
+            <param name="converters">An array that contains the custom converters to be registered.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MustExtensions.DataContractJsonSerializable``1(Testing.Commons.Must.BeEntryPoint,NUnit.Framework.Constraints.Constraint,System.Int32,System.Boolean,System.Runtime.Serialization.IDataContractSurrogate,System.Boolean)">
+            <summary>
+            Builds an instance of <see cref="T:Testing.Commons.NUnit.Constraints.SerializationConstraint`1"/> that allows checking the data contract serialization/deserialization of an object.
+            </summary>
+            <typeparam name="T">Type to be serialized and deserialized.</typeparam>
+            <param name="entry">Extension entry point.</param>
+            <param name="constraintOverDeserialized">Constraint to apply to the deserialized object.</param>
+            <param name="maxItemsInObjectGraph">The maximum number of items in the graph to serialize or deserialize. The default is <c>4</c>.</param>
+            <param name="ignoreExtensionDataObject">true to ignore the <see cref="T:System.Runtime.Serialization.IExtensibleDataObject"/> interface upon serialization and ignore unexpected data upon deserialization; otherwise, false. The default is false.</param>
+            <param name="dataContractSurrogate">An implementation of the <see cref="T:System.Runtime.Serialization.IDataContractSurrogate"/> to customize the serialization process.</param>
+            <param name="alwaysEmitTypeInformation">true to emit type information; otherwise, false. The default is false.</param>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="T:Testing.Commons.NUnit.Constraints.ConjunctionConstraint">
+            <summary>
+            Allows joining multiple constraints while reporting the specific constraint that failed.
+            </summary>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.ConjunctionConstraint.#ctor(NUnit.Framework.Constraints.Constraint[])">
+            <summary>
+            Creates the instance of the constraint.
+            </summary>
+            <param name="constraints">The list of constraints to evaluate.</param>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.ConjunctionConstraint.#ctor(System.Collections.Generic.IEnumerable{NUnit.Framework.Constraints.Constraint})">
+            <summary>
+            Creates the instance of the constraint.
+            </summary>
+            <param name="constraints">The list of constraints to evaluate.</param>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.ConjunctionConstraint.ApplyTo``1(``0)">
+            <summary>
+            Applies the constraint to an actual value, returning a ConstraintResult.
+            </summary>
+            <param name="actual">The value to be tested</param>
+            <returns>A ConstraintResult</returns>
+        </member>
+        <member name="P:Testing.Commons.NUnit.Constraints.ConjunctionConstraint.Description">
+            <summary>
+            The Description of what this constraint tests, for
+            use in messages and in the ConstraintResult.
+            </summary>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.ConjunctionConstraint.ConjuctionConstraintResult.WriteActualValueTo(NUnit.Framework.Constraints.MessageWriter)">
+            <summary>
+            Write the actual value for a failing constraint test to a
+            MessageWriter. The default implementation simply writes
+            the raw value of actual, leaving it to the writer to
+            perform any formatting.
+            </summary>
+            <param name="writer">The writer on which the actual value is displayed</param>
+        </member>
+        <member name="T:Testing.Commons.NUnit.Constraints.ConstrainedEnumerable">
+            <summary>
+            Used to check every item of an enumerable against a constraint.
+            </summary>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.ConstrainedEnumerable.#ctor(NUnit.Framework.Constraints.Constraint[])">
+            <summary>
+            Builds an instance with the provided constraints.
+            </summary>
+            <param name="constraints">Constraints to apply to the enumerable elements.</param>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.ConstrainedEnumerable.#ctor(System.Collections.Generic.IEnumerable{NUnit.Framework.Constraints.Constraint})">
+            <summary>
+            Builds an instance with the provided constraints.
+            </summary>
+            <param name="constraints">Constraints to apply to the enumerable elements.</param>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.ConstrainedEnumerable.ApplyTo``1(``0)">
+            <summary>
+            Applies the constraint to an actual value, returning a ConstraintResult.
+            </summary>
+            <param name="actual">The value to be tested</param>
+            <returns>A ConstraintResult</returns>
+        </member>
+        <member name="P:Testing.Commons.NUnit.Constraints.ConstrainedEnumerable.Description">
+            <summary>
+            The Description of what this constraint tests, for
+            use in messages and in the ConstraintResult.
+            </summary>
+        </member>
+        <member name="T:Testing.Commons.NUnit.Constraints.ConstrainedEnumerable.MatchingLength">
+            <summary>
+            Checks that the count of the enumerable and the provided constraints is the same. 
+            </summary>
+        </member>
+        <member name="T:Testing.Commons.NUnit.Constraints.ConstrainedEnumerable.IndexedConstraint">
+            <summary>
+            Encapsulates a contraint applied to an enumerable element to enhance the feedback in case of failure by providing the index of the element that provoked the failure.
+            </summary>
+        </member>
+        <member name="T:Testing.Commons.NUnit.Constraints.DelegatingConstraint">
+            <summary>
+            Provides a strongly-typed base class to implement custom constraints that
+            delegate matching and message formatting to another instance of <see cref="T:NUnit.Framework.Constraints.Constraint"/>
+            </summary>
+        </member>
+        <member name="P:Testing.Commons.NUnit.Constraints.DelegatingConstraint.Delegate">
+            <summary>
+            Instance of <see cref="T:NUnit.Framework.Constraints.Constraint"/> that will be in charge of matching and message formatting.
+            </summary>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.DelegatingConstraint.ApplyTo``1(``0)">
+            <summary>
+            Applies the constraint to an actual value, returning a ConstraintResult.
+            </summary>
+            <param name="actual">The value to be tested</param>
+            <returns>A ConstraintResult</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.DelegatingConstraint.matches(System.Object)">
+            <summary>
+            Test whether the constraint is satisfied by <paramref name="current"/>.
+            </summary>
+            <param name="current">The value to be tested.</param>
+            <returns>The resulting <see cref="T:NUnit.Framework.Constraints.ConstraintResult"/> from the vertification.</returns>
+        </member>
+        <member name="P:Testing.Commons.NUnit.Constraints.DelegatingConstraint.Description">
+            <summary>
+            The Description of what this constraint tests, for
+            use in messages and in the ConstraintResult.
+            </summary>
+        </member>
+        <member name="T:Testing.Commons.NUnit.Constraints.DeserializationConstraint`1">
+            <summary>
+            Used to check the deserialization of an object.
+            </summary>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.DeserializationConstraint`1.#ctor(Testing.Commons.Serialization.IDeserializer,NUnit.Framework.Constraints.Constraint)">
+            <summary>
+            Builds an instance with the provided deserializer and constraint.
+            </summary>
+            <param name="deserializer">Deserializer used to deserialize the tested value.</param>
+            <param name="constraintOverDeserialized">Constraint to apply to the deserialized object.</param>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.DeserializationConstraint`1.ApplyTo``1(``0)">
+            <summary>
+            Applies the constraint to an actual value, returning a ConstraintResult.
+            </summary>
+            <param name="actual">The value to be tested</param>
+            <returns>A ConstraintResult</returns>
+        </member>
+        <member name="P:Testing.Commons.NUnit.Constraints.DeserializationConstraint`1.Description">
+            <summary>
+            The Description of what this constraint tests, for
+            use in messages and in the ConstraintResult.
+            </summary>
+        </member>
+        <member name="T:Testing.Commons.NUnit.Constraints.EnumerableCountConstraint">
+            <summary>
+            Allows asserting on the number of elements of any instance of <see cref="T:System.Collections.IEnumerable"/>.
+            </summary>
+            <remarks>When evaluating linq queries NUnit does not provide a way of aserting on the element count.</remarks>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.EnumerableCountConstraint.#ctor(NUnit.Framework.Constraints.Constraint)">
+            <summary>
+            Creates the instance of the constraint.
+            </summary>
+            <param name="countConstraint">The constraint to be applied to the element count.</param>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.EnumerableCountConstraint.ApplyTo``1(``0)">
+            <summary>
+            Applies the constraint to an actual value, returning a ConstraintResult.
+            </summary>
+            <param name="actual">The value to be tested</param>
+            <returns>A ConstraintResult</returns>
+        </member>
+        <member name="T:Testing.Commons.NUnit.Constraints.EnumerableCountConstraint.TypeRevealingConstraint">
+            <summary>
+            Used to test that an object is of the same type provided or derived from it and extend the information given for the actual failing value.
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="T:Testing.Commons.NUnit.Constraints.EnumerableCountConstraint.CountConstraint">
+            <summary>
+            Wraps a constraint when used on the number of elements of an enumerable.
+            </summary>
+        </member>
+        <member name="T:Testing.Commons.NUnit.Constraints.JsonEqualConstraint">
+            <summary>
+            Extends <see cref="T:NUnit.Framework.Constraints.EqualConstraint"/> allowing asserting using compact JSON strings.
+            </summary>
+            <remarks>A compact JSON string notation uses single quotes for names and string values instead
+            of double quotes, removing the need to escape such double quotes.
+            <para>An expanded JSON string uses the canonical double quote style for names an string values.</para>
+            </remarks>
+            <example><code>Assert.That("{\"prop\"=\"value\"}", new JsonConstraint("{'prop'='value'}"))</code></example>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.JsonEqualConstraint.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Testing.Commons.NUnit.Constraints.JsonEqualConstraint"/> class. 
+            </summary>
+            <param name="expected">The expected value in JSON compact notation.</param>
+        </member>
+        <member name="T:Testing.Commons.NUnit.Constraints.JsonExtensions">
+            <summary>
+            Extensions for assertions involving compact JSON strings.
+            </summary>
+            <remarks>A compact JSON string notation uses single quotes for names and string values instead
+            of double quotes, removing the need to escape such double quotes.
+            <para>An extended JSON string uses the canonical double quote style for names an string values.</para>
+            </remarks>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.JsonExtensions.AsJson(NUnit.Framework.Constraints.EqualConstraint)">
+            <summary>
+            Flags the constraint to use the supplied compact JSON string when performing equality. 
+            </summary>
+            <param name="constraint">The constraint to modify.</param>
+            <returns>The modified constraint.</returns>
+            <example><code>Assert.That("{\"prop\"=\"value\"}", Is.EqualTo("{'prop'='value'}").AsJson())</code></example>
+        </member>
+        <member name="T:Testing.Commons.NUnit.Constraints.MatchingConstraint">
+            <summary>
+            Allows matching partial expected objects.
+            </summary>
+            <remarks>It is a useful feature when it is easier to create a object with the same shape and a subset of the values as the actual object.</remarks>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MatchingConstraint.#ctor(System.Object)">
+            <summary>
+            Creates the instance of the constraint.
+            </summary>
+            <param name="expected">The object to match the actual value against.</param>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.MatchingConstraint.ApplyTo``1(``0)">
+            <summary>
+            Applies the constraint to an actual value, returning a ConstraintResult.
+            </summary>
+            <param name="actual">The value to be tested</param>
+            <returns>A ConstraintResult</returns>
+        </member>
+        <member name="P:Testing.Commons.NUnit.Constraints.MatchingConstraint.Description">
+            <summary>
+            The Description of what this constraint tests, for
+            use in messages and in the ConstraintResult.
+            </summary>
+        </member>
+        <member name="T:Testing.Commons.NUnit.Constraints.NoPropertyChangedConstraint`1">
+            <summary>
+            Allows checking whether a type does not raise a <see cref="E:System.ComponentModel.INotifyPropertyChanged.PropertyChanged"/> when a property is set.
+            </summary>
+            <typeparam name="TSubject">Type that does not raises the <see cref="E:System.ComponentModel.INotifyPropertyChanged.PropertyChanged"/> event.</typeparam>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.NoPropertyChangedConstraint`1.#ctor(`0)">
+            <summary>
+            Instantiate the constraint
+            </summary>
+            <param name="subject"> Instance of the type not raising the event.</param>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.NoPropertyChangedConstraint`1.ApplyTo``1(NUnit.Framework.Constraints.ActualValueDelegate{``0})">
+            <summary>
+            Applies the constraint to an ActualValueDelegate that returns
+            the value to be tested. The default implementation simply evaluates
+            the delegate but derived classes may override it to provide for
+            delayed processing.
+            </summary>
+            <param name="del">An ActualValueDelegate</param>
+            <returns>A ConstraintResult</returns>
+        </member>
+        <member name="P:Testing.Commons.NUnit.Constraints.NoPropertyChangedConstraint`1.EventName">
+            <summary>
+            Name of the event.
+            </summary>
+        </member>
+        <member name="T:Testing.Commons.NUnit.Constraints.NoPropertyChangingConstraint`1">
+            <summary>
+            Allows checking whether a type does not raise a <see cref="E:System.ComponentModel.INotifyPropertyChanging.PropertyChanging"/> when a property is set.
+            </summary>
+            <typeparam name="TSubject">Type that does not raises the <see cref="E:System.ComponentModel.INotifyPropertyChanging.PropertyChanging"/> event.</typeparam>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.NoPropertyChangingConstraint`1.#ctor(`0)">
+            <summary>
+            Instantiate the constraint
+            </summary>
+            <param name="subject"> Instance of the type not raising the event.</param>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.NoPropertyChangingConstraint`1.ApplyTo``1(NUnit.Framework.Constraints.ActualValueDelegate{``0})">
+            <summary>
+            Applies the constraint to an ActualValueDelegate that returns
+            the value to be tested. The default implementation simply evaluates
+            the delegate but derived classes may override it to provide for
+            delayed processing.
+            </summary>
+            <param name="del">An ActualValueDelegate</param>
+            <returns>A ConstraintResult</returns>
+        </member>
+        <member name="P:Testing.Commons.NUnit.Constraints.NoPropertyChangingConstraint`1.EventName">
+            <summary>
+            Name of the event.
+            </summary>
+        </member>
+        <member name="T:Testing.Commons.NUnit.Constraints.NoRaisingConstraint`2">
+            <summary>
+            Base class for constraints for types not raising events.
+            </summary>
+            <typeparam name="TSubject">Type that does not raise the event.</typeparam>
+            <typeparam name="TEventArgs">The type of the event data that would be generated by the event.</typeparam>
+        </member>
+        <member name="P:Testing.Commons.NUnit.Constraints.NoRaisingConstraint`2.Subject">
+            <summary>
+            Instance of the event raising type.
+            </summary>
+        </member>
+        <member name="P:Testing.Commons.NUnit.Constraints.NoRaisingConstraint`2.EventName">
+            <summary>
+            Name of the event.
+            </summary>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.NoRaisingConstraint`2.#ctor(`0)">
+            <summary>
+            Instantiate the constraint
+            </summary>
+            <param name="subject"> Instance of the event not raised by the type.</param>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.NoRaisingConstraint`2.OnEventRaised(`1)">
+            <summary>
+            To be executed inside the callback of the event.
+            </summary>
+            <param name="e">The event data generated by the event.</param>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.NoRaisingConstraint`2.ApplyTo``1(``0)">
+            <summary>
+            Applies the constraint to an actual value, returning a ConstraintResult.
+            </summary>
+            <param name="actual">The value to be tested</param>
+            <returns>A ConstraintResult</returns>
+        </member>
+        <member name="P:Testing.Commons.NUnit.Constraints.NoRaisingConstraint`2.Description">
+            <summary>
+            The Description of what this constraint tests, for
+            use in messages and in the ConstraintResult.
+            </summary>
+        </member>
+        <member name="T:Testing.Commons.NUnit.Constraints.PropertyChangedConstraint`1">
+            <summary>
+            Allows checking whether a type raises a <see cref="E:System.ComponentModel.INotifyPropertyChanged.PropertyChanged"/> when a property is set.
+            </summary>
+            <typeparam name="TSubject">Type that raises the <see cref="E:System.ComponentModel.INotifyPropertyChanged.PropertyChanged"/> event.</typeparam>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.PropertyChangedConstraint`1.#ctor(`0,System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
+            <summary>
+            Instantiate the constraint
+            </summary>
+            <param name="subject"> Instance of the event raising type.</param>
+            <param name="property">Expression that represents the name of a property.</param>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.PropertyChangedConstraint`1.#ctor(`0,NUnit.Framework.Constraints.Constraint)">
+            <summary>
+            Instantiate the constraint
+            </summary>
+            <param name="subject"> Instance of the event raising type.</param>
+            <param name="eventArgsConstraint">Constraint to be applied to the event arg property.</param>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.PropertyChangedConstraint`1.ApplyTo``1(NUnit.Framework.Constraints.ActualValueDelegate{``0})">
+            <summary>
+            Applies the constraint to an ActualValueDelegate that returns
+            the value to be tested. The default implementation simply evaluates
+            the delegate but derived classes may override it to provide for
+            delayed processing.
+            </summary>
+            <param name="del">An ActualValueDelegate</param>
+            <returns>A ConstraintResult</returns>
+        </member>
+        <member name="P:Testing.Commons.NUnit.Constraints.PropertyChangedConstraint`1.EventName">
+            <summary>
+            Name of the event.
+            </summary>
+        </member>
+        <member name="T:Testing.Commons.NUnit.Constraints.PropertyChangingConstraint`1">
+            <summary>
+            Allows checking whether a type raises a <see cref="E:System.ComponentModel.INotifyPropertyChanging.PropertyChanging"/> when a property is set.
+            </summary>
+            <typeparam name="TSubject">Type that raises the <see cref="E:System.ComponentModel.INotifyPropertyChanging.PropertyChanging"/> event.</typeparam>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.PropertyChangingConstraint`1.#ctor(`0,System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
+            <summary>
+            Instantiate the constraint
+            </summary>
+            <param name="subject"> Instance of the event raising type.</param>
+            <param name="property">Expression that represents the name of a property.</param>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.PropertyChangingConstraint`1.#ctor(`0,NUnit.Framework.Constraints.Constraint)">
+            <summary>
+            Instantiate the constraint
+            </summary>
+            <param name="subject"> Instance of the event raising type.</param>
+            <param name="eventArgsConstraint">Constraint to be applied to the event arg property.</param>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.PropertyChangingConstraint`1.ApplyTo``1(NUnit.Framework.Constraints.ActualValueDelegate{``0})">
+            <summary>
+            Applies the constraint to an ActualValueDelegate that returns
+            the value to be tested. The default implementation simply evaluates
+            the delegate but derived classes may override it to provide for
+            delayed processing.
+            </summary>
+            <param name="del">An ActualValueDelegate</param>
+            <returns>A ConstraintResult</returns>
+        </member>
+        <member name="P:Testing.Commons.NUnit.Constraints.PropertyChangingConstraint`1.EventName">
+            <summary>
+            Name of the event.
+            </summary>
+        </member>
+        <member name="T:Testing.Commons.NUnit.Constraints.RaisingConstraint`2">
+            <summary>
+            Base class for constraints for event raising types.
+            </summary>
+            <typeparam name="TSubject">Type that raises the event.</typeparam>
+            <typeparam name="TEventArgs">The type of the event data generated by the event.</typeparam>
+        </member>
+        <member name="P:Testing.Commons.NUnit.Constraints.RaisingConstraint`2.Subject">
+            <summary>
+            Instance of the event raising type.
+            </summary>
+        </member>
+        <member name="P:Testing.Commons.NUnit.Constraints.RaisingConstraint`2.Matched">
+            <summary>
+            Return value of <see cref="M:NUnit.Framework.Constraints.Constraint.ApplyTo``1(NUnit.Framework.Constraints.ActualValueDelegate{``0})"/>.
+            </summary>
+        </member>
+        <member name="P:Testing.Commons.NUnit.Constraints.RaisingConstraint`2.EventName">
+            <summary>
+            Name of the event.
+            </summary>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.RaisingConstraint`2.#ctor(`0,System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.Func{NUnit.Framework.Constraints.Constraint,Testing.Commons.NUnit.Constraints.ComposablePropertyConstraint})">
+            <summary>
+            Instantiate the constraint
+            </summary>
+            <param name="subject"> Instance of the event raising type.</param>
+            <param name="property">Expression that represents the name of a property.</param>
+            <param name="eventArgs">Constraint on the property name.</param>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.RaisingConstraint`2.#ctor(`0,NUnit.Framework.Constraints.Constraint,System.Func{NUnit.Framework.Constraints.Constraint,Testing.Commons.NUnit.Constraints.ComposablePropertyConstraint})">
+            <summary>
+            Instantiate the constraint
+            </summary>
+            <param name="subject"> Instance of the event raising type.</param>
+            <param name="eventArgsConstraint">Constraint to be applied to the event arg property.</param>
+            <param name="eventArgs">Constraint on the property name.</param>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.RaisingConstraint`2.onEventRaised(`1)">
+            <summary>
+            To be executed inside the callback of the event.
+            </summary>
+            <param name="e">The event data generated by the event.</param>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.RaisingConstraint`2.ApplyTo``1(``0)">
+            <summary>
+            Applies the constraint to an actual value, returning a ConstraintResult.
+            </summary>
+            <param name="actual">The value to be tested</param>
+            <returns>A ConstraintResult</returns>
+        </member>
+        <member name="P:Testing.Commons.NUnit.Constraints.RaisingConstraint`2.Description">
+            <summary>
+            The Description of what this constraint tests, for
+            use in messages and in the ConstraintResult.
+            </summary>
+        </member>
+        <member name="T:Testing.Commons.NUnit.Constraints.SerializationConstraint`1">
+            <summary>
+            Used to check the serialization/deserialization of an object.
+            </summary>
+            <typeparam name="T">Type to be serialized and deserialized.</typeparam>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.SerializationConstraint`1.#ctor(Testing.Commons.Serialization.IRoundtripSerializer{`0},NUnit.Framework.Constraints.Constraint)">
+            <summary>
+            Builds an instance with the provided serializer and constraint.
+            </summary>
+            <param name="serializer">Serializer used to serialize/deserialize the tested value.</param>
+            <param name="constraintOverDeserialized">Constraint to apply to the deserialized object.</param>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.SerializationConstraint`1.ApplyTo``1(``0)">
+            <summary>
+            Applies the constraint to an actual value, returning a ConstraintResult.
+            </summary>
+            <param name="actual">The value to be tested</param>
+            <returns>A ConstraintResult</returns>
+        </member>
+        <member name="P:Testing.Commons.NUnit.Constraints.SerializationConstraint`1.Description">
+            <summary>
+            The Description of what this constraint tests, for
+            use in messages and in the ConstraintResult.
+            </summary>
+        </member>
+        <member name="T:Testing.Commons.NUnit.Constraints.Support.ConstraintTesterBase">
+            <summary>
+            Eases the testing activities of custom constraints.
+            </summary>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.Support.ConstraintTesterBase.getMessage``1(NUnit.Framework.Constraints.Constraint,``0)">
+            <summary>
+            Gets the error message of a failing contraint.
+            </summary>
+            <param name="subject">Constraint to be tested.</param>
+            <param name="actual">The value to be tested.</param>
+            <typeparam name="T">Type of the tested value.</typeparam>
+            <returns>The message of a failing contraint or <see cref="F:System.String.Empty"/> if is not failing.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.Support.ConstraintTesterBase.getMessage``1(NUnit.Framework.Constraints.Constraint,NUnit.Framework.Constraints.ActualValueDelegate{``0})">
+            <summary>
+            Gets the error message of a failing contraint.
+            </summary>
+            <param name="subject">Constraint to be tested.</param>
+            <param name="actual">The action to be tested.</param>
+            <typeparam name="T">Type of the tested value.</typeparam>
+            <returns>The message of a failing contraint or <see cref="F:System.String.Empty"/> if is not failing.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.Support.ConstraintTesterBase.matches``1(NUnit.Framework.Constraints.Constraint,``0)">
+            <summary>
+            Checks the success of a constraint.
+            </summary>
+            <param name="subject">Constraint to be tested.</param>
+            <param name="actual">The value to be tested.</param>
+            <typeparam name="T">Type of the tested value.</typeparam>
+            <returns><code>true</code> if the constraint matched, <code>false</code> otherwise.</returns>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.Support.ConstraintTesterBase.matches``1(NUnit.Framework.Constraints.Constraint,NUnit.Framework.Constraints.ActualValueDelegate{``0})">
+            <summary>
+            Checks the success of a constraint.
+            </summary>
+            <param name="subject">Constraint to be tested.</param>
+            <param name="actual">The action to be tested.</param>
+            <typeparam name="T">Type of the tested value.</typeparam>
+            <returns><code>true</code> if the constraint matched, <code>false</code> otherwise.</returns>
+        </member>
+        <member name="T:Testing.Commons.NUnit.Constraints.Support.ExposingWriter">
+            <summary>
+            Exposes the instance of <see cref="T:Testing.Commons.NUnit.Constraints.Support.WritableEqualityResult"/> which output would be formatted.
+            </summary>
+        </member>
+        <member name="T:Testing.Commons.NUnit.Constraints.Support.Operator`1">
+            <summary>
+            Provides standard operators over a single type
+            </summary>
+        </member>
+        <member name="P:Testing.Commons.NUnit.Constraints.Support.Operator`1.Equal">
+            <summary>
+            Returns a delegate to evaluate binary equality (==) for the given type; this delegate will throw
+            an InvalidOperationException if the type T does not provide this operator, or for
+            Nullable&lt;TInner&gt; if TInner does not provide this operator.
+            </summary>
+        </member>
+        <member name="P:Testing.Commons.NUnit.Constraints.Support.Operator`1.NotEqual">
+            <summary>
+            Returns a delegate to evaluate binary inequality (!=) for the given type; this delegate will throw
+            an InvalidOperationException if the type T does not provide this operator, or for
+            Nullable&lt;TInner&gt; if TInner does not provide this operator.
+            </summary>
+        </member>
+        <member name="P:Testing.Commons.NUnit.Constraints.Support.Operator`1.GreaterThan">
+            <summary>
+            Returns a delegate to evaluate binary greater-then (&gt;) for the given type; this delegate will throw
+            an InvalidOperationException if the type T does not provide this operator, or for
+            Nullable&lt;TInner&gt; if TInner does not provide this operator.
+            </summary>
+        </member>
+        <member name="P:Testing.Commons.NUnit.Constraints.Support.Operator`1.LessThan">
+            <summary>
+            Returns a delegate to evaluate binary less-than (&lt;) for the given type; this delegate will throw
+            an InvalidOperationException if the type T does not provide this operator, or for
+            Nullable&lt;TInner&gt; if TInner does not provide this operator.
+            </summary>
+        </member>
+        <member name="P:Testing.Commons.NUnit.Constraints.Support.Operator`1.GreaterThanOrEqual">
+            <summary>
+            Returns a delegate to evaluate binary greater-than-or-equal (&gt;=) for the given type; this delegate will throw
+            an InvalidOperationException if the type T does not provide this operator, or for
+            Nullable&lt;TInner&gt; if TInner does not provide this operator.
+            </summary>
+        </member>
+        <member name="P:Testing.Commons.NUnit.Constraints.Support.Operator`1.LessThanOrEqual">
+            <summary>
+            Returns a delegate to evaluate binary less-than-or-equal (&lt;=) for the given type; this delegate will throw
+            an InvalidOperationException if the type T does not provide this operator, or for
+            Nullable&lt;TInner&gt; if TInner does not provide this operator.
+            </summary>
+        </member>
+        <member name="T:Testing.Commons.NUnit.Constraints.Support.Operator`2">
+            <summary>
+            Provides standard operators that operate over operands of different types.
+            </summary>
+        </member>
+        <member name="P:Testing.Commons.NUnit.Constraints.Support.Operator`2.Equal">
+            <summary>
+            Returns a delegate to evaluate binary equality (==) for the given type; this delegate will throw
+            an InvalidOperationException if the type T does not provide this operator, or for
+            Nullable&lt;TInner&gt; if TInner does not provide this operator.
+            </summary>
+        </member>
+        <member name="P:Testing.Commons.NUnit.Constraints.Support.Operator`2.NotEqual">
+            <summary>
+            Returns a delegate to evaluate binary inequality (!=) for the given type; this delegate will throw
+            an InvalidOperationException if the type T does not provide this operator, or for
+            Nullable&lt;TInner&gt; if TInner does not provide this operator.
+            </summary>
+        </member>
+        <member name="P:Testing.Commons.NUnit.Constraints.Support.Operator`2.GreaterThan">
+            <summary>
+            Returns a delegate to evaluate binary greater-then (&gt;) for the given type; this delegate will throw
+            an InvalidOperationException if the type T does not provide this operator, or for
+            Nullable&lt;TInner&gt; if TInner does not provide this operator.
+            </summary>
+        </member>
+        <member name="P:Testing.Commons.NUnit.Constraints.Support.Operator`2.LessThan">
+            <summary>
+            Returns a delegate to evaluate binary less-than (&lt;) for the given type; this delegate will throw
+            an InvalidOperationException if the type T does not provide this operator, or for
+            Nullable&lt;TInner&gt; if TInner does not provide this operator.
+            </summary>
+        </member>
+        <member name="P:Testing.Commons.NUnit.Constraints.Support.Operator`2.GreaterThanOrEqual">
+            <summary>
+            Returns a delegate to evaluate binary greater-than-or-equal (&gt;=) for the given type; this delegate will throw
+            an InvalidOperationException if the type T does not provide this operator, or for
+            Nullable&lt;TInner&gt; if TInner does not provide this operator.
+            </summary>
+        </member>
+        <member name="P:Testing.Commons.NUnit.Constraints.Support.Operator`2.LessThanOrEqual">
+            <summary>
+            Returns a delegate to evaluate binary less-than-or-equal (&lt;=) for the given type; this delegate will throw
+            an InvalidOperationException if the type T does not provide this operator, or for
+            Nullable&lt;TInner&gt; if TInner does not provide this operator.
+            </summary>
+        </member>
+        <member name="T:Testing.Commons.NUnit.Constraints.Support.ExpressionBuilder">
+            <summary>
+            General purpose Expression utilities
+            </summary>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.Support.ExpressionBuilder.Binary``3(System.Func{System.Linq.Expressions.Expression,System.Linq.Expressions.Expression,System.Linq.Expressions.BinaryExpression})">
+            <summary>
+            Create a function delegate representing a binary operation
+            </summary>
+            <typeparam name="T">The first parameter type</typeparam>
+            <typeparam name="U">The second parameter type</typeparam>
+            <typeparam name="TResult">The return type</typeparam>
+            <param name="body">Body factory</param>
+            <returns>Compiled function delegate</returns>
+        </member>
+        <member name="T:Testing.Commons.NUnit.Constraints.Support.WritableEqualityResult">
+            <summary>
+            Adapter that allows writting an instance of <see cref="T:ExpectedObjects.EqualityResult"/> to a <see cref="T:NUnit.Framework.Constraints.MessageWriter"/>.
+            </summary>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.Support.WritableEqualityResult.WriteOffendingMember(NUnit.Framework.Constraints.MessageWriter)">
+            <summary>
+            Writes the member that did not match.
+            </summary>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.Support.WritableEqualityResult.WriteActual(NUnit.Framework.Constraints.MessageWriter)">
+            <summary>
+            Writes the value of the actual object.
+            </summary>
+        </member>
+        <member name="M:Testing.Commons.NUnit.Constraints.Support.WritableEqualityResult.WriteExpected">
+            <summary>
+            Writes the value of the expected object.
+            </summary>
+        </member>
+    </members>
+</doc>
