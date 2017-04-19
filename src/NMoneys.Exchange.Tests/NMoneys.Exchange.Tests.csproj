@@ -45,8 +45,8 @@
     <Reference Include="Testing.Commons, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Testing.Commons.2.0.0\lib\net40\Testing.Commons.dll</HintPath>
     </Reference>
-    <Reference Include="Testing.Commons.NUnit, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Testing.Commons.NUnit.4.0.0\lib\net40\Testing.Commons.NUnit.dll</HintPath>
+    <Reference Include="Testing.Commons.NUnit, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Testing.Commons.NUnit.4.0.0.20170419\lib\net40\Testing.Commons.NUnit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
