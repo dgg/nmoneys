@@ -45,6 +45,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Exchange", "Exchange", "{40
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NMoneys.netstandard", "src\NMoneys\NMoneys.netstandard.csproj", "{B2BB7B51-DDCF-46D5-8350-0284D5359AAC}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NMoneys.Tests.core", "src\NMoneys.Tests\NMoneys.Tests.core.csproj", "{8A779191-3A7D-43B4-8F9A-747013605C28}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -151,6 +153,18 @@ Global
 		{B2BB7B51-DDCF-46D5-8350-0284D5359AAC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{B2BB7B51-DDCF-46D5-8350-0284D5359AAC}.Release|x86.ActiveCfg = Release|Any CPU
 		{B2BB7B51-DDCF-46D5-8350-0284D5359AAC}.Release|x86.Build.0 = Release|Any CPU
+		{8A779191-3A7D-43B4-8F9A-747013605C28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A779191-3A7D-43B4-8F9A-747013605C28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A779191-3A7D-43B4-8F9A-747013605C28}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{8A779191-3A7D-43B4-8F9A-747013605C28}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{8A779191-3A7D-43B4-8F9A-747013605C28}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8A779191-3A7D-43B4-8F9A-747013605C28}.Debug|x86.Build.0 = Debug|Any CPU
+		{8A779191-3A7D-43B4-8F9A-747013605C28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A779191-3A7D-43B4-8F9A-747013605C28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A779191-3A7D-43B4-8F9A-747013605C28}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8A779191-3A7D-43B4-8F9A-747013605C28}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{8A779191-3A7D-43B4-8F9A-747013605C28}.Release|x86.ActiveCfg = Release|Any CPU
+		{8A779191-3A7D-43B4-8F9A-747013605C28}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
