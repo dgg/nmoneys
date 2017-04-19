@@ -5,6 +5,7 @@ using NMoneys.Extensions;
 using NMoneys.Tests.CustomConstraints;
 using NUnit.Framework;
 using Testing.Commons;
+using Testing.Commons.Globalization;
 
 namespace NMoneys.Tests
 {
@@ -46,27 +47,36 @@ namespace NMoneys.Tests
 
 		#region ForCurrentCulture
 
-		[Test, SetCulture("da-DK")]
+		[Test]
 		public void ForCurrentCulture_DefinedCulture_PropertiesSet()
 		{
-			Money subject = Money.ForCurrentCulture(100);
-			Assert.That(subject.Amount, Is.EqualTo(100m));
-			Assert.That(subject.CurrencyCode, Is.EqualTo(CurrencyIsoCode.DKK));
+			using (CultureReseter.Set("da-DK"))
+			{
+				Money subject = Money.ForCurrentCulture(100);
+				Assert.That(subject.Amount, Is.EqualTo(100m));
+				Assert.That(subject.CurrencyCode, Is.EqualTo(CurrencyIsoCode.DKK));
+			}
 		}
 
-		[Test, Platform(Include = "Net-2.0"), SetCulture("bg-BG")]
+		[Test, Platform(Include = "Net-2.0")]
 		public void ForCurrentCulture_OutdatedCulture_Exception()
 		{
-			Assert.That(() => Money.ForCurrentCulture(decimal.Zero),
-				Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.Contains("BGL"),
-				"Framework returns wrong ISOCurrencySymbol (BGL instead of BGN)");
+			using (CultureReseter.Set("bg-BG"))
+			{
+				Assert.That(() => Money.ForCurrentCulture(decimal.Zero),
+					Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.Contains("BGL"),
+					"Framework returns wrong ISOCurrencySymbol (BGL instead of BGN)");
+			}
 		}
 
-		[Test, Platform(Include = "Net-2.0"), SetCulture("et-EE")]
+		[Test, Platform(Include = "Net-2.0")]
 		public void ForCurrentCulture_CultureWithObsoleteCulture_EventRaised()
 		{
-			Action moneyWithObsoleteCurrency = () => Money.ForCurrentCulture(decimal.Zero);
-			Assert.That(moneyWithObsoleteCurrency, Must.Raise.ObsoleteEvent());
+			using (CultureReseter.Set("ee-EE"))
+			{
+				Action moneyWithObsoleteCurrency = () => Money.ForCurrentCulture(decimal.Zero);
+				Assert.That(moneyWithObsoleteCurrency, Must.Raise.ObsoleteEvent());
+			}
 		}
 
 		#endregion

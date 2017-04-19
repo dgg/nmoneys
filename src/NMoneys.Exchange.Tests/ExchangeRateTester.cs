@@ -5,6 +5,7 @@ using NMoneys.Extensions;
 using NMoneys.Tests.CustomConstraints;
 using NUnit.Framework;
 using Testing.Commons;
+using Testing.Commons.Globalization;
 
 namespace NMoneys.Exchange.Tests
 {
@@ -100,13 +101,16 @@ namespace NMoneys.Exchange.Tests
 			Assert.That(subject.ToString(), Is.EqualTo("EUR/USD 1.25"));
 		}
 
-		[Test, SetCulture("es-ES")]
+		[Test]
 		public void ToString_CultureIndependant()
 		{
-			var subject = new ExchangeRate(CurrencyIsoCode.EUR, CurrencyIsoCode.USD, 1.25m);
+			using (CultureReseter.Set("es-ES"))
+			{
+				var subject = new ExchangeRate(CurrencyIsoCode.EUR, CurrencyIsoCode.USD, 1.25m);
 
-			Assert.That(subject.ToString(), Is.EqualTo("EUR/USD 1.25"), "invariant number representation");
-			Assert.That(1.25m.ToString(), Is.EqualTo("1,25"), "even decimals use commas in spanish");
+				Assert.That(subject.ToString(), Is.EqualTo("EUR/USD 1.25"), "invariant number representation");
+				Assert.That(1.25m.ToString(), Is.EqualTo("1,25"), "even decimals use commas in spanish");
+			}
 		}
 
 		#region equality
