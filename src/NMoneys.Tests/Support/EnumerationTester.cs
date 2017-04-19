@@ -253,7 +253,7 @@ namespace NMoneys.Tests.Support
 
 	public enum Test1
 	{
-		[System.ComponentModel.Description("Test1 - Value1")]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("cate", "check")]
 		Value1,
 		Value2,
 		[DisplayName("displayName : Test1 - Value3")]
