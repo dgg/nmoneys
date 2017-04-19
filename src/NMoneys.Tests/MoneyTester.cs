@@ -355,28 +355,6 @@ namespace NMoneys.Tests
 			Assert.That(upper, Is.EqualTo(mixed));
 		}
 
-		[Test]
-		public void XmlDeserialization_IsCaseInsensitive()
-		{
-			string serializedMoney =
-				"<money xmlns=\"urn:nmoneys\">" +
-				"<amount>3.757</amount>" +
-				"<currency><isoCode>xXx</isoCode></currency>" +
-				"</money>";
-			Assert.That(serializedMoney, Must.Be.XmlDeserializableInto(new Money(3.757m)));
-		}
-
-		[Test]
-		public void DataContractDeserialization_IsCaseInsensitive()
-		{
-			string serializedMoney =
-				"<money xmlns=\"urn:nmoneys\">" +
-				"<amount>3.757</amount>" +
-				"<currency><isoCode>xXx</isoCode></currency>" +
-				"</money>";
-			Assert.That(serializedMoney, Must.Be.DataContractDeserializableInto(new Money(3.757m)));
-		}
-
 		#endregion
 	}
 }

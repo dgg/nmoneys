@@ -93,5 +93,31 @@ namespace NMoneys.Tests
 
 			Assert.That(deserialized, Must.Be.MoneyWith(0m, Currency.Xxx));
 		}
+
+		#region Issue 16. Case sensitivity. Money instances can be obtained by any casing of the IsoCode (Alphbetic code)
+	
+		[Test]
+		public void XmlDeserialization_IsCaseInsensitive()
+		{
+			string serializedMoney =
+				"<money xmlns=\"urn:nmoneys\">" +
+				"<amount>3.757</amount>" +
+				"<currency><isoCode>xXx</isoCode></currency>" +
+				"</money>";
+			Assert.That(serializedMoney, Must.Be.XmlDeserializableInto(new Money(3.757m)));
+		}
+
+		[Test]
+		public void DataContractDeserialization_IsCaseInsensitive()
+		{
+			string serializedMoney =
+				"<money xmlns=\"urn:nmoneys\">" +
+				"<amount>3.757</amount>" +
+				"<currency><isoCode>xXx</isoCode></currency>" +
+				"</money>";
+			Assert.That(serializedMoney, Must.Be.DataContractDeserializableInto(new Money(3.757m)));
+		}
+
+		#endregion
 	}
 }
