@@ -82,7 +82,7 @@
     <Compile Include="MoneyTester.Arithmetic.cs" />
     <Compile Include="MoneyTester.Arithmetic.Operators.cs" />
     <Compile Include="MoneyTester.Parsing.cs" />
-    <Compile Include="MoneyTester.Cloning.cs" />
+    <Compile Include="MoneyTester.Cloning.net.cs" />
     <Compile Include="MoneyTester.Comparisons.cs" />
     <Compile Include="CurrencyEqualityComparerTester.cs" />
     <Compile Include="CurrencyIsoCodeTester.cs" />
