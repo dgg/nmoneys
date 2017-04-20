@@ -62,17 +62,30 @@ function Copy-Artifacts($base, $configuration)
 
 function copy-binaries($base, $configuration)
 {
-	$release_bin_dir = Join-Path $base release\lib\Net40-client
+	$release_bin_dir = Join-Path $base release\lib\net40-client
 	
 	Copy-Item $base\src\NMoneys\bin\$configuration\NMoneys.dll $release_bin_dir
 	Copy-Item $base\src\NMoneys\bin\$configuration\NMoneys.XML $release_bin_dir
 	Copy-Item $base\src\NMoneys.Exchange\bin\$configuration\NMoneys.Exchange.dll $release_bin_dir
 	Copy-Item $base\src\NMoneys.Exchange\bin\$configuration\NMoneys.Exchange.XML $release_bin_dir
+
+	$release_bin_dir = Join-Path $base release\lib\netstandard1.4
+	
+	Copy-Item $base\src\NMoneys\bin\$configuration\netstandard1.4\NMoneys.dll $release_bin_dir
+	Copy-Item $base\src\NMoneys\bin\$configuration\netstandard1.4\NMoneys.XML $release_bin_dir
+	Copy-Item $base\src\NMoneys.Exchange\bin\$configuration\netstandard1.4\NMoneys.Exchange.dll $release_bin_dir
+	Copy-Item $base\src\NMoneys.Exchange\bin\$configuration\netstandard1.4\NMoneys.Exchange.XML $release_bin_dir
 }
 
 function copy-doc($base){
-	$release_bin_dir = Join-Path $base release\lib\Net40-client
-	$release_doc_dir = Join-Path $base release\doc
+	$release_bin_dir = Join-Path $base release\lib\net40-client
+	$release_doc_dir = Join-Path $base release\doc\net
+	
+	Get-ChildItem $release_doc_dir -Filter *.chm |
+		Copy-Item -Destination $release_bin_dir
+
+	$release_bin_dir = Join-Path $base release\lib\netstandard1.4
+	$release_doc_dir = Join-Path $base release\doc\netstandard
 	
 	Get-ChildItem $release_doc_dir -Filter *.chm |
 		Copy-Item -Destination $release_bin_dir
