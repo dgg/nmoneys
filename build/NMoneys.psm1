@@ -126,30 +126,37 @@ function Generate-Packages($base)
 function Generate-Zip-Files($base)
 {
 	$version = get-version-from-package $base 'NMoneys'
-	('NMoneys.dll', 'NMoneys.XML', 'NMoneys.chm') |
-		% { zip-bin $base $version 'NMoneys' $_ | Out-Null }
+		('NMoneys.dll', 'NMoneys.XML', 'NMoneys.chm') |
+		% { 
+			zip-bin $base $version 'NMoneys' $_ -framework 'net40-client' -abbreviation 'net' | Out-Null 
+			zip-bin $base $version 'NMoneys' $_ -framework 'netstandard1.4' -abbreviation 'netstandard' | Out-Null 
+		}
 		
-	zip-signed $base $version 'NMoneys' 'NMoneys.dll' | Out-Null
+	zip-signed $base $version 'NMoneys' 'NMoneys.dll' -abbreviation 'net' | Out-Null
+	zip-signed $base $version 'NMoneys' 'NMoneys.dll' -abbreviation 'netstandard' | Out-Null
 
 	$version = get-version-from-package $base 'NMoneys.Exchange'
 	('NMoneys.Exchange.dll', 'NMoneys.Exchange.XML', 'NMoneys_Exchange.chm') |
-		% { zip-bin $base $version 'NMoneys.Exchange' $_ | Out-Null }
+		% { 
+			zip-bin $base $version 'NMoneys.Exchange' $_ -framework 'net40-client' -abbreviation 'net'| Out-Null
+			zip-bin $base $version 'NMoneys.Exchange' $_ -framework 'netstandard1.4' -abbreviation 'netstandard'| Out-Null
+		}
 }
 
-function zip-bin($base, $version, $zipName, $fileName)
+function zip-bin($base, $version, $zipName, $fileName, $framework, $abbreviation)
 {
-	$zip_file = Join-Path $base "\release\$zipName.$version-bin.zip"
-	$to_add = Join-Path $base "\release\lib\Net40-client\$fileName"
-	
+	$zip_file = Join-Path $base "\release\$zipName.$version-bin_$abbreviation.zip"
+	$to_add = Join-Path $base "\release\lib\$framework\$fileName"
+
 	zip $zip_file $to_add
 	
 	return $zip_file
 }
 
-function zip-signed($base, $version, $zipName, $fileName)
+function zip-signed($base, $version, $zipName, $fileName, $abbreviation)
 {
-	$zip_file = Join-Path $base "\release\$zipName.$version-signed.zip"
-	$to_add = Join-Path $base "\release\signed\$fileName"
+	$zip_file = Join-Path $base "\release\$zipName.$version-signed_$abbreviation.zip"
+	$to_add = Join-Path $base "\release\signed\$abbreviation\$fileName"
 	
 	zip $zip_file $to_add
 	
@@ -166,10 +173,10 @@ function zip($zip_file, $to_add)
 
 function get-version-from-package($base, $packageFragment)
 {
-	$pkgVersion = Get-ChildItem -File "$base\release\$packageFragment*.nupkg" |
-		? { $_.Name -match "$packageFragment\.(\d(?:\.\d){3})" } |
+	$pkgVersion = Get-ChildItem -Path "$base\release\" -File "$packageFragment*.nupkg" |
+		? { $_.Name -match "$packageFragment\.(\d(?:\.\d){2})" } |
 		select -First 1 -Property @{ Name = "value"; Expression = {$matches[1]} }
-		
+
 	return $pkgVersion.value
 }
 
