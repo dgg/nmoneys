@@ -16,6 +16,8 @@ function generate-coverage($base, $configuration)
 }
 generate-coverage . $env:CONFIGURATION
 
+Run-Core-Tests . $env:CONFIGURATION
+
 Generate-Packages .
 
 Generate-Zip-Files .

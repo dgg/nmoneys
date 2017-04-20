@@ -242,4 +242,11 @@ function Run-Core-Tests($base, $config)
 	Throw-If-Error
 }
 
-export-modulemember -function Throw-If-Error, Ensure-Release-Folders, Build-Documentation, Copy-Artifacts, Generate-Packages, Generate-Zip-Files, Sign-Assemblies, Find-Versioned-Folder, Find-Test-Assemblies, Run-Core-Tests
+function Restore-Packages($base)
+{
+	# restoring .core test projects, restores .netstandard projects as well
+	Get-ChildItem -File -Recurse -Path "$base\src" -Filter *Tests.core.csproj |
+	ForEach-Object { dotnet restore $_.FullName }
+}
+
+export-modulemember -function Throw-If-Error, Ensure-Release-Folders, Build-Documentation, Copy-Artifacts, Generate-Packages, Generate-Zip-Files, Sign-Assemblies, Find-Versioned-Folder, Find-Test-Assemblies, Run-Core-Tests, Restore-Packages

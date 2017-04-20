@@ -16,6 +16,7 @@ task Clean -depends importModules {
 }
 
 task Compile -depends importModules {
+	Restore-Packages $base_dir
 	$msbuild = find-msbuild
 	
 	Exec { & $msbuild "$base_dir\NMoneys.sln" /p:configuration=$configuration /m /v:m /clp:Summary }

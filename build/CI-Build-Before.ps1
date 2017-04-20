@@ -14,4 +14,5 @@ function fetch-extra-tools($base)
 
 Ensure-Release-Folders .
 fetch-extra-tools .
+Restore-Packages .
 
