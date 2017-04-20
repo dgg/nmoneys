@@ -3,10 +3,10 @@
 
 namespace System.Xml.Serialization
 {
-    public class XmlIgnoreAttribute : Attribute { }
+    internal class XmlIgnoreAttribute : Attribute { }
 }
 
 namespace System.Runtime.Serialization
 {
-	public class EnumMemberAttribute : Attribute { }
+	internal class EnumMemberAttribute : Attribute { }
 }

@@ -12,7 +12,8 @@ function Throw-If-Error
 function Ensure-Release-Folders($base)
 {
 	(
-		"$base\release\doc\", 
+		"$base\release\doc\net\", 
+		"$base\release\doc\netstandard\", 
 		"$base\release\lib\net40-client\", 
 		"$base\release\lib\netstandard1.4\", 
 		"$base\release\content\Infrastructure\Serialization\", 
@@ -24,17 +25,31 @@ function Ensure-Release-Folders($base)
 
 function Build-Documentation($base, $configuration)
 {
-	imm-doc-net $base $configuration "NMoneys"
-	imm-doc-net $base $configuration "NMoneys.Exchange"
+	imm-doc-net $base $configuration "NMoneys" -framework 'net'
+	imm-doc-net $base $configuration "NMoneys.Exchange" -framework 'net'
+
+	imm-doc-net $base $configuration "NMoneys" -framework 'netstandard' -target 'netstandard1.4'
+	imm-doc-net $base $configuration "NMoneys.Exchange" -framework 'netstandard'  -target 'netstandard1.4'
 }
 
-function imm-doc-net($base, $configuration, $project)
+function imm-doc-net($base, $configuration, $project, $target = '', $framework)
 {
 	$immDocNet_path = "$base\tools\ImmDoc.NET"
 	$immDocNet = "$immDocNet_path\immDocNet.exe"
 	$name = $project.Replace(".", "_")
-
-	& $immDocNet -vl:1 -fd "-pn:$project" "-od:$base\release\doc\$name" "-cn:$base\release\doc\$name.chm" "-cp:$immDocNet_path" "$base\src\$project\bin\$configuration\$project.XML" "$base\src\$project\bin\$configuration\$project.dll"
+	$artifact_path = Join-Path $base "src\$project\bin\$configuration"
+	if ($target -ne '') {
+		$artifact_path = Join-Path $artifact_path $target
+	}
+	$xml = Join-Path $artifact_path "$project.xml"
+	$dll = Join-Path $artifact_path "$project.dll"
+	
+	& $immDocNet -vl:1 -fd "-pn:$project" `
+		"-od:$base\release\doc\$framework\$name" `
+		"-cn:$base\release\doc\$framework\$name.chm" `
+		"-cp:$immDocNet_path" `
+		$xml `
+		$dll
 	Throw-If-Error
 }
 

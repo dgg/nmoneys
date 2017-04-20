@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using NMoneys.Support;
@@ -19,7 +18,7 @@ namespace NMoneys.Exchange
 		/// <param name="to">Quote currency, the currency which the conversion is performed to.</param>
 		/// <param name="rate">A non-negative <see cref="decimal"/> instance representing the relative vaue of <paramref name="from"/> against <paramref name="to"/>.</param>
 		/// <example>{from}= EUR, {to}= USD, {rate}=1.2500, represented as "EUR/USD 1.2500" means that one euro is exchanged for 1.2500 US dollars.</example>
-		/// <exception cref="InvalidEnumArgumentException"><paramref name="from"/> or <paramref name="to"/> are undefined currencies.</exception>
+		/// <exception cref="ArgumentException"><paramref name="from"/> or <paramref name="to"/> are undefined currencies.</exception>
 		/// <exception cref="ArgumentException"><paramref name="rate"/> is negative.</exception>
 		public ExchangeRate(CurrencyIsoCode from, CurrencyIsoCode to, decimal rate)
 		{

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using NMoneys.Support;
@@ -20,7 +19,7 @@ namespace NMoneys
 		/// <param name="amount">The <see cref="Amount"/> of the monetary quantity.</param>
 		/// <returns>An instance of <see cref="Money"/> with the <paramref name="amount"/> specified and the currency associated to the current culture.</returns>
 		/// /// <exception cref="ArgumentException">The current is either an invariant or custom, or a <see cref="RegionInfo"/> cannot be instantiated from it.</exception>
-		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The ISO symbol associated to the current culture does not exist in the <see cref="CurrencyIsoCode"/> enumeration.</exception>
+		/// <exception cref="ArgumentException">The ISO symbol associated to the current culture does not exist in the <see cref="CurrencyIsoCode"/> enumeration.</exception>
 		/// <exception cref="MisconfiguredCurrencyException">The currency associated to the current culture has not been properly configured by the library implementor. Please, log a issue.</exception>
 		[Pure]
 		public static Money ForCurrentCulture(decimal amount)
@@ -40,7 +39,7 @@ namespace NMoneys
 		/// <returns>An instance of <see cref="Money"/> with the <paramref name="amount"/> specified and the currency associated to the specified <paramref name="culture"/>.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="culture"/> is null.</exception>
 		/// <exception cref="ArgumentException"><paramref name="culture"/> is either an invariant, custom or neutral culture, or a <see cref="RegionInfo"/> cannot be instantiated from it.</exception>
-		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The ISO symbol associated to the <paramref name="culture"/> does not exist in the <see cref="CurrencyIsoCode"/> enumeration.</exception>
+		/// <exception cref="ArgumentException">The ISO symbol associated to the <paramref name="culture"/> does not exist in the <see cref="CurrencyIsoCode"/> enumeration.</exception>
 		/// <exception cref="MisconfiguredCurrencyException">The currency associated to the <paramref name="culture"/> has not been properly configured by the library implementor. Please, log a issue.</exception>
 		[Pure]
 		public static Money ForCulture(decimal amount, CultureInfo culture)
@@ -66,7 +65,7 @@ namespace NMoneys
 		/// <param name="currency">The <see cref="CurrencyCode"/> of the monetary quantity.</param>
 		/// <returns>An <see cref="Money"/> instance with zero <see cref="Amount"/> and the specified <paramref name="currency"/>.</returns>
 		/// <seealso cref="Money(decimal, CurrencyIsoCode)"/>
-		/// <exception cref="InvalidEnumArgumentException"><paramref name="currency"/> is not defined.</exception>
+		/// <exception cref="ArgumentException"><paramref name="currency"/> is not defined.</exception>
 		[Pure]
 		public static Money Zero(CurrencyIsoCode currency)
 		{
@@ -80,7 +79,7 @@ namespace NMoneys
 		/// <param name="numberOfElements">The number of elements in the array.</param>
 		/// <returns>An array of <see cref="Money"/> instances with zero <see cref="Amount"/> and the specified <paramref name="currency"/>.</returns>
 		/// <seealso cref="Money.Zero(CurrencyIsoCode)"/>
-		/// <exception cref="InvalidEnumArgumentException"><paramref name="currency"/> is not defined.</exception>
+		/// <exception cref="ArgumentException"><paramref name="currency"/> is not defined.</exception>
 		/// <exception cref="OverflowException"><paramref name="numberOfElements"/> is not a valid array length.</exception>
 		[Pure]
 		public static Money[] Zero(CurrencyIsoCode currency, int numberOfElements)
@@ -137,7 +136,7 @@ namespace NMoneys
 		/// <returns>An <see cref="Money"/> instance with zero <see cref="Amount"/> and the specified <paramref name="threeLetterIsoCode"/>.</returns>
 		/// <seealso cref="Money(decimal, string)"/>
 		/// <exception cref="ArgumentNullException"><paramref name="threeLetterIsoCode"/> is null.</exception>
-		/// <exception cref="InvalidEnumArgumentException"><paramref name="threeLetterIsoCode"/> is not defined.</exception>
+		/// <exception cref="ArgumentException"><paramref name="threeLetterIsoCode"/> is not defined.</exception>
 		[Pure]
 		public static Money Zero(string threeLetterIsoCode)
 		{
@@ -153,7 +152,7 @@ namespace NMoneys
 		/// <seealso cref="Money.Zero(string)"/>
 		/// <exception cref="OverflowException"><paramref name="numberOfElements"/> is not a valid array length.</exception>
 		/// <exception cref="ArgumentNullException"><paramref name="threeLetterIsoCode"/> is null.</exception>
-		/// <exception cref="InvalidEnumArgumentException"><paramref name="threeLetterIsoCode"/> is not defined.</exception>
+		/// <exception cref="ArgumentException"><paramref name="threeLetterIsoCode"/> is not defined.</exception>
 		[Pure]
 		public static Money[] Zero(string threeLetterIsoCode, int numberOfElements)
 		{
@@ -294,7 +293,7 @@ currency);
 		/// <param name="numberOfElements">The number of elements in the array.</param>
 		/// <returns>An array of <see cref="Money"/> instances with <paramref name="amount"/> and the specified <paramref name="currency"/>.</returns>
 		/// <seealso cref="Money(decimal, CurrencyIsoCode)"/>
-		/// <exception cref="InvalidEnumArgumentException"><paramref name="currency"/> is not defined.</exception>
+		/// <exception cref="ArgumentException"><paramref name="currency"/> is not defined.</exception>
 		/// <exception cref="OverflowException"><paramref name="numberOfElements"/> is not a valid array length.</exception>
 		[Pure]
 		public static Money[] Some(decimal amount, CurrencyIsoCode currency, int numberOfElements)
@@ -310,7 +309,7 @@ currency);
 		/// <param name="numberOfElements">The number of elements in the array.</param>
 		/// <returns>An array of <see cref="Money"/> instances with <paramref name="amount"/> and the specified <paramref name="currency"/>.</returns>
 		/// <seealso cref="Money(decimal, Currency)"/>
-		/// <exception cref="InvalidEnumArgumentException"><paramref name="currency"/> is not defined.</exception>
+		/// <exception cref="ArgumentException"><paramref name="currency"/> is not defined.</exception>
 		/// <exception cref="OverflowException"><paramref name="numberOfElements"/> is not a valid array length.</exception>
 		[Pure]
 		public static Money[] Some(decimal amount, Currency currency, int numberOfElements)
@@ -328,7 +327,7 @@ currency);
 		/// <seealso cref="Money(decimal, string)"/>
 		/// <exception cref="OverflowException"><paramref name="numberOfElements"/> is not a valid array length.</exception>
 		/// <exception cref="ArgumentNullException"><paramref name="threeLetterIsoCode"/> is null.</exception>
-		/// <exception cref="InvalidEnumArgumentException"><paramref name="threeLetterIsoCode"/> is not defined.</exception>
+		/// <exception cref="ArgumentException"><paramref name="threeLetterIsoCode"/> is not defined.</exception>
 		[Pure]
 		public static Money[] Some(decimal amount, string threeLetterIsoCode, int numberOfElements)
 		{
