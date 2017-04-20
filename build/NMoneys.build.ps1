@@ -45,7 +45,9 @@ task importModules {
 task Test -depends ensureRelease {
 	$test_assemblies = Find-Test-Assemblies $base_dir $configuration
 
-	run-tests $base_dir $release_dir $test_assemblies
+	#run-tests $base_dir $release_dir $test_assemblies
+	Run-Core-Tests $base_dir $configuration
+
 	report-on-test-results $base_dir $release_dir
 }
 
@@ -75,10 +77,12 @@ function report-on-test-results($base, $release)
 	$orange_dir = Find-Versioned-Folder -base $base\tools -beginning 'NUnitOrange'
 	$nunit_orange = Join-Path $orange_dir tools\NUnitOrange.exe
 	
-	$input_xml = Join-Path $release TestResult.xml
-	$output_html = Join-Path $release TestResult.html
-	
-	exec { & $nunit_orange $input_xml $output_html }
+	('TestResult', 'NMoneys.TestResult.core', 'NMoneys.Exchange.TestResult.core') |
+	% { 
+		$input_xml = Join-Path $release "$_.xml"
+		$output_html = Join-Path $release "$_.html"
+		exec { & $nunit_orange $input_xml $output_html } 
+	}
 }
 
 function find-msbuild()

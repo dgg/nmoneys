@@ -160,17 +160,33 @@ function Find-Versioned-Folder($base, $beginning)
 
 function Find-Test-Assemblies($base, $configuration)
 {
-	$core = get-test-assembly $base $configuration "NMoneys"
+	$nmoneys = get-test-assembly $base $configuration "NMoneys"
 	$exchange = get-test-assembly $base $configuration "NMoneys.Exchange"
 	$serialization = get-test-assembly $base $configuration "NMoneys.Serialization"
 	$mongo_db = get-test-assembly $base $configuration "NMoneys.Serialization.Mongo_DB"
 
-	return ($core, $exchange, $serialization, $mongo_db)
+	return ($nmoneys, $exchange, $serialization, $mongo_db)
 }
 
-function get-test-assembly($base, $config, $name)
+function get-test-assembly($base, $config, $name, $target = '')
 {
-	return "$base\src\$name.Tests\bin\$config\$name.Tests.dll"
+	$assembly_name = "$base\src\$name.Tests\bin\$config\"
+	$assembly_name = Join-Path $assembly_name $target
+	$assembly_name = Join-Path $assembly_name "$name.Tests.dll"
+	return $assembly_name
 }
 
-export-modulemember -function Throw-If-Error, Ensure-Release-Folders, Build-Documentation, Copy-Artifacts, Generate-Packages, Generate-Zip-Files, Sign-Assemblies, Find-Versioned-Folder, Find-Test-Assemblies
+function Run-Core-Tests($base, $config)
+{
+	$nmoneys = get-test-assembly $base $config "NMoneys" -target 'netcoreapp1.0'
+	$exchange = get-test-assembly $base $config "NMoneys.Exchange" -target 'netcoreapp1.0'
+
+	$release = Resolve-Path $base\release
+
+	dotnet $nmoneys --result:"$release\NMoneys.TestResult.core.xml" --noheader
+	Throw-If-Error
+	dotnet $exchange --result:"$release\NMoneys.Exchange.TestResult.core.xml" --noheader
+	Throw-If-Error
+}
+
+export-modulemember -function Throw-If-Error, Ensure-Release-Folders, Build-Documentation, Copy-Artifacts, Generate-Packages, Generate-Zip-Files, Sign-Assemblies, Find-Versioned-Folder, Find-Test-Assemblies, Run-Core-Tests
