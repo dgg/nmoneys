@@ -30,4 +30,8 @@
 	<ItemGroup>
 		<Compile Remove="**\\*.net.cs" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Include="..\NMoneys\Properties\NMoneys_AssemblyInfo.cs" Link="Properties\NMoneys_AssemblyInfo.cs" />
+	</ItemGroup>
 </Project>

@@ -32,4 +32,8 @@
 	<ItemGroup>
 		<Compile Remove="**\\*.net.cs" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Include="..\NMoneys.Exchange\Properties\Exchange_AssemblyInfo.cs" Link="Properties\Exchange_AssemblyInfo.cs" />
+	</ItemGroup>
 </Project>
