@@ -40,7 +40,6 @@ task importModules {
 	Remove-Module [V]SSetup
 	$vssetup_dir = Find-Versioned-Folder -base $base_dir\tools -beginning 'VSSetup'
 	Import-Module  $vssetup_dir\VSSetup.psd1 -DisableNameChecking
-	$null
 }
 
 task Test -depends ensureRelease {
