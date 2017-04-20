@@ -11,7 +11,14 @@ function Throw-If-Error
 
 function Ensure-Release-Folders($base)
 {
-	("$base\release\doc\", "$base\release\lib\Net40-client\", "$base\release\content\Infrastructure\Serialization", "$base\release\signed\") |
+	(
+		"$base\release\doc\", 
+		"$base\release\lib\net40-client\", 
+		"$base\release\lib\netstandard1.4\", 
+		"$base\release\content\Infrastructure\Serialization\", 
+		"$base\release\signed\net\",
+		"$base\release\signed\netstandard\"
+	) |
 		% { New-Item -Type directory $_ -Force | Out-Null }
 }
 
@@ -140,10 +147,21 @@ function get-version-from-package($base, $packageFragment)
 
 function Sign-Assemblies($base, $configuration)
 {
-	$assembly = Join-Path $base \src\NMoneys\bin\$configuration\NMoneys.dll
-	$il_file = Join-Path $base \release\signed\NMoneys.il
-	$res_file = Join-Path $Base \release\signed\NMoneys.res
-	$signed_assembly = Join-Path $base \release\signed\NMoneys.dll
+	sign-assembly $base 'NMoneys' $configuration -framework 'net'
+	sign-assembly $base 'NMoneys' $configuration -target 'netstandard1.4' -framework 'netstandard'
+}
+
+function sign-assembly($base, $project, $configuration, $target = '', $name = $project, $framework)
+{
+	$assembly = Join-Path $base \src\$project\bin\$configuration
+	if ($target -ne '')
+	{
+		$assembly = Join-Path $assembly $target
+	}
+	$assembly = Join-path $assembly "$name.dll"
+	$il_file = Join-Path $base \release\signed\$framework\$name.il
+	$res_file = Join-Path $Base \release\signed\$framework\$name.res
+	$signed_assembly = Join-Path $base \release\signed\$framework\$name.dll
 	
 	ildasm $assembly /out:$il_file
 	Throw-If-Error "Could disassemble $assembly_file"
