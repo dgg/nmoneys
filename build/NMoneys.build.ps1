@@ -45,7 +45,7 @@ task importModules {
 task Test -depends ensureRelease {
 	$test_assemblies = Find-Test-Assemblies $base_dir $configuration
 
-	#run-tests $base_dir $release_dir $test_assemblies
+	run-tests $base_dir $release_dir $test_assemblies
 	Run-Core-Tests $base_dir $configuration
 
 	report-on-test-results $base_dir $release_dir
