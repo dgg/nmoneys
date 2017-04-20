@@ -1,14 +1,14 @@
 function push-package-artifact($packageFragment, $artifactName)
 {
 	$pkg = Get-ChildItem -File ".\release\$packageFragment*.nupkg" |
-		? { $_.Name -match "$packageFragment\.(\d(?:\.\d){3})" }
+		? { $_.Name -match "$packageFragment\.(\d(?:\.\d){2})" }
 	Push-AppveyorArtifact $pkg -DeploymentName $artifactName
 }
 
 function push-zip-artifact($zipFragment, $artifactName, $zipType)
 {
 	$zip = Get-ChildItem -File ".\release\$zipFragment*-$zipType.zip" |
-		? { $_.Name -match "$zipFragment\.(\d(?:\.\d){3})" }
+		? { $_.Name -match "$zipFragment\.(\d(?:\.\d){2})" }
 	Push-AppveyorArtifact $zip -DeploymentName $artifactName
 }
 
