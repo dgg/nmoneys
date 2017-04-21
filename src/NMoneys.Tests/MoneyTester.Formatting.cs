@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using NMoneys.Extensions;
+using NMoneys.Support;
 using NUnit.Framework;
 
 namespace NMoneys.Tests
@@ -41,7 +42,7 @@ namespace NMoneys.Tests
 			var subject = new Money(1000, CurrencyIsoCode.EUR);
 
 			Assert.That(subject.ToString(), Is.EqualTo("1.000,00 €"));
-			Assert.That(subject.ToString(CultureInfo.GetCultureInfo("fr-FR")),
+			Assert.That(subject.ToString(Culture.Get("fr-FR")),
 				Is.Not.EqualTo(subject.ToString()),
 				"Germany has different format than France");
 		}
@@ -51,7 +52,7 @@ namespace NMoneys.Tests
 		{
 			var subject = new Money(1000, CurrencyIsoCode.EUR);
 
-			Assert.That(subject.ToString(CultureInfo.GetCultureInfo("en-GB")), Is.EqualTo("£1,000.00"));
+			Assert.That(subject.ToString(Culture.Get("en-GB")), Is.EqualTo("£1,000.00"));
 		}
 
 		[Test]
@@ -92,7 +93,7 @@ namespace NMoneys.Tests
 			var subject = new Money(1500, CurrencyIsoCode.EUR);
 			string format = "{1} {0:#,#.00}";
 
-			Assert.That(subject.Format(format, CultureInfo.GetCultureInfo("fr-FR")),
+			Assert.That(subject.Format(format, Culture.Get("fr-FR")),
 				Is.Not.EqualTo(subject.Format(format)),
 				"Germany has different format than France");
 		}
@@ -102,7 +103,7 @@ namespace NMoneys.Tests
 		{
 			var subject = new Money(1500, CurrencyIsoCode.EUR);
 			string format = "{1} {0:#,#.00}";
-			Assert.That(subject.Format(format, CultureInfo.GetCultureInfo("en-US")), Is.EqualTo("€ 1,500.00"));
+			Assert.That(subject.Format(format, Culture.Get("en-US")), Is.EqualTo("€ 1,500.00"));
 		}
 
 		#region Issue 22. Default number formatting. Default does not include group separation

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using NMoneys.Extensions;
+using NMoneys.Support;
 using NMoneys.Tests.CustomConstraints;
 using NUnit.Framework;
 using Testing.Commons;
@@ -245,7 +246,7 @@ namespace NMoneys.Tests
 			Assert.That(parsed, Is.EqualTo(100000m.Eur()));
 
 			// NumberFormatInfo used for parsing, currency for building the money instance
-			NumberFormatInfo parser = CultureInfo.GetCultureInfo("en-GB").NumberFormat;
+			NumberFormatInfo parser = Culture.Get("en-GB").NumberFormat;
 			Money.TryParse("€1000.00", NumberStyles.Currency, parser, Currency.Eur, out parsed);
 			Assert.That(parsed, Is.EqualTo(1000m.Eur()));
 		}

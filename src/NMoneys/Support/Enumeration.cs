@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -13,7 +12,7 @@ namespace NMoneys.Support
 		private static void assertEnum<TEnum>() where TEnum : struct, IComparable, IFormattable, IConvertible
 		{
 			Type tEnum = typeof(TEnum);
-			if (!tEnum.IsEnum)
+			if (!Reflect.IsEnum(tEnum))
 			{
 				throw new ArgumentException(
 					$"The type {tEnum.Name} is not an enumeration",
@@ -36,13 +35,13 @@ namespace NMoneys.Support
 					object converted = Convert.ChangeType(text, underlying);
 					if (converted == null || !Enum.IsDefined(tEnum, converted))
 					{
-						throw new InvalidEnumArgumentException(message());
+						throw new ArgumentException(message());
 					}
 				}
 			}
 			catch (Exception ex)
 			{
-				throw new InvalidEnumArgumentException(message(), ex);
+				throw new ArgumentException(message(), ex);
 			}
 
 		}
@@ -53,7 +52,7 @@ namespace NMoneys.Support
 			Type tEnum = typeof(TEnum);
 			if (!Enum.IsDefined(tEnum, value))
 			{
-				throw new InvalidEnumArgumentException($"Value {value} was not defined for type {tEnum}");
+				throw new ArgumentException($"Value {value} was not defined for type {tEnum}");
 			}
 		}
 
@@ -141,7 +140,7 @@ namespace NMoneys.Support
 			bool result = false;
 			attribute = null;
 			FieldInfo field = fieldOf(value);
-			object[] attributes = field.GetCustomAttributes(typeof(TAttr), false);
+			Attribute[] attributes = Reflect.Attributes<TAttr>(field, false);
 			if (attributes.Length == 1)
 			{
 				result = true;
@@ -152,7 +151,7 @@ namespace NMoneys.Support
 
 		private static FieldInfo fieldOf<TEnum>(TEnum value) where TEnum : struct, IComparable, IFormattable, IConvertible
 		{
-			return typeof(TEnum).GetField(value.ToString(CultureInfo.InvariantCulture));
+			return Reflect.Field<TEnum>(value.ToString(CultureInfo.InvariantCulture));
 		}
 
 		public static IEqualityComparer<TEnum> Comparer<TEnum>() where TEnum : struct, IComparable, IFormattable, IConvertible
@@ -173,7 +172,7 @@ namespace NMoneys.Support
 			bool result = TryCast(value, out casted);
 			if (!result)
 			{
-				throw new InvalidEnumArgumentException($"'{value}' is not defined within type {typeof(TEnum).Name}.");
+				throw new ArgumentException($"'{value}' is not defined within type {typeof(TEnum).Name}.");
 			}
 			return casted.Value;
 		}
@@ -185,5 +184,7 @@ namespace NMoneys.Support
 			if (success) casted = (TEnum)Enum.ToObject(typeof(TEnum), value);
 			return success;
 		}
+
+		
 	}
 }

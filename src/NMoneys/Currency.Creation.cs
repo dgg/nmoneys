@@ -20,7 +20,7 @@ namespace NMoneys
 		/// in order to save some initialization time.</para></remarks>
 		/// <param name="isoCode">ISO 4217 code.</param>
 		/// <returns>The instance of <see cref="Currency"/> represented by the <paramref name="isoCode"/>.</returns>
-		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The <paramref name="isoCode"/> does not exist in the <see cref="CurrencyIsoCode"/> enumeration.</exception>
+		/// <exception cref="ArgumentException">The <paramref name="isoCode"/> does not exist in the <see cref="CurrencyIsoCode"/> enumeration.</exception>
 		/// <exception cref="MisconfiguredCurrencyException">The currency represented by <paramref name="isoCode"/> has not been properly configured by the library implementor. Please, log a issue.</exception>
 		[Pure]
 		public static Currency Get(CurrencyIsoCode isoCode)
@@ -50,7 +50,7 @@ namespace NMoneys
 		/// in order to save some initialization time.</para></remarks>
 		/// <param name="threeLetterIsoCode">A string representing a three-letter ISO 4217 code.</param>
 		/// <returns>The instance of <see cref="Currency"/> represented by the <paramref name="threeLetterIsoCode"/>.</returns>
-		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The <paramref name="threeLetterIsoCode"/> does not exist in the <see cref="CurrencyIsoCode"/> enumeration.</exception>
+		/// <exception cref="ArgumentException">The <paramref name="threeLetterIsoCode"/> does not exist in the <see cref="CurrencyIsoCode"/> enumeration.</exception>
 		/// <exception cref="MisconfiguredCurrencyException">The currency represented by <paramref name="threeLetterIsoCode"/> has not been properly configured by the library implementor. Please, log a issue.</exception>
 		[Pure]
 		public static Currency Get(string threeLetterIsoCode)
@@ -84,13 +84,13 @@ namespace NMoneys
 		/// <returns>The instance of <see cref="Currency"/> from to the region associated to the <paramref name="culture"/>.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="culture"/> is null.</exception>
 		/// <exception cref="ArgumentException"><paramref name="culture"/> is either an invariant, custom or neutral culture, or a <see cref="RegionInfo"/> cannot be instantiated from it.</exception>
-		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The ISO symbol associated to the <paramref name="culture"/> does not exist in the <see cref="CurrencyIsoCode"/> enumeration.</exception>
+		/// <exception cref="ArgumentException">The ISO symbol associated to the <paramref name="culture"/> does not exist in the <see cref="CurrencyIsoCode"/> enumeration.</exception>
 		/// <exception cref="MisconfiguredCurrencyException">The currency associated to the <paramref name="culture"/> has not been properly configured by the library implementor. Please, log a issue.</exception>
 		[Pure]
 		public static Currency Get(CultureInfo culture)
 		{
 			Guard.AgainstNullArgument(nameof(culture), culture);
-			return Get(new RegionInfo(culture.LCID));
+			return Get(new RegionInfo(culture.Name));
 		}
 
 		/// <summary>
@@ -109,7 +109,7 @@ namespace NMoneys
 		/// <param name="region">A <see cref="RegionInfo"/> from which retrieve the associated currency.</param>
 		/// <returns>The instance of <see cref="Currency"/> corresponding to the region.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="region"/> is null.</exception>
-		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The ISO symbol associated to the <paramref name="region"/> does not exist in the <see cref="CurrencyIsoCode"/> enumeration.</exception>
+		/// <exception cref="ArgumentException">The ISO symbol associated to the <paramref name="region"/> does not exist in the <see cref="CurrencyIsoCode"/> enumeration.</exception>
 		/// <exception cref="MisconfiguredCurrencyException">The currency associated to the <paramref name="region"/> has not been properly configured by the library implementor. Please, log a issue.</exception>
 		[Pure]
 		public static Currency Get(RegionInfo region)
@@ -207,7 +207,7 @@ namespace NMoneys
 
 			if (culture != null && !culture.IsNeutralCulture && !culture.Equals(CultureInfo.InvariantCulture))
 			{
-				var region = new RegionInfo(culture.LCID);
+				var region = new RegionInfo(culture.Name);
 				tryGet = TryGet(region, out currency);
 			}
 			return tryGet;

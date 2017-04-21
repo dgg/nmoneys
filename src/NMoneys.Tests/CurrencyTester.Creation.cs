@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using NMoneys.Support;
@@ -19,7 +18,7 @@ namespace NMoneys.Tests
 		public void Get_UndefinedIsoCode_Exception()
 		{
 			var notDefined = (CurrencyIsoCode) 5000;
-			Assert.That(() => Currency.Get(notDefined), Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.Contains("5000"));
+			Assert.That(() => Currency.Get(notDefined), Throws.ArgumentException.With.Message.Contains("5000"));
 		}
 
 		[Test]
@@ -37,34 +36,14 @@ namespace NMoneys.Tests
 		public void Get_UndefinedIsoSymbol_Exception()
 		{
 			string notDefined = "5000";
-			Assert.That(() => Currency.Get(notDefined), Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.Contains("5000"));
+			Assert.That(() => Currency.Get(notDefined), Throws.ArgumentException.With.Message.Contains("5000"));
 		}
 
 		[Test]
 		public void Get_DefinedCurrencyForCulture_Currency()
 		{
-			CultureInfo spanish = CultureInfo.GetCultureInfo("es-ES");
+			CultureInfo spanish = Culture.Get("es-ES");
 			Assert.That(Currency.Get(spanish), Is.SameAs(Currency.Eur));
-		}
-
-		[Test]
-		public void Get_NoRegionForCulture_Exception()
-		{
-			CultureInfo neutralSpanish = CultureInfo.GetCultureInfo("es");
-			Assert.That(() => Currency.Get(neutralSpanish), Throws.ArgumentException);
-		}
-
-		[Test, Platform(Include = "Net-2.0")]
-		public void Get_OutdateFrameworkCurrencySymbol_Exception()
-		{
-			CultureInfo bulgarian = CultureInfo.GetCultureInfo("bg-BG");
-			var bulgaria = new RegionInfo(bulgarian.LCID);
-
-			Assert.That(() => Currency.Get(bulgarian), Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.Contains("BGL"), "Framework returns wrong ISOCurrencySymbol (BGL instead of BGN)");
-			Currency lev = Currency.Get(CurrencyIsoCode.BGN);
-
-			Assert.That(lev.IsoSymbol, Is.Not.EqualTo(bulgaria.ISOCurrencySymbol));
-			Assert.That(lev.NativeName, Is.Not.EqualTo(bulgaria.CurrencyNativeName));
 		}
 
 		[Test]
@@ -72,13 +51,6 @@ namespace NMoneys.Tests
 		{
 			var denmark = new RegionInfo("DK");
 			Assert.That(Currency.Get(denmark), Is.SameAs(Currency.Dkk));
-		}
-
-		[Test, Platform(Include = "Net-2.0")]
-		public void Get_RegionWithOutdatedInformation_Exception()
-		{
-			var SerbiaAndMontenegro = new RegionInfo("CS");
-			Assert.That(() => Currency.Get(SerbiaAndMontenegro), Throws.InstanceOf<InvalidEnumArgumentException>().With.Message.Contains("CSD"));
 		}
 
 		[Test]
@@ -104,20 +76,6 @@ namespace NMoneys.Tests
 		public void Get_ObsoleteCurrencyCode_EventRaised(string threeLetterIsoCode)
 		{
 			Action getObsolete = () => Currency.Get(threeLetterIsoCode);
-			Assert.That(getObsolete, Must.Raise.ObsoleteEvent());
-		}
-
-		[Test, Platform(Include = "Net-2.0", Reason = "updated culture uses non-deprecated currency")]
-		public void Get_ObsoleteCulture_EventRaised()
-		{
-			Action getObsolete = () => Currency.Get(CultureInfo.GetCultureInfo("et-EE"));
-			Assert.That(getObsolete, Must.Raise.ObsoleteEvent());
-		}
-
-		[Test, Platform(Include = "Net-2.0", Reason = "updated culture uses non-deprecated currency")]
-		public void Get_ObsoleteRegion_EventRaised()
-		{
-			Action getObsolete = () => Currency.Get(new RegionInfo("EE"));
 			Assert.That(getObsolete, Must.Raise.ObsoleteEvent());
 		}
 
@@ -154,7 +112,7 @@ namespace NMoneys.Tests
 		[Test]
 		public void TryGet_DefinedCurrencyForCulture_True()
 		{
-			CultureInfo spanish = CultureInfo.GetCultureInfo("es-ES");
+			CultureInfo spanish = Culture.Get("es-ES");
 			Currency tried;
 			Assert.That(Currency.TryGet(spanish, out tried), Is.True);
 			Assert.That(tried, Is.SameAs(Currency.Eur));
@@ -163,26 +121,10 @@ namespace NMoneys.Tests
 		[Test]
 		public void TryGet_NoRegionForCulture_False()
 		{
-			CultureInfo neutralSpanish = CultureInfo.GetCultureInfo("es");
+			CultureInfo neutralSpanish = Culture.Get("es");
 			Currency tried;
 			Assert.That(Currency.TryGet(neutralSpanish, out tried), Is.False);
 			Assert.That(tried, Is.Null);
-		}
-
-		[Test, Platform(Include = "Net-2.0")]
-		public void TryGet_OutdateFrameworkCurrencySymbol_False()
-		{
-			CultureInfo bulgarian = CultureInfo.GetCultureInfo("bg-BG");
-			var bulgaria = new RegionInfo(bulgarian.LCID);
-
-			Currency lev;
-			Assert.That(Currency.TryGet(bulgarian, out lev), Is.False, "Framework returns wrong ISOCurrencySymbol (BGL instead of BGN)");
-			Assert.That(lev, Is.Null);
-
-			Currency.TryGet(CurrencyIsoCode.BGN, out lev);
-
-			Assert.That(lev.IsoSymbol, Is.Not.EqualTo(bulgaria.ISOCurrencySymbol));
-			Assert.That(lev.NativeName, Is.Not.EqualTo(bulgaria.CurrencyNativeName));
 		}
 
 		[Test]
@@ -193,15 +135,6 @@ namespace NMoneys.Tests
 
 			Assert.That(Currency.TryGet(denmark, out dkk), Is.True);
 			Assert.That(dkk, Is.SameAs(Currency.Dkk));
-		}
-
-		[Test, Platform(Include = "Net-2.0")]
-		public void TryGet_RegionWithOutdatedInformation_False()
-		{
-			var SerbiaAndMontenegro = new RegionInfo("CS");
-			Currency rsd;
-			Assert.That(Currency.TryGet(SerbiaAndMontenegro, out rsd), Is.False);
-			Assert.That(rsd, Is.Null);
 		}
 
 		[Test, TestCaseSource(typeof(Obsolete), nameof(Obsolete.ThreeLetterIsoCodes))]
@@ -217,22 +150,6 @@ namespace NMoneys.Tests
 		{
 			Currency c;
 			Action tryGetObsolete = () => Currency.TryGet(threeLetterIsoCode, out c);
-			Assert.That(tryGetObsolete, Must.Raise.ObsoleteEvent());
-		}
-
-		[Test, Platform(Include = "Net-2.0", Reason = "updated culture uses non-deprecated currency")]
-		public void TryGet_ObsoleteCulture_EventRaised()
-		{
-			Currency c;
-			Action tryGetObsolete = () => Currency.TryGet(CultureInfo.GetCultureInfo("et-EE"), out c);
-			Assert.That(tryGetObsolete, Must.Raise.ObsoleteEvent());
-		}
-
-		[Test, Platform(Include = "Net-2.0", Reason = "updated culture uses non-deprecated currency")]
-		public void TryGet_ObsoleteRegion_EventRaised()
-		{
-			Currency c;
-			Action tryGetObsolete = () => Currency.TryGet(new RegionInfo("EE"), out c);
 			Assert.That(tryGetObsolete, Must.Raise.ObsoleteEvent());
 		}
 

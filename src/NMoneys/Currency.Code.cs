@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using NMoneys.Support;
 
@@ -22,7 +21,7 @@ namespace NMoneys
 			/// <param name="isoCode">A string containing the name or value to convert.</param>
 			/// <returns>An object of type <see cref="CurrencyIsoCode"/> whose value is represented by value.</returns>
 			/// <exception cref="ArgumentNullException"><paramref name="isoCode"/> is null.</exception>
-			/// <exception cref="InvalidEnumArgumentException"><paramref name="isoCode"/> does not represent a defined alphabetic or numeric code.</exception>
+			/// <exception cref="ArgumentException"><paramref name="isoCode"/> does not represent a defined alphabetic or numeric code.</exception>
 			/// <seealso cref="IsoCodeExtensions.AlphabeticCode"/>
 			/// <seealso cref="IsoCodeExtensions.NumericCode"/>
 			[Pure]
@@ -42,7 +41,7 @@ namespace NMoneys
 			/// <param name="defaultValue">The value to return if the convertion fails.</param>
 			/// <returns>An object of type <see cref="CurrencyIsoCode"/> whose value is represented by value.</returns>
 			/// <exception cref="ArgumentNullException"><paramref name="isoCode"/> is null.</exception>
-			/// <exception cref="System.ComponentModel.InvalidEnumArgumentException"><paramref name="isoCode"/> does not represent a defined alphabetic or numeric code.</exception>
+			/// <exception cref="ArgumentException"><paramref name="isoCode"/> does not represent a defined alphabetic or numeric code.</exception>
 			/// <seealso cref="IsoCodeExtensions.AlphabeticCode"/>
 			/// <seealso cref="IsoCodeExtensions.NumericCode"/>
 			public static CurrencyIsoCode Parse(string isoCode, CurrencyIsoCode defaultValue)
@@ -85,7 +84,7 @@ namespace NMoneys
 			/// <para>The conversion is safe, in the sense that the value has to be defined within the values of the enumeration to be converted, but throws an exception when it cannot.</para>
 			/// <param name="numericCode">The value to be converted.</param>
 			/// <returns>An instance of the enumeration set to <paramref name="numericCode"/>.</returns>
-			/// <exception cref="InvalidEnumArgumentException"><paramref name="numericCode"/> is not defined within the values of <see cref="CurrencyIsoCode"/>.</exception>
+			/// <exception cref="ArgumentException"><paramref name="numericCode"/> is not defined within the values of <see cref="CurrencyIsoCode"/>.</exception>
 			public static CurrencyIsoCode Cast(short numericCode)
 			{
 				return Enumeration.Cast<CurrencyIsoCode>(numericCode);

@@ -24,22 +24,28 @@ namespace NMoneys.Tests.Allocations
 			}
 		}
 
-		[Test, SetCulture("")]
+		[Test]
 		public void ToString_SingleRatio_PaddedOne()
 		{
-			var singleBag = new RatioCollection(1m);
+			using (CultureReseter.Set(CultureInfo.InvariantCulture))
+			{
+				var singleBag = new RatioCollection(1m);
 
-			Assert.That(singleBag.ToString(), Is.EqualTo("< 1 >"));
+				Assert.That(singleBag.ToString(), Is.EqualTo("< 1 >"));
+			}
 		}
 
-		[Test, SetCulture("")]
+		[Test]
 		public void ToString_CustomFormatsAndProviders_AppliesToRatios()
 		{
-			var bag = new RatioCollection(0.5m, .4m, .05m, .05m);
-			var snailDecimalSeparator = (NumberFormatInfo)CultureInfo.InvariantCulture.NumberFormat.Clone();
-			snailDecimalSeparator.NumberDecimalSeparator = "@";
+			using (CultureReseter.Set(CultureInfo.InvariantCulture))
+			{
+				var bag = new RatioCollection(0.5m, .4m, .05m, .05m);
+				var snailDecimalSeparator = (NumberFormatInfo) CultureInfo.InvariantCulture.NumberFormat.Clone();
+				snailDecimalSeparator.NumberDecimalSeparator = "@";
 
-			Assert.That(bag.ToString(".000", snailDecimalSeparator), Is.EqualTo("< @500 | @400 | @050 | @050 >"));
+				Assert.That(bag.ToString(".000", snailDecimalSeparator), Is.EqualTo("< @500 | @400 | @050 | @050 >"));
+			}
 		}
 	}
 }

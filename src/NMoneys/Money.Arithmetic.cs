@@ -189,7 +189,7 @@ namespace NMoneys
 		[Pure]
 		public Money RoundToNearestInt()
 		{
-			return new Money(decimal.Round(Amount), CurrencyCode);
+			return new Money(Math.Round(Amount), CurrencyCode);
 		}
 
 		/// <summary>
@@ -203,7 +203,7 @@ namespace NMoneys
 		[Pure]
 		public Money RoundToNearestInt(MidpointRounding mode)
 		{
-			return new Money(decimal.Round(Amount, mode), CurrencyCode);
+			return new Money(Math.Round(Amount, mode), CurrencyCode);
 		}
 
 		/// <summary>
@@ -259,7 +259,7 @@ namespace NMoneys
 		[Pure]
 		public Money Round(int decimals)
 		{
-			return new Money(decimal.Round(Amount, decimals), CurrencyCode);
+			return new Money(Math.Round(Amount, decimals), CurrencyCode);
 		}
 
 		/// <summary>
@@ -281,7 +281,7 @@ namespace NMoneys
 		[Pure]
 		public Money Round(int decimals, MidpointRounding mode)
 		{
-			return new Money(decimal.Round(Amount, decimals, mode), CurrencyCode);
+			return new Money(Math.Round(Amount, decimals, mode), CurrencyCode);
 		}
 
 		/// <summary>

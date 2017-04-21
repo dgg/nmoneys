@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Xml.XPath;
 
@@ -51,10 +52,8 @@ namespace NMoneys.Support.Ext
 		/// <remarks>Optimized for a low number of unicodes (&lt;10)</remarks>
 		internal static string FromUnicodes(this string[] unicodes)
 		{
-			string str = string.Empty;
-			Array.ForEach(unicodes.emptyIfNull(),
-				item => str += char.ConvertFromUtf32(Convert.ToInt32(item.Trim(), CultureInfo.InvariantCulture)));
-			return str;
+			return unicodes.emptyIfNull().Aggregate(string.Empty, 
+				(current, item) => current + char.ConvertFromUtf32(Convert.ToInt32(item.Trim(), CultureInfo.InvariantCulture)));
 		}
 
 		/// <summary>

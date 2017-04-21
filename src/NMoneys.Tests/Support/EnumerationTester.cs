@@ -1,5 +1,4 @@
 using System;
-using System.ComponentModel;
 using NMoneys.Support;
 using NUnit.Framework;
 
@@ -26,9 +25,9 @@ namespace NMoneys.Tests.Support
 		public void AssertDefined_NotDefinedEnum_Exception()
 		{
 			Test1 notDefined = (Test1)50;
-			Assert.That(() => Enumeration.AssertDefined(notDefined), Throws.InstanceOf<InvalidEnumArgumentException>()
-				.With.Property("Message").Contains("50")
-				.And.With.Property("Message").Contains(typeof(Test1).Name));
+			Assert.That(() => Enumeration.AssertDefined(notDefined), Throws.ArgumentException
+				.With.Message.Contains("50")
+				.And.With.Message.Contains(typeof(Test1).Name));
 		}
 
 		[Test]
@@ -42,7 +41,7 @@ namespace NMoneys.Tests.Support
 		{
 			// for strings, use the representation
 			Assert.That(() => Enumeration.AssertDefined<Test1>("notDefined"),
-				Throws.InstanceOf<InvalidEnumArgumentException>().With.Property("Message").Contains("notDefined"));
+				Throws.ArgumentException.With.Message.Contains("notDefined"));
 		}
 
 		[Test]
@@ -56,7 +55,7 @@ namespace NMoneys.Tests.Support
 		public void AssertDefined_WrongCase_Exception()
 		{
 			Assert.That(() => Enumeration.AssertDefined<Test1>("value1"),
-				Throws.InstanceOf<InvalidEnumArgumentException>().With.Property("Message").Contains("value1"));
+				Throws.InstanceOf<ArgumentException>().With.Message.Contains("value1"));
 		}
 
 		#endregion
@@ -66,42 +65,42 @@ namespace NMoneys.Tests.Support
 		[Test]
 		public void Parse_ExistingValue_Value()
 		{
-			Assert.That(Enumeration.Parse<PlatformID>("Unix"), Is.EqualTo(PlatformID.Unix));
+			Assert.That(Enumeration.Parse<AttributeTargets>("Enum"), Is.EqualTo(AttributeTargets.Enum));
 		}
 
 		[Test]
 		public void Parse_NonExistingValue_Exception()
 		{
-			Assert.That(() => Enumeration.Parse<PlatformID>("nonExisting"), Throws.InstanceOf<InvalidEnumArgumentException>());
+			Assert.That(() => Enumeration.Parse<AttributeTargets>("nonExisting"), Throws.ArgumentException);
 		}
 
 		[Test]
 		public void Parse_WrongCaseValue_Exception()
 		{
-			Assert.That(() => Enumeration.Parse<PlatformID>("UniX"), Throws.InstanceOf<InvalidEnumArgumentException>());
+			Assert.That(() => Enumeration.Parse<AttributeTargets>("EnuM"), Throws.ArgumentException);
 		}
 
 		[Test]
 		public void TryParse_ExistingValue_True()
 		{
-			PlatformID? existing;
-			Assert.That(Enumeration.TryParse("Unix", out existing), Is.True);
-			Assert.That(existing, Is.EqualTo(PlatformID.Unix));
+			AttributeTargets? existing;
+			Assert.That(Enumeration.TryParse("Enum", out existing), Is.True);
+			Assert.That(existing, Is.EqualTo(AttributeTargets.Enum));
 		}
 
 		[Test]
 		public void TryParse_ExistingNumericValue_True()
 		{
-			PlatformID? existing;
+			AttributeTargets? existing;
 			Assert.That(Enumeration.TryParse("1", out existing), Is.True);
-			Assert.That(existing, Is.EqualTo(PlatformID.Win32Windows));
+			Assert.That(existing, Is.EqualTo(AttributeTargets.Assembly));
 		}
 
 		[Test]
 		public void TryParse_NonExistingValue_False()
 		{
 			bool parsed = false;
-			PlatformID? nonExisting = null;
+			AttributeTargets? nonExisting = null;
 
 			Assert.DoesNotThrow(() => parsed = Enumeration.TryParse("nonExisting", out nonExisting));
 			Assert.That(parsed, Is.False);
@@ -112,7 +111,7 @@ namespace NMoneys.Tests.Support
 		public void TryParse_NonExistingNumericValue_False()
 		{
 			bool parsed = false;
-			PlatformID? nonExisting = null;
+			AttributeTargets? nonExisting = null;
 
 			Assert.DoesNotThrow(() => parsed = Enumeration.TryParse("9999", out nonExisting));
 			Assert.That(parsed, Is.False);
@@ -123,9 +122,9 @@ namespace NMoneys.Tests.Support
 		public void TryParse_WrongCaseValue_False()
 		{
 			bool parsed = false;
-			PlatformID? nonExisting = null;
+			AttributeTargets? nonExisting = null;
 
-			Assert.DoesNotThrow(() => parsed = Enumeration.TryParse("UnIx", out nonExisting));
+			Assert.DoesNotThrow(() => parsed = Enumeration.TryParse("EnuM", out nonExisting));
 			Assert.That(parsed, Is.False, "case sentitive");
 			Assert.That(nonExisting, Is.Null);
 		}
@@ -134,7 +133,7 @@ namespace NMoneys.Tests.Support
 		public void TryParse_EmptyValue_False()
 		{
 			bool parsed = false;
-			PlatformID? nonExisting = null;
+			AttributeTargets? nonExisting = null;
 
 			Assert.DoesNotThrow(() => parsed = Enumeration.TryParse(string.Empty, out nonExisting));
 			Assert.That(parsed, Is.False);
@@ -221,15 +220,15 @@ namespace NMoneys.Tests.Support
 		[Test]
 		public void Parse_IsCaseSensitive()
 		{
-			Assert.That(() => Enumeration.Parse<PlatformID>("UNIX"), Throws.InstanceOf<InvalidEnumArgumentException>());
-			Assert.That(Enumeration.Parse<PlatformID>("Unix"), Is.EqualTo(PlatformID.Unix));
+			Assert.That(() => Enumeration.Parse<AttributeTargets>("ENUM"), Throws.ArgumentException);
+			Assert.That(Enumeration.Parse<AttributeTargets>("Enum"), Is.EqualTo(AttributeTargets.Enum));
 		}
 
 		[Test]
 		public void TryParse_IsCaseSensitive()
 		{
-			PlatformID? notParsed;
-			Assert.That(Enumeration.TryParse("UNIX", out notParsed), Is.False);
+			AttributeTargets? notParsed;
+			Assert.That(Enumeration.TryParse("ENUM", out notParsed), Is.False);
 			Assert.That(notParsed, Is.Null);
 		}
 
@@ -253,7 +252,7 @@ namespace NMoneys.Tests.Support
 
 	public enum Test1
 	{
-		[System.ComponentModel.Description("Test1 - Value1")]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("cate", "check")]
 		Value1,
 		Value2,
 		[DisplayName("displayName : Test1 - Value3")]

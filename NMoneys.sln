@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NMoneys", "src\NMoneys\NMoneys.csproj", "{5408F146-6F8A-406C-9E90-292662018F72}"
 EndProject
@@ -42,6 +42,14 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Serialization", "Serialization", "{2CA4C504-FDB9-4EE6-B343-96769FC1A9EB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Exchange", "Exchange", "{40F54352-6154-4660-8D0D-4B0289EF7945}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NMoneys.netstandard", "src\NMoneys\NMoneys.netstandard.csproj", "{B2BB7B51-DDCF-46D5-8350-0284D5359AAC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NMoneys.Tests.core", "src\NMoneys.Tests\NMoneys.Tests.core.csproj", "{8A779191-3A7D-43B4-8F9A-747013605C28}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NMoneys.Exchange.netstandard", "src\NMoneys.Exchange\NMoneys.Exchange.netstandard.csproj", "{AFD77543-9BE7-4969-A527-2074EFA7F459}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NMoneys.Exchange.Tests.core", "src\NMoneys.Exchange.Tests\NMoneys.Exchange.Tests.core.csproj", "{3E4C3DAF-FE14-4C0F-8119-D748CED9CA72}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -137,6 +145,54 @@ Global
 		{F36F6A65-890E-45CD-A0DF-916B06720761}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{F36F6A65-890E-45CD-A0DF-916B06720761}.Release|x86.ActiveCfg = Release|Any CPU
 		{F36F6A65-890E-45CD-A0DF-916B06720761}.Release|x86.Build.0 = Release|Any CPU
+		{B2BB7B51-DDCF-46D5-8350-0284D5359AAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2BB7B51-DDCF-46D5-8350-0284D5359AAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2BB7B51-DDCF-46D5-8350-0284D5359AAC}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B2BB7B51-DDCF-46D5-8350-0284D5359AAC}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B2BB7B51-DDCF-46D5-8350-0284D5359AAC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B2BB7B51-DDCF-46D5-8350-0284D5359AAC}.Debug|x86.Build.0 = Debug|Any CPU
+		{B2BB7B51-DDCF-46D5-8350-0284D5359AAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2BB7B51-DDCF-46D5-8350-0284D5359AAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2BB7B51-DDCF-46D5-8350-0284D5359AAC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B2BB7B51-DDCF-46D5-8350-0284D5359AAC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B2BB7B51-DDCF-46D5-8350-0284D5359AAC}.Release|x86.ActiveCfg = Release|Any CPU
+		{B2BB7B51-DDCF-46D5-8350-0284D5359AAC}.Release|x86.Build.0 = Release|Any CPU
+		{8A779191-3A7D-43B4-8F9A-747013605C28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A779191-3A7D-43B4-8F9A-747013605C28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A779191-3A7D-43B4-8F9A-747013605C28}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{8A779191-3A7D-43B4-8F9A-747013605C28}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{8A779191-3A7D-43B4-8F9A-747013605C28}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8A779191-3A7D-43B4-8F9A-747013605C28}.Debug|x86.Build.0 = Debug|Any CPU
+		{8A779191-3A7D-43B4-8F9A-747013605C28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A779191-3A7D-43B4-8F9A-747013605C28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A779191-3A7D-43B4-8F9A-747013605C28}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8A779191-3A7D-43B4-8F9A-747013605C28}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{8A779191-3A7D-43B4-8F9A-747013605C28}.Release|x86.ActiveCfg = Release|Any CPU
+		{8A779191-3A7D-43B4-8F9A-747013605C28}.Release|x86.Build.0 = Release|Any CPU
+		{AFD77543-9BE7-4969-A527-2074EFA7F459}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFD77543-9BE7-4969-A527-2074EFA7F459}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFD77543-9BE7-4969-A527-2074EFA7F459}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{AFD77543-9BE7-4969-A527-2074EFA7F459}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{AFD77543-9BE7-4969-A527-2074EFA7F459}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AFD77543-9BE7-4969-A527-2074EFA7F459}.Debug|x86.Build.0 = Debug|Any CPU
+		{AFD77543-9BE7-4969-A527-2074EFA7F459}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFD77543-9BE7-4969-A527-2074EFA7F459}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFD77543-9BE7-4969-A527-2074EFA7F459}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{AFD77543-9BE7-4969-A527-2074EFA7F459}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{AFD77543-9BE7-4969-A527-2074EFA7F459}.Release|x86.ActiveCfg = Release|Any CPU
+		{AFD77543-9BE7-4969-A527-2074EFA7F459}.Release|x86.Build.0 = Release|Any CPU
+		{3E4C3DAF-FE14-4C0F-8119-D748CED9CA72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E4C3DAF-FE14-4C0F-8119-D748CED9CA72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E4C3DAF-FE14-4C0F-8119-D748CED9CA72}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{3E4C3DAF-FE14-4C0F-8119-D748CED9CA72}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{3E4C3DAF-FE14-4C0F-8119-D748CED9CA72}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3E4C3DAF-FE14-4C0F-8119-D748CED9CA72}.Debug|x86.Build.0 = Debug|Any CPU
+		{3E4C3DAF-FE14-4C0F-8119-D748CED9CA72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E4C3DAF-FE14-4C0F-8119-D748CED9CA72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E4C3DAF-FE14-4C0F-8119-D748CED9CA72}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{3E4C3DAF-FE14-4C0F-8119-D748CED9CA72}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{3E4C3DAF-FE14-4C0F-8119-D748CED9CA72}.Release|x86.ActiveCfg = Release|Any CPU
+		{3E4C3DAF-FE14-4C0F-8119-D748CED9CA72}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -148,6 +204,8 @@ Global
 		{A30FA2A1-CE95-4CA9-A786-8C5616F98B57} = {2CA4C504-FDB9-4EE6-B343-96769FC1A9EB}
 		{7A926A2D-D194-4C53-8A69-F295E71B3EF2} = {2CA4C504-FDB9-4EE6-B343-96769FC1A9EB}
 		{F36F6A65-890E-45CD-A0DF-916B06720761} = {2CA4C504-FDB9-4EE6-B343-96769FC1A9EB}
+		{AFD77543-9BE7-4969-A527-2074EFA7F459} = {40F54352-6154-4660-8D0D-4B0289EF7945}
+		{3E4C3DAF-FE14-4C0F-8119-D748CED9CA72} = {40F54352-6154-4660-8D0D-4B0289EF7945}
 	EndGlobalSection
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True

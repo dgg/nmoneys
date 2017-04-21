@@ -31,6 +31,6 @@ namespace NMoneys
 		/// </summary>
 		/// <remarks>It is a delegate as we do not want to use their value within the progrma but just as a support
 		/// to the tools that compare the information in the .NET Framework with the information in the Xml.</remarks>
-		public Func<CultureInfo> Culture { get { return () => CultureInfo.GetCultureInfo(Name); } }
+		public Func<CultureInfo> Culture { get { return () => Support.Culture.Get(Name); } }
 	}
 }

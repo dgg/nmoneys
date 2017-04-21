@@ -1,14 +1,14 @@
 function push-package-artifact($packageFragment, $artifactName)
 {
 	$pkg = Get-ChildItem -File ".\release\$packageFragment*.nupkg" |
-		? { $_.Name -match "$packageFragment\.(\d(?:\.\d){3})" }
+		? { $_.Name -match "$packageFragment\.(\d(?:\.\d){2})" }
 	Push-AppveyorArtifact $pkg -DeploymentName $artifactName
 }
 
 function push-zip-artifact($zipFragment, $artifactName, $zipType)
 {
 	$zip = Get-ChildItem -File ".\release\$zipFragment*-$zipType.zip" |
-		? { $_.Name -match "$zipFragment\.(\d(?:\.\d){3})" }
+		? { $_.Name -match "$zipFragment\.(\d(?:\.\d){2})" }
 	Push-AppveyorArtifact $zip -DeploymentName $artifactName
 }
 
@@ -44,10 +44,13 @@ push-package-artifact 'NMoneys.Serialization.Mongo_DB' 'nmoneys_serialization_mo
 
 push-package-artifact 'NMoneys.Serialization.Entity_Framework' 'nmoneys_serialization_entity_framework'
 
-push-zip-artifact 'NMoneys' 'nmoneys_zip' 'bin'
+push-zip-artifact 'NMoneys' 'nmoneys_net_zip' 'bin_net'
+push-zip-artifact 'NMoneys' 'nmoneys_netstandard_zip' 'bin_netstandard'
 
-push-zip-artifact 'NMoneys' 'nmoneys_signed_zip' 'signed'
+push-zip-artifact 'NMoneys' 'nmoneys_signed_net_zip' 'signed_net'
+push-zip-artifact 'NMoneys' 'nmoneys_signed_netstandard_zip' 'signed_netstandard'
 
-push-zip-artifact 'NMoneys.Exchange' 'nmoneys_exchange_zip' 'bin'
+push-zip-artifact 'NMoneys.Exchange' 'nmoneys_exchange_net_zip' 'bin_net'
+push-zip-artifact 'NMoneys.Exchange' 'nmoneys_exchange_netstandard_zip' 'bin_netstandard'
 
 push-coverage .

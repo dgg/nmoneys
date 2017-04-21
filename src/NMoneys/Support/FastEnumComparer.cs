@@ -71,7 +71,7 @@ Only enums with underlying type of [{_supportedTypes.ToDelimitedString(t => t.Na
 			var objParam = Expression.Parameter(typeof(TEnum), "obj");
 			var underlyingType = Enum.GetUnderlyingType(typeof(TEnum));
 			var convertExpression = Expression.Convert(objParam, underlyingType);
-			var getHashCodeMethod = underlyingType.GetMethod("GetHashCode");
+			var getHashCodeMethod = Reflect.Method(underlyingType, "GetHashCode");
 			var getHashCodeExpression = Expression.Call(convertExpression, getHashCodeMethod);
 			return Expression.Lambda<Func<TEnum, int>>(getHashCodeExpression, objParam).Compile();
 		}

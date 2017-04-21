@@ -1,6 +1,8 @@
 using System;
+using System.Globalization;
 using NMoneys.Allocations;
 using NUnit.Framework;
+using Testing.Commons.Globalization;
 
 namespace NMoneys.Tests.Allocations
 {
@@ -17,24 +19,30 @@ namespace NMoneys.Tests.Allocations
 
 		private static readonly decimal[] properValues = {0m, .001m, .5m, .73m, 1m};
 
-		[Test, SetCulture("")]
+		[Test]
 		public void Ctor_NegativeRatio_Exception()
 		{
-			Assert.That(() => new Ratio(-0.3m), Throws.InstanceOf<ArgumentOutOfRangeException>()
-				.With.Property("ParamName").EqualTo("value").And
-				.With.Property("ActualValue").EqualTo(-0.3m)
-				.With.Message.Contains("0")
-				.With.Message.Contains("1"));
+			using (CultureReseter.Set(CultureInfo.InvariantCulture))
+			{ 
+				Assert.That(() => new Ratio(-0.3m), Throws.InstanceOf<ArgumentOutOfRangeException>()
+					.With.Property("ParamName").EqualTo("value").And
+					.With.Property("ActualValue").EqualTo(-0.3m)
+					.With.Message.Contains("0")
+					.With.Message.Contains("1"));
+			}
 		}
 
-		[Test, SetCulture("")]
+		[Test]
 		public void Ctor_BigRatio_Exception()
 		{
-			Assert.That(() => new Ratio(2.3m), Throws.InstanceOf<ArgumentOutOfRangeException>()
-				.With.Property("ParamName").EqualTo("value").And
-				.With.Property("ActualValue").EqualTo(2.3m)
-				.With.Message.Contains("0")
-				.With.Message.Contains("1"));
+			using (CultureReseter.Set(CultureInfo.InvariantCulture))
+			{ 
+				Assert.That(() => new Ratio(2.3m), Throws.InstanceOf<ArgumentOutOfRangeException>()
+					.With.Property("ParamName").EqualTo("value").And
+					.With.Property("ActualValue").EqualTo(2.3m)
+					.With.Message.Contains("0")
+					.With.Message.Contains("1"));
+			}
 		}
 
 		[Test]

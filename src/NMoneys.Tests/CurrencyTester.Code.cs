@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using NMoneys.Support;
 using NUnit.Framework;
@@ -51,20 +50,20 @@ namespace NMoneys.Tests
 		[Test]
 		public void Parse_Undefined_AlphabeticCode_Exception()
 		{
-			Assert.That(() => Currency.Code.Parse("notAnIsoCode"), Throws.InstanceOf<InvalidEnumArgumentException>());
+			Assert.That(() => Currency.Code.Parse("notAnIsoCode"), Throws.ArgumentException);
 		}
 
 		[Test]
 		public void Parse_Undefined_NumericCode_Exception()
 		{
-			Assert.That(() => Currency.Code.Parse("0"), Throws.InstanceOf<InvalidEnumArgumentException>());
+			Assert.That(() => Currency.Code.Parse("0"), Throws.ArgumentException);
 		}
 
 		[Test]
 		public void Parse_Overflowing_NumericCode_Exception()
 		{
 			long overflowingCode = short.MinValue + 1L;
-			Assert.That(() => Currency.Code.Parse(overflowingCode.ToString()), Throws.InstanceOf<InvalidEnumArgumentException>());
+			Assert.That(() => Currency.Code.Parse(overflowingCode.ToString()), Throws.ArgumentException);
 		}
 
 		[Test]
@@ -214,7 +213,7 @@ namespace NMoneys.Tests
 		public void Cast_UndefinedValue_Exception()
 		{
 			Assert.That(() => Currency.Code.Cast(46),
-				Throws.InstanceOf<InvalidEnumArgumentException>()
+				Throws.ArgumentException
 					.With.Message.Contains("46")
 					.And.Message.Contains("CurrencyIsoCode"));
 		}
@@ -242,23 +241,6 @@ namespace NMoneys.Tests
 		#endregion
 
 		#region Comparer
-
-		[Test, NUnit.Framework.Category("Performance"), Platform(Include = "Net-2.0")]
-		public void Comparer_BetterPerformance_ThanDefaultComparer()
-		{
-			CurrencyIsoCode[] values = Enumeration.GetValues<CurrencyIsoCode>();
-
-			int iterations = 1000000;
-			TimeSpan fast = run(iterations, i => 
-				populateDictionary(new Dictionary<CurrencyIsoCode, int>(Currency.Code.Comparer), values, i));
-			TimeSpan @default = run(iterations, i => 
-				populateDictionary(new Dictionary<CurrencyIsoCode, int>(EqualityComparer<CurrencyIsoCode>.Default), values, i));
-
-			Assert.That(fast, Is.LessThan(@default), "{0} < {1}", fast, @default);
-
-			// not only faster, more than 5 times faster
-			Assert.That(fast.TotalMilliseconds * 5, Is.LessThan(@default.Milliseconds), "{0} << {1}", fast, @default);
-		}
 
 		[Test, NUnit.Framework.Category("Performance"), Explicit]
 		public void Comparer_SlightlyBetterPerformance_ThanDefaultComparer()

@@ -12,12 +12,7 @@
     <AssemblyName>NMoneys.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
-    <SccProjectName>Svn</SccProjectName>
-    <SccLocalPath>Svn</SccLocalPath>
-    <SccAuxPath>Svn</SccAuxPath>
-    <SccProvider>SubversionScc</SccProvider>
+    <ResolveNuGetPackages>false</ResolveNuGetPackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,45 +33,30 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServerCompact, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\EntityFramework.SqlServerCompact.6.1.3\lib\net40\EntityFramework.SqlServerCompact.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="ExpectedObjects, Version=1.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ExpectedObjects.1.2.3\lib\net40\ExpectedObjects.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nunit.framework, Version=3.4.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NUnit.3.4.1\lib\net40\nunit.framework.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="nunit.framework, Version=3.6.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NUnit.3.6.1\lib\net40\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.XML" />
-    <Reference Include="Testing.Commons, Version=1.7.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Testing.Commons.1.7.0\lib\net40\Testing.Commons.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Testing.Commons, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Testing.Commons.2.0.0\lib\net40\Testing.Commons.dll</HintPath>
     </Reference>
-    <Reference Include="Testing.Commons.NUnit, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Testing.Commons.NUnit.3.1.0\lib\net40\Testing.Commons.NUnit.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Testing.Commons.NUnit, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Testing.Commons.NUnit.4.0.0.20170419\lib\net40\Testing.Commons.NUnit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CurrencyTester.Code.net.cs" />
+    <Compile Include="CurrencyTester.Creation.net.cs" />
+    <Compile Include="CustomConstraints\Must.Extensions.net.cs" />
+    <Compile Include="MoneyTester.Creation.net.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="..\NMoneys\Properties\NMoneys_AssemblyInfo.cs">
       <Link>Properties\NMoneys_AssemblyInfo.cs</Link>
@@ -88,57 +68,23 @@
     <Compile Include="Allocations\RatioTester.cs" />
     <Compile Include="Allocations\RatioTester.Equality.cs" />
     <Compile Include="CharacterReferenceTester.cs" />
-    <Compile Include="CurrencyIsoCodeTester.Serialization.cs">
-      <DependentUpon>CurrencyIsoCodeTester.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CurrencyIsoCodeTester.Serialization.Xml.cs">
-      <DependentUpon>CurrencyIsoCodeTester.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CurrencyTester.Serialization.Xml.cs">
-      <DependentUpon>CurrencyTester.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CurrencyTester.Serialization.cs">
-      <DependentUpon>CurrencyTester.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CurrencyTester.Markup.cs">
-      <DependentUpon>CurrencyTester.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CurrencyTester.Code.cs">
-      <DependentUpon>CurrencyTester.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CurrencyTester.Creation.cs">
-      <DependentUpon>CurrencyTester.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CurrencyTester.Comparisons.cs">
-      <DependentUpon>CurrencyTester.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MoneyTester.Creation.cs">
-      <DependentUpon>MoneyTester.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MoneyTester.Serialization.Xml.cs">
-      <DependentUpon>MoneyTester.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MoneyTester.Serialization.cs">
-      <DependentUpon>MoneyTester.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MoneyTester.Arithmetic.cs">
-      <DependentUpon>MoneyTester.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MoneyTester.Arithmetic.Operators.cs">
-      <DependentUpon>MoneyTester.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MoneyTester.Parsing.cs">
-      <DependentUpon>MoneyTester.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MoneyTester.Cloning.cs">
-      <DependentUpon>MoneyTester.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MoneyTester.Comparisons.cs">
-      <DependentUpon>MoneyTester.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CurrencyEqualityComparerTester.cs">
-      <DependentUpon>CurrencyTester.cs</DependentUpon>
-    </Compile>
+    <Compile Include="CurrencyIsoCodeTester.Serialization.net.cs" />
+    <Compile Include="CurrencyIsoCodeTester.Serialization.Xml.net.cs" />
+    <Compile Include="CurrencyTester.Serialization.Xml.net.cs" />
+    <Compile Include="CurrencyTester.Serialization.net.cs" />
+    <Compile Include="CurrencyTester.Markup.cs" />
+    <Compile Include="CurrencyTester.Code.cs" />
+    <Compile Include="CurrencyTester.Creation.cs" />
+    <Compile Include="CurrencyTester.Comparisons.cs" />
+    <Compile Include="MoneyTester.Creation.cs" />
+    <Compile Include="MoneyTester.Serialization.Xml.net.cs" />
+    <Compile Include="MoneyTester.Serialization.net.cs" />
+    <Compile Include="MoneyTester.Arithmetic.cs" />
+    <Compile Include="MoneyTester.Arithmetic.Operators.cs" />
+    <Compile Include="MoneyTester.Parsing.cs" />
+    <Compile Include="MoneyTester.Cloning.net.cs" />
+    <Compile Include="MoneyTester.Comparisons.cs" />
+    <Compile Include="CurrencyEqualityComparerTester.cs" />
     <Compile Include="CurrencyIsoCodeTester.cs" />
     <Compile Include="CurrencyTester.cs" />
     <Compile Include="CustomConstraints\CompleteAllocationConstraint.cs" />
@@ -151,18 +97,11 @@
     <Compile Include="CustomConstraints\QuasiCompleteAllocationConstraint.cs" />
     <Compile Include="ExtensionsTester.cs" />
     <Compile Include="MoneyTester.cs" />
-    <Compile Include="MoneyTester.Formatting.cs">
-      <DependentUpon>MoneyTester.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MoneyTester.Allocations.ProRated.cs">
-      <DependentUpon>MoneyTester.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MoneyTester.Some.cs">
-      <DependentUpon>MoneyTester.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MoneyTester.Allocations.Split.cs">
-      <DependentUpon>MoneyTester.cs</DependentUpon>
-    </Compile>
+    <Compile Include="MoneyTester.Equality.cs" />
+    <Compile Include="MoneyTester.Formatting.cs" />
+    <Compile Include="MoneyTester.Allocations.ProRated.cs" />
+    <Compile Include="MoneyTester.Some.cs" />
+    <Compile Include="MoneyTester.Allocations.Split.cs" />
     <Compile Include="ProvidersTesters.cs" />
     <Compile Include="Quickstart.cs" />
     <Compile Include="Support\ActionTimer.cs" />
@@ -195,21 +134,13 @@
     <Compile Include="Allocations\RatioCollectionTester.Formatting.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MoneyTester.Equality.cs">
-      <DependentUpon>MoneyTester.cs</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
-    if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
-    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\x86\*.*" "$(TargetDir)x86"
-    if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
-    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace NMoneys.Exchange.Tests
@@ -321,7 +322,7 @@ namespace NMoneys.Exchange.Tests
 
 			public override ExchangeRate Invert()
 			{
-				return new FiveDecimalsArithmetic(To, From, decimal.Round(1m / Rate, 5));
+				return new FiveDecimalsArithmetic(To, From, Math.Round(1m / Rate, 5));
 			}
 
 			public override Money Apply(Money from)

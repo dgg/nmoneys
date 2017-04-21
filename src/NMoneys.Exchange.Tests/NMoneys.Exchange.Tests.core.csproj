@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netcoreapp1.0</TargetFramework>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<OutputType>Exe</OutputType>
+		<AssemblyName>NMoneys.Exchange.Tests</AssemblyName>
+		<RootNamespace>NMoneys.Exchange.Tests</RootNamespace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DefineConstants>TRACE;DEBUG;NETCOREAPP1_0</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DefineConstants>TRACE;NETCOREAPP1_0</DefineConstants>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="NUnit" Version="3.6.1" />
+		<PackageReference Include="NUnitLite" Version="3.6.1" />
+		<PackageReference Include="Testing.Commons" Version="2.0.0" />
+		<PackageReference Include="Testing.Commons.NUnit" Version="4.0.0.20170419" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\NMoneys\NMoneys.netstandard.csproj" />
+		<ProjectReference Include="..\NMoneys.Exchange\NMoneys.Exchange.netstandard.csproj" />
+		<ProjectReference Include="..\NMoneys.Tests\NMoneys.Tests.core.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Remove="**\\*.net.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Include="..\NMoneys.Exchange\Properties\Exchange_AssemblyInfo.cs" Link="Properties\Exchange_AssemblyInfo.cs" />
+	</ItemGroup>
+</Project>
