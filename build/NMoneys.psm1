@@ -15,7 +15,7 @@ function Ensure-Release-Folders($base)
 		"$base\release\doc\net\", 
 		"$base\release\doc\netstandard\", 
 		"$base\release\lib\net40-client\", 
-		"$base\release\lib\netstandard1.4\", 
+		"$base\release\lib\netstandard1.3\", 
 		"$base\release\content\Infrastructure\Serialization\", 
 		"$base\release\signed\net\",
 		"$base\release\signed\netstandard\"
@@ -28,8 +28,8 @@ function Build-Documentation($base, $configuration)
 	imm-doc-net $base $configuration "NMoneys" -framework 'net'
 	imm-doc-net $base $configuration "NMoneys.Exchange" -framework 'net'
 
-	imm-doc-net $base $configuration "NMoneys" -framework 'netstandard' -target 'netstandard1.4'
-	imm-doc-net $base $configuration "NMoneys.Exchange" -framework 'netstandard'  -target 'netstandard1.4'
+	imm-doc-net $base $configuration "NMoneys" -framework 'netstandard' -target 'netstandard1.3'
+	imm-doc-net $base $configuration "NMoneys.Exchange" -framework 'netstandard'  -target 'netstandard1.3'
 }
 
 function imm-doc-net($base, $configuration, $project, $target = '', $framework)
@@ -69,12 +69,12 @@ function copy-binaries($base, $configuration)
 	Copy-Item $base\src\NMoneys.Exchange\bin\$configuration\NMoneys.Exchange.dll $release_bin_dir
 	Copy-Item $base\src\NMoneys.Exchange\bin\$configuration\NMoneys.Exchange.XML $release_bin_dir
 
-	$release_bin_dir = Join-Path $base release\lib\netstandard1.4
+	$release_bin_dir = Join-Path $base release\lib\netstandard1.3
 	
-	Copy-Item $base\src\NMoneys\bin\$configuration\netstandard1.4\NMoneys.dll $release_bin_dir
-	Copy-Item $base\src\NMoneys\bin\$configuration\netstandard1.4\NMoneys.XML $release_bin_dir
-	Copy-Item $base\src\NMoneys.Exchange\bin\$configuration\netstandard1.4\NMoneys.Exchange.dll $release_bin_dir
-	Copy-Item $base\src\NMoneys.Exchange\bin\$configuration\netstandard1.4\NMoneys.Exchange.XML $release_bin_dir
+	Copy-Item $base\src\NMoneys\bin\$configuration\netstandard1.3\NMoneys.dll $release_bin_dir
+	Copy-Item $base\src\NMoneys\bin\$configuration\netstandard1.3\NMoneys.XML $release_bin_dir
+	Copy-Item $base\src\NMoneys.Exchange\bin\$configuration\netstandard1.3\NMoneys.Exchange.dll $release_bin_dir
+	Copy-Item $base\src\NMoneys.Exchange\bin\$configuration\netstandard1.3\NMoneys.Exchange.XML $release_bin_dir
 }
 
 function copy-doc($base){
@@ -84,7 +84,7 @@ function copy-doc($base){
 	Get-ChildItem $release_doc_dir -Filter *.chm |
 		Copy-Item -Destination $release_bin_dir
 
-	$release_bin_dir = Join-Path $base release\lib\netstandard1.4
+	$release_bin_dir = Join-Path $base release\lib\netstandard1.3
 	$release_doc_dir = Join-Path $base release\doc\netstandard
 	
 	Get-ChildItem $release_doc_dir -Filter *.chm |
@@ -129,7 +129,7 @@ function Generate-Zip-Files($base)
 		('NMoneys.dll', 'NMoneys.XML', 'NMoneys.chm') |
 		% { 
 			zip-bin $base $version 'NMoneys' $_ -framework 'net40-client' -abbreviation 'net' | Out-Null 
-			zip-bin $base $version 'NMoneys' $_ -framework 'netstandard1.4' -abbreviation 'netstandard' | Out-Null 
+			zip-bin $base $version 'NMoneys' $_ -framework 'netstandard1.3' -abbreviation 'netstandard' | Out-Null 
 		}
 		
 	zip-signed $base $version 'NMoneys' 'NMoneys.dll' -abbreviation 'net' | Out-Null
@@ -139,7 +139,7 @@ function Generate-Zip-Files($base)
 	('NMoneys.Exchange.dll', 'NMoneys.Exchange.XML', 'NMoneys_Exchange.chm') |
 		% { 
 			zip-bin $base $version 'NMoneys.Exchange' $_ -framework 'net40-client' -abbreviation 'net'| Out-Null
-			zip-bin $base $version 'NMoneys.Exchange' $_ -framework 'netstandard1.4' -abbreviation 'netstandard'| Out-Null
+			zip-bin $base $version 'NMoneys.Exchange' $_ -framework 'netstandard1.3' -abbreviation 'netstandard'| Out-Null
 		}
 }
 
@@ -183,7 +183,7 @@ function get-version-from-package($base, $packageFragment)
 function Sign-Assemblies($base, $configuration)
 {
 	sign-assembly $base 'NMoneys' $configuration -framework 'net'
-	sign-assembly $base 'NMoneys' $configuration -target 'netstandard1.4' -framework 'netstandard'
+	sign-assembly $base 'NMoneys' $configuration -target 'netstandard1.3' -framework 'netstandard'
 }
 
 function sign-assembly($base, $project, $configuration, $target = '', $name = $project, $framework)

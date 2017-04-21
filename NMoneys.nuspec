@@ -16,7 +16,7 @@
 		<iconUrl>https://nugetgallery.blob.core.windows.net/icons/NMoneys.2.0.0.0.png</iconUrl>
 		<tags>.net currency money</tags>
 		<dependencies>
-			<group targetFramework="netstandard1.4">
+			<group targetFramework="netstandard1.3">
 				<dependency id="System.Diagnostics.Contracts" version="4.3.0" />
 				<dependency id="System.Xml.XPath" version="4.3.0" />
 			</group>
