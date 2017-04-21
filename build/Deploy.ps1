@@ -10,7 +10,7 @@ function push-package($package)
 	$release_dir = Join-Path $base_dir release
 
 	$pkg = Get-ChildItem -File "$release_dir\$package*.nupkg" |
-		? { $_.Name -match "$package\.(\d(?:\.\d){3})" }  | 
+		? { $_.Name -match "$package\.(\d(?:\.\d){2})" }  | 
 		% { 
 			& $nuget push $_.FullName
 			Throw-If-Error
