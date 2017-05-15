@@ -15,7 +15,7 @@
 		</summary>
 		<projectUrl>https://github.com/dgg/nmoneys</projectUrl>
 		<iconUrl>https://nugetgallery.blob.core.windows.net/icons/NMoneys.2.0.0.0.png</iconUrl>
-		<tags>.net currency money mongo mongodb JSON BSON</tags>
+		<tags>.net currency money iso iso4217 serialization mongo mongodb JSON BSON</tags>
 		<dependencies>
 			<dependency id="nmoneys" version="4.0.0.0" />
 		</dependencies>

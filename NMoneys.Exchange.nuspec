@@ -14,7 +14,7 @@
 		</summary>
 		<projectUrl>https://github.com/dgg/nmoneys</projectUrl>
 		<iconUrl>https://nugetgallery.blob.core.windows.net/icons/NMoneys.Exchange.1.0.0.0.png</iconUrl>
-		<tags>.net currency money</tags>
+		<tags>.net currency money iso iso4217 exchange</tags>
 		<dependencies>
 			<dependency id="nmoneys" version="5.0.0.0" />
 		</dependencies>
