@@ -53,6 +53,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Change\DenominationTester.cs" />
     <Compile Include="CurrencyTester.Code.net.cs" />
     <Compile Include="CurrencyTester.Creation.net.cs" />
     <Compile Include="CustomConstraints\Must.Extensions.net.cs" />
