@@ -19,5 +19,16 @@ namespace NMoneys.Tests
 			Assert.That(oneFiver[0].Denomination, Is.EqualTo(fiver));
 			Assert.That(oneFiver.Remainder, Is.EqualTo(0m.Xxx()));
 		}
+
+		[Test]
+		public void MinChange_LessAmountThanMinimalDenomination_AmountRemainder()
+		{
+			var threeX = new Money(3m);
+			var fiver = new Denomination(5m);
+			var noSolution = threeX.MinChange(new[] { fiver });
+
+			Assert.That(noSolution, Has.Count.EqualTo(0));
+			Assert.That(noSolution.Remainder, Is.EqualTo(5m.Xxx()));
+		}
 	}
 }
