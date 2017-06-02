@@ -1,4 +1,5 @@
-﻿using NMoneys.Change;
+﻿using System;
+using NMoneys.Change;
 using NUnit.Framework;
 
 namespace NMoneys.Tests.Change
@@ -17,7 +18,7 @@ namespace NMoneys.Tests.Change
 		[Test]
 		public void Ctor_Negative_Exception()
 		{
-			Assert.That(() => new Denomination(-1m), Throws.ArgumentException);
+			Assert.That(() => new Denomination(-1m), Throws.InstanceOf<ArgumentOutOfRangeException>());
 		}
 	}
 }
