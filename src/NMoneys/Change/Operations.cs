@@ -6,6 +6,8 @@ namespace NMoneys.Change
 	{
 		public static ChangeSolution MinChange(this Money money, Denomination[] denominations)
 		{
+			Positive.Amounts.AssertArgument(nameof(money), money.Amount);
+
 			Denomination[] orderedDenominations = denominations.OrderByDescending(d => d.Value).ToArray();
 			decimal remainder = money.Amount;
 			bool canContinue = true;

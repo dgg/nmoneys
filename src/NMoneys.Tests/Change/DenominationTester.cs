@@ -8,7 +8,7 @@ namespace NMoneys.Tests.Change
 	public class DenominationTester
 	{
 		[Test]
-		public void Ctor_WithValue()
+		public void Ctor_Positive_SetValue()
 		{
 			var subject = new Denomination(5m);
 
@@ -16,15 +16,10 @@ namespace NMoneys.Tests.Change
 		}
 
 		[Test]
-		public void Ctor_Negative_Exception()
+		[TestCase(0), TestCase(-1)]
+		public void Ctor_NotPositive_Exception(decimal notPositive)
 		{
-			Assert.That(() => new Denomination(-1m), Throws.InstanceOf<ArgumentOutOfRangeException>());
-		}
-
-		[Test]
-		public void Ctor_Zero_Exception()
-		{
-			Assert.That(() => new Denomination(0m), Throws.InstanceOf<ArgumentOutOfRangeException>());
+			Assert.That(() => new Denomination(notPositive), Throws.InstanceOf<ArgumentOutOfRangeException>());
 		}
 	}
 }

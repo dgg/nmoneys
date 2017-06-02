@@ -1,4 +1,5 @@
-﻿using NMoneys.Change;
+﻿using System;
+using NMoneys.Change;
 using NMoneys.Extensions;
 using NUnit.Framework;
 
@@ -7,6 +8,15 @@ namespace NMoneys.Tests
 	[TestFixture]
 	public partial class MoneyTester
 	{
+		[Test]
+		[TestCase(0), TestCase(-1)]
+		public void MinChange_NotPositive_Exception(decimal notPositive)
+		{
+			Denomination[] any = { new Denomination(1m) };
+
+			Assert.That(()=> new Money(notPositive).MinChange(any), Throws.InstanceOf<ArgumentOutOfRangeException>());
+		}
+
 		[Test]
 		public void MinChange_SameDenominationAsAmount_OneDenominationAndNoRemainder()
 		{
