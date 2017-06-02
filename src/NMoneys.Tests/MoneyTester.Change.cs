@@ -83,5 +83,28 @@ namespace NMoneys.Tests
 			Assert.That(subOptimalSolution[1].Quantity, Is.EqualTo(5u));
 			Assert.That(subOptimalSolution[1].Denomination.Value, Is.EqualTo(1m));
 		}
+
+
+
+		[Test]
+		public void MinChange_NotCompleteSolution_QuantifiedAndRemainder()
+		{
+			var notCompletelyChangeable = new Money(7m);
+
+			var subOptimalSolution = notCompletelyChangeable.MinChange(new[]
+			{
+				new Denomination(4m),
+				new Denomination(2m)
+			});
+
+			Assert.That(subOptimalSolution, Has.Count.EqualTo(2));
+			Assert.That(subOptimalSolution.Remainder, Is.EqualTo(1m.Xxx()));
+
+			Assert.That(subOptimalSolution[0].Quantity, Is.EqualTo(1u));
+			Assert.That(subOptimalSolution[0].Denomination.Value, Is.EqualTo(4m));
+
+			Assert.That(subOptimalSolution[1].Quantity, Is.EqualTo(1u));
+			Assert.That(subOptimalSolution[1].Denomination.Value, Is.EqualTo(2m));
+		}
 	}
 }
