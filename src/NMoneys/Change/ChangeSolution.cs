@@ -1,19 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using NMoneys.Extensions;
+using System.Linq;
 
-namespace NMoneys
+namespace NMoneys.Change
 {
-	public class ChangeSolution: IEnumerable<QuantifiedDenomination>
+	public class ChangeSolution : IEnumerable<QuantifiedDenomination>
 	{
-		private List<QuantifiedDenomination> _denominations = new List<QuantifiedDenomination>();
+		private readonly List<QuantifiedDenomination> _denominations = new List<QuantifiedDenomination>();
 
 		public QuantifiedDenomination this[int index] => _denominations[index];
-
-		public void Add(QuantifiedDenomination denomination)
-		{
-			_denominations.Add(denomination);
-		}
 
 		public IEnumerator<QuantifiedDenomination> GetEnumerator()
 		{
@@ -25,8 +21,19 @@ namespace NMoneys
 			return GetEnumerator();
 		}
 
-		public uint Count { get { return (uint)_denominations.Count; } }
+		public uint Count => (uint)_denominations.Count;
 
 		public Money Remainder { get; set; }
+
+		public void AddOrUpdate(Denomination denomination, Action<QuantifiedDenomination> action)
+		{
+			QuantifiedDenomination quantified = _denominations.FirstOrDefault(d => d.Denomination.Value == denomination.Value);
+			if (quantified == null)
+			{
+				quantified = new QuantifiedDenomination { Denomination = denomination };
+				_denominations.Add(quantified);
+			}
+			action(quantified);
+		}
 	}
 }
