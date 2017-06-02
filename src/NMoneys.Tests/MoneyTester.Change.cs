@@ -28,7 +28,7 @@ namespace NMoneys.Tests
 			var noSolution = threeX.MinChange(new[] { fiver });
 
 			Assert.That(noSolution, Has.Count.EqualTo(0));
-			Assert.That(noSolution.Remainder, Is.EqualTo(5m.Xxx()));
+			Assert.That(noSolution.Remainder, Is.EqualTo(threeX));
 		}
 	}
 }

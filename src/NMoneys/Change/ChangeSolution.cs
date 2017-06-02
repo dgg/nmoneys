@@ -27,6 +27,6 @@ namespace NMoneys
 
 		public uint Count { get { return (uint)_denominations.Count; } }
 
-		public Money Remainder => 0m.Xxx();
+		public Money Remainder { get; set; }
 	}
 }
