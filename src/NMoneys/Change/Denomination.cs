@@ -10,5 +10,10 @@
 		}
 
 		public decimal Value { get; }
+
+		internal bool CanBeSubstractedFrom(decimal remainder)
+		{
+			return remainder >= Value;
+		}
 	}
 }

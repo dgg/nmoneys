@@ -17,7 +17,7 @@ namespace NMoneys.Change
 			{
 				for (int i = 0; i < orderedDenominations.Length; i++)
 				{
-					while (remainder >= orderedDenominations[i].Value)
+					while (orderedDenominations[i].CanBeSubstractedFrom(remainder))
 					{
 						remainder -= orderedDenominations[i].Value;
 						var quantified = solution.FirstOrDefault(d => d.Denomination.Value == orderedDenominations[i].Value);
@@ -32,8 +32,8 @@ namespace NMoneys.Change
 							solution.Add(new QuantifiedDenomination{ Denomination = orderedDenominations[i], Quantity = 1u});
 						}
 					}
-					canContinue = false;
 				}
+				canContinue = false;
 			}
 			solution.Remainder = new Money(remainder, money.CurrencyCode);
 

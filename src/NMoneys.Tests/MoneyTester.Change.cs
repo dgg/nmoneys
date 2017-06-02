@@ -116,5 +116,18 @@ namespace NMoneys.Tests
 			Assert.That(subOptimalSolution[1].Quantity, Is.EqualTo(1u));
 			Assert.That(subOptimalSolution[1].Denomination.Value, Is.EqualTo(2m));
 		}
+
+		[Test]
+		public void MinChange_NoDenominations_EmptySolution()
+		{
+			var toBeChanged = new Money(5m);
+
+			var emptySolution = toBeChanged.MinChange(new Denomination[0]);
+
+			Assert.That(emptySolution, Is.Empty);
+			Assert.That(emptySolution.Count, Is.EqualTo(0));
+
+			Assert.That(emptySolution.Remainder, Is.EqualTo(toBeChanged));
+		}
 	}
 }
