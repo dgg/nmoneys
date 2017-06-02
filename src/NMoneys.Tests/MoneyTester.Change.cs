@@ -40,5 +40,26 @@ namespace NMoneys.Tests
 
 			Assert.That(noSolution.Remainder.CurrencyCode, Is.EqualTo(threeEuro.CurrencyCode));
 		}
+
+		[Test]
+		public void MinChange_ChangePossible_MultipleDenominationsNoRemainder()
+		{
+			var changeable = new Money(5m);
+			var wholeSolution = changeable.MinChange(new[]
+			{
+				new Denomination(1m),
+				new Denomination(3m),
+				new Denomination(2m)
+			});
+
+			Assert.That(wholeSolution, Has.Count.EqualTo(2));
+			Assert.That(wholeSolution.Remainder, Is.EqualTo(0m.Xxx()));
+
+			Assert.That(wholeSolution[0].Quantity, Is.EqualTo(1u));
+			Assert.That(wholeSolution[0].Denomination.Value, Is.EqualTo(3m));
+
+			Assert.That(wholeSolution[1].Quantity, Is.EqualTo(1u));
+			Assert.That(wholeSolution[1].Denomination.Value, Is.EqualTo(2m));
+		}
 	}
 }
