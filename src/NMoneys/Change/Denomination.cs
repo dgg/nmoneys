@@ -2,6 +2,7 @@
 
 namespace NMoneys.Change
 {
+	// class because default(decimal) is not a valid value for Value
 	public class Denomination
 	{
 		private static readonly Range<decimal> _range = new Range<decimal>(
