@@ -19,7 +19,7 @@ namespace NMoneys.Change
 				{
 					while (orderedDenominations[i].CanBeSubstractedFrom(remainder))
 					{
-						remainder -= orderedDenominations[i].Value;
+						orderedDenominations[i].SubstractFrom(ref remainder);
 						var quantified = solution.FirstOrDefault(d => d.Denomination.Value == orderedDenominations[i].Value);
 						// already in solution
 						if (quantified != null)

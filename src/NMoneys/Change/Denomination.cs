@@ -15,5 +15,10 @@
 		{
 			return remainder >= Value;
 		}
+
+		internal void SubstractFrom(ref decimal remainder)
+		{
+			remainder -= Value;
+		}
 	}
 }
