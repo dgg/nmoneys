@@ -61,5 +61,27 @@ namespace NMoneys.Tests
 			Assert.That(wholeSolution[1].Quantity, Is.EqualTo(1u));
 			Assert.That(wholeSolution[1].Denomination.Value, Is.EqualTo(2m));
 		}
+
+		[Test]
+		public void MinChange_NonOptimalForGreedy_SubOptimalSolution()
+		{
+			var changeable = new Money(30m);
+
+			var subOptimalSolution = changeable.MinChange(new[]
+			{
+				new Denomination(1m),
+				new Denomination(15m),
+				new Denomination(25m)
+			});
+
+			Assert.That(subOptimalSolution, Has.Count.EqualTo(2));
+			Assert.That(subOptimalSolution.Remainder, Is.EqualTo(0m.Xxx()));
+
+			Assert.That(subOptimalSolution[0].Quantity, Is.EqualTo(1u));
+			Assert.That(subOptimalSolution[0].Denomination.Value, Is.EqualTo(25m));
+
+			Assert.That(subOptimalSolution[1].Quantity, Is.EqualTo(5u));
+			Assert.That(subOptimalSolution[1].Denomination.Value, Is.EqualTo(1m));
+		}
 	}
 }
