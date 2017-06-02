@@ -30,7 +30,7 @@ namespace NMoneys.Change
 			QuantifiedDenomination quantified = _denominations.FirstOrDefault(d => d.Denomination.Value == denomination.Value);
 			if (quantified == null)
 			{
-				quantified = new QuantifiedDenomination { Denomination = denomination };
+				quantified = new QuantifiedDenomination(denomination);
 				_denominations.Add(quantified);
 			}
 			action(quantified);

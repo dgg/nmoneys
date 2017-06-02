@@ -20,7 +20,7 @@ namespace NMoneys.Change
 					while (orderedDenominations[i].CanBeSubstractedFrom(remainder))
 					{
 						orderedDenominations[i].SubstractFrom(ref remainder);
-						solution.AddOrUpdate(orderedDenominations[i], d => d.Quantity++);
+						solution.AddOrUpdate(orderedDenominations[i], d => d.Increase());
 					}
 				}
 				canContinue = false;

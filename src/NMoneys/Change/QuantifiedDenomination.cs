@@ -1,10 +1,18 @@
-﻿using NMoneys.Change;
-
-namespace NMoneys
+﻿namespace NMoneys.Change
 {
 	public class QuantifiedDenomination
 	{
-		public Denomination Denomination { get; set; }
-		public uint Quantity { get; set; }
+		public QuantifiedDenomination(Denomination denomination)
+		{
+			Denomination = denomination;
+		}
+
+		public Denomination Denomination { get; }
+		public uint Quantity { get; private set; }
+
+		internal void Increase()
+		{
+			Quantity++;
+		}
 	}
 }
