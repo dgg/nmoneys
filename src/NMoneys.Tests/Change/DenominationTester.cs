@@ -20,5 +20,11 @@ namespace NMoneys.Tests.Change
 		{
 			Assert.That(() => new Denomination(-1m), Throws.InstanceOf<ArgumentOutOfRangeException>());
 		}
+
+		[Test]
+		public void Ctor_Zero_Exception()
+		{
+			Assert.That(() => new Denomination(0m), Throws.InstanceOf<ArgumentOutOfRangeException>());
+		}
 	}
 }
