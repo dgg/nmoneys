@@ -52,6 +52,7 @@
     <Compile Include="Allocations\RatioCollection.cs" />
     <Compile Include="Allocations\RemainderAllocatorBase.cs" />
     <Compile Include="Allocations\LastToFirstAllocator.cs" />
+    <Compile Include="Change\Denomination.cs" />
     <Compile Include="Currency.Serialization.Xml.net.cs" />
     <Compile Include="Currency.Serialization.net.cs" />
     <Compile Include="Currency.Code.cs" />
