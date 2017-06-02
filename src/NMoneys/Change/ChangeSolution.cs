@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using NMoneys.Extensions;
 
 namespace NMoneys
 {
@@ -25,5 +26,7 @@ namespace NMoneys
 		}
 
 		public uint Count { get { return (uint)_denominations.Count; } }
+
+		public Money Remainder => 0m.Xxx();
 	}
 }
