@@ -30,5 +30,15 @@ namespace NMoneys.Tests
 			Assert.That(noSolution, Has.Count.EqualTo(0));
 			Assert.That(noSolution.Remainder, Is.EqualTo(threeX));
 		}
+
+		[Test]
+		public void MinChange_WhenRemainder_RemainderSameCurrencyAsInitial()
+		{
+			var threeEuro = 3m.Eur();
+			var fiver = new Denomination(5m);
+			var noSolution = threeEuro.MinChange(new[] {fiver});
+
+			Assert.That(noSolution.Remainder.CurrencyCode, Is.EqualTo(threeEuro.CurrencyCode));
+		}
 	}
 }
