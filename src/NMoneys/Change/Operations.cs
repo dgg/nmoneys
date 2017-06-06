@@ -36,5 +36,9 @@ namespace NMoneys.Change
 			return money.MinChange(denominations.AsEnumerable());
 		}
 
+		public static MinChangeSolution MinChange(this Money money, params decimal[] denominationValues)
+		{
+			return money.MinChange(denominationValues.Select(v => new Denomination(v)));
+		}
 	}
 }
