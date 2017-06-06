@@ -22,7 +22,7 @@ namespace NMoneys.Tests
 		{
 			var fiveX = new Money(5m);
 			var fiver = new Denomination(5m);
-			var oneFiver = fiveX.MinChange(new []{ fiver });
+			var oneFiver = fiveX.MinChange(fiver);
 
 			Assert.That(oneFiver, Has.Count.EqualTo(1));
 			Assert.That(oneFiver[0].Quantity, Is.EqualTo(1u));
@@ -35,7 +35,7 @@ namespace NMoneys.Tests
 		{
 			var threeX = new Money(3m);
 			var fiver = new Denomination(5m);
-			var noSolution = threeX.MinChange(new[] { fiver });
+			var noSolution = threeX.MinChange(fiver);
 
 			Assert.That(noSolution, Has.Count.EqualTo(0));
 			Assert.That(noSolution.Remainder, Is.EqualTo(threeX));
@@ -46,7 +46,7 @@ namespace NMoneys.Tests
 		{
 			var threeEuro = 3m.Eur();
 			var fiver = new Denomination(5m);
-			var noSolution = threeEuro.MinChange(new[] {fiver});
+			var noSolution = threeEuro.MinChange(fiver);
 
 			Assert.That(noSolution.Remainder.CurrencyCode, Is.EqualTo(threeEuro.CurrencyCode));
 		}
@@ -55,12 +55,10 @@ namespace NMoneys.Tests
 		public void MinChange_ChangePossible_MultipleDenominationsNoRemainder()
 		{
 			var changeable = new Money(5m);
-			var wholeSolution = changeable.MinChange(new[]
-			{
-				new Denomination(1m),
-				new Denomination(3m),
-				new Denomination(2m)
-			});
+			var wholeSolution = changeable.MinChange(
+				new Denomination(1m), 
+				new Denomination(3m), 
+				new Denomination(2m));
 
 			Assert.That(wholeSolution, Has.Count.EqualTo(2));
 			Assert.That(wholeSolution.Remainder, Is.EqualTo(0m.Xxx()));
@@ -77,12 +75,10 @@ namespace NMoneys.Tests
 		{
 			var changeable = new Money(30m);
 
-			var subOptimalSolution = changeable.MinChange(new[]
-			{
-				new Denomination(1m),
-				new Denomination(15m),
-				new Denomination(25m)
-			});
+			var subOptimalSolution = changeable.MinChange(
+				new Denomination(1m), 
+				new Denomination(15m), 
+				new Denomination(25m));
 
 			Assert.That(subOptimalSolution, Has.Count.EqualTo(2));
 			Assert.That(subOptimalSolution.Remainder, Is.EqualTo(0m.Xxx()));
@@ -101,11 +97,7 @@ namespace NMoneys.Tests
 		{
 			var notCompletelyChangeable = new Money(7m);
 
-			var subOptimalSolution = notCompletelyChangeable.MinChange(new[]
-			{
-				new Denomination(4m),
-				new Denomination(2m)
-			});
+			var subOptimalSolution = notCompletelyChangeable.MinChange(new Denomination(4m), new Denomination(2m));
 
 			Assert.That(subOptimalSolution, Has.Count.EqualTo(2));
 			Assert.That(subOptimalSolution.Remainder, Is.EqualTo(1m.Xxx()));
@@ -122,7 +114,7 @@ namespace NMoneys.Tests
 		{
 			var toBeChanged = new Money(5m);
 
-			var emptySolution = toBeChanged.MinChange(new Denomination[0]);
+			var emptySolution = toBeChanged.MinChange();
 
 			Assert.That(emptySolution, Is.Empty);
 			Assert.That(emptySolution.Count, Is.EqualTo(0));

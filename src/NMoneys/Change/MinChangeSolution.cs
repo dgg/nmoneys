@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace NMoneys.Change
 {
-	public class ChangeSolution : IEnumerable<QuantifiedDenomination>
+	public class MinChangeSolution : IEnumerable<QuantifiedDenomination>
 	{
 		private readonly List<QuantifiedDenomination> _denominations = new List<QuantifiedDenomination>();
 

@@ -1,10 +1,11 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace NMoneys.Change
 {
 	public static class Operations
 	{
-		public static ChangeSolution MinChange(this Money money, Denomination[] denominations)
+		public static MinChangeSolution MinChange(this Money money, IEnumerable<Denomination> denominations)
 		{
 			Positive.Amounts.AssertArgument(nameof(money), money.Amount);
 
@@ -12,7 +13,7 @@ namespace NMoneys.Change
 			decimal remainder = money.Amount;
 			bool canContinue = true;
 
-			ChangeSolution solution = new ChangeSolution();
+			MinChangeSolution solution = new MinChangeSolution();
 			while (remainder > 0 && canContinue)
 			{
 				for (int i = 0; i < orderedDenominations.Length; i++)
@@ -29,5 +30,11 @@ namespace NMoneys.Change
 
 			return solution;
 		}
+
+		public static MinChangeSolution MinChange(this Money money, params Denomination[] denominations)
+		{
+			return money.MinChange(denominations.AsEnumerable());
+		}
+
 	}
 }
