@@ -66,24 +66,47 @@ namespace NMoneys.Tests.Change
 			Assert.That(wholeSolution[1].Denomination.Value, Is.EqualTo(2m));
 		}
 
-		[Test]
-		public void MinChange_NonOptimalForGreedy_SubOptimalSolution()
+		private static readonly object[] greedySuboptimal =
 		{
-			var changeable = new Money(30m);
+			new object[]
+			{
+				30m, new[] {1m, 15m, 25m}, new[]
+				{
+					Tuple.Create(1u, 25m), Tuple.Create(5u, 1m)
+				}
+			},
+			new object[]
+			{
+				40m, new[] {1m, 5m, 10m, 20m, 25m}, new[]
+				{
+					Tuple.Create(1u, 25m), Tuple.Create(1u, 10m), Tuple.Create(1u, 5m)
+				}
+			},
+			new object[]
+			{
+				6m, new[] {1m, 3m, 4m}, new[]
+				{
+					Tuple.Create(1u, 4m), Tuple.Create(2u, 1m)
+				}
+			}
+		};
 
-			var subOptimalSolution = changeable.MinChange(1m, 15m, 25m);
+		[Test, TestCaseSource(nameof(greedySuboptimal))]
+		public void MinChange_NonOptimalForGreedy_SubOptimalSolution(decimal amount, decimal[] denominationValues, Tuple<uint, decimal>[] solution)
+		{
+			var changeable = new Money(amount);
 
-			Assert.That(subOptimalSolution, Has.Count.EqualTo(2));
+			var subOptimalSolution = changeable.MinChange(denominationValues);
+
+			Assert.That(subOptimalSolution, Has.Count.EqualTo(solution.Length));
 			Assert.That(subOptimalSolution.Remainder, Is.EqualTo(0m.Xxx()));
 
-			Assert.That(subOptimalSolution[0].Quantity, Is.EqualTo(1u));
-			Assert.That(subOptimalSolution[0].Denomination.Value, Is.EqualTo(25m));
-
-			Assert.That(subOptimalSolution[1].Quantity, Is.EqualTo(5u));
-			Assert.That(subOptimalSolution[1].Denomination.Value, Is.EqualTo(1m));
+			for (int i = 0; i < solution.Length; i++)
+			{
+				Assert.That(subOptimalSolution[i].Quantity, Is.EqualTo(solution[i].Item1));
+				Assert.That(subOptimalSolution[i].Denomination.Value, Is.EqualTo(solution[i].Item2));
+			}
 		}
-
-
 
 		[Test]
 		public void MinChange_NotCompleteSolution_QuantifiedAndRemainder()
