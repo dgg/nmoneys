@@ -52,9 +52,10 @@
     <Compile Include="Allocations\RatioCollection.cs" />
     <Compile Include="Allocations\RemainderAllocatorBase.cs" />
     <Compile Include="Allocations\LastToFirstAllocator.cs" />
+    <Compile Include="Change\Operations.CountWays.cs" />
     <Compile Include="Change\MinChangeSolution.cs" />
     <Compile Include="Change\Denomination.cs" />
-    <Compile Include="Change\Operations.cs" />
+    <Compile Include="Change\Operations.MinChange.cs" />
     <Compile Include="Change\Positive.cs" />
     <Compile Include="Change\QuantifiedDenomination.cs" />
     <Compile Include="Currency.Serialization.Xml.net.cs" />

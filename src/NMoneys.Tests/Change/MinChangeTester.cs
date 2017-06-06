@@ -4,10 +4,10 @@ using NMoneys.Change;
 using NMoneys.Extensions;
 using NUnit.Framework;
 
-namespace NMoneys.Tests
+namespace NMoneys.Tests.Change
 {
 	[TestFixture]
-	public partial class MoneyTester
+	public class MinChangeTester
 	{
 		[Test]
 		[TestCase(0), TestCase(-1)]
