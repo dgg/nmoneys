@@ -12,9 +12,7 @@ namespace NMoneys.Tests.Change
 		public void ChangeCount_Zero_OneWayOfChoosingNoDenominations()
 		{
 			var zero = Money.Zero();
-
 			Denomination[] any = { new Denomination(1) };
-
 			Assert.That(zero.ChangeCount(any), Is.EqualTo(1u));
 		}
 
@@ -41,6 +39,12 @@ namespace NMoneys.Tests.Change
 			Denomination[] denominations = denominationValues.Select(d => new Denomination(d)).ToArray();
 
 			Assert.That(money.ChangeCount(denominations), Is.EqualTo(count));
+		}
+
+		[Test]
+		public void ChangeCount_NoDenominations_Zero()
+		{
+			Assert.That(5m.Usd().ChangeCount(), Is.EqualTo(0));
 		}
 	}
 }
