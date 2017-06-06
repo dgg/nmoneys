@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace NMoneys.Change
 {
-	public static class Operations
+	public static class MinChangeOperation
 	{
 		public static MinChangeSolution MinChange(this Money money, IEnumerable<Denomination> denominations)
 		{
