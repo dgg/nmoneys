@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace NMoneys.Change
 {
@@ -16,6 +17,11 @@ namespace NMoneys.Change
 		internal void Increase()
 		{
 			Quantity++;
+		}
+
+		public override string ToString()
+		{
+			return $"{Quantity.ToString(CultureInfo.InvariantCulture)} x {Denomination}";
 		}
 	}
 }

@@ -1,4 +1,6 @@
-﻿namespace NMoneys.Change
+﻿using System.Globalization;
+
+namespace NMoneys.Change
 {
 	// class because default(decimal) is not a valid value for Value
 	public class Denomination
@@ -19,6 +21,11 @@
 		internal void SubstractFrom(ref decimal remainder)
 		{
 			remainder -= Value;
+		}
+
+		public override string ToString()
+		{
+			return Value.ToString(CultureInfo.InvariantCulture);
 		}
 	}
 }
