@@ -9,7 +9,7 @@ namespace NMoneys.Tests.Change
 	public class ChangeCountTester
 	{
 		[Test]
-		public void ChangeCount_Zero_OneWayOfChoosingNoDenominations()
+		public void ChangeCount_Zero_OneWayOfChoosingNoAmount()
 		{
 			Denomination[] any = { new Denomination(1) };
 			Assert.That(Money.Zero().ChangeCount(any), Is.EqualTo(1u));
@@ -33,9 +33,7 @@ namespace NMoneys.Tests.Change
 		public void ChangeCount_PossibleChange_AccordingToSamples(decimal amount, decimal[] denominationValues, uint count)
 		{
 			Money money = new Money(amount);
-			Denomination[] denominations = denominationValues.Select(d => new Denomination(d)).ToArray();
-
-			Assert.That(money.ChangeCount(denominations), Is.EqualTo(count));
+			Assert.That(money.ChangeCount(denominationValues), Is.EqualTo(count));
 		}
 
 		[Test]

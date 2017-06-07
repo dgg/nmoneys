@@ -4,17 +4,18 @@ using System.Linq;
 namespace NMoneys.Change
 {
 	[CLSCompliant(false)]
-	public static class CountWaysOperation
+	public static class ChangeCountOperation
 	{
 		public static uint ChangeCount(this Money money, params Denomination[] denominations)
 		{
 			long n = money.MinorIntegralAmount;
+			int m = denominations.Length;
 			long[] integralDenominations = denominations
 				.Select(d => new Money(d.Value, money.CurrencyCode))
-				.Select(m => m.MinorIntegralAmount)
+				.Select(mm => mm.MinorIntegralAmount)
 				.ToArray();
-			
-			//Time complexity of this function: O(mn)
+
+			//Time complexity of this function: O(m * n)
 			//Space Complexity of this function: O(n)
 
 			// table[i] will be storing the number of solutions
@@ -29,7 +30,7 @@ namespace NMoneys.Change
 			// Pick all coins one by one and update the table[]
 			// values after the index greater than or equal to
 			// the value of the picked coin
-			for (int i = 0; i < denominations.Length; i++)
+			for (int i = 0; i < m; i++)
 			{
 				for (long j = integralDenominations[i]; j <= n; j++)
 				{
