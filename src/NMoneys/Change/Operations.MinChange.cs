@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 
 namespace NMoneys.Change
 {
+	[CLSCompliant(false)]
 	public static class MinChangeOperation
 	{
-		public static MinChangeSolution MinChange(this Money money, IEnumerable<Denomination> denominations)
+		public static MinChangeSolution MinChange(this Money money, params Denomination[] denominations)
 		{
 			Positive.Amounts.AssertArgument(nameof(money), money.Amount);
 
@@ -31,14 +32,9 @@ namespace NMoneys.Change
 			return solution;
 		}
 
-		public static MinChangeSolution MinChange(this Money money, params Denomination[] denominations)
-		{
-			return money.MinChange(denominations.AsEnumerable());
-		}
-
 		public static MinChangeSolution MinChange(this Money money, params decimal[] denominationValues)
 		{
-			return money.MinChange(denominationValues.Select(v => new Denomination(v)));
+			return money.MinChange(denominationValues.Select(v => new Denomination(v)).ToArray());
 		}
 	}
 }

@@ -1,5 +1,8 @@
-﻿namespace NMoneys.Change
+﻿using System;
+
+namespace NMoneys.Change
 {
+	[CLSCompliant(false)]
 	public class QuantifiedDenomination
 	{
 		public QuantifiedDenomination(Denomination denomination)

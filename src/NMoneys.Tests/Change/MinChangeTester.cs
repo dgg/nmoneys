@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using NMoneys.Change;
 using NMoneys.Extensions;
 using NUnit.Framework;
@@ -66,7 +65,7 @@ namespace NMoneys.Tests.Change
 			Assert.That(wholeSolution[1].Denomination.Value, Is.EqualTo(2m));
 		}
 
-		private static readonly object[] greedySuboptimal =
+		private static readonly object[] _greedySuboptimal =
 		{
 			new object[]
 			{
@@ -91,7 +90,7 @@ namespace NMoneys.Tests.Change
 			}
 		};
 
-		[Test, TestCaseSource(nameof(greedySuboptimal))]
+		[Test, TestCaseSource(nameof(_greedySuboptimal))]
 		public void MinChange_NonOptimalForGreedy_SubOptimalSolution(decimal amount, decimal[] denominationValues, Tuple<uint, decimal>[] solution)
 		{
 			var changeable = new Money(amount);
@@ -130,7 +129,7 @@ namespace NMoneys.Tests.Change
 		{
 			var toBeChanged = new Money(5m);
 
-			var emptySolution = toBeChanged.MinChange(Enumerable.Empty<Denomination>());
+			var emptySolution = toBeChanged.MinChange(new Denomination[0]);
 
 			Assert.That(emptySolution, Is.Empty);
 			Assert.That(emptySolution.Count, Is.EqualTo(0));

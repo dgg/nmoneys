@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace NMoneys.Change
 {
+	[CLSCompliant(false)]
 	public class MinChangeSolution : IEnumerable<QuantifiedDenomination>
 	{
 		private readonly List<QuantifiedDenomination> _denominations = new List<QuantifiedDenomination>();

@@ -1,8 +1,9 @@
-using System.Collections.Generic;
+using System;
 using System.Linq;
 
 namespace NMoneys.Change
 {
+	[CLSCompliant(false)]
 	public static class CountWaysOperation
 	{
 		public static uint ChangeCount(this Money money, params Denomination[] denominations)
@@ -37,6 +38,11 @@ namespace NMoneys.Change
 			}
 
 			return table[n];
+		}
+
+		public static uint ChangeCount(this Money money, params decimal[] denominationValues)
+		{
+			return money.ChangeCount(denominationValues.Select(v => new Denomination(v)).ToArray());
 		}
 	}
 }
