@@ -21,19 +21,16 @@ namespace NMoneys.Change
 
 			// Base case (If given value n is 0)
 			table[0] = 0;
-
-			// Initialize all table values as Infinite
-			for (int i = 1; i <= n; i++)
-			{
-				table[i] = ushort.MaxValue;
-			}
-
+			
 			// Compute minimum denominations required for all
 			// values from 1 to n
 			for (long i = 1; i <= n; i++)
 			{
+				// Initialize all table values as Infinite
+				table[i] = ushort.MaxValue;
 				// Go through all denominations smaller than i
 				for (int j = 0; j < m; j++)
+				{
 					if (integralDenominations[j] <= i)
 					{
 						uint subResult = table[i - integralDenominations[j]];
@@ -42,6 +39,7 @@ namespace NMoneys.Change
 							table[i] = (ushort) (subResult + 1);
 						}
 					}
+				}
 			}
 			return table[n] == ushort.MaxValue ? default(ushort) : table[n];
 		}
