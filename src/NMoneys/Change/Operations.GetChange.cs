@@ -4,9 +4,9 @@ using System.Linq;
 namespace NMoneys.Change
 {
 	[CLSCompliant(false)]
-	public static class MinChangeOperation
+	public static class GetChangeOperation
 	{
-		public static MinChangeSolution MinChange(this Money money, params Denomination[] denominations)
+		public static GetChangeSolution GetChange(this Money money, params Denomination[] denominations)
 		{
 			Positive.Amounts.AssertArgument(nameof(money), money.Amount);
 
@@ -14,7 +14,7 @@ namespace NMoneys.Change
 			decimal remainder = money.Amount;
 			bool canContinue = true;
 
-			MinChangeSolution solution = new MinChangeSolution();
+			GetChangeSolution solution = new GetChangeSolution();
 			while (remainder > 0 && canContinue)
 			{
 				for (int i = 0; i < orderedDenominations.Length; i++)
@@ -33,9 +33,9 @@ namespace NMoneys.Change
 			return solution;
 		}
 
-		public static MinChangeSolution MinChange(this Money money, params decimal[] denominationValues)
+		public static GetChangeSolution GetChange(this Money money, params decimal[] denominationValues)
 		{
-			return money.MinChange(denominationValues.Select(v => new Denomination(v)).ToArray());
+			return money.GetChange(denominationValues.Select(v => new Denomination(v)).ToArray());
 		}
 	}
 }

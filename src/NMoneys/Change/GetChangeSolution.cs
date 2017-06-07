@@ -6,7 +6,7 @@ using System.Linq;
 namespace NMoneys.Change
 {
 	[CLSCompliant(false)]
-	public class MinChangeSolution : IEnumerable<QuantifiedDenomination>
+	public class GetChangeSolution : IEnumerable<QuantifiedDenomination>
 	{
 		private readonly List<QuantifiedDenomination> _denominations = new List<QuantifiedDenomination>();
 
@@ -26,7 +26,7 @@ namespace NMoneys.Change
 
 		public Money Remainder { get; set; }
 
-		public void AddOrUpdate(Denomination denomination, Action<QuantifiedDenomination> action)
+		internal void AddOrUpdate(Denomination denomination, Action<QuantifiedDenomination> action)
 		{
 			QuantifiedDenomination quantified = _denominations.FirstOrDefault(d => d.Denomination.Value == denomination.Value);
 			if (quantified == null)

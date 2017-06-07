@@ -15,7 +15,7 @@ namespace NMoneys.Change
 				.Select(mm => mm.MinorIntegralAmount)
 				.ToArray();
 				
-			// table[i] will be storing the minimum number of coins
+			// table[i] will be storing the minimum number of denominations
 			// required for i value.  So table[n] will have result
 			ushort[] table = new ushort[n + 1];
 
@@ -28,11 +28,11 @@ namespace NMoneys.Change
 				table[i] = ushort.MaxValue;
 			}
 
-			// Compute minimum coins required for all
+			// Compute minimum denominations required for all
 			// values from 1 to n
 			for (long i = 1; i <= n; i++)
 			{
-				// Go through all coins smaller than i
+				// Go through all denominations smaller than i
 				for (int j = 0; j < m; j++)
 					if (integralDenominations[j] <= i)
 					{

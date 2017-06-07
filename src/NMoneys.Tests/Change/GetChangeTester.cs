@@ -6,23 +6,23 @@ using NUnit.Framework;
 namespace NMoneys.Tests.Change
 {
 	[TestFixture]
-	public class MinChangeTester
+	public class GetChangeTester
 	{
 		[Test]
 		[TestCase(0), TestCase(-1)]
-		public void MinChange_NotPositive_Exception(decimal notPositive)
+		public void GetChange_NotPositive_Exception(decimal notPositive)
 		{
 			Denomination[] any = { new Denomination(1m) };
 
-			Assert.That(()=> new Money(notPositive).MinChange(any), Throws.InstanceOf<ArgumentOutOfRangeException>());
+			Assert.That(()=> new Money(notPositive).GetChange(any), Throws.InstanceOf<ArgumentOutOfRangeException>());
 		}
 
 		[Test]
-		public void MinChange_SameDenominationAsAmount_OneDenominationAndNoRemainder()
+		public void GetChange_SameDenominationAsAmount_OneDenominationAndNoRemainder()
 		{
 			var fiveX = new Money(5m);
 			var fiver = new Denomination(5m);
-			var oneFiver = fiveX.MinChange(fiver);
+			var oneFiver = fiveX.GetChange(fiver);
 
 			Assert.That(oneFiver, Has.Count.EqualTo(1));
 			Assert.That(oneFiver[0].Quantity, Is.EqualTo(1u));
@@ -31,29 +31,29 @@ namespace NMoneys.Tests.Change
 		}
 
 		[Test]
-		public void MinChange_LessAmountThanMinimalDenomination_AmountRemainder()
+		public void GetChange_LessAmountThanMinimalDenomination_AmountRemainder()
 		{
 			var threeX = new Money(3m);
-			var noSolution = threeX.MinChange(5m);
+			var noSolution = threeX.GetChange(5m);
 
 			Assert.That(noSolution, Has.Count.EqualTo(0));
 			Assert.That(noSolution.Remainder, Is.EqualTo(threeX));
 		}
 
 		[Test]
-		public void MinChange_WhenRemainder_RemainderSameCurrencyAsInitial()
+		public void GetChange_WhenRemainder_RemainderSameCurrencyAsInitial()
 		{
 			var threeEuro = 3m.Eur();
-			var noSolution = threeEuro.MinChange(5m);
+			var noSolution = threeEuro.GetChange(5m);
 
 			Assert.That(noSolution.Remainder.CurrencyCode, Is.EqualTo(threeEuro.CurrencyCode));
 		}
 
 		[Test]
-		public void MinChange_ChangePossible_MultipleDenominationsNoRemainder()
+		public void GetChange_ChangePossible_MultipleDenominationsNoRemainder()
 		{
 			var changeable = new Money(5m);
-			var wholeSolution = changeable.MinChange(1m, 3m, 2m);
+			var wholeSolution = changeable.GetChange(1m, 3m, 2m);
 
 			Assert.That(wholeSolution, Has.Count.EqualTo(2));
 			Assert.That(wholeSolution.Remainder, Is.EqualTo(0m.Xxx()));
@@ -91,11 +91,11 @@ namespace NMoneys.Tests.Change
 		};
 
 		[Test, TestCaseSource(nameof(_greedySuboptimal))]
-		public void MinChange_NonOptimalForGreedy_SubOptimalSolution(decimal amount, decimal[] denominationValues, Tuple<uint, decimal>[] solution)
+		public void GetChange_NonOptimalForGreedy_SubOptimalSolution(decimal amount, decimal[] denominationValues, Tuple<uint, decimal>[] solution)
 		{
 			var changeable = new Money(amount);
 
-			var subOptimalSolution = changeable.MinChange(denominationValues);
+			var subOptimalSolution = changeable.GetChange(denominationValues);
 
 			Assert.That(subOptimalSolution, Has.Count.EqualTo(solution.Length));
 			Assert.That(subOptimalSolution.Remainder, Is.EqualTo(0m.Xxx()));
@@ -108,11 +108,11 @@ namespace NMoneys.Tests.Change
 		}
 
 		[Test]
-		public void MinChange_NotCompleteSolution_QuantifiedAndRemainder()
+		public void GetChange_NotCompleteSolution_QuantifiedAndRemainder()
 		{
 			var notCompletelyChangeable = new Money(7m);
 
-			var subOptimalSolution = notCompletelyChangeable.MinChange(4m, 2m);
+			var subOptimalSolution = notCompletelyChangeable.GetChange(4m, 2m);
 
 			Assert.That(subOptimalSolution, Has.Count.EqualTo(2));
 			Assert.That(subOptimalSolution.Remainder, Is.EqualTo(1m.Xxx()));
@@ -125,11 +125,11 @@ namespace NMoneys.Tests.Change
 		}
 
 		[Test]
-		public void MinChange_NoDenominations_EmptySolution()
+		public void GetChange_NoDenominations_EmptySolution()
 		{
 			var toBeChanged = new Money(5m);
 
-			var emptySolution = toBeChanged.MinChange(new Denomination[0]);
+			var emptySolution = toBeChanged.GetChange(new Denomination[0]);
 
 			Assert.That(emptySolution, Is.Empty);
 			Assert.That(emptySolution.Count, Is.EqualTo(0));
