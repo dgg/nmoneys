@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System;
 using NMoneys.Change;
 using NMoneys.Extensions;
 using NUnit.Framework;
@@ -9,10 +9,17 @@ namespace NMoneys.Tests.Change
 	public class ChangeCountTester
 	{
 		[Test]
-		public void ChangeCount_Zero_OneWayOfChoosingNoAmount()
+		[TestCase(0), TestCase(-1)]
+		public void ChangeCount_NotPositive_Exception(decimal notPositive)
 		{
 			Denomination[] any = { new Denomination(1) };
-			Assert.That(Money.Zero().ChangeCount(any), Is.EqualTo(1u));
+			Assert.That(() => new Money(notPositive).ChangeCount(any), Throws.InstanceOf<ArgumentOutOfRangeException>());
+		}
+
+		[Test]
+		public void ChangeCount_NoDenominations_Zero()
+		{
+			Assert.That(5m.Usd().ChangeCount(new Denomination[0]), Is.EqualTo(0));
 		}
 
 		[Test]
@@ -34,12 +41,6 @@ namespace NMoneys.Tests.Change
 		{
 			Money money = new Money(amount);
 			Assert.That(money.ChangeCount(denominationValues), Is.EqualTo(count));
-		}
-
-		[Test]
-		public void ChangeCount_NoDenominations_Zero()
-		{
-			Assert.That(5m.Usd().ChangeCount(new Denomination[0]), Is.EqualTo(0));
 		}
 	}
 }

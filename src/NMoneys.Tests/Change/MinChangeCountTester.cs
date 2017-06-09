@@ -1,4 +1,5 @@
-﻿using NMoneys.Change;
+﻿using System;
+using NMoneys.Change;
 using NMoneys.Extensions;
 using NUnit.Framework;
 
@@ -8,10 +9,17 @@ namespace NMoneys.Tests.Change
 	public class MinChangeCountTester
 	{
 		[Test]
-		public void MinChangeCount_Zero_NoWayOfChoosingNoAmount()
+		[TestCase(0), TestCase(-1)]
+		public void MinChangeCount_NotPositive_Exception(decimal notPositive)
 		{
 			Denomination[] any = { new Denomination(1) };
-			Assert.That(Money.Zero().MinChangeCount(any), Is.EqualTo(0));
+			Assert.That(() => new Money(notPositive).MinChangeCount(any), Throws.InstanceOf<ArgumentOutOfRangeException>());
+		}
+
+		[Test]
+		public void MinChangeCount_NoDenominations_Zero()
+		{
+			Assert.That(5m.Usd().MinChangeCount(new Denomination[0]), Is.EqualTo(0));
 		}
 
 		[Test]
@@ -20,7 +28,7 @@ namespace NMoneys.Tests.Change
 			Assert.That(7m.Xxx().MinChangeCount(4m, 2m), Is.EqualTo(0u));
 		}
 
-		private static readonly object[] _minChangeCountSamples = 
+		private static readonly object[] _minChangeCountSamples =
 		{
 			new object[] {4m, new decimal[]{1, 2, 3}, 2u},
 			new object[] {10m, new decimal[]{2, 5, 3, 6}, 2u},
@@ -33,12 +41,6 @@ namespace NMoneys.Tests.Change
 		{
 			Money money = new Money(amount);
 			Assert.That(money.MinChangeCount(denominationValues), Is.EqualTo(count));
-		}
-
-		[Test]
-		public void MinChangeCount_NoDenominations_Zero()
-		{
-			Assert.That(5m.Usd().MinChangeCount(new Denomination[0]), Is.EqualTo(0));
 		}
 	}
 }

@@ -8,6 +8,8 @@ namespace NMoneys.Change
 	{
 		public static ushort MinChangeCount(this Money money, params Denomination[] denominations)
 		{
+			Positive.Amounts.AssertArgument(nameof(money), money.Amount);
+
 			long n = money.MinorIntegralAmount;
 			int m = denominations.Length;
 			long[] integralDenominations = denominations
