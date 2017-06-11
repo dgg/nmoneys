@@ -6,9 +6,10 @@ namespace NMoneys.Change
 	[CLSCompliant(false)]
 	public class QuantifiedDenomination
 	{
-		public QuantifiedDenomination(Denomination denomination)
+		internal QuantifiedDenomination(Denomination denomination, uint quantity = 0u)
 		{
 			Denomination = denomination;
+			Quantity = quantity;
 		}
 
 		public Denomination Denomination { get; }

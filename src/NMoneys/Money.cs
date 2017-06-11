@@ -136,8 +136,14 @@ namespace NMoneys
 			get
 			{
 				Currency currency = Currency.Get(CurrencyCode);
-				return decimal.Truncate(decimal.Multiply(Amount, PowerOfTen.Positive(currency)));
+				return CalculateMinorAmount(Amount, currency);
 			}
+		}
+
+		internal static decimal CalculateMinorAmount(decimal amount, Currency currency)
+		{
+			decimal minorAmount = decimal.Truncate(decimal.Multiply(amount, PowerOfTen.Positive(currency)));
+			return minorAmount;
 		}
 
 		/// <summary>

@@ -34,6 +34,7 @@ namespace NMoneys.Tests.Change
 			new object[] {10m, new decimal[]{2, 5, 3, 6}, 2u},
 			new object[] {6m, new decimal[]{1, 3, 4}, 2u},
 			new object[] {5m, new decimal[]{1, 2, 3}, 2u},
+			new object[] {63m, new decimal[]{ 1, 5, 10, 21, 25 }, 3u},
 		};
 
 		[Test, TestCaseSource(nameof(_minChangeCountSamples))]

@@ -1,9 +1,11 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 
 namespace NMoneys.Change
 {
 	// class because default(decimal) is not a valid value for Value
-	public class Denomination
+	// TODO: convert to struct
+	public class Denomination : IEquatable<Denomination>
 	{
 		public Denomination(decimal value)
 		{
@@ -26,6 +28,31 @@ namespace NMoneys.Change
 		public override string ToString()
 		{
 			return Value.ToString(CultureInfo.InvariantCulture);
+		}
+
+		internal IntegralDenomination ToIntegral(Currency operationCurrency)
+		{
+			return new IntegralDenomination(this, operationCurrency);
+		}
+
+		public bool Equals(Denomination other)
+		{
+			if (ReferenceEquals(null, other)) return false;
+			if (ReferenceEquals(this, other)) return true;
+			return Value == other.Value;
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(null, obj)) return false;
+			if (ReferenceEquals(this, obj)) return true;
+			if (obj.GetType() != GetType()) return false;
+			return Equals((Denomination) obj);
+		}
+
+		public override int GetHashCode()
+		{
+			return Value.GetHashCode();
 		}
 	}
 }

@@ -25,5 +25,11 @@ namespace NMoneys.Tests.Change.Support
 		{
 			return new QDenomination((uint) quantity, denominationValue);
 		}
+
+		public static CompleteMinChangeConstraint CompleteMinChange(this Must.BeEntryPoint entry,
+			params QDenomination[] denominations)
+		{
+			return new CompleteMinChangeConstraint(denominations);
+		}
 	}
 }

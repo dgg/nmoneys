@@ -53,6 +53,9 @@
     <Compile Include="Allocations\RemainderAllocatorBase.cs" />
     <Compile Include="Allocations\LastToFirstAllocator.cs" />
     <Compile Include="Change\GetChangeSolution.cs" />
+    <Compile Include="Change\IntegralDenomination.cs" />
+    <Compile Include="Change\MinChangeSolution.cs" />
+    <Compile Include="Change\Operations.GetMinChange.cs" />
     <Compile Include="Change\Operations.MinChangeCount.cs" />
     <Compile Include="Change\Operations.ChangeCount.cs" />
     <Compile Include="Change\Denomination.cs" />

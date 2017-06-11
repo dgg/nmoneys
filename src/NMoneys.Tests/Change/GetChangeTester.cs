@@ -80,6 +80,13 @@ namespace NMoneys.Tests.Change
 				{
 					1.x(4), 2.x(1)
 				}
+			},
+			new object[]
+			{
+				63m, new[] {1m, 5m, 10m, 21m, 25m}, new[]
+				{
+					2.x(25), 1.x(10), 3.x(1)
+				}
 			}
 		};
 
