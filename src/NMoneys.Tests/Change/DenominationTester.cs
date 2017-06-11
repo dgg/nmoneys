@@ -21,5 +21,13 @@ namespace NMoneys.Tests.Change
 		{
 			Assert.That(() => new Denomination(notPositive), Throws.InstanceOf<ArgumentOutOfRangeException>());
 		}
+
+		[Test]
+		public void DefaultCtor_YieldsNonDefaultValue()
+		{
+			var subject = new Denomination();
+
+			Assert.That(subject.Value, Is.Not.EqualTo(default(decimal)).And.EqualTo(1));
+		}
 	}
 }
