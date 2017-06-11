@@ -4,9 +4,9 @@ using System.Linq;
 namespace NMoneys.Change
 {
 	[CLSCompliant(false)]
-	public static class ChangeCountOperation
+	public static class CountWaysToMakeChangeOperation
 	{
-		public static uint ChangeCount(this Money money, params Denomination[] denominations)
+		public static uint CountWaysToMakeChange(this Money money, params Denomination[] denominations)
 		{
 			Positive.Amounts.AssertArgument(nameof(money), money.Amount);
 
@@ -43,9 +43,9 @@ namespace NMoneys.Change
 			return table[n];
 		}
 
-		public static uint ChangeCount(this Money money, params decimal[] denominationValues)
+		public static uint CountWaysToMakeChange(this Money money, params decimal[] denominationValues)
 		{
-			return money.ChangeCount(denominationValues.Select(v => new Denomination(v)).ToArray());
+			return money.CountWaysToMakeChange(denominationValues.Select(v => new Denomination(v)).ToArray());
 		}
 	}
 }

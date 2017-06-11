@@ -55,7 +55,7 @@
   <ItemGroup>
     <Compile Include="Change\GetMinChangeTester.cs" />
     <Compile Include="Change\MinChangeCountTester.cs" />
-    <Compile Include="Change\ChangeCountTester.cs" />
+    <Compile Include="Change\CountWaysToMakeChangeTester.cs" />
     <Compile Include="Change\DenominationTester.cs" />
     <Compile Include="Change\Support\CompleteMinChangeConstraint.cs" />
     <Compile Include="Change\Support\CompleteChangeConstraint.cs" />

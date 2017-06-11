@@ -6,26 +6,26 @@ using NUnit.Framework;
 namespace NMoneys.Tests.Change
 {
 	[TestFixture]
-	public class ChangeCountTester
+	public class CountWaysToMakeChangeTester
 	{
 		[Test]
 		[TestCase(0), TestCase(-1)]
 		public void ChangeCount_NotPositive_Exception(decimal notPositive)
 		{
 			Denomination[] any = { new Denomination(1) };
-			Assert.That(() => new Money(notPositive).ChangeCount(any), Throws.InstanceOf<ArgumentOutOfRangeException>());
+			Assert.That(() => new Money(notPositive).CountWaysToMakeChange(any), Throws.InstanceOf<ArgumentOutOfRangeException>());
 		}
 
 		[Test]
 		public void ChangeCount_NoDenominations_Zero()
 		{
-			Assert.That(5m.Usd().ChangeCount(new Denomination[0]), Is.EqualTo(0));
+			Assert.That(5m.Usd().CountWaysToMakeChange(new Denomination[0]), Is.EqualTo(0));
 		}
 
 		[Test]
 		public void ChangeCount_NotPossibleToChange_Zero()
 		{
-			Assert.That(7m.Xxx().ChangeCount(4m, 2m), Is.EqualTo(0u));
+			Assert.That(7m.Xxx().CountWaysToMakeChange(4m, 2m), Is.EqualTo(0u));
 		}
 
 		private static readonly object[] _changeCountSamples = 
@@ -40,7 +40,7 @@ namespace NMoneys.Tests.Change
 		public void ChangeCount_PossibleChange_AccordingToSamples(decimal amount, decimal[] denominationValues, uint count)
 		{
 			Money money = new Money(amount);
-			Assert.That(money.ChangeCount(denominationValues), Is.EqualTo(count));
+			Assert.That(money.CountWaysToMakeChange(denominationValues), Is.EqualTo(count));
 		}
 	}
 }

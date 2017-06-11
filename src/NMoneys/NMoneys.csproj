@@ -57,7 +57,7 @@
     <Compile Include="Change\MinChangeSolution.cs" />
     <Compile Include="Change\Operations.GetMinChange.cs" />
     <Compile Include="Change\Operations.MinChangeCount.cs" />
-    <Compile Include="Change\Operations.ChangeCount.cs" />
+    <Compile Include="Change\Operations.CountWaysToMakeChange.cs" />
     <Compile Include="Change\Denomination.cs" />
     <Compile Include="Change\Operations.GetChange.cs" />
     <Compile Include="Change\Positive.cs" />
