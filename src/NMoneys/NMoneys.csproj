@@ -52,7 +52,7 @@
     <Compile Include="Allocations\RatioCollection.cs" />
     <Compile Include="Allocations\RemainderAllocatorBase.cs" />
     <Compile Include="Allocations\LastToFirstAllocator.cs" />
-    <Compile Include="Change\GetChangeSolution.cs" />
+    <Compile Include="Change\ChangeSolution.cs" />
     <Compile Include="Change\IntegralDenomination.cs" />
     <Compile Include="Change\MinChangeSolution.cs" />
     <Compile Include="Change\Operations.GetMinChange.cs" />

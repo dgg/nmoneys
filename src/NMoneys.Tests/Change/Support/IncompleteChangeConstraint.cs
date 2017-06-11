@@ -12,7 +12,7 @@ namespace NMoneys.Tests.Change.Support
 		public IncompleteChangeConstraint(Money remainder, QDenomination[] denominations)
 		{
 			Delegate = new ConjunctionConstraint(
-				Must.Have.Property(nameof(GetChangeSolution.Remainder), Is.EqualTo(remainder)),
+				Must.Have.Property(nameof(ChangeSolution.Remainder), Is.EqualTo(remainder)),
 				new ConstrainedEnumerable(
 					denominations.Select(d => new QuantifiedDenominationConstraint(d))
 				));

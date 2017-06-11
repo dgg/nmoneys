@@ -6,11 +6,11 @@ namespace NMoneys.Change
 {
 	public class MinChangeSolution : IEnumerable<QuantifiedDenomination>
 	{
-		private IEnumerable<QuantifiedDenomination> _denominations;
+		private readonly QuantifiedDenomination[] _denominations;
 
 		internal MinChangeSolution(long toChange, Currency operationCurrency, ushort[] table, IntegralDenomination?[] usedDenominations)
 		{
-			_denominations = Enumerable.Empty<QuantifiedDenomination>();
+			_denominations = new QuantifiedDenomination[0];
 
 			ushort possibleSolution = table.Last();
 			if (possibleSolution != ushort.MaxValue)
@@ -27,18 +27,22 @@ namespace NMoneys.Change
 					denomination -= usedDenomination.IntegralAmount;
 				}
 				_denominations = denominations.GroupBy(_ => _)
-					.Select(g => new QuantifiedDenomination(g.Key, (uint) g.Count()));
+					.Select(g => new QuantifiedDenomination(g.Key, (uint) g.Count()))
+					.ToArray();
 			}
 		}
 
 		public IEnumerator<QuantifiedDenomination> GetEnumerator()
 		{
-			return _denominations.GetEnumerator();
+			return _denominations.Cast<QuantifiedDenomination>().GetEnumerator();
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return GetEnumerator();
 		}
+
+		public QuantifiedDenomination this[int idx] => _denominations[idx];
+		public uint Count => (uint)_denominations.Length;
 	}
 }

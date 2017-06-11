@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace NMoneys.Change
@@ -6,7 +7,7 @@ namespace NMoneys.Change
 	[CLSCompliant(false)]
 	public static class GetChangeOperation
 	{
-		public static GetChangeSolution GetChange(this Money money, params Denomination[] denominations)
+		public static ChangeSolution GetChange(this Money money, params Denomination[] denominations)
 		{
 			Positive.Amounts.AssertArgument(nameof(money), money.Amount);
 
@@ -14,7 +15,8 @@ namespace NMoneys.Change
 			decimal remainder = money.Amount;
 			bool canContinue = true;
 
-			GetChangeSolution solution = new GetChangeSolution();
+			List<Denomination> usedDenominations = new List<Denomination>(denominations.Length);
+			
 			while (remainder > 0 && canContinue)
 			{
 				for (int i = 0; i < orderedDenominations.Length; i++)
@@ -22,18 +24,16 @@ namespace NMoneys.Change
 					while (orderedDenominations[i].CanBeSubstractedFrom(remainder))
 					{
 						orderedDenominations[i].SubstractFrom(ref remainder);
-						solution.AddOrUpdate(orderedDenominations[i], 
-							d => d.Increase());
+						usedDenominations.Add(orderedDenominations[i]);
 					}
 				}
 				canContinue = false;
 			}
-			solution.Remainder = new Money(remainder, money.CurrencyCode);
-
+			ChangeSolution solution = new ChangeSolution(usedDenominations, new Money(remainder, money.CurrencyCode));
 			return solution;
 		}
 
-		public static GetChangeSolution GetChange(this Money money, params decimal[] denominationValues)
+		public static ChangeSolution GetChange(this Money money, params decimal[] denominationValues)
 		{
 			return money.GetChange(denominationValues.Select(v => new Denomination(v)).ToArray());
 		}
