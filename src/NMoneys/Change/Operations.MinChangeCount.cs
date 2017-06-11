@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using NMoneys.Extensions;
 
 namespace NMoneys.Change
 {
@@ -12,9 +13,9 @@ namespace NMoneys.Change
 
 			long n = money.MinorIntegralAmount;
 			int m = denominations.Length;
-			long[] integralDenominations = denominations
-				.Select(d => new Money(d.Value, money.CurrencyCode))
-				.Select(mm => mm.MinorIntegralAmount)
+			Currency currencyOperation = money.GetCurrency();
+			IntegralDenomination[] integralDenominations = denominations
+				.Select(d => new IntegralDenomination(d, currencyOperation))
 				.ToArray();
 				
 			// table[i] will be storing the minimum number of denominations
@@ -33,9 +34,9 @@ namespace NMoneys.Change
 				// Go through all denominations smaller than i
 				for (int j = 0; j < m; j++)
 				{
-					if (integralDenominations[j] <= i)
+					if (integralDenominations[j].IntegralAmount <= i)
 					{
-						uint subResult = table[i - integralDenominations[j]];
+						uint subResult = table[i - integralDenominations[j].IntegralAmount];
 						if (subResult != ushort.MaxValue && subResult + 1u < table[i])
 						{
 							table[i] = (ushort) (subResult + 1);
