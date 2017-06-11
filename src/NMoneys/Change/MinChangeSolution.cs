@@ -15,7 +15,8 @@ namespace NMoneys.Change
 			ushort possibleSolution = table.Last();
 			if (possibleSolution != ushort.MaxValue)
 			{
-				List<Denomination> denominations = new List<Denomination>();
+				// at most as many denominations as used
+				List<Denomination> denominations = new List<Denomination>(usedDenominations.Length);
 				IntegralDenomination defaultDenomination = IntegralDenomination.Default(operationCurrency);
 
 				long denomination = toChange;

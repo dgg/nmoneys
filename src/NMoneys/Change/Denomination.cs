@@ -14,16 +14,6 @@ namespace NMoneys.Change
 		private readonly decimal? _value;
 		public decimal Value => _value.GetValueOrDefault(1);
 
-		internal bool CanBeSubstractedFrom(decimal remainder)
-		{
-			return remainder >= Value;
-		}
-
-		internal void SubstractFrom(ref decimal remainder)
-		{
-			remainder -= Value;
-		}
-
 		public override string ToString()
 		{
 			return Value.ToString(CultureInfo.InvariantCulture);

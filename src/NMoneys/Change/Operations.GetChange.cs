@@ -15,21 +15,25 @@ namespace NMoneys.Change
 			decimal remainder = money.Amount;
 			bool canContinue = true;
 
-			List<Denomination> usedDenominations = new List<Denomination>(denominations.Length);
+			List<Denomination> usedDenominations = new List<Denomination>();
 			
 			while (remainder > 0 && canContinue)
 			{
 				for (int i = 0; i < orderedDenominations.Length; i++)
 				{
-					while (orderedDenominations[i].CanBeSubstractedFrom(remainder))
+					// if the denomination can be substracted from what's left
+					while (remainder >= orderedDenominations[i].Value)
 					{
-						orderedDenominations[i].SubstractFrom(ref remainder);
+						// use the denomination
+						remainder -= orderedDenominations[i].Value;
 						usedDenominations.Add(orderedDenominations[i]);
 					}
 				}
+				// make sure we can finish in case we cannot change
 				canContinue = false;
 			}
-			ChangeSolution solution = new ChangeSolution(usedDenominations, new Money(remainder, money.CurrencyCode));
+			ChangeSolution solution = new ChangeSolution(usedDenominations, 
+				new Money(remainder, money.CurrencyCode));
 			return solution;
 		}
 
