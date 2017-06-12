@@ -7,15 +7,15 @@ using Testing.Commons;
 namespace NMoneys.Tests.Change
 {
 	[TestFixture]
-	public class GetMinChangeTester
+	public class GetOptimalChangeTester
 	{
 		[Test]
 		[TestCase(0), TestCase(-1)]
-		public void GetMinChange_NotPositive_Exception(decimal notPositive)
+		public void GetOptimalChange_NotPositive_Exception(decimal notPositive)
 		{
 			Denomination[] any = { new Denomination(1m) };
 
-			Assert.That(()=> new Money(notPositive).GetChange(any), Throws.InstanceOf<ArgumentOutOfRangeException>());
+			Assert.That(()=> new Money(notPositive).GetOptimalChange(any), Throws.InstanceOf<ArgumentOutOfRangeException>());
 		}
 
 		private static readonly object[] _greedySuboptimal =
@@ -51,11 +51,11 @@ namespace NMoneys.Tests.Change
 		};
 
 		[Test, TestCaseSource(nameof(_greedySuboptimal))]
-		public void GetMinChange_NonOptimalForGreedy_OptimalSolution(decimal amount, decimal[] denominationValues, QDenomination[] solution)
+		public void GetOptimalChange_NonOptimalForGreedy_OptimalSolution(decimal amount, decimal[] denominationValues, QDenomination[] solution)
 		{
 			var changeable = new Money(amount);
 
-			var optimalSolution = changeable.GetMinChange(denominationValues);
+			var optimalSolution = changeable.GetOptimalChange(denominationValues);
 
 			Assert.That(optimalSolution, Must.Be.CompleteMinChange(solution));
 		}

@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace NMoneys.Change
 {
-	public class MinChangeSolution : IEnumerable<QuantifiedDenomination>
+	public class OptimalChangeSolution : IEnumerable<QuantifiedDenomination>
 	{
 		private readonly QuantifiedDenomination[] _denominations;
 
-		internal MinChangeSolution(long toChange, Currency operationCurrency, ushort[] table, IntegralDenomination?[] usedDenominations)
+		internal OptimalChangeSolution(long toChange, Currency operationCurrency, ushort[] table, IntegralDenomination?[] usedDenominations)
 		{
 			_denominations = new QuantifiedDenomination[0];
 

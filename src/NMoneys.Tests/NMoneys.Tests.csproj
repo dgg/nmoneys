@@ -53,8 +53,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Change\GetMinChangeTester.cs" />
-    <Compile Include="Change\MinChangeCountTester.cs" />
+    <Compile Include="Change\GetOptimalChangeTester.cs" />
+    <Compile Include="Change\CountOptimalChangeTester.cs" />
     <Compile Include="Change\CountWaysToMakeChangeTester.cs" />
     <Compile Include="Change\DenominationTester.cs" />
     <Compile Include="Change\Support\CompleteMinChangeConstraint.cs" />

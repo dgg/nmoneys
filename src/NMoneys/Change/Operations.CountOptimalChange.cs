@@ -5,9 +5,9 @@ using NMoneys.Extensions;
 namespace NMoneys.Change
 {
 	[CLSCompliant(false)]
-	public static class MinChangeCountOperation
+	public static class CountOptimalChangeOperation
 	{
-		public static ushort MinChangeCount(this Money money, params Denomination[] denominations)
+		public static ushort CountOptimalChange(this Money money, params Denomination[] denominations)
 		{
 			Positive.Amounts.AssertArgument(nameof(money), money.Amount);
 
@@ -47,9 +47,9 @@ namespace NMoneys.Change
 			return table[n] == ushort.MaxValue ? default(ushort) : table[n];
 		}
 
-		public static ushort MinChangeCount(this Money money, params decimal[] denominationValues)
+		public static ushort CountOptimalChange(this Money money, params decimal[] denominationValues)
 		{
-			return money.MinChangeCount(denominationValues.Select(v => new Denomination(v)).ToArray());
+			return money.CountOptimalChange(denominationValues.Select(v => new Denomination(v)).ToArray());
 		}
 	}
 }
