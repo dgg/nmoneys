@@ -27,8 +27,7 @@ namespace NMoneys.Change
 					denominations.Add(usedDenomination.Denomination);
 					denomination -= usedDenomination.IntegralAmount;
 				}
-				_denominations = denominations.GroupBy(_ => _)
-					.Select(g => new QuantifiedDenomination(g.Key, (uint) g.Count()))
+				_denominations = QuantifiedDenomination.Aggregate(denominations)
 					.ToArray();
 			}
 		}

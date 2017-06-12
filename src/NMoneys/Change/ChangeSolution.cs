@@ -12,8 +12,7 @@ namespace NMoneys.Change
 		internal ChangeSolution(IEnumerable<Denomination> usedDenominations, Money remainder)
 		{
 			Remainder = remainder;
-			_denominations = usedDenominations.GroupBy(_ => _)
-				.Select(g => new QuantifiedDenomination(g.Key, (uint) g.Count()))
+			_denominations = QuantifiedDenomination.Aggregate(usedDenominations)
 				.ToArray();
 		}
 
