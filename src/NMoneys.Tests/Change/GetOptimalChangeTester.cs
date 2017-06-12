@@ -19,6 +19,44 @@ namespace NMoneys.Tests.Change
 			Assert.That(()=> new Money(notPositive).GetOptimalChange(any), Throws.InstanceOf<ArgumentOutOfRangeException>());
 		}
 
+		[Test]
+		public void GetOptimalChange_NoDenominations_EmptySolution()
+		{
+			var subject = new Money(5m);
+
+			var emptySolution = subject.GetOptimalChange(new Denomination[0]);
+
+			Assert.That(emptySolution, Must.Be.NoChange());
+		}
+
+		[Test]
+		public void GetOptimalChange_NotEnoughToMakeChange_EmptySolution()
+		{
+			var subject = new Money(3m);
+			var emptySolution = subject.GetOptimalChange(5m);
+
+			Assert.That(emptySolution, Must.Be.NoChange());
+		}
+
+		[Test]
+		public void GetOptimalChange_IdentityChange_OneDenominationAndNoRemainder()
+		{
+			var subject = new Money(5m);
+			var change = subject.GetOptimalChange(5m);
+
+			Assert.That(change, Must.Be.OptimalChange(1.x(5)));
+		}
+
+		[Test]
+		public void GetOptimalChange_ChangePossible_MultipleDenominationsNoRemainder()
+		{
+			var subject = new Money(5m);
+			var wholeSolution = subject.GetOptimalChange(1m, 3m, 2m);
+
+			Assert.That(wholeSolution, Must.Be.OptimalChange(1.x(3), 1.x(2)));
+			Assert.That(wholeSolution, Has.Property(nameof(ChangeSolution.TotalCount)).EqualTo(2));
+		}
+
 		private static readonly object[] _greedySuboptimal =
 		{
 			new object[]
@@ -62,14 +100,13 @@ namespace NMoneys.Tests.Change
 		}
 
 		[Test]
-		public void GetOptimalChange_NotCompleteSolution_QuantifiedAndRemainder()
+		public void GetOptimalChange_NotCompleteSolution_EmptySolution()
 		{
 			var subject = new Money(7m);
 
-			var incompleteSolution = subject.GetChange(4m, 2m);
+			var incomplete = subject.GetOptimalChange(4m, 2m);
 
-			Assert.That(incompleteSolution, Must.Not.Be.IncompleteChange(1m.Xxx(),
-				1.x(4), 1.x(2)));
+			Assert.That(incomplete, Must.Be.NoChange());
 		}
 	}
 }

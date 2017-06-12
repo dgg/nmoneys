@@ -37,5 +37,10 @@ namespace NMoneys.Tests.Change.Support
 		{
 			return new OptimalChangeConstraint(denominations);
 		}
+
+		public static NoOptimalChangeConstraint NoChange(this Must.BeEntryPoint entry)
+		{
+			return new NoOptimalChangeConstraint();
+		}
 	}
 }

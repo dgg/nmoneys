@@ -23,6 +23,12 @@ namespace NMoneys.Tests.Change
 		}
 
 		[Test]
+		public void CountOptimalChange_IdentityChange_One()
+		{
+			Assert.That(5m.Usd().CountOptimalChange(5m), Is.EqualTo(1));
+		}
+
+		[Test]
 		public void CountOptimalChange_NotPossibleToMakeChange_Zero()
 		{
 			Assert.That(7m.Xxx().CountOptimalChange(4m, 2m), Is.EqualTo(0u));

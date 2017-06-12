@@ -40,7 +40,7 @@ namespace NMoneys.Tests.Change
 		}
 
 		[Test]
-		public void GetChange_SameDenominationAsAmount_OneDenominationAndNoRemainder()
+		public void GetChange_IdentityChange_OneDenominationAndNoRemainder()
 		{
 			var subject = new Money(5m);
 			var change = subject.GetChange(5m);
