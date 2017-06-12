@@ -13,6 +13,7 @@ namespace NMoneys.Tests.Change.Support
 		{
 			Delegate = new ConjunctionConstraint(
 				Must.Have.Property(nameof(ChangeSolution.Remainder), Is.EqualTo(Money.Zero(code))),
+				Must.Have.Property(nameof(ChangeSolution.Count), Is.EqualTo(denominations.Length)),
 				new ConstrainedEnumerable(
 					denominations.Select(d => new QuantifiedDenominationConstraint(d))
 					));

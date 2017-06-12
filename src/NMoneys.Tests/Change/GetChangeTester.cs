@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using NMoneys.Change;
 using NMoneys.Extensions;
 using NMoneys.Tests.Change.Support;
@@ -56,6 +57,7 @@ namespace NMoneys.Tests.Change
 
 			Assert.That(wholeSolution, Must.Be.CompleteChange(CurrencyIsoCode.XXX,
 				1.x(3), 1.x(2)));
+			Assert.That(wholeSolution, Has.Property(nameof(ChangeSolution.TotalCount)).EqualTo(2));
 		}
 
 		private static readonly object[] _greedySuboptimal =
@@ -98,6 +100,7 @@ namespace NMoneys.Tests.Change
 			var subOptimalSolution = subject.GetChange(denominationValues);
 
 			Assert.That(subOptimalSolution, Must.Be.CompleteChange(CurrencyIsoCode.XXX, solution));
+			Assert.That(subOptimalSolution.TotalCount, Is.EqualTo(solution.Sum(s => s.Quantity)));
 		}
 
 		[Test]
@@ -109,6 +112,7 @@ namespace NMoneys.Tests.Change
 
 			Assert.That(incompleteSolution, Must.Not.Be.IncompleteChange(1m.Xxx(), 
 				1.x(4), 1.x(2)));
+			Assert.That(incompleteSolution.TotalCount, Is.EqualTo(2));
 		}
 	}
 }
