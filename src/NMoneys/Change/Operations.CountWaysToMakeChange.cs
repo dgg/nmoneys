@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using NMoneys.Extensions;
 
 namespace NMoneys.Change
 {
@@ -12,9 +13,9 @@ namespace NMoneys.Change
 
 			long n = money.MinorIntegralAmount;
 			int m = denominations.Length;
+			Currency operationCurrency = money.GetCurrency();
 			long[] integralDenominations = denominations
-				.Select(d => new Money(d.Value, money.CurrencyCode))
-				.Select(mm => mm.MinorIntegralAmount)
+				.Select(d => IntegralDenomination.CalculateAmount(d, operationCurrency))
 				.ToArray();
 
 			//Time complexity of this function: O(m * n)

@@ -20,39 +20,43 @@ namespace NMoneys.Tests.Change
 		}
 
 		[Test]
+		public void GetChange_NoDenominations_EmptySolution()
+		{
+			var subject = new Money(5m);
+
+			var emptySolution = subject.GetChange(new Denomination[0]);
+
+			Assert.That(emptySolution, Is.Empty);
+			Assert.That(emptySolution, Has.Count.EqualTo(0));
+			Assert.That(emptySolution.Remainder, Is.EqualTo(subject));
+		}
+
+		[Test]
+		public void GetChange_NotEnoughToMakeChange_EmptySolution()
+		{
+			var subject = new Money(3m);
+			var emptySolution = subject.GetChange(5m);
+
+			Assert.That(emptySolution, Is.Empty);
+			Assert.That(emptySolution, Has.Count.EqualTo(0));
+			Assert.That(emptySolution.Remainder, Is.EqualTo(subject));
+		}
+
+		[Test]
 		public void GetChange_SameDenominationAsAmount_OneDenominationAndNoRemainder()
 		{
-			var fiveX = new Money(5m);
-			var oneFiver = fiveX.GetChange(5m);
+			var subject = new Money(5m);
+			var change = subject.GetChange(5m);
 
-			Assert.That(oneFiver, Must.Be.CompleteChange(CurrencyIsoCode.XXX, 
+			Assert.That(change, Must.Be.CompleteChange(CurrencyIsoCode.XXX, 
 				1.x(5)));
-		}
-
-		[Test]
-		public void GetChange_LessAmountThanMinimalDenomination_AmountRemainder()
-		{
-			var threeX = new Money(3m);
-			var noSolution = threeX.GetChange(5m);
-
-			Assert.That(noSolution, Has.Count.EqualTo(0));
-			Assert.That(noSolution.Remainder, Is.EqualTo(threeX));
-		}
-
-		[Test]
-		public void GetChange_WhenRemainder_RemainderSameCurrencyAsInitial()
-		{
-			var threeEuro = 3m.Eur();
-			var noSolution = threeEuro.GetChange(5m);
-
-			Assert.That(noSolution.Remainder.CurrencyCode, Is.EqualTo(threeEuro.CurrencyCode));
 		}
 
 		[Test]
 		public void GetChange_ChangePossible_MultipleDenominationsNoRemainder()
 		{
-			var changeable = new Money(5m);
-			var wholeSolution = changeable.GetChange(1m, 3m, 2m);
+			var subject = new Money(5m);
+			var wholeSolution = subject.GetChange(1m, 3m, 2m);
 
 			Assert.That(wholeSolution, Must.Be.CompleteChange(CurrencyIsoCode.XXX,
 				1.x(3), 1.x(2)));
@@ -93,9 +97,9 @@ namespace NMoneys.Tests.Change
 		[Test, TestCaseSource(nameof(_greedySuboptimal))]
 		public void GetChange_NonOptimalForGreedy_SubOptimalSolution(decimal amount, decimal[] denominationValues, QDenomination[] solution)
 		{
-			var changeable = new Money(amount);
+			var subject = new Money(amount);
 
-			var subOptimalSolution = changeable.GetChange(denominationValues);
+			var subOptimalSolution = subject.GetChange(denominationValues);
 
 			Assert.That(subOptimalSolution, Must.Be.CompleteChange(CurrencyIsoCode.XXX, solution));
 		}
@@ -103,25 +107,12 @@ namespace NMoneys.Tests.Change
 		[Test]
 		public void GetChange_NotCompleteSolution_QuantifiedAndRemainder()
 		{
-			var notCompletelyChangeable = new Money(7m);
+			var subject = new Money(7m);
 
-			var incompleteSolution = notCompletelyChangeable.GetChange(4m, 2m);
+			var incompleteSolution = subject.GetChange(4m, 2m);
 
-			Assert.That(incompleteSolution, Must.Not.Be.CompleteChange(1m.Xxx(), 
+			Assert.That(incompleteSolution, Must.Not.Be.IncompleteChange(1m.Xxx(), 
 				1.x(4), 1.x(2)));
-		}
-
-		[Test]
-		public void GetChange_NoDenominations_EmptySolution()
-		{
-			var toBeChanged = new Money(5m);
-
-			var emptySolution = toBeChanged.GetChange(new Denomination[0]);
-
-			Assert.That(emptySolution, Is.Empty);
-			Assert.That(emptySolution.Count, Is.EqualTo(0));
-
-			Assert.That(emptySolution.Remainder, Is.EqualTo(toBeChanged));
 		}
 	}
 }

@@ -4,9 +4,9 @@ using Testing.Commons.NUnit.Constraints;
 
 namespace NMoneys.Tests.Change.Support
 {
-	internal class CompleteMinChangeConstraint : DelegatingConstraint
+	internal class OptimalChangeConstraint : DelegatingConstraint
 	{
-		public CompleteMinChangeConstraint(QDenomination[] denominations)
+		public OptimalChangeConstraint(QDenomination[] denominations)
 		{
 			Delegate = new ConjunctionConstraint(
 				new ConstrainedEnumerable(

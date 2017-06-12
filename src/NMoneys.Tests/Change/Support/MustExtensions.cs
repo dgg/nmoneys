@@ -10,7 +10,13 @@ namespace NMoneys.Tests.Change.Support
 			return new CompleteChangeConstraint(code, denominations);
 		}
 
-		public static IncompleteChangeConstraint CompleteChange(this Must.NotBeEntryPoint entry,
+		public static NoChangeConstraint NoChange(this Must.BeEntryPoint entry,
+			Money remainder)
+		{
+			return new NoChangeConstraint(remainder);
+		}
+
+		public static IncompleteChangeConstraint IncompleteChange(this Must.NotBeEntryPoint entry,
 			Money remainder, params QDenomination[] denominations)
 		{
 			return new IncompleteChangeConstraint(remainder, denominations);
@@ -26,10 +32,10 @@ namespace NMoneys.Tests.Change.Support
 			return new QDenomination((uint) quantity, denominationValue);
 		}
 
-		public static CompleteMinChangeConstraint CompleteMinChange(this Must.BeEntryPoint entry,
+		public static OptimalChangeConstraint OptimalChange(this Must.BeEntryPoint entry,
 			params QDenomination[] denominations)
 		{
-			return new CompleteMinChangeConstraint(denominations);
+			return new OptimalChangeConstraint(denominations);
 		}
 	}
 }

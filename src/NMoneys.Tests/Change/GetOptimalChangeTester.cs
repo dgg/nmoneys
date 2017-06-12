@@ -57,7 +57,7 @@ namespace NMoneys.Tests.Change
 
 			var optimalSolution = changeable.GetOptimalChange(denominationValues);
 
-			Assert.That(optimalSolution, Must.Be.CompleteMinChange(solution));
+			Assert.That(optimalSolution, Must.Be.OptimalChange(solution));
 		}
 	}
 }

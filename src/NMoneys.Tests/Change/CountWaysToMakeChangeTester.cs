@@ -23,7 +23,7 @@ namespace NMoneys.Tests.Change
 		}
 
 		[Test]
-		public void ChangeCount_NotPossibleToChange_Zero()
+		public void ChangeCount_NotPossibleToMakeChange_Zero()
 		{
 			Assert.That(7m.Xxx().CountWaysToMakeChange(4m, 2m), Is.EqualTo(0u));
 		}
@@ -34,6 +34,7 @@ namespace NMoneys.Tests.Change
 			new object[] {10m, new decimal[]{2, 5, 3, 6}, 5u},
 			new object[] {6m, new decimal[]{1, 3, 4}, 4u},
 			new object[] {5m, new decimal[]{1, 2, 3}, 5u},
+			new object[] {.63m, new[]{.01m, .05m, .1m, .25m}, 73u},
 		};
 
 		[Test, TestCaseSource(nameof(_changeCountSamples))]

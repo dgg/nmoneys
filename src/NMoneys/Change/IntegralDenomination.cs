@@ -10,12 +10,18 @@ namespace NMoneys.Change
 		public IntegralDenomination(Denomination denomination, Currency operationCurrency)
 		{
 			Denomination = denomination;
-			IntegralAmount = Convert.ToInt64(Money.CalculateMinorAmount(denomination.Value, operationCurrency));
+			IntegralAmount = CalculateAmount(denomination, operationCurrency);
 		}
 
 		public static IntegralDenomination Default(Currency operationCurrency)
 		{
 			return new IntegralDenomination(new Denomination(1), operationCurrency);
+		}
+
+		internal static long CalculateAmount(Denomination denomination, Currency operationCurrency)
+		{
+			long integralAmount = Convert.ToInt64(Money.CalculateMinorAmount(denomination.Value, operationCurrency));
+			return integralAmount;
 		}
 	}
 }

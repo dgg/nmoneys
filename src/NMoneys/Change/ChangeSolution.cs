@@ -30,5 +30,7 @@ namespace NMoneys.Change
 		public uint Count => (uint)_denominations.Length;
 
 		public Money Remainder { get; }
+
+		public uint TotalCount => (uint) _denominations.Sum(s => s.Quantity);
 	}
 }

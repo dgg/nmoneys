@@ -23,7 +23,7 @@ namespace NMoneys.Tests.Change
 		}
 
 		[Test]
-		public void CountOptimalChange_NotPossibleToChange_Zero()
+		public void CountOptimalChange_NotPossibleToMakeChange_Zero()
 		{
 			Assert.That(7m.Xxx().CountOptimalChange(4m, 2m), Is.EqualTo(0u));
 		}
@@ -35,6 +35,7 @@ namespace NMoneys.Tests.Change
 			new object[] {6m, new decimal[]{1, 3, 4}, 2u},
 			new object[] {5m, new decimal[]{1, 2, 3}, 2u},
 			new object[] {63m, new decimal[]{ 1, 5, 10, 21, 25 }, 3u},
+			new object[] {.63m, new[]{ .01m, .05m, .1m, .25m }, 6u},
 		};
 
 		[Test, TestCaseSource(nameof(_minChangeCountSamples))]

@@ -15,6 +15,8 @@ namespace NMoneys.Change
 			int m = denominations.Length;
 			Currency operationCurrency = money.GetCurrency();
 			IntegralDenomination[] integralDenominations = denominations
+				// denominations are ordered because the algorithm is sensitive to order
+				.OrderBy(d => d.Value)
 				.Select(d => d.ToIntegral(operationCurrency))
 				.ToArray();
 
@@ -41,6 +43,7 @@ namespace NMoneys.Change
 					}
 				}
 			}
+
 			var solution = new OptimalChangeSolution(n, operationCurrency, table, usedDenominations);
 			return solution;
 		}

@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace NMoneys.Change
 {
+	[CLSCompliant(false)]
 	public class OptimalChangeSolution : IEnumerable<QuantifiedDenomination>
 	{
 		private readonly QuantifiedDenomination[] _denominations;
@@ -27,7 +29,7 @@ namespace NMoneys.Change
 					denominations.Add(usedDenomination.Denomination);
 					denomination -= usedDenomination.IntegralAmount;
 				}
-				_denominations = QuantifiedDenomination.Aggregate(denominations)
+				_denominations = QuantifiedDenomination.Aggregate(denominations.OrderByDescending(d => d.Value))
 					.ToArray();
 			}
 		}
@@ -44,5 +46,6 @@ namespace NMoneys.Change
 
 		public QuantifiedDenomination this[int idx] => _denominations[idx];
 		public uint Count => (uint)_denominations.Length;
+		public uint TotalCount => (uint)_denominations.Sum(d => d.Quantity);
 	}
 }
