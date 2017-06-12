@@ -26,9 +26,7 @@ namespace NMoneys.Tests.Change
 
 			var emptySolution = subject.GetChange(new Denomination[0]);
 
-			Assert.That(emptySolution, Is.Empty);
-			Assert.That(emptySolution, Has.Count.EqualTo(0));
-			Assert.That(emptySolution.Remainder, Is.EqualTo(subject));
+			Assert.That(emptySolution, Must.Be.NoChange(remainder: subject));
 		}
 
 		[Test]
@@ -37,9 +35,7 @@ namespace NMoneys.Tests.Change
 			var subject = new Money(3m);
 			var emptySolution = subject.GetChange(5m);
 
-			Assert.That(emptySolution, Is.Empty);
-			Assert.That(emptySolution, Has.Count.EqualTo(0));
-			Assert.That(emptySolution.Remainder, Is.EqualTo(subject));
+			Assert.That(emptySolution, Must.Be.NoChange(remainder: subject));
 		}
 
 		[Test]

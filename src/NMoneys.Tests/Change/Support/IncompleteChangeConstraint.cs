@@ -23,20 +23,4 @@ namespace NMoneys.Tests.Change.Support
 			return Delegate.ApplyTo(current);
 		}
 	}
-
-	internal class NoChangeConstraint : DelegatingConstraint
-	{
-		public NoChangeConstraint(Money remainder)
-		{
-			Delegate = new ConjunctionConstraint(
-				Is.Empty,
-				Has.Count.EqualTo(0),
-				Must.Have.Property(nameof(ChangeSolution.Remainder), Is.EqualTo(remainder));
-		}
-
-		protected override ConstraintResult matches(object current)
-		{
-			return Delegate.ApplyTo(current);
-		}
-	}
 }

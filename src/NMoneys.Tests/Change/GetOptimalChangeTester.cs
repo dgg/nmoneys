@@ -1,5 +1,6 @@
 ﻿using System;
 using NMoneys.Change;
+using NMoneys.Extensions;
 using NMoneys.Tests.Change.Support;
 using NUnit.Framework;
 using Testing.Commons;
@@ -58,6 +59,17 @@ namespace NMoneys.Tests.Change
 			var optimalSolution = changeable.GetOptimalChange(denominationValues);
 
 			Assert.That(optimalSolution, Must.Be.OptimalChange(solution));
+		}
+
+		[Test]
+		public void GetOptimalChange_NotCompleteSolution_QuantifiedAndRemainder()
+		{
+			var subject = new Money(7m);
+
+			var incompleteSolution = subject.GetChange(4m, 2m);
+
+			Assert.That(incompleteSolution, Must.Not.Be.IncompleteChange(1m.Xxx(),
+				1.x(4), 1.x(2)));
 		}
 	}
 }

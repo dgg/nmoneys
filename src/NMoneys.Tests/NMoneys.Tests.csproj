@@ -57,6 +57,7 @@
     <Compile Include="Change\CountOptimalChangeTester.cs" />
     <Compile Include="Change\CountWaysToMakeChangeTester.cs" />
     <Compile Include="Change\DenominationTester.cs" />
+    <Compile Include="Change\Support\NoChangeConstraint.cs" />
     <Compile Include="Change\Support\OptimalChangeConstraint.cs" />
     <Compile Include="Change\Support\CompleteChangeConstraint.cs" />
     <Compile Include="Change\Support\IncompleteChangeConstraint.cs" />
