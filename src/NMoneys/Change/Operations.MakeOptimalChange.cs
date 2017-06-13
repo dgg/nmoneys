@@ -4,8 +4,7 @@ using NMoneys.Extensions;
 
 namespace NMoneys.Change
 {
-	[CLSCompliant(false)]
-	public static class MakeOptimalChangeOperation
+	public static partial class ChangeOperations
 	{
 		public static OptimalChangeSolution MakeOptimalChange(this Money money, params Denomination[] denominations)
 		{

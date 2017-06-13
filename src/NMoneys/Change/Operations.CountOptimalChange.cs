@@ -1,11 +1,9 @@
-using System;
 using System.Linq;
 using NMoneys.Extensions;
 
 namespace NMoneys.Change
 {
-	[CLSCompliant(false)]
-	public static class CountOptimalChangeOperation
+	public static partial class ChangeOperations
 	{
 		public static ushort CountOptimalChange(this Money money, params Denomination[] denominations)
 		{

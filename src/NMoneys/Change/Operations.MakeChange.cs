@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace NMoneys.Change
 {
-	[CLSCompliant(false)]
-	public static class MakeChangeOperation
+	public static partial class ChangeOperations
 	{
 		public static ChangeSolution MakeChange(this Money money, params Denomination[] denominations)
 		{

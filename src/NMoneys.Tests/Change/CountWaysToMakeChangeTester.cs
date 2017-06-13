@@ -23,6 +23,13 @@ namespace NMoneys.Tests.Change
 		}
 
 		[Test]
+		public void CountWaysToMakeChange_NullDenominations_Exception()
+		{
+			Denomination[] @null = null;
+			Assert.That(()=>5m.Usd().CountWaysToMakeChange(@null), Throws.ArgumentNullException);
+		}
+
+		[Test]
 		public void CountWaysToMakeChange_NotPossibleToMakeChange_Zero()
 		{
 			Assert.That(7m.Xxx().CountWaysToMakeChange(4m, 2m), Is.EqualTo(0u));
