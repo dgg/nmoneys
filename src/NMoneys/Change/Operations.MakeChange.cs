@@ -17,8 +17,8 @@ namespace NMoneys.Change
 		/// <para>An practival infinite (or sufficiently large) number of denominations is assumed. That is, we are not going to run out of denominations when making the change.</para>
 		/// </remarks>
 		/// <param name="money">The monetary quantity to make change of.</param>
-		/// <param name="denominations">The monetary denominations for which we make the change.</param>
-		/// <returns>A solution with the denominations used for making the change.</returns>
+		/// <param name="denominations">The monetary denominations for which the change is made.</param>
+		/// <returns>A solution with the denominations used for making change.</returns>
 		[Pure]
 		public static ChangeSolution MakeChange(this Money money, params Denomination[] denominations)
 		{
@@ -57,8 +57,8 @@ namespace NMoneys.Change
 		/// <remarks>This overload is a facility method for easier syntax. <see cref="MakeChange(NMoneys.Money,NMoneys.Change.Denomination[])"/>
 		/// for more information.</remarks>
 		/// <param name="money">The monetary quantity to make change of.</param>
-		/// <param name="denominationValues">The monetary denomination values for which we make the change.</param>
-		/// <returns>A solution with the denominations used for making the change.</returns>
+		/// <param name="denominationValues">The monetary denomination values for which the change is made.</param>
+		/// <returns>A solution with the denominations used for making change.</returns>
 		[Pure]
 		public static ChangeSolution MakeChange(this Money money, params decimal[] denominationValues)
 		{

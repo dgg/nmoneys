@@ -1,4 +1,4 @@
-using System;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using NMoneys.Extensions;
 
@@ -6,6 +6,22 @@ namespace NMoneys.Change
 {
 	public static partial class ChangeOperations
 	{
+		/// <summary>
+		/// Returns a way to make an optimal change (in terms of number of denominations) for a particular amount of money given a regardless of the set of denominations in
+		/// an efficient manner.
+		/// </summary>
+		/// <remarks>The computation of the change of made using dynamic programming strategies, that is, computing all possible solutions
+		/// and selecting an optimal one (in terms of number of denominations used).
+		/// <para>This way of computing yields an optimal (in terms of number of denominations) even for
+		/// arbitrary, non-canonical, denomination sets.</para>
+		/// <para>This strategy allows computing the result in O(m*n) time, being n the size of <paramref name="money"/> and m the length of <paramref name="denominations"/>.</para>
+		/// <para>An optimal change is only considered for denomination sets that provide a complete (non-partial) 
+		/// way of making change for the given amount. Partial change solutions are not considered optimal solutions and thus, not calculated.</para>
+		/// </remarks>
+		/// <param name="money">The monetary quantity to make optimal change of.</param>
+		/// <param name="denominations">The monetary denominations for which the optimal change is made.</param>
+		/// <returns>A solution with the denominations used for making optimal change.</returns>
+		[Pure]
 		public static OptimalChangeSolution MakeOptimalChange(this Money money, params Denomination[] denominations)
 		{
 			Positive.Amounts.AssertArgument(nameof(money), money.Amount);
@@ -30,6 +46,7 @@ namespace NMoneys.Change
 			{
 				// Initialize all table values as Infinite
 				table[i] = ushort.MaxValue;
+
 				// Go through all denominations smaller than i
 				for (int j = 0; j < m && integralDenominations[j].IntegralAmount <= i; j++)
 				{
@@ -46,6 +63,15 @@ namespace NMoneys.Change
 			return solution;
 		}
 
+		/// <summary>
+		/// Returns a way to make an optimal change (in terms of number of denominations) for a particular amount of money given a regardless of the set of denominations in
+		/// an efficient manner.
+		/// </summary>
+		/// <remarks>This overload is a facility method for easier syntax. <see cref="MakeOptimalChange(NMoneys.Money,NMoneys.Change.Denomination[])"/>
+		/// for more information.</remarks>
+		/// <param name="money">The monetary quantity to make optimal change of.</param>
+		/// <param name="denominationValues">The monetary denomination values for which the optimal change is made.</param>
+		/// <returns>A solution with the denominations used for making optimal change.</returns>
 		public static OptimalChangeSolution MakeOptimalChange(this Money money, params decimal[] denominationValues)
 		{
 			return money.MakeOptimalChange(denominationValues.Select(v => new Denomination(v)).ToArray());

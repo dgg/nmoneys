@@ -15,12 +15,12 @@ namespace NMoneys.Change
 		/// <summary>
 		/// Counts the number of ways of making changes for a particular amount of money given a set of denominations.
 		/// </summary>
-		/// <remarks>Instead of using a brute force, recursive algorithm, it takes a faster and computational cheaper approach
+		/// <remarks>Instead of using a brute-force, recursive, algorithm, it takes a faster and computational cheaper approach
 		/// using dynamic programming strategy.
-		/// <para>Such strategy allow computing the result in O(n*m) time, given n the size of <paramref name="money"/> and m the length of <paramref name="denominations"/>.</para>
+		/// <para>Such strategy allow computing the result in O(n*m) time, being n the size of <paramref name="money"/> and m the length of <paramref name="denominations"/>.</para>
 		/// <para>In terms of size, we need to store O(n) memory to store temporary results.</para></remarks>
 		/// <param name="money">The monetary quantity to make change of.</param>
-		/// <param name="denominations">The monetary denominations for which we make the change.</param>
+		/// <param name="denominations">The monetary denominations for which the change is made.</param>
 		/// <returns>The number of ways one can make change for a given amount of money or zero if no change can be made.</returns>
 		/// <exception cref="ArgumentOutOfRangeException">If <paramref name="money"/> is not positive.</exception>
 		/// <exception cref="ArgumentNullException">If <paramref name="denominations"/> is null.</exception>
@@ -63,7 +63,7 @@ namespace NMoneys.Change
 		/// <remarks>This overload is a facility method for easier syntax. <see cref="CountWaysToMakeChange(NMoneys.Money,NMoneys.Change.Denomination[])"/>
 		/// for more information.</remarks>
 		/// <param name="money">The monetary quantity to make change of.</param>
-		/// <param name="denominationValues">The monetary denomination values for which we make the change.</param>
+		/// <param name="denominationValues">The monetary denomination values for which the change is made.</param>
 		/// <returns>The number of ways one can make change for a given amount of money or zero if no change can be made.</returns>
 		/// <exception cref="ArgumentOutOfRangeException">If <paramref name="money"/> is not positive.</exception>
 		/// <exception cref="ArgumentNullException">If <paramref name="denominationValues"/> is null.</exception>
