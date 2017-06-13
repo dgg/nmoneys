@@ -28,5 +28,7 @@ namespace NMoneys.Support
 		{
 			return _startToken + string.Join(_separatorToken, collection.Select(stringifier).ToArray()) + _endToken;
 		}
+
+		public static readonly  Stringifier Default = new Stringifier();
 	}
 }

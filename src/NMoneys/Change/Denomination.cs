@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 
 namespace NMoneys.Change
@@ -13,7 +14,7 @@ namespace NMoneys.Change
 	/// </remarks>
 	/// <example>To represent 50 cents of a dollar, one would create a denomination of value .5
 	/// <code>var fiftyCents = new Denomination(.5m);</code></example>
-	public struct Denomination : IEquatable<Denomination>
+	public struct Denomination : IEquatable<Denomination>, IFormattable
 	{
 		/// <summary>
 		/// Creates an instance of <see cref="Denomination"/> with the given value.
@@ -33,16 +34,25 @@ namespace NMoneys.Change
 		/// <summary>
 		/// Value of the denomination.
 		/// </summary>
+		[Pure]
 		public decimal Value => _value.GetValueOrDefault(1);
 
 
 		/// <summary>Returns representation of the value of this instance.</summary>
 		/// <returns>A <see cref="string" /> containing a textual representation.</returns>
+		[Pure]
 		public override string ToString()
 		{
 			return Value.ToString(CultureInfo.InvariantCulture);
 		}
 
+		[Pure]
+		public string ToString(string format, IFormatProvider formatProvider)
+		{
+			return Value.ToString(format, formatProvider);
+		}
+
+		[Pure]
 		internal IntegralDenomination ToIntegral(Currency operationCurrency)
 		{
 			return new IntegralDenomination(this, operationCurrency);
@@ -52,6 +62,7 @@ namespace NMoneys.Change
 		/// Indicates whether the current object is equal to another object of the same type.</summary>
 		/// <returns>true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.</returns>
 		/// <param name="other">A <see cref="Denomination"/> to compare with this object.</param>
+		[Pure]
 		public bool Equals(Denomination other)
 		{
 			return _value == other._value;
@@ -61,6 +72,7 @@ namespace NMoneys.Change
 		/// Indicates whether this instance and a specified object are equal.</summary>
 		/// <returns>true if <paramref name="obj" /> and this instance are the same type and represent the same value; otherwise, false. </returns>
 		/// <param name="obj">Another object to compare to. </param>
+		[Pure]
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(null, obj)) return false;
@@ -68,6 +80,7 @@ namespace NMoneys.Change
 		}
 
 		/// <inheritdoc />
+		[Pure]
 		public override int GetHashCode()
 		{
 			return _value.GetHashCode();

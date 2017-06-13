@@ -130,7 +130,7 @@ namespace NMoneys.Allocations
 		[Pure]
 		public override string ToString()
 		{
-			return new Stringifier().Stringify(_allocated);
+			return Stringifier.Default.Stringify(_allocated);
 		}
 
 		/// <summary>

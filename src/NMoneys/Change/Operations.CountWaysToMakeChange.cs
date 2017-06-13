@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using NMoneys.Extensions;
 using NMoneys.Support;
@@ -23,6 +24,7 @@ namespace NMoneys.Change
 		/// <returns>The number of ways one can make change for a given amount of money or zero if no change can be made.</returns>
 		/// <exception cref="ArgumentOutOfRangeException">If <paramref name="money"/> is not positive.</exception>
 		/// <exception cref="ArgumentNullException">If <paramref name="denominations"/> is null.</exception>
+		[Pure]
 		public static uint CountWaysToMakeChange(this Money money, params Denomination[] denominations)
 		{
 			Positive.Amounts.AssertArgument(nameof(money), money.Amount);
@@ -34,7 +36,6 @@ namespace NMoneys.Change
 			long[] integralDenominations = denominations
 				.Select(d => IntegralDenomination.CalculateAmount(d, operationCurrency))
 				.ToArray();
-
 
 			// table[i] will be storing the number of solutions for value i.
 			// n+1 rows are needed since the table is constructed in bottom up manner using the base case (n = 0)
@@ -66,6 +67,7 @@ namespace NMoneys.Change
 		/// <returns>The number of ways one can make change for a given amount of money or zero if no change can be made.</returns>
 		/// <exception cref="ArgumentOutOfRangeException">If <paramref name="money"/> is not positive.</exception>
 		/// <exception cref="ArgumentNullException">If <paramref name="denominationValues"/> is null.</exception>
+		[Pure]
 		public static uint CountWaysToMakeChange(this Money money, params decimal[] denominationValues)
 		{
 			Guard.AgainstNullArgument(nameof(denominationValues), denominationValues);

@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using NMoneys.Support;
 
 namespace NMoneys.Allocations
@@ -25,7 +26,7 @@ namespace NMoneys.Allocations
 		/// <summary>
 		/// Fraction
 		/// </summary>
-		public decimal Value { get; set; }
+		public decimal Value { get; }
 
 		/// <summary>
 		/// Converts the numeric value of this instance to its equivalent string representation. 
@@ -35,7 +36,7 @@ namespace NMoneys.Allocations
 		/// </returns>
 		public override string ToString()
 		{
-			return Value.ToString();
+			return Value.ToString(CultureInfo.InvariantCulture);
 		}
 
 		/// <summary>

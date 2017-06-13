@@ -30,7 +30,7 @@ namespace NMoneys.Allocations
 
 		private static Ratio[] toRatios(decimal[] ratioValues)
 		{
-			Guard.AgainstNullArgument("ratioValues", ratioValues);
+			Guard.AgainstNullArgument(nameof(ratioValues), ratioValues);
 			return ratioValues.Select(r => new Ratio(r)).ToArray();
 		}
 
@@ -42,7 +42,7 @@ namespace NMoneys.Allocations
 		/// <exception cref="ArgumentOutOfRangeException"><paramref name="ratios"/> do not sum up one.</exception>
 		public RatioCollection(params Ratio[] ratios)
 		{
-			Guard.AgainstNullArgument("ratios", ratios);
+			Guard.AgainstNullArgument(nameof(ratios), ratios);
 			assertAllocatable(ratios);
 
 			_ratios = ratios;
@@ -53,7 +53,7 @@ namespace NMoneys.Allocations
 			decimal sum = ratios.Select(r => r.Value).Sum();
 			if (!sum.Equals(decimal.One))
 			{
-				throw new ArgumentOutOfRangeException("ratios", sum, "Ratios have to sum up 1.0.");
+				throw new ArgumentOutOfRangeException(nameof(ratios), sum, "Ratios have to sum up 1.0.");
 			}
 		}
 
@@ -78,7 +78,7 @@ namespace NMoneys.Allocations
 		/// Gets a 32-bit integer that represents the total number of ratios in the <see cref="RatioCollection"/>.
 		/// </summary>
 		/// <returns>A 32-bit integer that represents the total number of ratios in the <see cref="RatioCollection"/>.</returns>
-		public int Count { get { return _ratios.Length; } }
+		public int Count => _ratios.Length;
 
 		/// <summary>
 		/// Gets the ratio at the specified index.
@@ -88,10 +88,7 @@ namespace NMoneys.Allocations
 		/// <exception cref="ArgumentOutOfRangeException">index is less than zero.
 		/// -or-
 		/// index is equal to or greater than <see cref="Count"/>.</exception>
-		public Ratio this[int index]
-		{
-			get { return _ratios[index]; }
-		}
+		public Ratio this[int index] => _ratios[index];
 
 		#endregion
 
@@ -103,7 +100,7 @@ namespace NMoneys.Allocations
 		/// </returns>
 		public override string ToString()
 		{
-			return new Stringifier().Stringify(_ratios);
+			return Stringifier.Default.Stringify(_ratios);
 		}
 
 		/// <summary>
@@ -121,7 +118,7 @@ namespace NMoneys.Allocations
 		/// </param>
 		public string ToString(string format, IFormatProvider formatProvider)
 		{
-			return new Stringifier().Stringify(_ratios, r => r.ToString(format, formatProvider));
+			return Stringifier.Default.Stringify(_ratios, r => r.ToString(format, formatProvider));
 		}
 	}
 }

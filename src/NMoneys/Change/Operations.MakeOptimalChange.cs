@@ -25,8 +25,7 @@ namespace NMoneys.Change
 			// Base case (If given value n is 0)
 			table[0] = 0;
 
-			// Compute minimum denominations required for all
-			// values from 1 to n
+			// Compute minimum denominations required for all values from 1 to n
 			for (long i = 1; i <= n; i++)
 			{
 				// Initialize all table values as Infinite

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 
 namespace NMoneys.Change
@@ -18,6 +19,7 @@ namespace NMoneys.Change
 		/// <param name="money">The monetary quantity to make change of.</param>
 		/// <param name="denominations">The monetary denominations for which we make the change.</param>
 		/// <returns>A solution with the denominations used for making the change.</returns>
+		[Pure]
 		public static ChangeSolution MakeChange(this Money money, params Denomination[] denominations)
 		{
 			Positive.Amounts.AssertArgument(nameof(money), money.Amount);
@@ -57,6 +59,7 @@ namespace NMoneys.Change
 		/// <param name="money">The monetary quantity to make change of.</param>
 		/// <param name="denominationValues">The monetary denomination values for which we make the change.</param>
 		/// <returns>A solution with the denominations used for making the change.</returns>
+		[Pure]
 		public static ChangeSolution MakeChange(this Money money, params decimal[] denominationValues)
 		{
 			return money.MakeChange(denominationValues.Select(v => new Denomination(v)).ToArray());
