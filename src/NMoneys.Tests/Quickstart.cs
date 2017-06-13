@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using NMoneys.Allocations;
+using NMoneys.Change;
 using NMoneys.Extensions;
 using NMoneys.Support;
 using NUnit.Framework;
@@ -148,6 +149,46 @@ namespace NMoneys.Tests
 			
 			Assert.That(incomplete.Remainder, Is.EqualTo(.001m.Usd()));
 			Assert.That(incomplete, Is.EqualTo(new[] { 5m.Usd(), 5m.Usd() }));
+		}
+
+		[Test]
+		public void Money_MakeChange()
+		{
+			Money moneyBack = 1m.Usd().Minus(.37m.Usd()); // ¢63
+			Denomination[] usCoins = 
+			{
+				new Denomination(.25m), // quarters
+				new Denomination(.10m), // dimes
+				new Denomination(.05m), // nickels
+				new Denomination(.01m)  // pennies
+			};
+			uint seventyThree = moneyBack.CountWaysToMakeChange(usCoins);
+			// --> 73 ways to make change of ¢63
+			Assert.That(seventyThree, Is.EqualTo(73));
+
+			// optimal for canonical systems
+			ChangeSolution change = moneyBack.MakeChange(usCoins);
+			// --> six coins: 2 quarters, 1 dime, 3 pennies
+			Assert.That(change.TotalCount, Is.EqualTo(6));
+
+			OptimalChangeSolution sameChange = moneyBack.MakeOptimalChange(usCoins);
+			// --> six coins as well: 2 quarters, 1 dime, 3 pennies
+			Assert.That(sameChange.TotalCount, Is.EqualTo(6));
+
+			var nonCanonicalDenominations = new[]
+			{
+				new Denomination(.25m), // quarters
+				new Denomination(.10m), // dimes
+				new Denomination(.05m), // nickels
+				new Denomination(.01m), // pennies
+				new Denomination(.21m)  // ?
+			};
+			ChangeSolution subOptimal = moneyBack.MakeChange(nonCanonicalDenominations);
+			// --> six coins: 2 quarters, 1 dime, 3 pennies
+			Assert.That(subOptimal.TotalCount, Is.EqualTo(6));
+			OptimalChangeSolution optimal = moneyBack.MakeOptimalChange(nonCanonicalDenominations);
+			// --> three coins: 3 of .21
+			Assert.That(optimal.TotalCount, Is.EqualTo(3));
 		}
 	}
 }
