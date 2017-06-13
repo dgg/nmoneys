@@ -9,11 +9,14 @@ namespace NMoneys.Tests.Change.Support
 {
 	internal class CompleteChangeConstraint : DelegatingConstraint
 	{
-		public CompleteChangeConstraint(CurrencyIsoCode code, QDenomination[] denominations)
+		public CompleteChangeConstraint(uint totalCount, QDenomination[] denominations)
 		{
 			Delegate = new ConjunctionConstraint(
-				Must.Have.Property(nameof(ChangeSolution.Remainder), Is.EqualTo(Money.Zero(code))),
+				Must.Have.Property(nameof(ChangeSolution.IsSolution), Is.True),
+				Must.Have.Property(nameof(ChangeSolution.IsComplete), Is.True),
+				Must.Have.Property(nameof(ChangeSolution.Remainder), Is.Null),
 				Must.Have.Property(nameof(ChangeSolution.Count), Is.EqualTo(denominations.Length)),
+				Must.Have.Property(nameof(ChangeSolution.TotalCount), Is.EqualTo(totalCount)),
 				new ConstrainedEnumerable(
 					denominations.Select(d => new QuantifiedDenominationConstraint(d))
 					));

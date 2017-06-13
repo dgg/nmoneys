@@ -11,7 +11,7 @@ namespace NMoneys.Change
 		private readonly QuantifiedDenomination[] _denominations;
 		internal ChangeSolution(IEnumerable<Denomination> usedDenominations, Money remainder)
 		{
-			Remainder = remainder;
+			Remainder = remainder.Amount > decimal.Zero ? remainder : default(Money?);
 			_denominations = QuantifiedDenomination.Aggregate(usedDenominations)
 				.ToArray();
 		}
@@ -29,8 +29,12 @@ namespace NMoneys.Change
 		public QuantifiedDenomination this[int idx] => _denominations[idx];
 		public uint Count => (uint)_denominations.Length;
 
-		public Money Remainder { get; }
+		public Money? Remainder { get; }
 
 		public uint TotalCount => (uint) _denominations.Sum(s => s.Quantity);
+
+		public bool IsSolution => Count > 0;
+
+		public bool IsComplete => IsSolution && !Remainder.HasValue;
 	}
 }

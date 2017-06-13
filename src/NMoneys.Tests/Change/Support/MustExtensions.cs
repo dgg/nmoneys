@@ -4,10 +4,10 @@ namespace NMoneys.Tests.Change.Support
 {
 	internal static partial class MustExtensions
 	{
-		public static CompleteChangeConstraint CompleteChange(this Must.BeEntryPoint entry,
-			CurrencyIsoCode code, params QDenomination[] denominations)
+		public static CompleteChangeConstraint CompleteChange(this Must.BeEntryPoint entry, uint totalCount,
+			params QDenomination[] denominations)
 		{
-			return new CompleteChangeConstraint(code, denominations);
+			return new CompleteChangeConstraint(totalCount, denominations);
 		}
 
 		public static NoChangeConstraint NoChange(this Must.BeEntryPoint entry,

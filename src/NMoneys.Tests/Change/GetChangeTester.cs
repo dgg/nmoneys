@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using NMoneys.Change;
 using NMoneys.Extensions;
 using NMoneys.Tests.Change.Support;
@@ -45,8 +44,7 @@ namespace NMoneys.Tests.Change
 			var subject = new Money(5m);
 			var change = subject.GetChange(5m);
 
-			Assert.That(change, Must.Be.CompleteChange(CurrencyIsoCode.XXX, 
-				1.x(5)));
+			Assert.That(change, Must.Be.CompleteChange(1, 1.x(5)));
 		}
 
 		[Test]
@@ -55,37 +53,35 @@ namespace NMoneys.Tests.Change
 			var subject = new Money(5m);
 			var wholeSolution = subject.GetChange(1m, 3m, 2m);
 
-			Assert.That(wholeSolution, Must.Be.CompleteChange(CurrencyIsoCode.XXX,
-				1.x(3), 1.x(2)));
-			Assert.That(wholeSolution, Has.Property(nameof(ChangeSolution.TotalCount)).EqualTo(2));
+			Assert.That(wholeSolution, Must.Be.CompleteChange(2, 1.x(3), 1.x(2)));
 		}
 
 		private static readonly object[] _greedySuboptimal =
 		{
 			new object[]
 			{
-				30m, new[] {1m, 15m, 25m}, new[]
+				30m, new[] {1m, 15m, 25m}, 6u, new[]
 				{
 					1.x(25), 5.x(1)
 				}
 			},
 			new object[]
 			{
-				40m, new[] {1m, 5m, 10m, 20m, 25m}, new[]
+				40m, new[] {1m, 5m, 10m, 20m, 25m}, 3u, new[]
 				{
 					1.x(25), 1.x(10), 1.x(5)
 				}
 			},
 			new object[]
 			{
-				6m, new[] {1m, 3m, 4m}, new[]
+				6m, new[] {1m, 3m, 4m}, 3u, new[]
 				{
 					1.x(4), 2.x(1)
 				}
 			},
 			new object[]
 			{
-				63m, new[] {1m, 5m, 10m, 21m, 25m}, new[]
+				63m, new[] {1m, 5m, 10m, 21m, 25m}, 6u, new[]
 				{
 					2.x(25), 1.x(10), 3.x(1)
 				}
@@ -93,14 +89,13 @@ namespace NMoneys.Tests.Change
 		};
 
 		[Test, TestCaseSource(nameof(_greedySuboptimal))]
-		public void GetChange_NonOptimalForGreedy_SubOptimalSolution(decimal amount, decimal[] denominationValues, QDenomination[] solution)
+		public void GetChange_NonOptimalForGreedy_SubOptimalSolution(decimal amount, decimal[] denominationValues, uint totalCount, QDenomination[] solution)
 		{
 			var subject = new Money(amount);
 
 			var subOptimalSolution = subject.GetChange(denominationValues);
 
-			Assert.That(subOptimalSolution, Must.Be.CompleteChange(CurrencyIsoCode.XXX, solution));
-			Assert.That(subOptimalSolution.TotalCount, Is.EqualTo(solution.Sum(s => s.Quantity)));
+			Assert.That(subOptimalSolution, Must.Be.CompleteChange(totalCount, solution));
 		}
 
 		[Test]
