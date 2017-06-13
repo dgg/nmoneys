@@ -53,7 +53,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Change\GetOptimalChangeTester.cs" />
+    <Compile Include="Change\MakeOptimalChangeTester.cs" />
     <Compile Include="Change\CountOptimalChangeTester.cs" />
     <Compile Include="Change\CountWaysToMakeChangeTester.cs" />
     <Compile Include="Change\DenominationTester.cs" />

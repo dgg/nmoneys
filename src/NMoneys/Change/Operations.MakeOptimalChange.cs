@@ -5,9 +5,9 @@ using NMoneys.Extensions;
 namespace NMoneys.Change
 {
 	[CLSCompliant(false)]
-	public static class GetOptimalChangeOperation
+	public static class MakeOptimalChangeOperation
 	{
-		public static OptimalChangeSolution GetOptimalChange(this Money money, params Denomination[] denominations)
+		public static OptimalChangeSolution MakeOptimalChange(this Money money, params Denomination[] denominations)
 		{
 			Positive.Amounts.AssertArgument(nameof(money), money.Amount);
 
@@ -48,9 +48,9 @@ namespace NMoneys.Change
 			return solution;
 		}
 
-		public static OptimalChangeSolution GetOptimalChange(this Money money, params decimal[] denominationValues)
+		public static OptimalChangeSolution MakeOptimalChange(this Money money, params decimal[] denominationValues)
 		{
-			return money.GetOptimalChange(denominationValues.Select(v => new Denomination(v)).ToArray());
+			return money.MakeOptimalChange(denominationValues.Select(v => new Denomination(v)).ToArray());
 		}
 	}
 }
