@@ -35,6 +35,6 @@ namespace NMoneys.Change
 
 		public bool IsSolution => Count > 0;
 
-		public bool IsComplete => IsSolution && !Remainder.HasValue;
+		public bool IsPartial => IsSolution && Remainder.HasValue;
 	}
 }

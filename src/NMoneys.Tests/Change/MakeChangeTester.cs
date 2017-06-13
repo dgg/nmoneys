@@ -105,7 +105,7 @@ namespace NMoneys.Tests.Change
 
 			var incompleteSolution = subject.MakeChange(4m, 2m);
 
-			Assert.That(incompleteSolution, Must.Not.Be.IncompleteChange(1m.Xxx(), 2,
+			Assert.That(incompleteSolution, Must.Not.Be.PartialChange(1m.Xxx(), 2,
 				1.x(4), 1.x(2)));
 			Assert.That(incompleteSolution.TotalCount, Is.EqualTo(2));
 		}

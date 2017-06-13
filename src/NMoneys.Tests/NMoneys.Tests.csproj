@@ -61,7 +61,7 @@
     <Compile Include="Change\Support\NoOptimalChangeConstraint.cs" />
     <Compile Include="Change\Support\OptimalChangeConstraint.cs" />
     <Compile Include="Change\Support\CompleteChangeConstraint.cs" />
-    <Compile Include="Change\Support\IncompleteChangeConstraint.cs" />
+    <Compile Include="Change\Support\PartialChangeConstraint.cs" />
     <Compile Include="Change\Support\MustExtensions.cs" />
     <Compile Include="Change\Support\QDenomination.cs" />
     <Compile Include="Change\Support\QuantifiedDenominationConstraint.cs" />
