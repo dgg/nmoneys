@@ -12,11 +12,12 @@ namespace NMoneys.Change
 		/// </summary>
 		/// <remarks>The computation of the change of made using dynamic programming strategies, that is, computing all possible solutions
 		/// and selecting an optimal one (in terms of number of denominations used).
-		/// <para>This way of computing yields an optimal (in terms of number of denominations) even for
+		/// <para>This way of computing yields an optimal solution (in terms of number of denominations) even for
 		/// arbitrary, non-canonical, denomination sets.</para>
 		/// <para>This strategy allows computing the result in O(m*n) time, being n the size of <paramref name="money"/> and m the length of <paramref name="denominations"/>.</para>
 		/// <para>An optimal change is only considered for denomination sets that provide a complete (non-partial) 
 		/// way of making change for the given amount. Partial change solutions are not considered optimal solutions and thus, not calculated.</para>
+		/// <para>A practical infinite (or sufficiently large) number of denominations is assumed. That is, we are not going to run out of denominations when making the change.</para>
 		/// </remarks>
 		/// <param name="money">The monetary quantity to make optimal change of.</param>
 		/// <param name="denominations">The monetary denominations for which the optimal change is made.</param>

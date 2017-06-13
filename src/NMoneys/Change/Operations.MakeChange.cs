@@ -14,7 +14,7 @@ namespace NMoneys.Change
 		/// <para>This way of computing might not yield an optimal (in terms of number of denominations) solution for arbitrary denomination sets.</para>
 		/// <para>It is, however, optimal (in terms of number of denminations) for canonical denomination sets (those that minimize the average cost of making change).</para>
 		/// <para>For denomination sets that provide no complete way of making change for the given amount, a partial change is calculated.</para>
-		/// <para>An practival infinite (or sufficiently large) number of denominations is assumed. That is, we are not going to run out of denominations when making the change.</para>
+		/// <para>A practical infinite (or sufficiently large) number of denominations is assumed. That is, we are not going to run out of denominations when making the change.</para>
 		/// </remarks>
 		/// <param name="money">The monetary quantity to make change of.</param>
 		/// <param name="denominations">The monetary denominations for which the change is made.</param>
