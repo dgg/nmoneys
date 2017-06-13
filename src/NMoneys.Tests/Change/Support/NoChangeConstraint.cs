@@ -11,10 +11,10 @@ namespace NMoneys.Tests.Change.Support
 		public NoChangeConstraint(Money remainder)
 		{
 			Delegate = new ConjunctionConstraint(
-				Must.Have.Property(nameof(ChangeSolution.IsSolution), Is.False)/*,
+				Must.Have.Property(nameof(ChangeSolution.IsSolution), Is.False),
 				Is.Empty,
 				Must.Have.Property(nameof(ChangeSolution.Count), Is.EqualTo(0)),
-				Must.Have.Property(nameof(ChangeSolution.Remainder), Is.EqualTo(remainder))*/);
+				Must.Have.Property(nameof(ChangeSolution.Remainder), Is.EqualTo(remainder)));
 		}
 
 		protected override ConstraintResult matches(object current)

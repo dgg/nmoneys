@@ -11,6 +11,7 @@ namespace NMoneys.Tests.Change.Support
 		public NoOptimalChangeConstraint()
 		{
 			Delegate = new ConjunctionConstraint(
+				Must.Have.Property(nameof(OptimalChangeSolution.IsSolution), Is.False),
 				Is.Empty,
 				Must.Have.Property(nameof(OptimalChangeSolution.Count), Is.EqualTo(0)));
 		}

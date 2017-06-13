@@ -47,5 +47,7 @@ namespace NMoneys.Change
 		public QuantifiedDenomination this[int idx] => _denominations[idx];
 		public uint Count => (uint)_denominations.Length;
 		public uint TotalCount => (uint)_denominations.Sum(d => d.Quantity);
+
+		public bool IsSolution => Count > 0;
 	}
 }

@@ -1,5 +1,8 @@
 ﻿using System.Linq;
+using NMoneys.Change;
+using NUnit.Framework;
 using NUnit.Framework.Constraints;
+using Testing.Commons;
 using Testing.Commons.NUnit.Constraints;
 
 namespace NMoneys.Tests.Change.Support
@@ -9,6 +12,7 @@ namespace NMoneys.Tests.Change.Support
 		public OptimalChangeConstraint(QDenomination[] denominations)
 		{
 			Delegate = new ConjunctionConstraint(
+				Must.Have.Property(nameof(OptimalChangeSolution.IsSolution), Is.True),
 				new ConstrainedEnumerable(
 					denominations.Select(d => new QuantifiedDenominationConstraint(d))
 					));
