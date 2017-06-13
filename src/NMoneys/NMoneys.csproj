@@ -59,7 +59,7 @@
     <Compile Include="Change\Operations.CountOptimalChange.cs" />
     <Compile Include="Change\Operations.CountWaysToMakeChange.cs" />
     <Compile Include="Change\Denomination.cs" />
-    <Compile Include="Change\Operations.GetChange.cs" />
+    <Compile Include="Change\Operations.MakeChange.cs" />
     <Compile Include="Change\Positive.cs" />
     <Compile Include="Change\QuantifiedDenomination.cs" />
     <Compile Include="Currency.Serialization.Xml.net.cs" />

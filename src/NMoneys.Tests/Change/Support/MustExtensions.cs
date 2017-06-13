@@ -17,9 +17,9 @@ namespace NMoneys.Tests.Change.Support
 		}
 
 		public static IncompleteChangeConstraint IncompleteChange(this Must.NotBeEntryPoint entry,
-			Money remainder, params QDenomination[] denominations)
+			Money remainder, uint totalCount, params QDenomination[] denominations)
 		{
-			return new IncompleteChangeConstraint(remainder, denominations);
+			return new IncompleteChangeConstraint(remainder, totalCount, denominations);
 		}
 
 		public static QDenomination x(this int quantity, int denominationValue)

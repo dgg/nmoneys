@@ -5,9 +5,9 @@ using System.Linq;
 namespace NMoneys.Change
 {
 	[CLSCompliant(false)]
-	public static class GetChangeOperation
+	public static class MakeChangeOperation
 	{
-		public static ChangeSolution GetChange(this Money money, params Denomination[] denominations)
+		public static ChangeSolution MakeChange(this Money money, params Denomination[] denominations)
 		{
 			Positive.Amounts.AssertArgument(nameof(money), money.Amount);
 
@@ -37,9 +37,9 @@ namespace NMoneys.Change
 			return solution;
 		}
 
-		public static ChangeSolution GetChange(this Money money, params decimal[] denominationValues)
+		public static ChangeSolution MakeChange(this Money money, params decimal[] denominationValues)
 		{
-			return money.GetChange(denominationValues.Select(v => new Denomination(v)).ToArray());
+			return money.MakeChange(denominationValues.Select(v => new Denomination(v)).ToArray());
 		}
 	}
 }

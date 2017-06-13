@@ -68,7 +68,7 @@
     <Compile Include="CurrencyTester.Code.net.cs" />
     <Compile Include="CurrencyTester.Creation.net.cs" />
     <Compile Include="CustomConstraints\Must.Extensions.net.cs" />
-    <Compile Include="Change\GetChangeTester.cs" />
+    <Compile Include="Change\MakeChangeTester.cs" />
     <Compile Include="MoneyTester.Creation.net.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="..\NMoneys\Properties\NMoneys_AssemblyInfo.cs">

@@ -8,50 +8,50 @@ using Testing.Commons;
 namespace NMoneys.Tests.Change
 {
 	[TestFixture]
-	public class GetChangeTester
+	public class MakeChangeTester
 	{
 		[Test]
 		[TestCase(0), TestCase(-1)]
-		public void GetChange_NotPositive_Exception(decimal notPositive)
+		public void MakeChange_NotPositive_Exception(decimal notPositive)
 		{
 			Denomination[] any = { new Denomination(1m) };
 
-			Assert.That(()=> new Money(notPositive).GetChange(any), Throws.InstanceOf<ArgumentOutOfRangeException>());
+			Assert.That(()=> new Money(notPositive).MakeChange(any), Throws.InstanceOf<ArgumentOutOfRangeException>());
 		}
 
 		[Test]
-		public void GetChange_NoDenominations_EmptySolution()
+		public void MakeChange_NoDenominations_EmptySolution()
 		{
 			var subject = new Money(5m);
 
-			var emptySolution = subject.GetChange(new Denomination[0]);
+			var emptySolution = subject.MakeChange(new Denomination[0]);
 
 			Assert.That(emptySolution, Must.Be.NoChange(remainder: subject));
 		}
 
 		[Test]
-		public void GetChange_NotEnoughToMakeChange_EmptySolution()
+		public void MakeChange_NotEnoughToMakeChange_EmptySolution()
 		{
 			var subject = new Money(3m);
-			var emptySolution = subject.GetChange(5m);
+			var emptySolution = subject.MakeChange(5m);
 
 			Assert.That(emptySolution, Must.Be.NoChange(remainder: subject));
 		}
 
 		[Test]
-		public void GetChange_IdentityChange_OneDenominationAndNoRemainder()
+		public void MakeChange_IdentityChange_OneDenominationAndNoRemainder()
 		{
 			var subject = new Money(5m);
-			var change = subject.GetChange(5m);
+			var change = subject.MakeChange(5m);
 
 			Assert.That(change, Must.Be.CompleteChange(1, 1.x(5)));
 		}
 
 		[Test]
-		public void GetChange_ChangePossible_MultipleDenominationsNoRemainder()
+		public void MakeChange_ChangePossible_MultipleDenominationsNoRemainder()
 		{
 			var subject = new Money(5m);
-			var wholeSolution = subject.GetChange(1m, 3m, 2m);
+			var wholeSolution = subject.MakeChange(1m, 3m, 2m);
 
 			Assert.That(wholeSolution, Must.Be.CompleteChange(2, 1.x(3), 1.x(2)));
 		}
@@ -89,23 +89,23 @@ namespace NMoneys.Tests.Change
 		};
 
 		[Test, TestCaseSource(nameof(_greedySuboptimal))]
-		public void GetChange_NonOptimalForGreedy_SubOptimalSolution(decimal amount, decimal[] denominationValues, uint totalCount, QDenomination[] solution)
+		public void MakeChange_NonOptimalForGreedy_SubOptimalSolution(decimal amount, decimal[] denominationValues, uint totalCount, QDenomination[] solution)
 		{
 			var subject = new Money(amount);
 
-			var subOptimalSolution = subject.GetChange(denominationValues);
+			var subOptimalSolution = subject.MakeChange(denominationValues);
 
 			Assert.That(subOptimalSolution, Must.Be.CompleteChange(totalCount, solution));
 		}
 
 		[Test]
-		public void GetChange_NotCompleteSolution_QuantifiedAndRemainder()
+		public void MakeChange_NotCompleteSolution_QuantifiedAndRemainder()
 		{
 			var subject = new Money(7m);
 
-			var incompleteSolution = subject.GetChange(4m, 2m);
+			var incompleteSolution = subject.MakeChange(4m, 2m);
 
-			Assert.That(incompleteSolution, Must.Not.Be.IncompleteChange(1m.Xxx(), 
+			Assert.That(incompleteSolution, Must.Not.Be.IncompleteChange(1m.Xxx(), 2,
 				1.x(4), 1.x(2)));
 			Assert.That(incompleteSolution.TotalCount, Is.EqualTo(2));
 		}
