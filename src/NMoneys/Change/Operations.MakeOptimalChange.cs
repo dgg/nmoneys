@@ -72,6 +72,7 @@ namespace NMoneys.Change
 		/// <param name="money">The monetary quantity to make optimal change of.</param>
 		/// <param name="denominationValues">The monetary denomination values for which the optimal change is made.</param>
 		/// <returns>A solution with the denominations used for making optimal change.</returns>
+		[Pure]
 		public static OptimalChangeSolution MakeOptimalChange(this Money money, params decimal[] denominationValues)
 		{
 			return money.MakeOptimalChange(denominationValues.Select(v => new Denomination(v)).ToArray());

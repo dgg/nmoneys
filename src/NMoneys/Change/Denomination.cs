@@ -46,6 +46,7 @@ namespace NMoneys.Change
 			return Value.ToString(CultureInfo.InvariantCulture);
 		}
 
+		/// <inheritdoc />
 		[Pure]
 		public string ToString(string format, IFormatProvider formatProvider)
 		{
