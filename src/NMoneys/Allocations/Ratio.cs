@@ -62,7 +62,7 @@ namespace NMoneys.Allocations
 		/// <returns>
 		/// true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
 		/// </returns>
-		/// <param name="other">An <see cref="Ratio"/> to compare with this object.</param>
+		/// <param name="other">A <see cref="Ratio"/> to compare with this object.</param>
 		public bool Equals(Ratio other)
 		{
 			return other.Value == Value;

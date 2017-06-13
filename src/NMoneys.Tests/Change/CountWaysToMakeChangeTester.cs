@@ -26,7 +26,7 @@ namespace NMoneys.Tests.Change
 		public void CountWaysToMakeChange_NullDenominations_Exception()
 		{
 			Denomination[] @null = null;
-			Assert.That(()=>5m.Usd().CountWaysToMakeChange(@null), Throws.ArgumentNullException);
+			Assert.That(() => 5m.Usd().CountWaysToMakeChange(@null), Throws.ArgumentNullException);
 		}
 
 		[Test]
@@ -41,7 +41,7 @@ namespace NMoneys.Tests.Change
 			Assert.That(7m.Eur().CountWaysToMakeChange(7m), Is.EqualTo(1));
 		}
 
-		private static readonly object[] _changeCountSamples = 
+		private static readonly object[] _changeCountSamples =
 		{
 			new object[] {4m, new decimal[]{1, 2, 3}, 4u},
 			new object[] {10m, new decimal[]{2, 5, 3, 6}, 5u},
