@@ -56,7 +56,6 @@
     <Compile Include="Change\IntegralDenomination.cs" />
     <Compile Include="Change\OptimalChangeSolution.cs" />
     <Compile Include="Change\Operations.MakeOptimalChange.cs" />
-    <Compile Include="Change\Operations.CountOptimalChange.cs" />
     <Compile Include="Change\Operations.CountWaysToMakeChange.cs" />
     <Compile Include="Change\Denomination.cs" />
     <Compile Include="Change\Operations.MakeChange.cs" />
