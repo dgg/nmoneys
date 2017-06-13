@@ -11,7 +11,7 @@ namespace NMoneys.Change
 	/// Represents a possible solution to the problem of finding a way to make change for a particular monetary amount given a set of denominations.
 	/// <remarks>The solution might not be optimal in terms of number of denominations used as it is computed using a greedy algorithm.</remarks>
 	/// </summary>
-	public class ChangeSolution : IEnumerable<QuantifiedDenomination>
+	public class ChangeSolution : IEnumerable<QuantifiedDenomination>, IFormattable
 	{
 		private readonly QuantifiedDenomination[] _denominations;
 		internal ChangeSolution(IEnumerable<Denomination> usedDenominations, Money remainder)
@@ -82,11 +82,32 @@ namespace NMoneys.Change
 		public bool IsPartial => IsSolution && Remainder.HasValue;
 
 		/// <inheritdoc />
-
 		[Pure]
 		public override string ToString()
 		{
-			return Stringifier.Default.Stringify(_denominations);
+			string representation = Stringifier.Default.Stringify(_denominations);
+			if (Remainder.HasValue)
+			{
+				representation += $" + {Stringifier.Default.StringifyIt(Remainder.Value)}";
+			}
+			return representation;
+		}
+
+		/// <summary>
+		/// Formats the value of the current instance using the specified format.
+		/// </summary>
+		/// <returns>A <see cref="string"/> containing the value of the current instance based on the specified format.</returns>
+		/// <param name="format">The <see cref="string"/> specifying the format to  apply to each <see cref="QuantifiedDenomination"/>.
+		/// -or- 
+		/// null to use the default format defined for the type of the <see cref="IFormattable"/> implementation.
+		/// </param>
+		/// <param name="formatProvider">The <see cref="IFormatProvider"/> to use to format the value.
+		/// -or- 
+		/// null to obtain the numeric format information from the current locale setting of the operating system. 
+		/// </param>
+		public string ToString(string format, IFormatProvider formatProvider)
+		{
+			return Stringifier.Default.Stringify(_denominations, d => d.ToString(format, formatProvider));
 		}
 	}
 }

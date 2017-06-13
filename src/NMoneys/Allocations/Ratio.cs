@@ -36,7 +36,7 @@ namespace NMoneys.Allocations
 		/// </returns>
 		public override string ToString()
 		{
-			return Value.ToString(CultureInfo.InvariantCulture);
+			return Value.ToString(CultureInfo.CurrentCulture);
 		}
 
 		/// <summary>

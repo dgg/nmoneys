@@ -43,10 +43,21 @@ namespace NMoneys.Change
 		[Pure]
 		public override string ToString()
 		{
-			return Value.ToString(CultureInfo.InvariantCulture);
+			return Value.ToString(CultureInfo.CurrentCulture);
 		}
 
-		/// <inheritdoc />
+		/// <summary>
+		/// Formats the value of the current instance using the specified format.
+		/// </summary>
+		/// <returns>A <see cref="string"/> containing the value of the current instance in the specified format.</returns>
+		/// <param name="format">The <see cref="string"/> specifying the format to use.                   
+		/// -or- 
+		/// null to use the default format defined for the type of the <see cref="IFormattable"/> implementation.
+		/// </param>
+		/// <param name="formatProvider">The <see cref="IFormatProvider"/> to use to format the value.
+		/// -or- 
+		/// null to obtain the numeric format information from the current locale setting of the operating system. 
+		/// </param>
 		[Pure]
 		public string ToString(string format, IFormatProvider formatProvider)
 		{

@@ -53,9 +53,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Change\OptimalChangeSolutionTester.cs" />
+    <Compile Include="Change\ChangeSolutionTester.cs" />
     <Compile Include="Change\MakeOptimalChangeTester.cs" />
     <Compile Include="Change\CountWaysToMakeChangeTester.cs" />
     <Compile Include="Change\DenominationTester.cs" />
+    <Compile Include="Change\QuantifiedDenominationTester.cs" />
     <Compile Include="Change\Support\NoChangeConstraint.cs" />
     <Compile Include="Change\Support\NoOptimalChangeConstraint.cs" />
     <Compile Include="Change\Support\OptimalChangeConstraint.cs" />

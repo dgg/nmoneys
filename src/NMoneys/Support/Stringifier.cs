@@ -29,6 +29,16 @@ namespace NMoneys.Support
 			return _startToken + string.Join(_separatorToken, collection.Select(stringifier).ToArray()) + _endToken;
 		}
 
+		public string StringifyIt<T>(T obj)
+		{
+			return StringifyIt(obj, each => each.ToString());
+		}
+
+		public string StringifyIt<T>(T obj, Func<T, string> stringifier)
+		{
+			return _startToken + stringifier(obj) + _endToken;
+		}
+
 		public static readonly  Stringifier Default = new Stringifier();
 	}
 }

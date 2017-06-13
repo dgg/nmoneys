@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
+using NMoneys.Support;
 
 namespace NMoneys.Change
 {
 	/// <summary>
 	/// Represents a currency denomination that has been used to make change of a monetary amount.
 	/// </summary>
-	public class QuantifiedDenomination
+	public class QuantifiedDenomination : IFormattable
 	{
 		internal QuantifiedDenomination(Denomination denomination, uint quantity = 0u)
 		{
@@ -31,11 +32,41 @@ namespace NMoneys.Change
 		[CLSCompliant(false), Pure]
 		public uint Quantity { get; }
 
-		/// <inheritdoc />
+		private static readonly string _formatPattern = "{0} * {1}";
+		/// <summary>
+		/// Converts the numeric value of this instance to its equivalent string representation. 
+		/// </summary>
+		/// <returns>
+		/// A string that represents the value of this instance.
+		/// </returns>
 		[Pure]
 		public override string ToString()
 		{
-			return $"{Quantity.ToString(CultureInfo.InvariantCulture)} x {Denomination}";
+			string representation = string.Format(_formatPattern,
+				Quantity.ToString(CultureInfo.InvariantCulture),
+				Denomination);
+			return Stringifier.Default.StringifyIt(representation);
+		}
+
+		/// <summary>
+		/// Formats the value of the current instance using the specified format.
+		/// </summary>
+		/// <returns>A <see cref="string"/> containing the value of the current instance based on the specified format.</returns>
+		/// <param name="format">The <see cref="string"/> specifying the format to  apply to <see cref="Denomination"/>.
+		/// -or- 
+		/// null to use the default format defined for the type of the <see cref="IFormattable"/> implementation.
+		/// </param>
+		/// <param name="formatProvider">The <see cref="IFormatProvider"/> to use to format the value.
+		/// -or- 
+		/// null to obtain the numeric format information from the current locale setting of the operating system. 
+		/// </param>
+		[Pure]
+		public string ToString(string format, IFormatProvider formatProvider)
+		{
+			string representation = string.Format(_formatPattern,
+				Quantity.ToString(CultureInfo.InvariantCulture),
+				Denomination.ToString(format, formatProvider));
+			return Stringifier.Default.StringifyIt(representation);
 		}
 
 		// Given a collection of possibly repeated denominations, tallies up the different denominations into a colletion
@@ -43,7 +74,7 @@ namespace NMoneys.Change
 		internal static IEnumerable<QuantifiedDenomination> Aggregate(IEnumerable<Denomination> denominations)
 		{
 			var aggregation = denominations.GroupBy(_ => _)
-				.Select(g => new QuantifiedDenomination(g.Key, (uint) g.Count()));
+				.Select(g => new QuantifiedDenomination(g.Key, (uint)g.Count()));
 			return aggregation;
 		}
 	}

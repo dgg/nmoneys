@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using NMoneys.Support;
 
 namespace NMoneys.Change
 {
@@ -11,7 +12,7 @@ namespace NMoneys.Change
 	/// Represents a possible solution to the problem of finding an optimal way to make change for a particular monetary amount given a set of denominations.
 	/// <remarks>The solution is optimal in terms of number of denominations used.</remarks>
 	/// </summary>
-	public class OptimalChangeSolution : IEnumerable<QuantifiedDenomination>
+	public class OptimalChangeSolution : IEnumerable<QuantifiedDenomination>, IFormattable
 	{
 		private readonly QuantifiedDenomination[] _denominations;
 
@@ -83,5 +84,29 @@ namespace NMoneys.Change
 		/// <returns>true if there was a solution to the make optimal change problem; false otherwise.</returns>
 		[Pure]
 		public bool IsSolution => Count > 0;
+
+		/// <inheritdoc />
+		[Pure]
+		public override string ToString()
+		{
+			return Stringifier.Default.Stringify(_denominations);
+		}
+
+		/// <summary>
+		/// Formats the value of the current instance using the specified format.
+		/// </summary>
+		/// <returns>A <see cref="string"/> containing the value of the current instance based on the specified format.</returns>
+		/// <param name="format">The <see cref="string"/> specifying the format to  apply to each <see cref="QuantifiedDenomination"/>.
+		/// -or- 
+		/// null to use the default format defined for the type of the <see cref="IFormattable"/> implementation.
+		/// </param>
+		/// <param name="formatProvider">The <see cref="IFormatProvider"/> to use to format the value.
+		/// -or- 
+		/// null to obtain the numeric format information from the current locale setting of the operating system. 
+		/// </param>
+		public string ToString(string format, IFormatProvider formatProvider)
+		{
+			return Stringifier.Default.Stringify(_denominations, d => d.ToString(format, formatProvider));
+		}
 	}
 }
