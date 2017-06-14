@@ -60,7 +60,7 @@ namespace NMoneys
 		[EnumMember]
 		AWG = 533,
 		/// <summary>
-		/// Azerbaijanian Manat
+		/// Azerbaijan Manat
 		/// </summary>
 		[EnumMember, CanonicalCulture("az-Latn-AZ")]
 		AZN = 944,
@@ -400,7 +400,7 @@ namespace NMoneys
 		[EnumMember, CanonicalCulture("ky-KG")]
 		KGS = 417,
 		/// <summary>
-		/// Comoro Franc
+		/// Comorian Franc
 		/// </summary>
 		[EnumMember]
 		KMF = 174,
@@ -790,7 +790,7 @@ namespace NMoneys
 		[EnumMember]
 		USS = 998,
 		/// <summary>
-		/// >Uruguay Peso en Unidades Indexadas (URUIURUI)
+		/// >Uruguay Peso en Unidades Indexadas (UI)
 		/// </summary>
 		[EnumMember, CanonicalCulture("es-UY")]
 		UYI = 940,

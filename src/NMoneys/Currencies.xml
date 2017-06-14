@@ -872,7 +872,7 @@
 		<negativePattern>5</negativePattern>
 	</currency>
 	<currency code="KMF">
-		<englishName>Comoro Franc</englishName>
+		<englishName>Comorian Franc</englishName>
 		<nativeName>Comoro Franc</nativeName>
 		<symbol>67 70</symbol>
 		<significantDecimalDigits>0</significantDecimalDigits>
