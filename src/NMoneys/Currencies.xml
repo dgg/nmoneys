@@ -104,7 +104,7 @@
 		<entity>fnof</entity>
 	</currency>
 	<currency code="AZN">
-		<englishName>Azerbaijanian Manat</englishName>
+		<englishName>Azerbaijan Manat</englishName>
 		<nativeName>Azərbaycan Manatı</nativeName>
 		<symbol>8380</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
@@ -1712,7 +1712,7 @@
 		<negativePattern>0</negativePattern>
 	</currency>
 	<currency code="USS">
-		<englishName>US Dollar (Same day)</englishName>
+		<englishName>US Dollar (Same day)</englishName>a
 		<nativeName>US Dollar (Same day)</nativeName>
 		<symbol>36</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
