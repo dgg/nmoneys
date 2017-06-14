@@ -1723,8 +1723,8 @@
 		<negativePattern>0</negativePattern>
 	</currency>
 	<currency code="UYI">
-		<englishName>Uruguay Peso en Unidades Indexadas (URUIURUI)</englishName>
-		<nativeName>Uruguay Peso en Unidades Indexadas (URUIURUI)</nativeName>
+		<englishName>Uruguay Peso en Unidades Indexadas (UI)</englishName>
+		<nativeName>Uruguay Peso en Unidades Indexadas (UI)</nativeName>
 		<symbol>36 85</symbol>
 		<significantDecimalDigits>0</significantDecimalDigits>
 		<decimalSeparator>,</decimalSeparator>
