@@ -938,8 +938,8 @@
 		<negativePattern>8</negativePattern>
 	</currency>
 	<currency code="LAK">
-		<englishName>Kip</englishName>
-		<nativeName>ກີບ</nativeName>
+		<englishName>Lao Kip</englishName>
+		<nativeName>ເງີນກີບລາວ</nativeName>
 		<symbol>8365</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>,</decimalSeparator>

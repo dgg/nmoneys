@@ -435,7 +435,7 @@ namespace NMoneys
 		[EnumMember, CanonicalCulture("kk-KZ")]
 		KZT = 398,
 		/// <summary>
-		/// Kip
+		/// Lao Kip
 		/// </summary>
 		[EnumMember, CanonicalCulture("lo-LA")]
 		LAK = 418,
