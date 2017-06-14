@@ -651,8 +651,8 @@
 		<negativePattern>0</negativePattern>
 	</currency>
 	<currency code="GNF">
-		<englishName>Guinea Franc</englishName>
-		<nativeName>Guinea Franc</nativeName>
+		<englishName>Guinean Franc</englishName>
+		<nativeName>Franc Guinéen</nativeName>
 		<symbol>70</symbol>
 		<significantDecimalDigits>0</significantDecimalDigits>
 		<decimalSeparator>.</decimalSeparator>

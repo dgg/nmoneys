@@ -305,7 +305,7 @@ namespace NMoneys
 		[EnumMember]
 		GMD = 270,
 		/// <summary>
-		/// Guinea Franc
+		/// Guinean Franc
 		/// </summary>
 		[EnumMember]
 		GNF = 324,
