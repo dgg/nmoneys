@@ -1,6 +1,8 @@
+using System;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using NMoneys.Extensions;
+using NMoneys.Support;
 
 namespace NMoneys.Change
 {
@@ -22,10 +24,13 @@ namespace NMoneys.Change
 		/// <param name="money">The monetary quantity to make optimal change of.</param>
 		/// <param name="denominations">The monetary denominations for which the optimal change is made.</param>
 		/// <returns>A solution with the denominations used for making optimal change.</returns>
+		/// <exception cref="ArgumentOutOfRangeException">If <paramref name="money"/> is not positive.</exception>
+		/// <exception cref="ArgumentNullException">If <paramref name="denominations"/> is null.</exception>
 		[Pure]
 		public static OptimalChangeSolution MakeOptimalChange(this Money money, params Denomination[] denominations)
 		{
 			Positive.Amounts.AssertArgument(nameof(money), money.Amount);
+			Guard.AgainstNullArgument(nameof(denominations), denominations);
 
 			long n = money.MinorIntegralAmount;
 			int m = denominations.Length;
@@ -73,9 +78,13 @@ namespace NMoneys.Change
 		/// <param name="money">The monetary quantity to make optimal change of.</param>
 		/// <param name="denominationValues">The monetary denomination values for which the optimal change is made.</param>
 		/// <returns>A solution with the denominations used for making optimal change.</returns>
+		/// <exception cref="ArgumentOutOfRangeException">If <paramref name="money"/> is not positive.</exception>
+		/// <exception cref="ArgumentNullException">If <paramref name="denominationValues"/> is null.</exception>
 		[Pure]
 		public static OptimalChangeSolution MakeOptimalChange(this Money money, params decimal[] denominationValues)
 		{
+			Guard.AgainstNullArgument(nameof(denominationValues), denominationValues);
+
 			return money.MakeOptimalChange(denominationValues.Select(v => new Denomination(v)).ToArray());
 		}
 	}

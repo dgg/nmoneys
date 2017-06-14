@@ -30,6 +30,13 @@ namespace NMoneys.Tests.Change
 		}
 
 		[Test]
+		public void MakeChange_NullDenominations_Exception()
+		{
+			Denomination[] @null = null;
+			Assert.That(() => 5m.Usd().MakeChange(@null), Throws.ArgumentNullException);
+		}
+
+		[Test]
 		public void MakeChange_NotEnoughToMakeChange_EmptySolution()
 		{
 			var subject = new Money(3m);

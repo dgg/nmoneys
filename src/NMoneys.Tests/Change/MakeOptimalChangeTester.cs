@@ -1,5 +1,6 @@
 ﻿using System;
 using NMoneys.Change;
+using NMoneys.Extensions;
 using NMoneys.Tests.Change.Support;
 using NUnit.Framework;
 using Testing.Commons;
@@ -26,6 +27,13 @@ namespace NMoneys.Tests.Change
 			var emptySolution = subject.MakeOptimalChange(new Denomination[0]);
 
 			Assert.That(emptySolution, Must.Be.NoChange());
+		}
+
+		[Test]
+		public void MakeChange_NullDenominations_Exception()
+		{
+			Denomination[] @null = null;
+			Assert.That(() => 5m.Usd().MakeOptimalChange(@null), Throws.ArgumentNullException);
 		}
 
 		[Test]

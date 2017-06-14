@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using NMoneys.Support;
 
 namespace NMoneys.Change
 {
@@ -19,10 +21,13 @@ namespace NMoneys.Change
 		/// <param name="money">The monetary quantity to make change of.</param>
 		/// <param name="denominations">The monetary denominations for which the change is made.</param>
 		/// <returns>A solution with the denominations used for making change.</returns>
+		/// <exception cref="ArgumentOutOfRangeException">If <paramref name="money"/> is not positive.</exception>
+		/// <exception cref="ArgumentNullException">If <paramref name="denominations"/> is null.</exception>
 		[Pure]
 		public static ChangeSolution MakeChange(this Money money, params Denomination[] denominations)
 		{
 			Positive.Amounts.AssertArgument(nameof(money), money.Amount);
+			Guard.AgainstNullArgument(nameof(denominations), denominations);
 
 			Denomination[] orderedDenominations = denominations.OrderByDescending(d => d.Value).ToArray();
 			decimal remainder = money.Amount;
@@ -59,9 +64,13 @@ namespace NMoneys.Change
 		/// <param name="money">The monetary quantity to make change of.</param>
 		/// <param name="denominationValues">The monetary denomination values for which the change is made.</param>
 		/// <returns>A solution with the denominations used for making change.</returns>
+		/// <exception cref="ArgumentOutOfRangeException">If <paramref name="money"/> is not positive.</exception>
+		/// <exception cref="ArgumentNullException">If <paramref name="denominationValues"/> is null.</exception>
 		[Pure]
 		public static ChangeSolution MakeChange(this Money money, params decimal[] denominationValues)
 		{
+			Guard.AgainstNullArgument(nameof(denominationValues), denominationValues);
+
 			return money.MakeChange(denominationValues.Select(v => new Denomination(v)).ToArray());
 		}
 	}
