@@ -3,7 +3,7 @@
 	<metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
 		<id>NMoneys.Serialization.Json_NET</id>
 		<title>NMoneys Serialization: Json.NET</title>
-		<version>3.1.0.0</version>
+		<version>4.0.0.0</version>
 		<authors>Daniel González García</authors>
 		<licenseUrl>http://www.opensource.org/licenses/bsd-license.php</licenseUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -16,10 +16,21 @@
 		<iconUrl>https://nugetgallery.blob.core.windows.net/icons/NMoneys.2.0.0.0.png</iconUrl>
 		<tags>.net currency money iso iso4217 serialization newtonsoft Json.NET JSON</tags>
 		<dependencies>
-			<dependency id="nmoneys" version="4.0.0.0" />
+			<group targetFramework="netcoreapp1.0">
+				<dependency id="nmoneys" version="5.0.0.0" />
+				<dependency id="newtonsoft.json" version="9.0.1" />
+			</group>
+			<group targetFramework="net40">
+				<dependency id="nmoneys" version="4.0.0.0" />
+				<dependency id="newtonsoft.json" version="4.5.11" />
+			</group>
 		</dependencies>
+		<contentFiles>
+			<files include="cs\**\*.*" buildAction="Compile" />
+		</contentFiles>
 	</metadata>
 	<files>
 		<file src="content\**\Json_NET.cs" target="content" />
+		<file src="contentfiles\**\Json_NET.cs" target="contentFiles" />
 	</files>
 </package>

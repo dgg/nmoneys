@@ -17,6 +17,7 @@ function Ensure-Release-Folders($base)
 		"$base\release\lib\net40-client\", 
 		"$base\release\lib\netstandard1.3\", 
 		"$base\release\content\Infrastructure\Serialization\", 
+		"$base\release\contentFiles\cs\any\Infrastructure\Serialization\",
 		"$base\release\signed\net\",
 		"$base\release\signed\netstandard\"
 	) |
@@ -94,21 +95,25 @@ function copy-doc($base){
 function copy-sources()
 {
 	$src = Join-Path $base src\NMoneys.Serialization\
-	$release_src_dir = Join-Path $base release\content\Infrastructure\Serialization
+	$release_content_dir = Join-Path $base release\content\Infrastructure\Serialization
 	
 	Get-ChildItem -Path ("$src\Json_NET", "$src\Service_Stack", "$src\Mongo_DB", "$src\Entity_Framework") -Filter "*.cs" |
-		Copy-Item -Destination $release_src_dir
+		Copy-Item -Destination $release_content_dir
+
+	$release_contentFiles_dir = Join-Path $base release\contentFiles\cs\any\Infrastructure\Serialization
+	Get-ChildItem -Path ("$src\Json_NET") -Filter "*.cs" |
+		Copy-Item -Destination $release_contentFiles_dir
 
 	Get-ChildItem -Path "$src\Json_Net" -Filter "*.cs" |
 		Get-Content |
 		% {$_ -replace "Newtonsoft", "Raven.Imports.Newtonsoft"} | 
 		% {$_ -replace ".Json_NET", ".Raven_DB"} |
-		Set-Content "$release_src_dir\Raven_DB.cs"
+		Set-Content "$release_content_dir\Raven_DB.cs"
 
 	$src = Join-Path $base src\NMoneys.Serialization.Mongo_DB\
 	
 	Get-ChildItem -Path "$src\" -Filter "*.cs" |
-		Copy-Item -Destination $release_src_dir
+		Copy-Item -Destination $release_content_dir
 }
 
 function Generate-Packages($base)
