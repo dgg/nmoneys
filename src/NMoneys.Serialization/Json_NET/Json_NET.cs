@@ -17,6 +17,7 @@ namespace NMoneys.Serialization.Json_NET
 	/// Property casing must be configured apart from this converter using, for instance, another
 	/// <see cref="IContractResolver"/>
 	/// </para>
+	/// <para>This converter can handle conversion to and from <see cref="Nullable{Money}"/> as well.</para>
 	/// </remarks>
 	/// <example>
 	/// <code>{"Amount" : 123.4, "Currency" : {"IsoCode" : "XXX"}}</code>
@@ -70,6 +71,7 @@ namespace NMoneys.Serialization.Json_NET
 	/// Property casing must be configured apart from this converter using, for instance, another
 	/// <see cref="IContractResolver"/>
 	/// </para>
+	/// <para>This converter can handle conversion to and from <see cref="Nullable{Money}"/> as well.</para>
 	/// </remarks>
 	/// <example>
 	/// <code>{"Amount" : 123.4, "Currency" : "XXX"}</code>
