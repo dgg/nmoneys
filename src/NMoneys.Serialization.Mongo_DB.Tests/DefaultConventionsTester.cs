@@ -65,7 +65,7 @@ namespace NMoneys.Serialization.Mongo_DB.Tests
 
 			string actual = toSerialize.ToJson();
 
-			Assert.That(actual, Is.EqualTo("{ 'Amount' : 14.3, 'Currency' : { 'IsoCode' : 'XTS' } }").AsJson());
+			Assert.That(actual, Is.EqualTo("{ 'Amount' : NumberDecimal('14.3'), 'Currency' : { 'IsoCode' : 'XTS' } }").AsJson());
 		}
 
 		[Test]
@@ -77,7 +77,7 @@ namespace NMoneys.Serialization.Mongo_DB.Tests
 
 			string actual = notNull.ToJson();
 
-			Assert.That(actual, Is.EqualTo("{ 'Amount' : 14.3, 'Currency' : { 'IsoCode' : 'XTS' } }").AsJson());
+			Assert.That(actual, Is.EqualTo("{ 'Amount' : NumberDecimal('14.3'), 'Currency' : { 'IsoCode' : 'XTS' } }").AsJson());
 		}
 
 		[Test]
@@ -105,7 +105,7 @@ namespace NMoneys.Serialization.Mongo_DB.Tests
 
 			string actual = toSerialize.ToJson();
 
-			Assert.That(actual, Is.EqualTo("{ 'Amount' : 14.3, 'Currency' : 963 }").AsJson());
+			Assert.That(actual, Is.EqualTo("{ 'Amount' : NumberDecimal('14.3'), 'Currency' : 963 }").AsJson());
 		}
 
 		[Test]
@@ -117,7 +117,7 @@ namespace NMoneys.Serialization.Mongo_DB.Tests
 
 			string actual = notNull.ToJson();
 
-			Assert.That(actual, Is.EqualTo("{ 'Amount' : 14.3, 'Currency' : 963 }").AsJson());
+			Assert.That(actual, Is.EqualTo("{ 'Amount' : NumberDecimal('14.3'), 'Currency' : 963 }").AsJson());
 		}
 
 		[Test]
@@ -141,7 +141,7 @@ namespace NMoneys.Serialization.Mongo_DB.Tests
 
 			string actual = notNull.ToJson();
 
-			Assert.That(actual, Is.EqualTo("{ 'PropName' : { 'Amount' : 14.3, 'Currency' : 963 } }").AsJson());
+			Assert.That(actual, Is.EqualTo("{ 'PropName' : { 'Amount' : NumberDecimal('14.3'), 'Currency' : 963 } }").AsJson());
 		}
 
 		[Test]

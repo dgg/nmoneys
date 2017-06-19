@@ -37,7 +37,7 @@ namespace NMoneys.Serialization.Mongo_DB.Tests
 			_proxy.Serializer = new DefaultMoneySerializer();
 
 			string actual = toSerialize.ToJson();
-			Assert.That(actual, Is.EqualTo("{ 'amount' : 14.3, 'currency' : 'XTS' }").AsJson());
+			Assert.That(actual, Is.EqualTo("{ 'amount' : NumberDecimal('14.3'), 'currency' : 'XTS' }").AsJson());
 		}
 
 		[Test]
@@ -48,7 +48,7 @@ namespace NMoneys.Serialization.Mongo_DB.Tests
 			_proxy.Serializer = new DefaultMoneySerializer();
 
 			string actual = notNull.ToJson();
-			Assert.That(actual, Is.EqualTo("{ 'amount' : 14.3, 'currency' : 'XTS' }").AsJson());
+			Assert.That(actual, Is.EqualTo("{ 'amount' : NumberDecimal('14.3'), 'currency' : 'XTS' }").AsJson());
 		}
 
 		[Test]
@@ -75,11 +75,11 @@ namespace NMoneys.Serialization.Mongo_DB.Tests
 
 			string actual = toSerialize.ToJson();
 
-			Assert.That(actual, Is.EqualTo("{ 'amount' : 14.3, 'currency' : { 'isoCode' : 'XTS' } }").AsJson());
+			Assert.That(actual, Is.EqualTo("{ 'amount' : NumberDecimal('14.3'), 'currency' : { 'isoCode' : 'XTS' } }").AsJson());
 		}
 
 		[Test]
-		public void Serialization_Canonical_LikeCanonicalJsonSerialization()
+		public void Serialization_Canonical_SortOfLikeCanonicalJsonSerialization()
 		{
 			using (var serializer = new DataContractJsonRoundtripSerializer<Money>( dataContractSurrogate: new DataContractSurrogate()))
 			{
@@ -88,7 +88,13 @@ namespace NMoneys.Serialization.Mongo_DB.Tests
 
 				_proxy.Serializer = new CanonicalMoneySerializer();
 
-				string actual = toSerialize.ToJson().Replace(" ", string.Empty);
+				string actual = toSerialize.ToJson()
+					// spacing
+					.Replace(" ", string.Empty)
+					// non-numerical figure representation
+					.Replace("NumberDecimal(\"", string.Empty)
+					.Replace("\")", string.Empty);
+
 				Assert.That(actual, Is.EqualTo(canonical));
 			}
 		}
@@ -102,7 +108,7 @@ namespace NMoneys.Serialization.Mongo_DB.Tests
 
 			string actual = notNull.ToJson();
 
-			Assert.That(actual, Is.EqualTo("{ 'amount' : 14.3, 'currency' : { 'isoCode' : 'XTS' } }").AsJson());
+			Assert.That(actual, Is.EqualTo("{ 'amount' : NumberDecimal('14.3'), 'currency' : { 'isoCode' : 'XTS' } }").AsJson());
 		}
 
 		[Test]
@@ -125,7 +131,7 @@ namespace NMoneys.Serialization.Mongo_DB.Tests
 			_proxy.Serializer = new CanonicalMoneySerializer();
 
 			string actual = notNull.ToJson();
-			Assert.That(actual, Is.EqualTo("{ 'propName' : { 'amount' : 14.3, 'currency' : { 'isoCode' : 'XTS' } } }").AsJson());
+			Assert.That(actual, Is.EqualTo("{ 'propName' : { 'amount' : NumberDecimal('14.3'), 'currency' : { 'isoCode' : 'XTS' } } }").AsJson());
 		}
 
 		[Test]
@@ -153,7 +159,7 @@ namespace NMoneys.Serialization.Mongo_DB.Tests
 		{
 			var expected = new Money(14.3m, CurrencyIsoCode.XTS);
 
-			string json = "{'amount':14.3,'currency':{'isoCode':'XTS'}}";
+			string json = "{'amount':NumberDecimal('14.3'),'currency':{'isoCode':'XTS'}}";
 
 			_proxy.Serializer = new CanonicalMoneySerializer();
 
@@ -182,7 +188,7 @@ namespace NMoneys.Serialization.Mongo_DB.Tests
 		{
 			var expected = new Money(14.3m, CurrencyIsoCode.XTS);
 
-			string json = "{'name': 'something', 'propName': {'amount':14.3,'currency':{'isoCode':'XTS'}}}";
+			string json = "{'name': 'something', 'propName': {'amount':NumberDecimal('14.3'),'currency':{'isoCode':'XTS'}}}";
 
 			_proxy.Serializer = new CanonicalMoneySerializer();
 
@@ -196,7 +202,7 @@ namespace NMoneys.Serialization.Mongo_DB.Tests
 		{
 			var expected = new Money(14.3m, CurrencyIsoCode.XTS);
 
-			string json = "{'amount':14.3,'currency':{'isoCode':'XTS'}}";
+			string json = "{'amount':NumberDecimal('14.3'),'currency':{'isoCode':'XTS'}}";
 
 			_proxy.Serializer = new CanonicalMoneySerializer();
 
@@ -223,7 +229,7 @@ namespace NMoneys.Serialization.Mongo_DB.Tests
 		{
 			var expected = new Money(14.3m, CurrencyIsoCode.XTS);
 
-			string json = "{'propName':{'amount':14.3,'currency':{'isoCode':'XTS'}}}";
+			string json = "{'propName':{'amount':NumberDecimal('14.3'),'currency':{'isoCode':'XTS'}}}";
 
 			_proxy.Serializer = new CanonicalMoneySerializer();
 
@@ -253,7 +259,7 @@ namespace NMoneys.Serialization.Mongo_DB.Tests
 		{
 			var expected = new Money(14.3m, CurrencyIsoCode.XTS);
 
-			string json = "{'amount':14.3,'currency':'XTS'}";
+			string json = "{'amount':NumberDecimal('14.3'),'currency':'XTS'}";
 
 			_proxy.Serializer = new DefaultMoneySerializer();
 
@@ -267,7 +273,7 @@ namespace NMoneys.Serialization.Mongo_DB.Tests
 		{
 			var expected = new Money(14.3m, CurrencyIsoCode.XTS);
 
-			string json = "{'name': 'something', 'propName': {'amount':14.3,'currency':'XTS'}}}";
+			string json = "{'name': 'something', 'propName': {'amount':NumberDecimal('14.3'),'currency':'XTS'}}}";
 
 			_proxy.Serializer = new DefaultMoneySerializer();
 
@@ -281,7 +287,7 @@ namespace NMoneys.Serialization.Mongo_DB.Tests
 		{
 			var expected = new Money(14.3m, CurrencyIsoCode.XTS);
 
-			string json = "{'amount':14.3,'currency':'XTS'}";
+			string json = "{'amount':NumberDecimal('14.3'),'currency':'XTS'}";
 
 			_proxy.Serializer = new DefaultMoneySerializer();
 

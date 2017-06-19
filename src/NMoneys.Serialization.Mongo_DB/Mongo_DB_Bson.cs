@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Text;
 using MongoDB.Bson;
 using MongoDB.Bson.IO;
@@ -126,6 +127,12 @@ namespace NMoneys.Serialization.Mongo_DB
 
 	internal abstract class MoneyReader : IMoneyReader
 	{
+		protected readonly BsonClassMap<Money> _map;
+
+		protected MoneyReader(BsonClassMap<Money> map)
+		{
+			_map = map;
+		}
 		public Money ReadFrom(BsonDeserializationContext context, BsonDeserializationArgs args)
 		{
 			context.Reader.ReadStartDocument();
@@ -135,26 +142,47 @@ namespace NMoneys.Serialization.Mongo_DB
 			return new Money(amount, currencyCode);
 		}
 
-		protected abstract decimal readAmount(IBsonReader reader);
+		protected virtual decimal readAmount(IBsonReader reader)
+		{
+			BsonMemberMap amountMap = _map.GetMemberMap(m => m.Amount);
+			reader.ReadName(amountMap.ElementName);
+			decimal amount;
+			// support old numeric representations
+			BsonType type = reader.GetCurrentBsonType();
+			switch (type)
+			{
+				case BsonType.Double:
+				{
+					double amountRead = reader.ReadDouble();
+					amount = Convert.ToDecimal(amountRead);
+					break;
+				}
+				case BsonType.Decimal128:
+				{
+					Decimal128 amountRead = reader.ReadDecimal128();
+					amount = Decimal128.ToDecimal(amountRead);
+					break;
+				}
+				case BsonType.String:
+				{
+					string amountRead = reader.ReadString();
+					amount = decimal.Parse(amountRead, CultureInfo.InvariantCulture);
+					break;
+				}
+				default:
+					var message = $"Cannot convert a {type} to a Decimal.";
+					throw new NotSupportedException(message);
+			}
+			
+			return amount;
+		}
+
 		protected abstract CurrencyIsoCode readCurrency(BsonDeserializationContext context, BsonDeserializationArgs args);
 	}
 
 	internal class DefaultMoneyReader : MoneyReader
 	{
-		private readonly BsonClassMap<Money> _map;
-
-		public DefaultMoneyReader(BsonClassMap<Money> map)
-		{
-			_map = map;
-		}
-
-		protected override decimal readAmount(IBsonReader reader)
-		{
-			var amountMap = _map.GetMemberMap(m => m.Amount);
-			double amountRead = reader.ReadDouble(amountMap.ElementName);
-			decimal amount = Convert.ToDecimal(amountRead);
-			return amount;
-		}
+		public DefaultMoneyReader(BsonClassMap<Money> map) : base(map) { }
 
 		protected override CurrencyIsoCode readCurrency(BsonDeserializationContext context, BsonDeserializationArgs args)
 		{
@@ -168,20 +196,7 @@ namespace NMoneys.Serialization.Mongo_DB
 
 	internal class CanonicalMoneyReader : MoneyReader
 	{
-		private readonly BsonClassMap<Money> _map;
-
-		public CanonicalMoneyReader(BsonClassMap<Money> map)
-		{
-			_map = map;
-		}
-
-		protected override decimal readAmount(IBsonReader reader)
-		{
-			BsonMemberMap amountMap = _map.GetMemberMap(m => m.Amount);
-			double amountRead = reader.ReadDouble(amountMap.ElementName);
-			decimal amount = Convert.ToDecimal(amountRead);
-			return amount;
-		}
+		public CanonicalMoneyReader(BsonClassMap<Money> map) : base(map) { }
 
 		protected override CurrencyIsoCode readCurrency(BsonDeserializationContext context, BsonDeserializationArgs args)
 		{
@@ -225,7 +240,7 @@ namespace NMoneys.Serialization.Mongo_DB
 		protected virtual void writeAmount(Money value, IBsonWriter writer)
 		{
 			BsonMemberMap amountMap = _map.GetMemberMap(m => m.Amount);
-			writer.WriteDouble(amountMap.ElementName, Convert.ToDouble(value.Amount));
+			writer.WriteDecimal128(amountMap.ElementName, new Decimal128(value.Amount));
 		}
 		protected abstract void writeCurrency(Money value, BsonSerializationContext context, BsonSerializationArgs args);
 	}

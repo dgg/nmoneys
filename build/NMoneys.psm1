@@ -97,11 +97,15 @@ function copy-sources()
 	$src = Join-Path $base src\NMoneys.Serialization\
 	$release_content_dir = Join-Path $base release\content\Infrastructure\Serialization
 	
-	Get-ChildItem -Path ("$src\Json_NET", "$src\Service_Stack", "$src\Mongo_DB", "$src\Entity_Framework") -Filter "*.cs" |
+	$src_dirs = ("$src\Json_NET", "$src\Service_Stack", "$src\Mongo_DB", "$src\Entity_Framework", 
+		(Join-Path $base "src\NMoneys.Serialization.Mongo_DB"))
+
+	Get-ChildItem -Path $src_dirs -Filter "*.cs" |
 		Copy-Item -Destination $release_content_dir
 
+	$src_dirs = ("$src\Json_NET", (Join-Path $base "src\NMoneys.Serialization.Mongo_DB"))
 	$release_contentFiles_dir = Join-Path $base release\contentFiles\cs\any\Infrastructure\Serialization
-	Get-ChildItem -Path ("$src\Json_NET") -Filter "*.cs" |
+	Get-ChildItem -Path $src_dirs -Filter "*.cs" |
 		Copy-Item -Destination $release_contentFiles_dir
 
 	Get-ChildItem -Path "$src\Json_Net" -Filter "*.cs" |
@@ -109,11 +113,6 @@ function copy-sources()
 		% {$_ -replace "Newtonsoft", "Raven.Imports.Newtonsoft"} | 
 		% {$_ -replace ".Json_NET", ".Raven_DB"} |
 		Set-Content "$release_content_dir\Raven_DB.cs"
-
-	$src = Join-Path $base src\NMoneys.Serialization.Mongo_DB\
-	
-	Get-ChildItem -Path "$src\" -Filter "*.cs" |
-		Copy-Item -Destination $release_content_dir
 }
 
 function Generate-Packages($base)
