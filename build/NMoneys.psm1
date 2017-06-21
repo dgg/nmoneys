@@ -108,8 +108,6 @@ function copy-sources()
 	Get-ChildItem -Path $src_dirs -Filter "*.cs" |
 		Copy-Item -Destination $release_contentFiles_dir
 
-	Write-Host 'copy raven'
-
 	Get-ChildItem -Path "$src\Json_Net" -Filter "*.cs" |
 		Get-Content |
 		% {$_ -replace "Newtonsoft", "Raven.Imports.Newtonsoft"} | 
