@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.Linq;
 using NMoneys.Support;
 
 namespace NMoneys
@@ -13,15 +14,12 @@ namespace NMoneys
 		private static readonly HashSet<CurrencyIsoCode> _set;
 		static ObsoleteCurrencies()
 		{
-#pragma warning disable 612,618
-			_set = new HashSet<CurrencyIsoCode>(FastEnumComparer<CurrencyIsoCode>.Instance)
-			{
-				CurrencyIsoCode.EEK,
-				CurrencyIsoCode.ZMK,
-				CurrencyIsoCode.LVL,
-				CurrencyIsoCode.LTL,
-			};
-#pragma warning restore 612,618
+			var obsoleteCodes = Enumeration.GetValues<CurrencyIsoCode>()
+				.Where(Enumeration.HasAttribute<CurrencyIsoCode, ObsoleteAttribute>);
+
+			_set = new HashSet<CurrencyIsoCode>(
+				obsoleteCodes,
+				FastEnumComparer<CurrencyIsoCode>.Instance);
 		}
 
 		[Pure]
@@ -37,6 +35,6 @@ namespace NMoneys
 		}
 
 		[Pure]
-		public static uint Count => Convert.ToUInt32(_set.Count);
+		public static ushort Count => Convert.ToUInt16(_set.Count);
 	}
 }

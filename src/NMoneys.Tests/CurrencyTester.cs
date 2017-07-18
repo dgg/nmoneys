@@ -155,11 +155,6 @@ namespace NMoneys.Tests
 
 			// all currency codes are marked as obsolete
 			Assert.That(obsoleteCodes, Has.All.Matches<CurrencyIsoCode>(Enumeration.HasAttribute<CurrencyIsoCode, ObsoleteAttribute>));
-
-			// there no more currency codes marked as obsolete than obsolete currencies
-			Assert.That(obsoleteCodes, Is.EquivalentTo(
-				Enumeration.GetValues<CurrencyIsoCode>()
-					.Where(Enumeration.HasAttribute<CurrencyIsoCode, ObsoleteAttribute>)));
 		}
 
 #pragma warning restore 169

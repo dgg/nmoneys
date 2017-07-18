@@ -142,7 +142,7 @@ namespace NMoneys
 		/// <summary>
 		/// Belarussian Ruble
 		/// </summary>
-		[EnumMember, CanonicalCulture("be-BY")]
+		[EnumMember, CanonicalCulture("be-BY"), Obsolete("deprecated in favor of BYN")]
 		BYR = 974,
 		/// <summary>
 		/// Belize Dollar
