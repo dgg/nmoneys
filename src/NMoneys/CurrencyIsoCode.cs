@@ -787,7 +787,7 @@ namespace NMoneys
 		/// <summary>
 		/// US Dollar (Same day)
 		/// </summary>
-		[EnumMember]
+		[EnumMember, Obsolete("No longer in use")]
 		USS = 998,
 		/// <summary>
 		/// >Uruguay Peso en Unidades Indexadas (UI)

@@ -1722,6 +1722,7 @@
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
 		<negativePattern>0</negativePattern>
+		<obsolete>true</obsolete>
 	</currency>
 	<currency code="UYI">
 		<englishName>Uruguay Peso en Unidades Indexadas (UI)</englishName>
