@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using NMoneys.Extensions;
+﻿using NMoneys.Extensions;
 using NMoneys.Support;
 using NUnit.Framework;
 
@@ -15,7 +14,7 @@ namespace NMoneys.Tests
 			Assert.That(subject.ToString(), Is.EqualTo("£5.00"));
 
 			subject = new Money(5, CurrencyIsoCode.DKK);
-			Assert.That(subject.ToString(), Is.EqualTo("kr 5,00"), "Kroner symbol DOES not include dot. Mistake in Vista and newer.");
+			Assert.That(subject.ToString(), Is.EqualTo("kr. 5,00"), "Kroner symbol DOES indeed include the trailing dot.");
 
 			subject = new Money(5, CurrencyIsoCode.USD);
 			Assert.That(subject.ToString(), Is.EqualTo("$5.00"));
@@ -32,7 +31,7 @@ namespace NMoneys.Tests
 			Assert.That(subject.ToString("N"), Is.EqualTo("1,000.00"));
 
 			subject = new Money(1000, CurrencyIsoCode.DKK);
-			Assert.That(subject.ToString("C"), Is.EqualTo("kr 1.000,00"), "Kroner symbol DOES not include dot. Mistake in Vista and newer.");
+			Assert.That(subject.ToString("C"), Is.EqualTo("kr. 1.000,00"), "Kroner symbol DOES indeed include the trailing dot.");
 			Assert.That(subject.ToString("00.000"), Is.EqualTo("1000,000"));
 		}
 

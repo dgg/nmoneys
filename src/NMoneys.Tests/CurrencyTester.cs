@@ -26,7 +26,7 @@ namespace NMoneys.Tests
 			// override for 2.0 SFr.
 			new object[] {Currency.Chf, CurrencyIsoCode.CHF, "CHF", "Fr.", "Swiss Franc"},
 			// overriden for wrong symbol "kr."
-			new object[] {Currency.Dkk, CurrencyIsoCode.DKK, "DKK", "kr", "Danish Krone"},
+			new object[] {Currency.Dkk, CurrencyIsoCode.DKK, "DKK", "kr.", "Danish Krone"},
 			new object[] {Currency.Eur, CurrencyIsoCode.EUR, "EUR", "€", "Euro"},
 			new object[] {Currency.Gbp, CurrencyIsoCode.GBP, "GBP", "£", "Pound Sterling"},
 			new object[] {Currency.Hkd, CurrencyIsoCode.HKD, "HKD", "HK$", "Hong Kong Dollar"},

@@ -27,7 +27,7 @@ namespace NMoneys.Tests
 			new TestCaseData("$1.5", Currency.Dollar, 1.5m).SetName("one-and-the-half dollars"),
 			new TestCaseData("£5.75", Currency.Pound, 5.75m).SetName("five-and-three-quarters pounds"),
 			new TestCaseData("10 €", Currency.Euro, 10m).SetName("ten euros"),
-			new TestCaseData("kr 100", Currency.Dkk, 100m).SetName("hundrede kroner"),
+			new TestCaseData("kr. 100", Currency.Dkk, 100m).SetName("hundrede kroner"),
 			new TestCaseData("¤1.2", Currency.None, 1.2m).SetName("one point two, no currency")
 		};
 
@@ -44,7 +44,7 @@ namespace NMoneys.Tests
 			new TestCaseData("($1.5)", Currency.Dollar, -1.5m).SetName("owe one-and-the-half dollars"),
 			new TestCaseData("-£5.75", Currency.Pound, -5.75m).SetName("oew five-and-three-quarters pounds"),
 			new TestCaseData("-10 €", Currency.Euro, -10m).SetName("owe ten euros"),
-			new TestCaseData("kr -100", Currency.Dkk, -100m).SetName("owe hundrede kroner"),
+			new TestCaseData("kr. -100", Currency.Dkk, -100m).SetName("owe hundrede kroner"),
 			new TestCaseData("(¤1.2)", Currency.None, -1.2m).SetName("owe one point two, no currency")
 		};
 
