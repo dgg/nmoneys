@@ -1,11 +1,11 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
 		<id>NMoneys.Exchange</id>
 		<title>NMoneys Exchange</title>
-		<version>4.0.0.0</version>
+		<version>4.0.0.1</version>
 		<authors>Daniel González García</authors>
-		<licenseUrl>http://www.opensource.org/licenses/bsd-license.php</licenseUrl>
+		<licenseUrl>https://raw.githubusercontent.com/dgg/nmoneys/master/LICENSE</licenseUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>Extensions to the implementation of the Money Value Object to support exchange operations between moneys in different currencies.</description>
 		<summary>

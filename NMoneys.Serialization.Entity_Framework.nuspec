@@ -1,11 +1,11 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
 		<id>NMoneys.Serialization.Entity_Framework</id>
 		<title>NMoneys Serialization: EntityFramework</title>
-		<version>2.0.0.0</version>
+		<version>2.0.0.1</version>
 		<authors>Daniel González García</authors>
-		<licenseUrl>http://www.opensource.org/licenses/bsd-license.php</licenseUrl>
+		<licenseUrl>https://raw.githubusercontent.com/dgg/nmoneys/master/LICENSE</licenseUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>Custom serialization when NMoneys objects are to be persisted as complex types using Entity Framework.</description>
 		<summary>
