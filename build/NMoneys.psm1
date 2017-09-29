@@ -17,9 +17,7 @@ function Ensure-Release-Folders($base)
 		"$base\release\lib\net40-client\", 
 		"$base\release\lib\netstandard1.3\", 
 		"$base\release\content\Infrastructure\Serialization\", 
-		"$base\release\contentFiles\cs\any\Infrastructure\Serialization\",
-		"$base\release\signed\net\",
-		"$base\release\signed\netstandard\"
+		"$base\release\contentFiles\cs\any\Infrastructure\Serialization\"
 	) |
 		% { New-Item -Type directory $_ -Force | Out-Null }
 }
@@ -135,9 +133,6 @@ function Generate-Zip-Files($base)
 			zip-bin $base $version 'NMoneys' $_ -framework 'net40-client' -abbreviation 'net' | Out-Null 
 			zip-bin $base $version 'NMoneys' $_ -framework 'netstandard1.3' -abbreviation 'netstandard' | Out-Null 
 		}
-		
-	zip-signed $base $version 'NMoneys' 'NMoneys.dll' -abbreviation 'net' | Out-Null
-	zip-signed $base $version 'NMoneys' 'NMoneys.dll' -abbreviation 'netstandard' | Out-Null
 
 	$version = get-version-from-package $base 'NMoneys.Exchange'
 	('NMoneys.Exchange.dll', 'NMoneys.Exchange.XML', 'NMoneys_Exchange.chm') |
@@ -152,16 +147,6 @@ function zip-bin($base, $version, $zipName, $fileName, $framework, $abbreviation
 	$zip_file = Join-Path $base "\release\$zipName.$version-bin_$abbreviation.zip"
 	$to_add = Join-Path $base "\release\lib\$framework\$fileName"
 
-	zip $zip_file $to_add
-	
-	return $zip_file
-}
-
-function zip-signed($base, $version, $zipName, $fileName, $abbreviation)
-{
-	$zip_file = Join-Path $base "\release\$zipName.$version-signed_$abbreviation.zip"
-	$to_add = Join-Path $base "\release\signed\$abbreviation\$fileName"
-	
 	zip $zip_file $to_add
 	
 	return $zip_file
@@ -182,30 +167,6 @@ function get-version-from-package($base, $packageFragment)
 		select -First 1 -Property @{ Name = "value"; Expression = {$matches[1]} }
 
 	return $pkgVersion.value
-}
-
-function Sign-Assemblies($base, $configuration)
-{
-	sign-assembly $base 'NMoneys' $configuration -framework 'net'
-	sign-assembly $base 'NMoneys' $configuration -target 'netstandard1.3' -framework 'netstandard'
-}
-
-function sign-assembly($base, $project, $configuration, $target = '', $name = $project, $framework)
-{
-	$assembly = Join-Path $base \src\$project\bin\$configuration
-	if ($target -ne '')
-	{
-		$assembly = Join-Path $assembly $target
-	}
-	$assembly = Join-path $assembly "$name.dll"
-	$il_file = Join-Path $base \release\signed\$framework\$name.il
-	$res_file = Join-Path $Base \release\signed\$framework\$name.res
-	$signed_assembly = Join-Path $base \release\signed\$framework\$name.dll
-	
-	ildasm $assembly /out:$il_file
-	Throw-If-Error "Could disassemble $assembly_file"
-	ilasm $il_file /dll /key=$base\NMoneys.key.snk /output=$signed_assembly /quiet /res=$res_file
-	Throw-If-Error "Could not assemble $il_file"
 }
 
 function Find-Versioned-Folder($base, $beginning)
@@ -253,4 +214,4 @@ function Restore-Packages($base)
 	ForEach-Object { dotnet restore $_.FullName }
 }
 
-export-modulemember -function Throw-If-Error, Ensure-Release-Folders, Build-Documentation, Copy-Artifacts, Generate-Packages, Generate-Zip-Files, Sign-Assemblies, Find-Versioned-Folder, Find-Test-Assemblies, Run-Core-Tests, Restore-Packages
+export-modulemember -function Throw-If-Error, Ensure-Release-Folders, Build-Documentation, Copy-Artifacts, Generate-Packages, Generate-Zip-Files, Find-Versioned-Folder, Find-Test-Assemblies, Run-Core-Tests, Restore-Packages

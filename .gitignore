@@ -2,6 +2,7 @@
 #ignore thumbnails created by windows
 Thumbs.db
 #Ignore files build by Visual Studio
+
 *.obj
 *.pdb
 *.user
@@ -26,3 +27,5 @@ obj/
 [Rr]elease*/
 _ReSharper*/
 [Tt]est[Rr]esult*
+
+.vs/

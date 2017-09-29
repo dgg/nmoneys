@@ -6,7 +6,7 @@ properties {
   $release_dir = "$base_dir\release"
 }
 
-task default -depends Clean, Compile, Sign, Document, Test, CopyArtifacts, BuildArtifacts
+task default -depends Clean, Compile, Document, Test, CopyArtifacts, BuildArtifacts
 
 task Clean -depends importModules {
 	$msbuild = find-msbuild
@@ -20,10 +20,6 @@ task Compile -depends importModules {
 	$msbuild = find-msbuild
 	
 	Exec { & $msbuild "$base_dir\NMoneys.sln" /p:configuration=$configuration /m /v:m /clp:Summary }
-}
-
-task Sign -depends ensureRelease, Compile { 
-	Sign-Assemblies $base_dir $configuration
 }
 
 task Document -depends ensureRelease {
