@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Xml.Serialization;
 using NMoneys.Support;
@@ -388,6 +389,7 @@ namespace NMoneys
 			Test = Xts;
 		}
 
+		[Pure]
 		private static Currency init(CurrencyIsoCode isoCode, Func<CurrencyIsoCode, CurrencyInfo> infoReading)
 		{
 			return new Currency(infoReading(isoCode));
@@ -443,6 +445,7 @@ namespace NMoneys
 		/// <seealso cref="TryGet(string, out Currency)"/>
 		/// <seealso cref="TryGet(CultureInfo, out Currency)"/>
 		/// <seealso cref="TryGet(RegionInfo, out Currency)"/>
+		[Pure]
 		public static event EventHandler<ObsoleteCurrencyEventArgs> ObsoleteCurrency;
 
 		internal static void RaiseIfObsolete(CurrencyIsoCode code)
@@ -462,6 +465,7 @@ namespace NMoneys
 			}
 		}
 
+		[Pure]
 		internal decimal Round(decimal share)
 		{
 			decimal raw = share - (.5m * MinAmount);
