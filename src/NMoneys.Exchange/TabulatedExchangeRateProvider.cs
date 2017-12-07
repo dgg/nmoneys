@@ -98,8 +98,7 @@ namespace NMoneys.Exchange
 		/// <returns>The <see cref="ExchangeRate"/> just added as per the rules specified in the constructor.</returns>
 		public ExchangeRate Add(CurrencyIsoCode from, CurrencyIsoCode to, decimal rate)
 		{
-			Dictionary<CurrencyIsoCode, ExchangeRate> columns;
-			if (!_rows.TryGetValue(from, out columns))
+			if (!_rows.TryGetValue(from, out var columns))
 			{
 				columns = new Dictionary<CurrencyIsoCode, ExchangeRate>(FastEnumComparer<CurrencyIsoCode>.Instance);
 				_rows.Add(from, columns);
@@ -151,8 +150,7 @@ namespace NMoneys.Exchange
 		{
 			bool isThere = false;
 			rate = null;
-			Dictionary<CurrencyIsoCode, ExchangeRate> colum;
-			if (_rows.TryGetValue(from, out colum))
+			if (_rows.TryGetValue(from, out var colum))
 			{
 				isThere = colum.TryGetValue(to, out rate);
 			}

@@ -377,5 +377,36 @@ namespace NMoneys.Tests.Support
 		}
 
 		#endregion
+
+		#region Equality
+
+		[Test]
+		public void Equals_SameBoundNatureSameValues_True()
+		{
+			Range<int> one = new Range<int>(1.Open(), 2.Open()),
+				another = new Range<int>(1.Open(), 2.Open());
+
+			Assert.That(one.Equals(another), Is.True);
+		}
+
+		[Test]
+		public void Equals_SameBoundNatureDifferentValues_False()
+		{
+			Range<int> one = new Range<int>(1.Open(), 2.Open()),
+				another = new Range<int>(1.Open(), 3.Open());
+
+			Assert.That(one.Equals(another), Is.False);
+		}
+
+		[Test]
+		public void Equals_DifferentBoundNatureSameValues_False()
+		{
+			Range<int> one = new Range<int>(1.Open(), 2.Open()),
+				another = new Range<int>(1.Open(), 2.Close());
+
+			Assert.That(one.Equals(another), Is.False);
+		}
+
+		#endregion
 	}
 }

@@ -16,7 +16,7 @@ namespace NMoneys.Support
 		}
 	}
 
-	internal interface IBound<T> where T : struct, IComparable<T>
+	internal interface IBound<T> : IEquatable<IBound<T>> where T : struct, IComparable<T>
 	{
 		T Value { get; }
 
@@ -76,6 +76,32 @@ namespace NMoneys.Support
 		{
 			return Value + " (inclusive)";
 		}
+
+		#region Equality
+
+		public bool Equals(IBound<T> other)
+		{
+			if (ReferenceEquals(null, other)) return false;
+			return other is Closed<T> closed && equals(closed);
+		}
+
+		private bool equals(Closed<T> other)
+		{
+			return _value.Equals(other._value);
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(null, obj)) return false;
+			return obj is Closed<T> closed && equals(closed);
+		}
+
+		public override int GetHashCode()
+		{
+			return _value.GetHashCode();
+		}
+
+		#endregion
 	}
 
 	internal struct Open<T> : IBound<T> where T : struct, IComparable<T>
@@ -112,9 +138,35 @@ namespace NMoneys.Support
 		{
 			return Value + " (not inclusive)";
 		}
+
+		#region Equality
+
+		public bool Equals(IBound<T> other)
+		{
+			if (ReferenceEquals(null, other)) return false;
+			return other is Open<T> open && equals(open);
+		}
+
+		private bool equals(Open<T> other)
+		{
+			return _value.Equals(other._value);
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(null, obj)) return false;
+			return obj is Open<T> open && equals(open);
+		}
+
+		public override int GetHashCode()
+		{
+			return _value.GetHashCode();
+		}
+
+		#endregion
 	}
 
-	internal class Range<T> where T : struct, IComparable<T>
+	internal struct Range<T> where T : struct, IComparable<T>
 	{
 		private readonly IBound<T> _lowerBound;
 		private readonly IBound<T> _upperBound;
@@ -132,7 +184,7 @@ namespace NMoneys.Support
 
 		public T UpperBound => _upperBound.Value;
 
-		public virtual bool Contains(T item)
+		public bool Contains(T item)
 		{
 			return _lowerBound.LessThan(item) && _upperBound.MoreThan(item);
 		}
@@ -157,6 +209,27 @@ namespace NMoneys.Support
 			foreach (var value in values)
 			{
 				AssertArgument(paramName, value);
+			}
+		}
+
+		public bool Equals(Range<T> other)
+		{
+			return Equals(_lowerBound, other._lowerBound) &&
+				Equals(_upperBound, other._upperBound);
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(null, obj)) return false;
+			return obj is Range<T> range && Equals(range);
+		}
+
+		public override int GetHashCode()
+		{
+			unchecked
+			{
+				return ((_lowerBound != null ? _lowerBound.GetHashCode() : 0) * 397) ^
+					(_upperBound != null ? _upperBound.GetHashCode() : 0);
 			}
 		}
 	}
