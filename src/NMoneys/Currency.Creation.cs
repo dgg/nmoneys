@@ -27,7 +27,7 @@ namespace NMoneys
 		{
 			Enumeration.AssertDefined(isoCode);
 
-			Currency currency = _cache.GetOrAdd(isoCode, () =>
+			Currency currency = CurrencyCache.GetOrAdd(isoCode, () =>
 			{
 				var built = init(isoCode, _provider.Get);
 				if (built == null) throw new MisconfiguredCurrencyException(isoCode);
@@ -55,7 +55,7 @@ namespace NMoneys
 		[Pure]
 		public static Currency Get(string threeLetterIsoCode)
 		{
-			Currency currency = _cache.GetOrAdd(threeLetterIsoCode, () =>
+			Currency currency = CurrencyCache.GetOrAdd(threeLetterIsoCode, () =>
 			{
 				var isoCode = Code.ParseArgument(threeLetterIsoCode, nameof(threeLetterIsoCode));
 				var built = init(isoCode, _provider.Get);
@@ -142,7 +142,7 @@ namespace NMoneys
 			if (Enumeration.CheckDefined(isoCode))
 			{
 				tryGet = true;
-				currency = _cache.GetOrAdd(isoCode, () => init(isoCode, _provider.Get));
+				currency = CurrencyCache.GetOrAdd(isoCode, () => init(isoCode, _provider.Get));
 			}
 			RaiseIfObsolete(currency);
 			return tryGet;
@@ -173,7 +173,7 @@ namespace NMoneys
 			if (threeLetterIsoSymbol != null && Enumeration.TryParse(threeLetterIsoSymbol.ToUpperInvariant(), out isoCode))
 			{
 				tryGet = true;
-				currency = _cache.GetOrAdd(isoCode.GetValueOrDefault(), () =>
+				currency = CurrencyCache.GetOrAdd(isoCode.GetValueOrDefault(), () =>
 					init(isoCode.GetValueOrDefault(), _provider.Get));
 			}
 			RaiseIfObsolete(currency);
@@ -259,7 +259,7 @@ namespace NMoneys
 				{
 					CurrencyIsoCode isoCode = isoCodes[i];
 					var copy = initializer;
-					Currency currency = _cache.GetOrAdd(isoCode, () => init(isoCode, copy.Get));
+					Currency currency = CurrencyCache.GetOrAdd(isoCode, () => init(isoCode, copy.Get));
 					RaiseIfObsolete(isoCode);
 					yield return currency;
 				}

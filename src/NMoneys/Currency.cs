@@ -300,10 +300,6 @@ namespace NMoneys
 		/// </summary>
 		public static readonly Currency Test;
 
-		/*private static readonly ThreadSafeCache<string, Currency> _byIsoSymbol;
-		private static readonly ThreadSafeCache<CurrencyIsoCode, Currency> _byIsoCode;*/
-		private static readonly CurrencyCache _cache;
-
 		private static readonly ICurrencyInfoProvider _provider;
 
 		/// <summary>
@@ -311,79 +307,78 @@ namespace NMoneys
 		/// </summary>
 		static Currency()
 		{
-			_cache = new CurrencyCache();
 			_provider = CurrencyInfo.CreateProvider();
 
 			using (var initializer = CurrencyInfo.CreateInitializer())
 			{
 				Aud = init(CurrencyIsoCode.AUD, initializer.Get);
-				_cache.Add(Aud);
+				CurrencyCache.Add(Aud);
 
 				Cad = init(CurrencyIsoCode.CAD, initializer.Get);
-				_cache.Add(Cad);
+				CurrencyCache.Add(Cad);
 
 				Chf = init(CurrencyIsoCode.CHF, initializer.Get);
-				_cache.Add(Chf);
+				CurrencyCache.Add(Chf);
 
 				Cny = init(CurrencyIsoCode.CNY, initializer.Get);
-				_cache.Add(Cny);
+				CurrencyCache.Add(Cny);
 
 				Dkk = init(CurrencyIsoCode.DKK, initializer.Get);
-				_cache.Add(Dkk);
+				CurrencyCache.Add(Dkk);
 
 				Eur = init(CurrencyIsoCode.EUR, initializer.Get);
-				_cache.Add(Eur);
+				CurrencyCache.Add(Eur);
 
 				Gbp = init(CurrencyIsoCode.GBP, initializer.Get);
-				_cache.Add(Gbp);
+				CurrencyCache.Add(Gbp);
 
 				Hkd = init(CurrencyIsoCode.HKD, initializer.Get);
-				_cache.Add(Hkd);
+				CurrencyCache.Add(Hkd);
 
 				Huf = init(CurrencyIsoCode.HUF, initializer.Get);
-				_cache.Add(Huf);
+				CurrencyCache.Add(Huf);
 
 				Inr = init(CurrencyIsoCode.INR, initializer.Get);
-				_cache.Add(Inr);
+				CurrencyCache.Add(Inr);
 
 				Jpy = init(CurrencyIsoCode.JPY, initializer.Get);
-				_cache.Add(Jpy);
+				CurrencyCache.Add(Jpy);
 
 				Mxn = init(CurrencyIsoCode.MXN, initializer.Get);
-				_cache.Add(Mxn);
+				CurrencyCache.Add(Mxn);
 
 				Myr = init(CurrencyIsoCode.MYR, initializer.Get);
-				_cache.Add(Myr);
+				CurrencyCache.Add(Myr);
 
 				Nok = init(CurrencyIsoCode.NOK, initializer.Get);
-				_cache.Add(Nok);
+				CurrencyCache.Add(Nok);
 
 				Nzd = init(CurrencyIsoCode.NZD, initializer.Get);
-				_cache.Add(Nzd);
+				CurrencyCache.Add(Nzd);
 
 				Rub = init(CurrencyIsoCode.RUB, initializer.Get);
-				_cache.Add(Rub);
+				CurrencyCache.Add(Rub);
 
 				Sek = init(CurrencyIsoCode.SEK, initializer.Get);
-				_cache.Add(Sek);
+				CurrencyCache.Add(Sek);
 
 				Sgd = init(CurrencyIsoCode.SGD, initializer.Get);
-				_cache.Add(Sgd);
+				CurrencyCache.Add(Sgd);
 
 				Thb = init(CurrencyIsoCode.THB, initializer.Get);
-				_cache.Add(Thb);
+				CurrencyCache.Add(Thb);
 
 				Usd = init(CurrencyIsoCode.USD, initializer.Get);
-				_cache.Add(Usd);
+				CurrencyCache.Add(Usd);
 
 				Zar = init(CurrencyIsoCode.ZAR, initializer.Get);
-				_cache.Add(Zar);
+				CurrencyCache.Add(Zar);
 
 				Xxx = init(CurrencyIsoCode.XXX, initializer.Get);
-				_cache.Add(Xxx);
+				CurrencyCache.Add(Xxx);
 
 				Xts = init(CurrencyIsoCode.XTS, initializer.Get);
-				_cache.Add(Xts);
+				CurrencyCache.Add(Xts);
 			}
 
 			Euro = Eur;
@@ -413,7 +408,7 @@ namespace NMoneys
 				{
 					CurrencyIsoCode isoCode = isoCodes[i];
 					var copy = initializer;
-					_cache.GetOrAdd(isoCode, () => init(isoCode, copy.Get));
+					CurrencyCache.GetOrAdd(isoCode, () => init(isoCode, copy.Get));
 				}
 			}
 		}
