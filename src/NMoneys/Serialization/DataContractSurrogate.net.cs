@@ -120,13 +120,13 @@ namespace NMoneys.Serialization
 		/// <param name="targetType">The <see cref="Type"/> that the substituted object should be assigned to.</param>
 		public object GetDeserializedObject(object obj, Type targetType)
 		{
-			if (obj is Data.Money && targetType == typeof(Money))
+			if (obj is Data.Money money && targetType == typeof(Money))
 			{
-				return ((Data.Money)obj).RevertSurrogation();
+				return money.RevertSurrogation();
 			}
-			if (obj is Data.Currency && targetType == typeof(Currency))
+			if (obj is Data.Currency currency && targetType == typeof(Currency))
 			{
-				return ((Data.Currency)obj).RevertSurrogation();
+				return currency.RevertSurrogation();
 			}
 			return obj;
 		}

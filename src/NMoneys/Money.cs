@@ -88,14 +88,8 @@ namespace NMoneys
 		/// </summary>
 		public CurrencyIsoCode CurrencyCode
 		{
-			get
-			{
-				return _currencyCode.GetValueOrDefault(CurrencyIsoCode.XXX);
-			}
-			private set
-			{
-				_currencyCode = value;
-			}
+			get => _currencyCode.GetValueOrDefault(CurrencyIsoCode.XXX);
+			private set => _currencyCode = value;
 		}
 #pragma warning restore 612,618
 
