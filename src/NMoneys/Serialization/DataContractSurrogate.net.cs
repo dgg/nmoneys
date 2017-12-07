@@ -8,7 +8,6 @@ using System.Runtime.Serialization.Json;
 
 namespace NMoneys.Serialization
 {
-
 	/// <summary>
 	/// Provides the methods needed to substitute one type for another in order to customize the serialization and deserialization processes
 	/// performed by <see cref="DataContractJsonSerializer"/>
@@ -28,7 +27,7 @@ namespace NMoneys.Serialization
 		/// </summary>
 		/// <typeparam name="T">The type from <see cref="NMoneys"/> being serialized or deserialized.</typeparam>
 		/// <returns>The type of the instance that is serialized or deserialized.</returns>
-		public Type Type<T>()
+		private static Type type<T>()
 		{
 			return typeof(T);
 		}
@@ -38,9 +37,9 @@ namespace NMoneys.Serialization
 		/// </summary>
 		/// <typeparam name="T">The type from <see cref="NMoneys"/> being serialized or deserialized.</typeparam>
 		/// <returns>An <see cref="IEnumerable{T}"/> of <see cref="Type"/> that contains the type present in the object graph.</returns>
-		public IEnumerable<Type> KnownTypes<T>()
+		private static IEnumerable<Type> knownTypes<T>()
 		{
-			return new[] { Type<T>() };
+			yield return type<T>();
 		}
 		/// <summary>
 		/// Do not ignore the <see cref="IExtensibleDataObject"/> interface upon serialization or unexpected data upon deserialization.
@@ -57,15 +56,15 @@ namespace NMoneys.Serialization
 		/// </summary>
 		/// <remarks>This method also specifies a list of known types that may be present in the object graph, the maximum number of graph items to
 		/// serialize or deserialize, whether to ignore unexpected data or emit type information, and a surrogate for custom serialization according to the
-		/// options defined in <see cref="Type{T}"/>, <see cref="KnownTypes{T}"/>, <see cref="MaxItemsInObjectGraph"/>, <see cref="IgnoreExtensionDataObject"/>,
+		/// options defined in <see cref="type{T}"/>, <see cref="knownTypes{T}"/>, <see cref="MaxItemsInObjectGraph"/>, <see cref="IgnoreExtensionDataObject"/>,
 		/// <see cref="AlwaysEmitTypeInformation"/> and the current <see cref="IDataContractSurrogate"/>.</remarks>
 		/// <typeparam name="T">The type from <see cref="NMoneys"/> being serialized or deserialized.</typeparam>
 		/// <returns>An instance of <see cref="DataContractJsonSerializer"/> initialied with the default options in <see cref="DataContractSurrogate"/></returns>
 		public DataContractJsonSerializer BuildSerializer<T>()
 		{
 			var serializer = new DataContractJsonSerializer(
-				Type<T>(),
-				KnownTypes<T>(),
+				type<T>(),
+				knownTypes<T>(),
 				MaxItemsInObjectGraph,
 				IgnoreExtensionDataObject,
 				this,
