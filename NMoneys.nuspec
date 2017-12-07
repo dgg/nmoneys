@@ -3,7 +3,7 @@
 	<metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
 		<id>NMoneys</id>
 		<title>NMoneys</title>
-		<version>5.1.4.1</version>
+		<version>6.0.0.0</version>
 		<authors>Daniel González García</authors>
 		<licenseUrl>https://raw.githubusercontent.com/dgg/nmoneys/master/LICENSE</licenseUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
