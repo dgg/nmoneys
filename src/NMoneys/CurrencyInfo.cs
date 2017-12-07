@@ -23,20 +23,22 @@ namespace NMoneys
 			Entity = entity;
 		}
 
-		public CurrencyIsoCode Code { get; private set; }
-		public string EnglishName { get; private set; }
-		public string NativeName { get; private set; }
+		public CurrencyIsoCode Code { get; }
+		public string EnglishName { get; }
+		public string NativeName { get; }
 
-		public string Symbol { get; private set; }
-		public int SignificantDecimalDigits { get; private set; }
-		public string DecimalSeparator { get; private set; }
-		public string GroupSeparator { get; private set; }
-		public int[] GroupSizes { get; private set; }
-		public int PositivePattern { get; private set; }
-		public int NegativePattern { get; private set; }
-		public bool Obsolete { get; private set; }
-		public CharacterReference Entity { get; private set; }
+		public string Symbol { get; }
+		public int SignificantDecimalDigits { get; }
+		public string DecimalSeparator { get; }
+		public string GroupSeparator { get; }
+		public int[] GroupSizes { get; }
+		public int PositivePattern { get; }
+		public int NegativePattern { get; }
+		public bool Obsolete { get; }
+		public CharacterReference Entity { get; }
 
+
+		/// <inheritdoc />
 		public override string ToString()
 		{
 			StringBuilder sb = new StringBuilder();
@@ -48,10 +50,24 @@ namespace NMoneys
 			sb.AppendLine();
 			sb.AppendFormat("Symbol {0}", Symbol);
 			sb.AppendLine();
-			sb.AppendFormat("SignificantDecimalDigits {0}", SignificantDecimalDigits);
+			printDecimals(sb);
+			printGroups(sb);
+			printPatterns(sb);
+			sb.AppendFormat("Obsolete {0}", Obsolete);
 			sb.AppendLine();
-			sb.AppendFormat("DecimalSeparator {0}", DecimalSeparator);
+			return sb.ToString();
+		}
+
+		private void printPatterns(StringBuilder sb)
+		{
+			sb.AppendFormat("PositivePattern {0}", PositivePattern);
 			sb.AppendLine();
+			sb.AppendFormat("NegativePattern {0}", NegativePattern);
+			sb.AppendLine();
+		}
+
+		private void printGroups(StringBuilder sb)
+		{
 			sb.AppendFormat("GroupSeparator {0}", GroupSeparator);
 			sb.AppendLine();
 			sb.Append("GroupSizes ");
@@ -59,13 +75,14 @@ namespace NMoneys
 			sb.Append(GroupSizes.ToDelimitedString());
 			sb.Append("]");
 			sb.AppendLine();
-			sb.AppendFormat("PositivePattern {0}", PositivePattern);
+		}
+
+		private void printDecimals(StringBuilder sb)
+		{
+			sb.AppendFormat("SignificantDecimalDigits {0}", SignificantDecimalDigits);
 			sb.AppendLine();
-			sb.AppendFormat("NegativePattern {0}", NegativePattern);
+			sb.AppendFormat("DecimalSeparator {0}", DecimalSeparator);
 			sb.AppendLine();
-			sb.AppendFormat("Obsolete {0}", Obsolete);
-			sb.AppendLine();
-			return sb.ToString();
 		}
 
 		internal static ICurrencyInfoProvider CreateProvider()
