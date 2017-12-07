@@ -178,7 +178,7 @@ namespace NMoneys
 		/// <returns>true if <see cref="CurrencyCode"/> is equal to <paramref name="money"/>'s; otherwise, false.</returns>
 		public bool HasSameCurrencyAs(Money money)
 		{
-			return Enumeration.Comparer<CurrencyIsoCode>().Equals(money.CurrencyCode, CurrencyCode);
+			return money.CurrencyCode.Equals(CurrencyCode);
 		}
 
 		/// <summary>

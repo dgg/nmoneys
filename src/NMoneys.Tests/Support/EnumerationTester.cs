@@ -190,20 +190,20 @@ namespace NMoneys.Tests.Support
 		public void Comparer_Equal_True()
 		{
 			Test1 x = Test1.Value1, y = Test1.Value1;
-			Assert.That(Enumeration.Comparer<Test1>().Equals(x, y), Is.True);
+			Assert.That(Enumeration.Comparer<Test1>.Instance.Equals(x, y), Is.True);
 		}
 
 		[Test]
 		public void Comparer_NotEqual_False()
 		{
 			Test1 x = Test1.Value1, y = (Test1)(-1);
-			Assert.That(Enumeration.Comparer<Test1>().Equals(x, y), Is.False);
+			Assert.That(Enumeration.Comparer<Test1>.Instance.Equals(x, y), Is.False);
 		}
 
 		[Test]
 		public void Comparer_NotEnum_Throws()
 		{
-			Assert.That(() => Enumeration.Comparer<int>(), Throws.ArgumentException);
+			Assert.That(() => Enumeration.Comparer<int>.Instance, Throws.ArgumentException);
 		}
 
 		#endregion
@@ -244,10 +244,7 @@ namespace NMoneys.Tests.Support
 		}
 
 		private readonly string _displayName;
-		public string DisplayName
-		{
-			get { return _displayName; }
-		}
+		public string DisplayName => _displayName;
 	}
 
 	public enum Test1

@@ -19,7 +19,7 @@ namespace NMoneys
 
 			_set = new HashSet<CurrencyIsoCode>(
 				obsoleteCodes,
-				FastEnumComparer<CurrencyIsoCode>.Instance);
+				Currency.Code.Comparer);
 		}
 
 		[Pure]

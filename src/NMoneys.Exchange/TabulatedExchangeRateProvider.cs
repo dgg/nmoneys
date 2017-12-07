@@ -85,7 +85,7 @@ namespace NMoneys.Exchange
 		public TabulatedExchangeRateProvider(Func<CurrencyIsoCode, CurrencyIsoCode, decimal, ExchangeRate> rateBuilder)
 		{
 			_rateBuilder = rateBuilder;
-			_rows = new Dictionary<CurrencyIsoCode, Dictionary<CurrencyIsoCode, ExchangeRate>>(FastEnumComparer<CurrencyIsoCode>.Instance);
+			_rows = new Dictionary<CurrencyIsoCode, Dictionary<CurrencyIsoCode, ExchangeRate>>(Currency.Code.Comparer);
 		}
 
 		/// <summary>
@@ -100,7 +100,7 @@ namespace NMoneys.Exchange
 		{
 			if (!_rows.TryGetValue(from, out var columns))
 			{
-				columns = new Dictionary<CurrencyIsoCode, ExchangeRate>(FastEnumComparer<CurrencyIsoCode>.Instance);
+				columns = new Dictionary<CurrencyIsoCode, ExchangeRate>(Currency.Code.Comparer);
 				_rows.Add(from, columns);
 			}
 			ExchangeRate added = _rateBuilder(from, to, rate);

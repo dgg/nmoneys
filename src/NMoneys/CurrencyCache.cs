@@ -15,7 +15,7 @@ namespace NMoneys
 			int concurrency = Environment.ProcessorCount * 4;
 			_byIsoSymbol = new ConcurrentDictionary<string, Currency>(concurrency, cacheCapacity, StringComparer.OrdinalIgnoreCase);
 			// we use a fast comparer as we have quite a few enum keys
-			_byIsoCode = new ConcurrentDictionary<CurrencyIsoCode, Currency>(concurrency, cacheCapacity, Enumeration.Comparer<CurrencyIsoCode>());
+			_byIsoCode = new ConcurrentDictionary<CurrencyIsoCode, Currency>(concurrency, cacheCapacity, Currency.Code.Comparer);
 		}
 
 		public Currency Add(Currency currency)

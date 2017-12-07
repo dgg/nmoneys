@@ -18,7 +18,7 @@ namespace NMoneys
 		[Pure]
 		public bool Equals(Money other)
 		{
-			return Enumeration.Comparer<CurrencyIsoCode>().Equals(other.CurrencyCode, CurrencyCode) && 
+			return Currency.Code.Comparer.Equals(other.CurrencyCode, CurrencyCode) && 
 				other.Amount == Amount;
 		}
 

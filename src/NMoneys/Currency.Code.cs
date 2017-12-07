@@ -46,8 +46,7 @@ namespace NMoneys
 			/// <seealso cref="IsoCodeExtensions.NumericCode"/>
 			public static CurrencyIsoCode Parse(string isoCode, CurrencyIsoCode defaultValue)
 			{
-				CurrencyIsoCode? parsed;
-				TryParse(isoCode, out parsed);
+				TryParse(isoCode, out var parsed);
 				return parsed.GetValueOrDefault(defaultValue);
 			}
 
@@ -107,7 +106,7 @@ namespace NMoneys
 			/// Provides a performant implementation of <see cref="IEqualityComparer{T}"/> for instances of <see cref="CurrencyIsoCode"/>.
 			/// </summary>
 			/// <remarks><seealso href="http://www.codeproject.com/Articles/33528/Accelerating-Enum-Based-Dictionaries-with-Generic">Source</seealso></remarks>
-			public static readonly IEqualityComparer<CurrencyIsoCode> Comparer = FastEnumComparer<CurrencyIsoCode>.Instance;
+			public static readonly IEqualityComparer<CurrencyIsoCode> Comparer = Enumeration.Comparer<CurrencyIsoCode>.Instance;
 		}
 	}
 }

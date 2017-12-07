@@ -20,7 +20,7 @@ namespace NMoneys
 			if (ReferenceEquals(null, other)) return false;
 			if (ReferenceEquals(this, other)) return true;
 			// only IsoCode matters as it cannot be mutated
-			return Enumeration.Comparer<CurrencyIsoCode>().Equals(other.IsoCode, IsoCode);
+			return Code.Comparer.Equals(other.IsoCode, IsoCode);
 		}
 
 		/// <summary>
