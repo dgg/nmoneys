@@ -156,7 +156,7 @@ namespace NMoneys.Support
 		}
 
 		/* based on: http://www.codeproject.com/KB/cs/EnumComparer.aspx */
-		public class Comparer<TEnum> : IEqualityComparer<TEnum> where TEnum : struct, IComparable, IFormattable, IConvertible
+		internal class Comparer<TEnum> : IEqualityComparer<TEnum> where TEnum : struct, IComparable, IFormattable, IConvertible
 		{
 			public static readonly IEqualityComparer<TEnum> Instance;
 
