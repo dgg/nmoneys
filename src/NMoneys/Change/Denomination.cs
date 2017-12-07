@@ -88,7 +88,7 @@ namespace NMoneys.Change
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(null, obj)) return false;
-			return obj is Denomination && Equals((Denomination) obj);
+			return obj is Denomination denomination && Equals(denomination);
 		}
 
 		/// <inheritdoc />

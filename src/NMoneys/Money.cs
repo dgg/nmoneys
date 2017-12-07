@@ -65,12 +65,7 @@ namespace NMoneys
 			setAllFields(money.Amount, money.CurrencyCode);
 		}
 
-		private void setAllFields(decimal amount, CurrencyIsoCode currency)
-		{
-			setAllFields(amount, currency, ObsoleteCurrencyEventBehavior.Raise);
-		}
-
-		private void setAllFields(decimal amount, CurrencyIsoCode currency, ObsoleteCurrencyEventBehavior eventBehavior)
+		private void setAllFields(decimal amount, CurrencyIsoCode currency, ObsoleteCurrencyEventBehavior eventBehavior = ObsoleteCurrencyEventBehavior.Raise)
 		{
 			Enumeration.AssertDefined(currency);
 			if (eventBehavior == ObsoleteCurrencyEventBehavior.Raise) Currency.RaiseIfObsolete(currency);
@@ -189,7 +184,7 @@ namespace NMoneys
 		/// <returns>true if <see cref="CurrencyCode"/> is equal to <paramref name="money"/>'s; otherwise, false.</returns>
 		public bool HasSameCurrencyAs(Money money)
 		{
-			return money.CurrencyCode.Equals(CurrencyCode);
+			return Enumeration.Comparer<CurrencyIsoCode>().Equals(money.CurrencyCode, CurrencyCode);
 		}
 
 		/// <summary>

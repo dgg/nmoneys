@@ -99,13 +99,13 @@ namespace NMoneys.Serialization
 		/// <param name="targetType">The <see cref="Type"/> that the substituted object should be assigned to.</param>
 		public object GetObjectToSerialize(object obj, Type targetType)
 		{
-			if (obj is Money && targetType == typeof(Data.Money))
+			if (obj is Money money && targetType == typeof(Data.Money))
 			{
-				return new Data.Money((Money)obj);
+				return new Data.Money(money);
 			}
-			if (obj is Currency && targetType == typeof(Data.Currency))
+			if (obj is Currency currency && targetType == typeof(Data.Currency))
 			{
-				return new Data.Currency((Currency)obj);
+				return new Data.Currency(currency);
 			}
 			return obj;
 		}
