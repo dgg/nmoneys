@@ -58,6 +58,13 @@ namespace NMoneys
 			return Currency.Get(isoCode);
 		}
 
+		/// <summary>
+		/// Determines whether the specified objects are equal.
+		/// </summary>
+		/// <remarks>Is checks euqality in a performant manner, regardless of the framework version.</remarks>
+		/// <param name="code">The first object of type <see cref="CurrencyIsoCode"/> to compare.</param>
+		/// <param name="other">The second object of type <see cref="CurrencyIsoCode"/> to compare.</param>
+		/// <returns>true if the specified objects are equal; otherwise, false.</returns>
 		public static bool Equals(this CurrencyIsoCode code, CurrencyIsoCode other)
 		{
 			return Currency.Code.Comparer.Equals(code, other);

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 
 namespace NMoneys.Allocations
 {
@@ -27,7 +26,7 @@ namespace NMoneys.Allocations
 		/// At the end of the distribution, the resulting allocation should, most of the times, be complete (nothing else to allocate).
 		/// But it does not have to be like that. If the remaining amount is too small to be allocated, it will remain a remainder.
 		/// <para>Implementors will increase the amounts used to generate the returning <see cref="Allocation"/> according to whichever strategy is chosen to distribute the remainder of <paramref name="allocationSoFar"/>.</para>
-		/// <para>It may not be called at all if the money can be evenly distributed in <see cref="Money.Allocate(int)"/> or <see cref="Money.Allocate(RatioCollection)"/>.</para>
+		/// <para>It may not be called at all if the money can be evenly distributed in <see cref="AllocateOperations.Allocate(Money, int)"/> or <see cref="AllocateOperations.Allocate(Money, RatioCollection)"/>.</para>
 		/// </remarks>
 		/// <param name="allocationSoFar">Contains the remainder amount that might need to be allocated or <see cref="Money.Zero()"/> if no remainder is left.
 		/// <para>It also contains the evenly allocated amounts (if any).</para>

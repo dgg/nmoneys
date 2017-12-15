@@ -5,6 +5,9 @@ using NMoneys.Support;
 
 namespace NMoneys.Allocations
 {
+	/// <summary>
+	/// Extension class that gives access to extensions methods related to money allocation.
+	/// </summary>
 	public static class AllocateOperations
 	{
 		/// <summary>

@@ -203,7 +203,8 @@ namespace NMoneys.Tests.Support
 		[Test]
 		public void Comparer_NotEnum_Throws()
 		{
-			Assert.That(() => Enumeration.Comparer<int>.Instance, Throws.ArgumentException);
+			Assert.That(() => Enumeration.Comparer<int>.Instance, Throws.InstanceOf<TypeInitializationException>().With
+				.InnerException.TypeOf<ArgumentException>());
 		}
 
 		#endregion
