@@ -1,4 +1,4 @@
-﻿using System;
+﻿using GoCommando;
 
 namespace NMoneys.Tools
 {
@@ -6,8 +6,7 @@ namespace NMoneys.Tools
 	{
 		static void Main(string[] args)
 		{
-			Console.WriteLine(Environment.Version);
-			Console.ReadLine();
+			Go.Run();
 		}
 		
 	}

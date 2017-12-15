@@ -5,6 +5,7 @@
   </PropertyGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net46'">
     <PackageReference Include="consoletables" Version="2.1.0" />
+	<PackageReference Include="gocommando" Version="0.93.0" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Support\**" />
@@ -12,7 +13,6 @@
     <None Remove="Support\**" />
 	<Compile Remove="Command.cs" />
     <Compile Remove="CompareWithGlobalization.cs" />
-    <Compile Remove="EncodeSymbol.cs" />
     <Compile Remove="ExtractInfoFromCulture.cs" />
     <Compile Remove="ScrapeWebsite.cs" />
   </ItemGroup>
