@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.3
+VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NMoneys", "src\NMoneys\NMoneys.csproj", "{5408F146-6F8A-406C-9E90-292662018F72}"
 EndProject
@@ -50,6 +50,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NMoneys.Exchange.netstandard", "src\NMoneys.Exchange\NMoneys.Exchange.netstandard.csproj", "{AFD77543-9BE7-4969-A527-2074EFA7F459}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NMoneys.Exchange.Tests.core", "src\NMoneys.Exchange.Tests\NMoneys.Exchange.Tests.core.csproj", "{3E4C3DAF-FE14-4C0F-8119-D748CED9CA72}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{6D30C6B3-BF44-4323-850A-92403ACD4537}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NMoneys.Tools", "src\NMoneys.Tools\NMoneys.Tools.csproj", "{97CFD0AF-5C58-410D-A673-668F9E293089}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -193,6 +197,18 @@ Global
 		{3E4C3DAF-FE14-4C0F-8119-D748CED9CA72}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{3E4C3DAF-FE14-4C0F-8119-D748CED9CA72}.Release|x86.ActiveCfg = Release|Any CPU
 		{3E4C3DAF-FE14-4C0F-8119-D748CED9CA72}.Release|x86.Build.0 = Release|Any CPU
+		{97CFD0AF-5C58-410D-A673-668F9E293089}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97CFD0AF-5C58-410D-A673-668F9E293089}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97CFD0AF-5C58-410D-A673-668F9E293089}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{97CFD0AF-5C58-410D-A673-668F9E293089}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{97CFD0AF-5C58-410D-A673-668F9E293089}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{97CFD0AF-5C58-410D-A673-668F9E293089}.Debug|x86.Build.0 = Debug|Any CPU
+		{97CFD0AF-5C58-410D-A673-668F9E293089}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97CFD0AF-5C58-410D-A673-668F9E293089}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97CFD0AF-5C58-410D-A673-668F9E293089}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{97CFD0AF-5C58-410D-A673-668F9E293089}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{97CFD0AF-5C58-410D-A673-668F9E293089}.Release|x86.ActiveCfg = Release|Any CPU
+		{97CFD0AF-5C58-410D-A673-668F9E293089}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -206,6 +222,10 @@ Global
 		{F36F6A65-890E-45CD-A0DF-916B06720761} = {2CA4C504-FDB9-4EE6-B343-96769FC1A9EB}
 		{AFD77543-9BE7-4969-A527-2074EFA7F459} = {40F54352-6154-4660-8D0D-4B0289EF7945}
 		{3E4C3DAF-FE14-4C0F-8119-D748CED9CA72} = {40F54352-6154-4660-8D0D-4B0289EF7945}
+		{97CFD0AF-5C58-410D-A673-668F9E293089} = {6D30C6B3-BF44-4323-850A-92403ACD4537}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {77F849D3-2F38-48E2-AF00-270304BB7FE3}
 	EndGlobalSection
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
