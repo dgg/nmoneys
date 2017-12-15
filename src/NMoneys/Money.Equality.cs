@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using NMoneys.Support;
 
 namespace NMoneys
 {
@@ -16,9 +18,9 @@ namespace NMoneys
 		[Pure]
 		public bool Equals(Money other)
 		{
-			return Equals(other.CurrencyCode, CurrencyCode) && other.Amount == Amount;
+			return Currency.Code.Comparer.Equals(other.CurrencyCode, CurrencyCode) && 
+				other.Amount == Amount;
 		}
-
 
 		/// <summary>
 		/// Indicates whether this instance and a specified object are equal.
@@ -59,7 +61,7 @@ namespace NMoneys
 		[Pure]
 		public static bool operator ==(Money left, Money right)
 		{
-			return Equals(left, right);
+			return EqualityComparer<Money>.Default.Equals(left, right);
 		}
 
 		/// <summary>
@@ -71,7 +73,7 @@ namespace NMoneys
 		[Pure]
 		public static bool operator !=(Money left, Money right)
 		{
-			return !Equals(left, right);
+			return !EqualityComparer<Money>.Default.Equals(left, right);
 		}
 	}
 }

@@ -2,7 +2,7 @@
 
 namespace NMoneys.Change
 {
-	internal struct IntegralDenomination
+	internal struct IntegralDenomination : IEquatable<IntegralDenomination>
 	{
 		public Denomination Denomination { get; }
 		public long IntegralAmount { get; }
@@ -22,6 +22,27 @@ namespace NMoneys.Change
 		{
 			long integralAmount = Convert.ToInt64(Money.CalculateMinorAmount(denomination.Value, operationCurrency));
 			return integralAmount;
+		}
+
+
+		public bool Equals(IntegralDenomination other)
+		{
+			return Denomination.Equals(other.Denomination) &&
+				IntegralAmount == other.IntegralAmount;
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(null, obj)) return false;
+			return obj is IntegralDenomination denomination && Equals(denomination);
+		}
+
+		public override int GetHashCode()
+		{
+			unchecked
+			{
+				return (Denomination.GetHashCode() * 397) ^ IntegralAmount.GetHashCode();
+			}
 		}
 	}
 }

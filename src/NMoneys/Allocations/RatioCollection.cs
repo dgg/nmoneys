@@ -48,7 +48,7 @@ namespace NMoneys.Allocations
 			_ratios = ratios;
 		}
 
-		private void assertAllocatable(IEnumerable<Ratio> ratios)
+		private static void assertAllocatable(IEnumerable<Ratio> ratios)
 		{
 			decimal sum = ratios.Select(r => r.Value).Sum();
 			if (!sum.Equals(decimal.One))

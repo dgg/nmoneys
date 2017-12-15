@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using NMoneys.Support.Ext;
 
@@ -154,10 +155,77 @@ namespace NMoneys.Support
 			return Reflect.Field<TEnum>(value.ToString(CultureInfo.InvariantCulture));
 		}
 
-		public static IEqualityComparer<TEnum> Comparer<TEnum>() where TEnum : struct, IComparable, IFormattable, IConvertible
+		/* based on: http://www.codeproject.com/KB/cs/EnumComparer.aspx */
+		internal class Comparer<TEnum> : IEqualityComparer<TEnum> where TEnum : struct, IComparable, IFormattable, IConvertible
 		{
-			assertEnum<TEnum>();
-			return FastEnumComparer<TEnum>.Instance;
+			public static readonly IEqualityComparer<TEnum> Instance;
+
+			private static readonly Func<TEnum, TEnum, bool> _equals;
+			private static readonly Func<TEnum, int> _getHashCode;
+
+			static Comparer()
+			{
+				assertEnum<TEnum>();
+				_getHashCode = generateGetHashCode();
+				_equals = generateEquals();
+				Instance = new Comparer<TEnum>();
+			}
+			/// <summary>
+			/// A private constructor to prevent user instantiation.
+			/// </summary>
+			private Comparer()
+			{
+				assertUnderlyingTypeIsSupported();
+			}
+			public bool Equals(TEnum x, TEnum y)
+			{
+				// call the generated method
+				return _equals(x, y);
+			}
+
+			public int GetHashCode(TEnum obj)
+			{
+				// call the generated method
+				return _getHashCode(obj);
+			}
+
+			private static readonly ICollection<Type> _supportedTypes = new[]
+				{
+				typeof (byte), typeof (sbyte),
+				typeof (short), typeof (ushort),
+				typeof (int), typeof (uint),
+				typeof (long), typeof (ulong)
+			};
+			private static void assertUnderlyingTypeIsSupported()
+			{
+				var underlyingType = Enum.GetUnderlyingType(typeof(TEnum));
+
+
+				if (!_supportedTypes.Contains(underlyingType))
+				{
+					throw new NotSupportedException(
+						$@"The underlying type of '{typeof(TEnum).Name}' is {underlyingType.Name}. 
+Only enums with underlying type of [{_supportedTypes.ToDelimitedString(t => t.Name)}] are supported.");
+				}
+			}
+
+			private static Func<TEnum, TEnum, bool> generateEquals()
+			{
+				var xParam = Expression.Parameter(typeof(TEnum), "x");
+				var yParam = Expression.Parameter(typeof(TEnum), "y");
+				var equalExpression = Expression.Equal(xParam, yParam);
+				return Expression.Lambda<Func<TEnum, TEnum, bool>>(equalExpression, xParam, yParam).Compile();
+			}
+
+			private static Func<TEnum, int> generateGetHashCode()
+			{
+				var objParam = Expression.Parameter(typeof(TEnum), "obj");
+				var underlyingType = Enum.GetUnderlyingType(typeof(TEnum));
+				var convertExpression = Expression.Convert(objParam, underlyingType);
+				var getHashCodeMethod = Reflect.Method(underlyingType, nameof(object.GetHashCode));
+				var getHashCodeExpression = Expression.Call(convertExpression, getHashCodeMethod);
+				return Expression.Lambda<Func<TEnum, int>>(getHashCodeExpression, objParam).Compile();
+			}
 		}
 
 		public static TEnum[] GetValues<TEnum>() where TEnum : struct, IComparable, IFormattable, IConvertible

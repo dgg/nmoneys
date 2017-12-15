@@ -14,18 +14,18 @@ namespace NMoneys.Support
 		/// Collection of Unicode code points for each character of the symbol
 		/// </summary>
 		/// <remarks>Used to construct the unicode <see cref="Symbol"/>.</remarks>
-		public int[] CodePoints { get; private set; }
+		public int[] CodePoints { get; }
 
 		/// <summary>
 		/// Space-tokenized collection of code points (as strings) for each character of the symbol.
 		/// </summary>
 		/// <remarks>Used to represent a complex symbol in the <see cref="CurrencyInfo"/> storage.</remarks>
-		public string TokenizedCodePoints { get; private set; }
+		public string TokenizedCodePoints { get; }
 
 		/// <summary>
 		/// Complex Unicode symbol.
 		/// </summary>
-		public string Symbol { get; private set; }
+		public string Symbol { get; }
 
 		private UnicodeSymbol(int[] codePoints, string symbol)
 		{

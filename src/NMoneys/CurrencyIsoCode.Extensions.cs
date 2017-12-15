@@ -57,5 +57,10 @@ namespace NMoneys
 		{
 			return Currency.Get(isoCode);
 		}
+
+		public static bool Equals(this CurrencyIsoCode code, CurrencyIsoCode other)
+		{
+			return Currency.Code.Comparer.Equals(code, other);
+		}
 	}
 }

@@ -2,7 +2,7 @@
 
 namespace NMoneys.Support
 {
-	internal class Culture
+	internal static class Culture
 	{
 		public static CultureInfo Get(string name)
 		{
