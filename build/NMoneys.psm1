@@ -210,7 +210,7 @@ function Run-Core-Tests($base, $config)
 function Restore-Packages($base)
 {
 	# restoring .core test projects, restores .netstandard projects as well
-	Get-ChildItem -File -Recurse -Path "$base\src" -Filter *Tests.core.csproj |
+	Get-ChildItem -File -Recurse -Path "$base\src" -Include @('*Tests.core.csproj', '*.Tools.csproj') |
 	ForEach-Object { dotnet restore $_.FullName }
 }
 
