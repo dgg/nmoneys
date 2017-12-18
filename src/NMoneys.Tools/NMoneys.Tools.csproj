@@ -13,7 +13,6 @@
     <None Remove="Support\**" />
 	<Compile Remove="Command.cs" />
     <Compile Remove="CompareWithGlobalization.cs" />
-    <Compile Remove="ScrapeWebsite.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NMoneys\NMoneys.csproj" />
