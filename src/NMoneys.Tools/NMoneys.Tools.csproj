@@ -8,13 +8,6 @@
 	<PackageReference Include="gocommando" Version="0.93.0" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="Support\**" />
-    <EmbeddedResource Remove="Support\**" />
-    <None Remove="Support\**" />
-	<Compile Remove="Command.cs" />
-    <Compile Remove="CompareWithGlobalization.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\NMoneys\NMoneys.csproj" />
   </ItemGroup>
 </Project>
