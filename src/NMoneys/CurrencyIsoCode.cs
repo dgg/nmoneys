@@ -692,7 +692,7 @@ namespace NMoneys
 		/// <summary>
 		/// Surinam Dollar
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("nl-SR")]
 		SRD = 968,
 		/// <summary>
 		/// South Sudanese Pound

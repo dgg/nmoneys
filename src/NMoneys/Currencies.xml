@@ -1505,14 +1505,14 @@
 	</currency>
 	<currency code="SRD">
 		<englishName>Surinam Dollar</englishName>
-		<nativeName>Surinam Dollar</nativeName>
+		<nativeName>Surinaamse dollar</nativeName>
 		<symbol>36</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
-		<decimalSeparator>.</decimalSeparator>
-		<groupSeparator>,</groupSeparator>
+		<decimalSeparator>,</decimalSeparator>
+		<groupSeparator>.</groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<positivePattern>2</positivePattern>
+		<negativePattern>12</negativePattern>
 	</currency>
 	<currency code="SSP">
 		<englishName>South Sudanese Pound</englishName>

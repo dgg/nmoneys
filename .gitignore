@@ -30,3 +30,5 @@ _ReSharper*/
 
 .vs/
 *.ndproj
+# those packages are really not needed when building netframework
+packages/System.*/
