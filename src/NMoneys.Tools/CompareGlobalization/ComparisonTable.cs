@@ -1,4 +1,5 @@
-﻿using ConsoleTables;
+﻿using System.Globalization;
+using ConsoleTables;
 
 namespace NMoneys.Tools.CompareGlobalization
 {
@@ -24,5 +25,12 @@ namespace NMoneys.Tools.CompareGlobalization
 		}
 
 		protected abstract void BuildTable(GlobalizationCurrencyInfo[] globalizationInfo, CurrencyInfo[] configurationInfo);
+
+		protected string FormatCultureColumn(CultureInfo culture, bool? isOverwritten = null)
+		{
+			string overwritten = isOverwritten.GetValueOrDefault() ? " *" : string.Empty;
+			string column = $"{culture.Name} [{culture.EnglishName}]{overwritten}";
+			return column;
+		}
 	}
 }

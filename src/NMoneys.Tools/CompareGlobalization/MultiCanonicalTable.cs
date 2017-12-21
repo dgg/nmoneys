@@ -23,13 +23,12 @@ namespace NMoneys.Tools.CompareGlobalization
 					CultureInfo canonicalCulture = canonicalAttr?.Culture();
 					if (canonicalCulture != null)
 					{
-						string overwritten = canonicalAttr.Overwritten ? "*" : string.Empty;
-						string canonicalColumn = $"{canonicalCulture.Name} [{canonicalCulture.EnglishName}] {overwritten}";
+						string canonicalColumn = FormatCultureColumn(canonicalCulture, canonicalAttr.Overwritten);
 
 						AddRow(group.Key, canonicalColumn, string.Empty, string.Empty);
 						foreach (var notCanonical in fromGlobalization.Where(i => !i.Culture.Equals(canonicalCulture)))
 						{
-							string notCanonicalColumn = $"{notCanonical.Culture.Name} [{notCanonical.Culture.EnglishName}]";
+							string notCanonicalColumn = FormatCultureColumn(notCanonical.Culture);
 							string equalityColumn = notCanonical.Equals(fromConfiguration) ? "=" : "!=";
 							AddRow(string.Empty, string.Empty, notCanonicalColumn, equalityColumn);
 						}

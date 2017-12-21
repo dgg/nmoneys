@@ -22,7 +22,8 @@ namespace NMoneys.Tools.CompareGlobalization
 					{
 						AddRow(fromConfiguration.Code, string.Empty);
 					}
-					string fromGlobalizationColumn = $"{fromGlobalization[i].Culture.Name} [{fromGlobalization[i].Culture.EnglishName}]";
+					string fromGlobalizationColumn = FormatCultureColumn(fromGlobalization[i].Culture);
+
 					AddRow(string.Empty, fromGlobalizationColumn);
 				}
 			}

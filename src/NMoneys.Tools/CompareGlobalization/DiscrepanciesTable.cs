@@ -29,8 +29,7 @@ namespace NMoneys.Tools.CompareGlobalization
 				if (differences != null)
 				{
 					CultureInfo canonicalCulture = fromConfiguration.Canonical.Culture();
-					string overwritten = fromConfiguration.Canonical.Overwritten ? "*" : string.Empty;
-					string configurationColumn = $"{canonicalCulture.Name} [{canonicalCulture.EnglishName}] {overwritten}";
+					string configurationColumn = FormatCultureColumn(canonicalCulture, fromConfiguration.Canonical.Overwritten);
 					AddRow(fromGlobalization.Info.Code, configurationColumn, string.Empty);
 					foreach (var diff in differences)
 					{
