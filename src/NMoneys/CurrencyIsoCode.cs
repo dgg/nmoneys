@@ -552,7 +552,7 @@ namespace NMoneys
 		/// <summary>
 		/// Namibia Dollar
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("en-NA", Overwritten = true)]
 		NAD = 516,
 		/// <summary>
 		/// Naira
