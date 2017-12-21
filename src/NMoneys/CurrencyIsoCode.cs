@@ -822,7 +822,7 @@ namespace NMoneys
 		/// <summary>
 		/// Tala
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("en-WS", Overwritten = true)]
 		WST = 882,
 		/// <summary>
 		/// CFA Franc BEAC
