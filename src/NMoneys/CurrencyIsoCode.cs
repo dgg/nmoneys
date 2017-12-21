@@ -652,7 +652,7 @@ namespace NMoneys
 		/// <summary>
 		/// Solomon Islands Dollar
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("en-SB")]
 		SBD = 090,
 		/// <summary>
 		/// Seychelles Rupee
