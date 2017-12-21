@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
@@ -740,9 +740,9 @@ namespace NMoneys
 		[EnumMember, CanonicalCulture("ar-TN")]
 		TND = 788,
 		/// <summary>
-		/// Pa'anga
+		/// Paʻanga
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("to-TO", Overwritten = true)]
 		TOP = 776,
 		/// <summary>
 		/// Turkish Lira
