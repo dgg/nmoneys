@@ -1478,7 +1478,7 @@
 		<groupSeparator>,</groupSeparator>
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<negativePattern>1</negativePattern>
 		<entity>pound</entity>
 	</currency>
 	<currency code="SLL">
@@ -1524,6 +1524,7 @@
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
 		<negativePattern>1</negativePattern>
+		<entity>pound</entity>
 	</currency>
 	<currency code="STD">
 		<englishName>Dobra</englishName>

@@ -677,7 +677,7 @@ namespace NMoneys
 		/// <summary>
 		/// Saint Helena Pound
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("en-SH")]
 		SHP = 654,
 		/// <summary>
 		/// Leone
