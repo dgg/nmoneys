@@ -1561,13 +1561,13 @@
 	<currency code="SZL">
 		<englishName>Lilangeni</englishName>
 		<nativeName>Lilangeni</nativeName>
-		<symbol>76</symbol>
+		<symbol>69</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
-		<decimalSeparator>.</decimalSeparator>
-		<groupSeparator>,</groupSeparator>
+		<decimalSeparator>,</decimalSeparator>
+		<groupSeparator> </groupSeparator>
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<negativePattern>1</negativePattern>
 	</currency>
 	<currency code="THB">
 		<englishName>Baht</englishName>

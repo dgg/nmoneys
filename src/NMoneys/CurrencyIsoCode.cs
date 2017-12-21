@@ -717,7 +717,7 @@ namespace NMoneys
 		/// <summary>
 		/// Lilangeni
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("ss-SZ")]
 		SZL = 748,
 		/// <summary>
 		/// Baht
