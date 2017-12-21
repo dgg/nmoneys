@@ -597,7 +597,7 @@ namespace NMoneys
 		/// <summary>
 		/// Kina
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("en-PG", Overwritten = true)]
 		PGK = 598,
 		/// <summary>
 		/// Philippine Peso
