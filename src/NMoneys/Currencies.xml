@@ -1527,14 +1527,14 @@
 	</currency>
 	<currency code="STD">
 		<englishName>Dobra</englishName>
-		<nativeName>Dobra</nativeName>
+		<nativeName>Dobra de São Tomé e Príncipe</nativeName>
 		<symbol>68 98</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
-		<decimalSeparator>.</decimalSeparator>
-		<groupSeparator>,</groupSeparator>
+		<decimalSeparator>,</decimalSeparator>
+		<groupSeparator> </groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<positivePattern>3</positivePattern>
+		<negativePattern>8</negativePattern>
 	</currency>
 	<currency code="SVC">
 		<englishName>El Salvador Colon</englishName>

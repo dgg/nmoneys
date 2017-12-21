@@ -702,7 +702,7 @@ namespace NMoneys
 		/// <summary>
 		/// Dobra
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("pt-ST", Overwritten = true)]
 		STD = 678,
 		/// <summary>
 		/// El Salvador Colon
