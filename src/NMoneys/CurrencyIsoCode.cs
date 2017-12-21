@@ -772,7 +772,7 @@ namespace NMoneys
 		/// <summary>
 		/// Uganda Shilling
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("sw-UG", Overwritten = true)]
 		UGX = 800,
 		/// <summary>
 		/// US Dollar

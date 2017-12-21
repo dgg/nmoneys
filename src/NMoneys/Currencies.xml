@@ -1681,14 +1681,14 @@
 	</currency>
 	<currency code="UGX">
 		<englishName>Uganda Shilling</englishName>
-		<nativeName>Uganda Shilling</nativeName>
+		<nativeName>Shilingi ya Uganda</nativeName>
 		<symbol>85 83 104</symbol>
 		<significantDecimalDigits>0</significantDecimalDigits>
 		<decimalSeparator>.</decimalSeparator>
 		<groupSeparator>,</groupSeparator>
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<negativePattern>1</negativePattern>
 	</currency>
 	<currency code="USD">
 		<englishName>US Dollar</englishName>
