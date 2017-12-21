@@ -1,5 +1,4 @@
-﻿using System;
-using ConsoleTables;
+﻿using ConsoleTables;
 using GoCommando;
 using static System.Console;
 
@@ -9,12 +8,10 @@ namespace NMoneys.Tools.CompareIso
 	[Description("Compares the information provided by the ISO.org page against NMoneys implementation")]
     internal class CompareIsoCommand : ICommand
     {
-	    private static readonly Uri _url = new Uri("https://www.currency-iso.org/dam/downloads/lists/list_one.xml");
-
 		public void Run()
 	    {
 		    var loader = new IsoCurrenciesLoader();
-		    IsoCurrenciesCollection isoCurrencies = loader.LoadFrom(_url);
+		    IsoCurrenciesCollection isoCurrencies = loader.LoadFrom(IsoCurrenciesLoader.IsoUrl);
 		    ImplementedCurrenciesCollection implemented = new ImplementedCurrenciesCollection()
 			    .AddRange(Currency.FindAll());
 
