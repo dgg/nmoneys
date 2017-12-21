@@ -657,7 +657,7 @@ namespace NMoneys
 		/// <summary>
 		/// Seychelles Rupee
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("en-SC", Overwritten = true)]
 		SCR = 690,
 		/// <summary>
 		/// Sudanese Pound

@@ -1426,14 +1426,14 @@
 	</currency>
 	<currency code="SCR">
 		<englishName>Seychelles Rupee</englishName>
-		<nativeName>Seychelles Rupee</nativeName>
-		<symbol>8360</symbol>
+		<nativeName>Roupie seychelloise</nativeName>
+		<symbol>83 82</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>.</decimalSeparator>
 		<groupSeparator>,</groupSeparator>
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<negativePattern>1</negativePattern>
 	</currency>
 	<currency code="SDG">
 		<englishName>Sudanese Pound</englishName>
@@ -1445,7 +1445,6 @@
 		<groupSizes>3</groupSizes>
 		<positivePattern>2</positivePattern>
 		<negativePattern>9</negativePattern>
-		<entity>pound</entity>
 	</currency>
 	<currency code="SEK">
 		<englishName>Swedish Krona</englishName>
