@@ -682,7 +682,7 @@ namespace NMoneys
 		/// <summary>
 		/// Leone
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("en-SL")]
 		SLL = 694,
 		/// <summary>
 		/// Somali Shilling
