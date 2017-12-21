@@ -762,7 +762,7 @@ namespace NMoneys
 		/// <summary>
 		/// Tanzanian Shilling
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("sw-TZ", Overwritten = true)]
 		TZS = 834,
 		/// <summary>
 		/// Hryvnia

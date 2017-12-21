@@ -1659,14 +1659,14 @@
 	</currency>
 	<currency code="TZS">
 		<englishName>Tanzanian Shilling</englishName>
-		<nativeName>Tanzanian Shilling</nativeName>
-		<symbol>164</symbol>
+		<nativeName>Shilingi ya Tanzania</nativeName>
+		<symbol>84 83 104</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>.</decimalSeparator>
 		<groupSeparator>,</groupSeparator>
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<negativePattern>1</negativePattern>
 	</currency>
 	<currency code="UAH">
 		<englishName>Hryvnia</englishName>
