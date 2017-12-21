@@ -1304,7 +1304,7 @@
 		<negativePattern>0</negativePattern>
 	</currency>
 	<currency code="PHP">
-		<englishName>Philippine Peso</englishName>
+		<englishName>Philippine Piso</englishName>
 		<nativeName>Piso ng Pilipinas</nativeName>
 		<symbol>8369</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
