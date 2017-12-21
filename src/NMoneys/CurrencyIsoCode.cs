@@ -817,7 +817,7 @@ namespace NMoneys
 		/// <summary>
 		/// Vatu
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("fr-VU", Overwritten = true)]
 		VUV = 548,
 		/// <summary>
 		/// Tala

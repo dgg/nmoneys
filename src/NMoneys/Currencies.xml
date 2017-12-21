@@ -1781,14 +1781,14 @@
 	</currency>
 	<currency code="VUV">
 		<englishName>Vatu</englishName>
-		<nativeName>Vatu</nativeName>
-		<symbol>86 116</symbol>
+		<nativeName>vatu vanuatuan</nativeName>
+		<symbol>86 84</symbol>
 		<significantDecimalDigits>0</significantDecimalDigits>
-		<decimalSeparator>.</decimalSeparator>
-		<groupSeparator>,</groupSeparator>
+		<decimalSeparator>,</decimalSeparator>
+		<groupSeparator> </groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<positivePattern>3</positivePattern>
+		<negativePattern>8</negativePattern>
 	</currency>
 	<currency code="WST">
 		<englishName>Tala</englishName>
