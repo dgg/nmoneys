@@ -697,7 +697,7 @@ namespace NMoneys
 		/// <summary>
 		/// South Sudanese Pound
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("en-SS")]
 		SSP = 728,
 		/// <summary>
 		/// Dobra
