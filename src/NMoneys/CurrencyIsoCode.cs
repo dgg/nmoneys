@@ -927,7 +927,7 @@ namespace NMoneys
 		/// <summary>
 		/// Zambian Kwacha
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("en-ZM", Overwritten = true)]
 		ZMW = 967,
 		/// <summary>
 		/// Zimbabwe Dollar

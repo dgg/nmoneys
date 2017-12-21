@@ -13,7 +13,8 @@ namespace NMoneys.Tools.CompareGlobalization
 				.Where(i => !Enumeration.HasAttribute<CurrencyIsoCode, CanonicalCultureAttribute>(i.Code))
 				.ToArray();
 
-			foreach (var fromConfiguration in notDecorated)
+			var cmp = new AlphaComparer();
+			foreach (var fromConfiguration in notDecorated.OrderBy(i => i.Code, cmp))
 			{
 				var fromGlobalization = globalizationInfo.Where(i => Currency.Code.Comparer.Equals(i.Info.Code, fromConfiguration.Code)).ToArray();
 				for (int i = 0; i < fromGlobalization.Length; i++)
