@@ -1,16 +1,15 @@
 ﻿using System.Globalization;
 using System.Linq;
-using ConsoleTables;
 using NMoneys.Support;
 
 namespace NMoneys.Tools.CompareGlobalization
 {
-	internal static class MultiCanonicalTable
+	internal class MultiCanonicalTable : ComparisonTable
 	{
-		public static void Print(GlobalizationCurrencyInfo[] globalizationInfo, CurrencyInfo[] configurationInfo)
-		{
-			ConsoleTable multiCanonical = new ConsoleTable("Code", "Canonical", "Globalization", "Equal to Canonical?");
+		public MultiCanonicalTable() : base("Code", "Canonical", "Globalization", "Equal to Canonical?") { }
 
+		protected override void BuildTable(GlobalizationCurrencyInfo[] globalizationInfo, CurrencyInfo[] configurationInfo)
+		{
 			var configurationMap = configurationInfo.ToDictionary(i => i.Code, Currency.Code.Comparer);
 
 			var cmp = new AlphaComparer();
@@ -27,18 +26,16 @@ namespace NMoneys.Tools.CompareGlobalization
 						string overwritten = canonicalAttr.Overwritten ? "*" : string.Empty;
 						string canonicalColumn = $"{canonicalCulture.Name} [{canonicalCulture.EnglishName}] {overwritten}";
 
-						multiCanonical.AddRow(group.Key, canonicalColumn, string.Empty, string.Empty);
+						AddRow(group.Key, canonicalColumn, string.Empty, string.Empty);
 						foreach (var notCanonical in fromGlobalization.Where(i => !i.Culture.Equals(canonicalCulture)))
 						{
 							string notCanonicalColumn = $"{notCanonical.Culture.Name} [{notCanonical.Culture.EnglishName}]";
 							string equalityColumn = notCanonical.Equals(fromConfiguration) ? "=" : "!=";
-							multiCanonical.AddRow(string.Empty, string.Empty, notCanonicalColumn, equalityColumn);
+							AddRow(string.Empty, string.Empty, notCanonicalColumn, equalityColumn);
 						}
 					}
 				}
 			}
-
-			multiCanonical.Write(Format.Alternative);
 		}
 	}
 }

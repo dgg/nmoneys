@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using GoCommando;
 using NMoneys.Support;
 
@@ -33,22 +34,25 @@ namespace NMoneys.Tools.CompareGlobalization
 			CurrencyInfo[] configurationInfo;
 			using (var initializer = new EmbeddedXmlInitializer())
 			{
-				configurationInfo = Enumeration.GetValues<CurrencyIsoCode>().Select(c => initializer.Get(c)).ToArray();
+				configurationInfo = Enumeration.GetValues<CurrencyIsoCode>()
+					.Select(c => initializer.Get(c))
+					.ToArray();
 			}
 
+			List<ComparisonTable> tables = new List<ComparisonTable>(3);
 			if (MultiCanonical || All)
 			{
-				MultiCanonicalTable.Print(globalizationInfo, configurationInfo);
+				tables.Add(new MultiCanonicalTable());
 			}
 			if (Discrepancies || All)
 			{
-				DiscrepanciesTable.Print(globalizationInfo, configurationInfo);
+				tables.Add(new DiscrepanciesTable());
 			}
 			if (NotCanonical || All)
 			{
-				NotCanonicalTable.Print(globalizationInfo, configurationInfo);
+				tables.Add(new NotCanonicalTable());
 			}
-			
+			tables.ForEach(t => t.Print(globalizationInfo, configurationInfo));
 		}
 	}
 }

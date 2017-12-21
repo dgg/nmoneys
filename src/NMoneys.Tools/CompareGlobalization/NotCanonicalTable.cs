@@ -1,15 +1,14 @@
 ﻿using System.Linq;
-using ConsoleTables;
 using NMoneys.Support;
 
 namespace NMoneys.Tools.CompareGlobalization
 {
-	internal static class NotCanonicalTable
+	internal sealed class NotCanonicalTable : ComparisonTable
 	{
-		public static void Print(GlobalizationCurrencyInfo[] globalizationInfo, CurrencyInfo[] configurationInfo)
-		{
-			ConsoleTable notCanonical = new ConsoleTable("Code", "Globalization");
+		public NotCanonicalTable() : base("Code", "Globalization") { }
 
+		protected override void BuildTable(GlobalizationCurrencyInfo[] globalizationInfo, CurrencyInfo[] configurationInfo)
+		{
 			var notDecorated = configurationInfo
 				.Where(i => !Enumeration.HasAttribute<CurrencyIsoCode, CanonicalCultureAttribute>(i.Code))
 				.ToArray();
@@ -21,14 +20,12 @@ namespace NMoneys.Tools.CompareGlobalization
 				{
 					if (i == 0)
 					{
-						notCanonical.AddRow(fromConfiguration.Code, string.Empty);
+						AddRow(fromConfiguration.Code, string.Empty);
 					}
 					string fromGlobalizationColumn = $"{fromGlobalization[i].Culture.Name} [{fromGlobalization[i].Culture.EnglishName}]";
-					notCanonical.AddRow(string.Empty, fromGlobalizationColumn);
+					AddRow(string.Empty, fromGlobalizationColumn);
 				}
 			}
-
-			notCanonical.Write(Format.Alternative);
 		}
 	}
 }

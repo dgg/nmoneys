@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using ConsoleTables;
 using NMoneys.Support;
 
 namespace NMoneys.Tools.CompareGlobalization
 {
-	internal static class DiscrepanciesTable
+	internal class DiscrepanciesTable : ComparisonTable
 	{
-		public static void Print(GlobalizationCurrencyInfo[] globalizationInfo, CurrencyInfo[] configurationInfo)
-		{
-			ConsoleTable discrepancies = new ConsoleTable("Code", "Configuration", "Globalization");
+		public DiscrepanciesTable() : base("Code", "Configuration", "Globalization") { }
 
+		protected override void BuildTable(GlobalizationCurrencyInfo[] globalizationInfo, CurrencyInfo[] configurationInfo)
+		{
 			Dictionary<string, GlobalizationCurrencyInfo> globalizationMap = globalizationInfo.ToDictionary(i => i.Culture.Name, i => i, StringComparer.Ordinal);
 
 			var decoratedFromConfiguration = configurationInfo
@@ -32,15 +31,13 @@ namespace NMoneys.Tools.CompareGlobalization
 					CultureInfo canonicalCulture = fromConfiguration.Canonical.Culture();
 					string overwritten = fromConfiguration.Canonical.Overwritten ? "*" : string.Empty;
 					string configurationColumn = $"{canonicalCulture.Name} [{canonicalCulture.EnglishName}] {overwritten}";
-					discrepancies.AddRow(fromGlobalization.Info.Code, configurationColumn, string.Empty);
+					AddRow(fromGlobalization.Info.Code, configurationColumn, string.Empty);
 					foreach (var diff in differences)
 					{
-						discrepancies.AddRow("   " + diff.PropertyName, diff.Configuration, diff.Globalization);
+						AddRow("   " + diff.PropertyName, diff.Configuration, diff.Globalization);
 					}
 				}
 			}
-
-			discrepancies.Write(Format.Alternative);
 		}
 	}
 }
