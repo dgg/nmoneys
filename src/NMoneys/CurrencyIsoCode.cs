@@ -882,7 +882,7 @@ namespace NMoneys
 		/// <summary>
 		/// CFP Franc
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("fr-NC", Overwritten = true)]
 		XPF = 953,
 		/// <summary>
 		/// Platinum

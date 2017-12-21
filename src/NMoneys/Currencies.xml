@@ -1929,14 +1929,14 @@
 	</currency>
 	<currency code="XPF">
 		<englishName>CFP Franc</englishName>
-		<nativeName>CFP Franc</nativeName>
-		<symbol>70</symbol>
+		<nativeName>franc pacifique</nativeName>
+		<symbol>67 70 80</symbol>
 		<significantDecimalDigits>0</significantDecimalDigits>
-		<decimalSeparator>.</decimalSeparator>
-		<groupSeparator>,</groupSeparator>
+		<decimalSeparator>,</decimalSeparator>
+		<groupSeparator> </groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<positivePattern>3</positivePattern>
+		<negativePattern>8</negativePattern>
 	</currency>
 	<currency code="XPT">
 		<englishName>Platinum</englishName>
