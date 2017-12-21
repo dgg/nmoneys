@@ -662,7 +662,7 @@ namespace NMoneys
 		/// <summary>
 		/// Sudanese Pound
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("ar-SD")]
 		SDG = 938,
 		/// <summary>
 		/// Swedish Krona

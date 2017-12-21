@@ -1437,14 +1437,14 @@
 	</currency>
 	<currency code="SDG">
 		<englishName>Sudanese Pound</englishName>
-		<nativeName>Sudanese Pound</nativeName>
-		<symbol>164</symbol>
+		<nativeName>جنيه سوداني</nativeName>
+		<symbol>1580 46 1587 46</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>.</decimalSeparator>
 		<groupSeparator>,</groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<positivePattern>2</positivePattern>
+		<negativePattern>9</negativePattern>
 		<entity>pound</entity>
 	</currency>
 	<currency code="SEK">
