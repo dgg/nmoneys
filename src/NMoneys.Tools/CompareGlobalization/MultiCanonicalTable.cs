@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Linq;
 using NMoneys.Support;
 
@@ -15,7 +16,7 @@ namespace NMoneys.Tools.CompareGlobalization
 			var cmp = new AlphaComparer();
 			foreach (var group in globalizationInfo.GroupBy(i => i.Info.Code).OrderBy(g => g.Key, cmp))
 			{
-				GlobalizationCurrencyInfo[] fromGlobalization = group.ToArray();
+				GlobalizationCurrencyInfo[] fromGlobalization = group.OrderBy(i => i.Culture.Name, StringComparer.Ordinal).ToArray();
 				if (fromGlobalization.Length > 1)
 				{
 					CurrencyInfo fromConfiguration = configurationMap[group.Key];

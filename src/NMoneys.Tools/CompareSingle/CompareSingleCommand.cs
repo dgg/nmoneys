@@ -32,7 +32,6 @@ namespace NMoneys.Tools.CompareSingle
 
 		private CanonicalCultureAttribute ensureCanonical(CurrencyIsoCode currency)
 		{
-			
 			if (!Enumeration.TryGetAttribute(currency, out CanonicalCultureAttribute attribute))
 			{
 				writeError($"Currency '{currency}' not decorated with '{nameof(CanonicalCultureAttribute)}'.");

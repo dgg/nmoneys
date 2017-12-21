@@ -1,4 +1,6 @@
-﻿using ConsoleTables;
+﻿using System;
+using System.Linq;
+using ConsoleTables;
 using GoCommando;
 using static System.Console;
 
@@ -19,7 +21,7 @@ namespace NMoneys.Tools.CompareIso
 		    ConsoleTable isoOnly = new ConsoleTable("Alpha-Code", "Name", "Minor units");
 		    ConsoleTable discrepancies = new ConsoleTable("Alpha-Code", "Name / ISO Name", "Minor units / ISO Units");
 
-		    foreach (IsoCurrency iso in isoCurrencies)
+		    foreach (IsoCurrency iso in isoCurrencies.OrderBy(c => c.AlphabeticalCode, StringComparer.Ordinal))
 		    {
 			    Currency currency = implemented[iso.NumericCode.Value.GetValueOrDefault()];
 			    if (currency != null)
