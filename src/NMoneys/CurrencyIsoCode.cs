@@ -412,7 +412,7 @@ namespace NMoneys
 		/// <summary>
 		/// North Korean Won
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("ko-KP", Overwritten = true)]
 		KPW = 408,
 		/// <summary>
 		/// Won
@@ -427,7 +427,7 @@ namespace NMoneys
 		/// <summary>
 		/// Cayman Islands Dollar
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("en-KY")]
 		KYD = 136,
 		/// <summary>
 		/// Tenge

@@ -885,14 +885,14 @@
 	</currency>
 	<currency code="KPW">
 		<englishName>North Korean Won</englishName>
-		<nativeName>North Korean Won</nativeName>
+		<nativeName>조선 민주주의 인민 공화국 원</nativeName>
 		<symbol>8361</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>.</decimalSeparator>
 		<groupSeparator>,</groupSeparator>
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<negativePattern>1</negativePattern>
 	</currency>
 	<currency code="KRW">
 		<englishName>Won</englishName>
@@ -925,7 +925,7 @@
 		<groupSeparator>,</groupSeparator>
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<negativePattern>1</negativePattern>
 	</currency>
 	<currency code="KZT">
 		<englishName>Tenge</englishName>
