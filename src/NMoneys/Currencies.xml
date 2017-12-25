@@ -1107,14 +1107,14 @@
 	</currency>
 	<currency code="MRO">
 		<englishName>Ouguiya</englishName>
-		<nativeName>Ouguiya</nativeName>
-		<symbol>85 77</symbol>
+		<nativeName>أوقية موريتانية</nativeName>
+		<symbol>1571 46 1605 46 8207</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
-		<decimalSeparator>.</decimalSeparator>
-		<groupSeparator>,</groupSeparator>
+		<decimalSeparator>,</decimalSeparator>
+		<groupSeparator>.</groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<positivePattern>2</positivePattern>
+		<negativePattern>9</negativePattern>
 	</currency>
 	<currency code="MUR">
 		<englishName>Mauritius Rupee</englishName>

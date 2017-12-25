@@ -512,7 +512,7 @@ namespace NMoneys
 		/// <summary>
 		/// Ouguiya
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("ar-MR", Overwritten = true)]
 		MRO = 478,
 		/// <summary>
 		/// Mauritius Rupee
