@@ -547,7 +547,7 @@ namespace NMoneys
 		/// <summary>
 		/// Mozambique Metical
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("pt-MZ", Overwritten = true)]
 		MZN = 943,
 		/// <summary>
 		/// Namibia Dollar
