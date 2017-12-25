@@ -452,7 +452,7 @@ namespace NMoneys
 		/// <summary>
 		/// Liberian Dollar
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("en-LR")]
 		LRD = 430,
 		/// <summary>
 		/// Loti
