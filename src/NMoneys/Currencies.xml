@@ -1052,14 +1052,14 @@
 	</currency>
 	<currency code="MGA">
 		<englishName>Malagasy Ariary</englishName>
-		<nativeName>Malagasy Ariary</nativeName>
-		<symbol>164</symbol>
+		<nativeName>Ariary</nativeName>
+		<symbol>65 114</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>.</decimalSeparator>
 		<groupSeparator>,</groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<positivePattern>2</positivePattern>
+		<negativePattern>9</negativePattern>
 	</currency>
 	<currency code="MKD">
 		<englishName>Denar</englishName>

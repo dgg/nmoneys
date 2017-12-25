@@ -487,7 +487,7 @@ namespace NMoneys
 		/// <summary>
 		/// Malagasy Ariary
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("mg-MG", Overwritten = true)]
 		MGA = 969,
 		/// <summary>
 		/// Denar
