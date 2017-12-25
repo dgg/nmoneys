@@ -1119,13 +1119,13 @@
 	<currency code="MUR">
 		<englishName>Mauritius Rupee</englishName>
 		<nativeName>Mauritius Rupee</nativeName>
-		<symbol>8360</symbol>
+		<symbol>82 115</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>.</decimalSeparator>
 		<groupSeparator>,</groupSeparator>
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<negativePattern>1</negativePattern>
 	</currency>
 	<currency code="MVR">
 		<englishName>Rufiyaa</englishName>

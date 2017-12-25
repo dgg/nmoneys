@@ -517,7 +517,7 @@ namespace NMoneys
 		/// <summary>
 		/// Mauritius Rupee
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("en-MU", Overwritten = true)]
 		MUR = 480,
 		/// <summary>
 		/// Rufiyaa
