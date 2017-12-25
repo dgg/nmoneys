@@ -527,7 +527,7 @@ namespace NMoneys
 		/// <summary>
 		/// Kwacha
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("en-MW", Overwritten = true)]
 		MWK = 454,
 		/// <summary>
 		/// Mexican Peso
