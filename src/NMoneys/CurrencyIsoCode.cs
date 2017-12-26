@@ -72,7 +72,7 @@ namespace NMoneys
 		/// <summary>
 		/// Barbados Dollar
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("en-BB", Overwritten = true)]
 		BBD = 052,
 		/// <summary>
 		/// Taka
