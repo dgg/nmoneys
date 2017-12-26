@@ -212,7 +212,7 @@ namespace NMoneys
 		/// <summary>
 		/// Cuban Peso
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("es-CU", Overwritten = true)]
 		CUP = 192,
 		/// <summary>
 		/// Cape Verde Escudo
