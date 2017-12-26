@@ -227,7 +227,7 @@ namespace NMoneys
 		/// <summary>
 		/// Djibouti Franc
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("fr-DJ")]
 		DJF = 262,
 		/// <summary>
 		/// Danish Krone
