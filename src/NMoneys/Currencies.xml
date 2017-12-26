@@ -48,14 +48,14 @@
 	</currency>
 	<currency code="ANG">
 		<englishName>Netherlands Antillean Guilder</englishName>
-		<nativeName>Netherlands Antillean Guilder</nativeName>
-		<symbol>402</symbol>
+		<nativeName>Antilliaanse gulden</nativeName>
+		<symbol>78 65 102 46</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
-		<decimalSeparator>.</decimalSeparator>
-		<groupSeparator>,</groupSeparator>
+		<decimalSeparator>,</decimalSeparator>
+		<groupSeparator>.</groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<positivePattern>2</positivePattern>
+		<negativePattern>12</negativePattern>
 		<entity>fnof</entity>
 	</currency>
 	<currency code="AOA">

@@ -37,7 +37,7 @@ namespace NMoneys
 		/// <summary>
 		/// Netherlands Antillean Guilder
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("nl-CW", Overwritten = true)]
 		ANG = 532,
 		/// <summary>
 		/// Kwanza
