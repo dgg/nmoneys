@@ -30,7 +30,7 @@
 		<symbol>76</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>,</decimalSeparator>
-		<groupSeparator> </groupSeparator>
+		<groupSeparator> </groupSeparator>
 		<groupSizes>3</groupSizes>
 		<positivePattern>3</positivePattern>
 		<negativePattern>8</negativePattern>
