@@ -619,14 +619,13 @@
 	<currency code="GHS">
 		<englishName>Ghana Cedi</englishName>
 		<nativeName>Ghana Cedi</nativeName>
-		<symbol>162</symbol>
+		<symbol>71 72 8373</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>.</decimalSeparator>
 		<groupSeparator>,</groupSeparator>
 		<groupSizes>3</groupSizes>
 		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
-		<entity>cent</entity>
+		<negativePattern>1</negativePattern>
 	</currency>
 	<currency code="GIP">
 		<englishName>Gibraltar Pound</englishName>

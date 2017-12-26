@@ -292,7 +292,7 @@ namespace NMoneys
 		/// <summary>
 		/// Ghana Cedi
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("en-GH", Overwritten = true)]
 		GHS = 936,
 		/// <summary>
 		/// Gibraltar Pound
