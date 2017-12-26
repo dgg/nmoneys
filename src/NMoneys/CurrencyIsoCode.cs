@@ -97,7 +97,7 @@ namespace NMoneys
 		/// <summary>
 		/// Bermudian Dollar
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("en-BM", Overwritten = true)]
 		BMD = 060,
 		/// <summary>
 		/// Brunei Dollar
