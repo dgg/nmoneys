@@ -92,7 +92,7 @@ namespace NMoneys
 		/// <summary>
 		/// Burundi Franc
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("fr-BI", Overwritten = true)]
 		BIF = 108,
 		/// <summary>
 		/// Bermudian Dollar
