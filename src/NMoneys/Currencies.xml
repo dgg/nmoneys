@@ -654,13 +654,13 @@
 	<currency code="GNF">
 		<englishName>Guinean Franc</englishName>
 		<nativeName>Franc Guinéen</nativeName>
-		<symbol>70</symbol>
+		<symbol>70 71</symbol>
 		<significantDecimalDigits>0</significantDecimalDigits>
-		<decimalSeparator>.</decimalSeparator>
-		<groupSeparator>,</groupSeparator>
+		<decimalSeparator>,</decimalSeparator>
+		<groupSeparator> </groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<positivePattern>3</positivePattern>
+		<negativePattern>8</negativePattern>
 	</currency>
 	<currency code="GTQ">
 		<englishName>Quetzal</englishName>

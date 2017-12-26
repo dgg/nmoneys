@@ -307,7 +307,7 @@ namespace NMoneys
 		/// <summary>
 		/// Guinean Franc
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("fr-GN", Overwritten = true)]
 		GNF = 324,
 		/// <summary>
 		/// Quetzal
