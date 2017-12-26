@@ -302,7 +302,7 @@ namespace NMoneys
 		/// <summary>
 		/// Dalasi
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("en-GM", Overwritten = true)]
 		GMD = 270,
 		/// <summary>
 		/// Guinean Franc
