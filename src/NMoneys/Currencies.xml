@@ -453,10 +453,10 @@
 		<symbol></symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>$</decimalSeparator>
-		<groupSeparator>.</groupSeparator>
+		<groupSeparator> </groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>0</positivePattern>
-		<negativePattern>1</negativePattern>
+		<positivePattern>3</positivePattern>
+		<negativePattern>8</negativePattern>
 	</currency>
 	<currency code="CZK">
 		<englishName>Czech Koruna</englishName>

@@ -217,7 +217,7 @@ namespace NMoneys
 		/// <summary>
 		/// Cape Verde Escudo
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("pt-CV", Overwritten = true)]
 		CVE = 132,
 		/// <summary>
 		/// Czech Koruna
