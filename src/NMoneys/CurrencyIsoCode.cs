@@ -42,7 +42,7 @@ namespace NMoneys
 		/// <summary>
 		/// Kwanza
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("pt-AO", Overwritten = true)]
 		AOA = 973,
 		/// <summary>
 		/// Argentine Peso

@@ -61,13 +61,13 @@
 	<currency code="AOA">
 		<englishName>Kwanza</englishName>
 		<nativeName>Kwanza</nativeName>
-		<symbol>164</symbol>
+		<symbol>75 122</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
-		<decimalSeparator>.</decimalSeparator>
-		<groupSeparator>,</groupSeparator>
+		<decimalSeparator>,</decimalSeparator>
+		<groupSeparator> </groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<positivePattern>3</positivePattern>
+		<negativePattern>8</negativePattern>
 	</currency>
 	<currency code="ARS">
 		<englishName>Argentine Peso</englishName>
