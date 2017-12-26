@@ -1114,6 +1114,18 @@
 		<groupSizes>3</groupSizes>
 		<positivePattern>2</positivePattern>
 		<negativePattern>9</negativePattern>
+		<obsolete>true</obsolete>
+	</currency>
+	<currency code="MRU">
+		<englishName>Ouguiya</englishName>
+		<nativeName>أوقية موريتانية</nativeName>
+		<symbol>1571 46 1605 46 8207</symbol>
+		<significantDecimalDigits>2</significantDecimalDigits>
+		<decimalSeparator>,</decimalSeparator>
+		<groupSeparator>.</groupSeparator>
+		<groupSizes>3</groupSizes>
+		<positivePattern>2</positivePattern>
+		<negativePattern>9</negativePattern>
 	</currency>
 	<currency code="MUR">
 		<englishName>Mauritius Rupee</englishName>

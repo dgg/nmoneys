@@ -7,7 +7,7 @@ namespace NMoneys.Tests
 	[TestFixture]
 	public partial class CurrencyTester
 	{
-		[Test, TestCaseSource("HtmlEntitySpec")]
+		[Test, TestCaseSource(nameof(HtmlEntitySpec))]
 		public void SomeCurrencies_HaveAnHtmlEntity(string isoSymbol, string entityName, string entityNumber)
 		{
 			Currency withHtmlEntity = Currency.Get(isoSymbol);
@@ -22,7 +22,7 @@ namespace NMoneys.Tests
 		}
 
 #pragma warning disable 169
-		private static object[] HtmlEntitySpec = new[]
+		private static object[] HtmlEntitySpec =
 		{
 			new object[]{"ANG", "&fnof;", "&#402;" },
 			new object[]{"AWG", "&fnof;", "&#402;" },
@@ -45,8 +45,6 @@ namespace NMoneys.Tests
 			new object[]{"XDR", "&curren;", "&#164;" },
 			new object[]{"XPT", "&curren;", "&#164;" },
 			new object[]{"XTS", "&curren;", "&#164;" },
-
-			new object[]{"GHS", "&cent;", "&#162;" },
 		};
 	}
 }

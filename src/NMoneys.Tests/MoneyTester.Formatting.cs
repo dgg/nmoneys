@@ -129,8 +129,8 @@ namespace NMoneys.Tests
 			Money positive = new Money(12.25m, CurrencyIsoCode.CVE),
 				negative = new Money(-12.25m, CurrencyIsoCode.CVE);
 
-			Assert.That(positive.ToString(), Is.EqualTo("12$25"));
-			Assert.That(negative.ToString(), Is.EqualTo("-12$25"));
+			Assert.That(positive.ToString(), Is.EqualTo("12$25 "));
+			Assert.That(negative.ToString(), Is.EqualTo("-12$25 "));
 		}
 
 		#endregion
