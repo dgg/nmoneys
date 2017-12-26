@@ -57,7 +57,7 @@ namespace NMoneys
 		/// <summary>
 		/// Aruban Florin
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("nl-AW", Overwritten = true)]
 		AWG = 533,
 		/// <summary>
 		/// Azerbaijan Manat

@@ -93,14 +93,14 @@
 	</currency>
 	<currency code="AWG">
 		<englishName>Aruban Florin</englishName>
-		<nativeName>Aruban Florin</nativeName>
-		<symbol>402</symbol>
+		<nativeName>Arubaanse florijn</nativeName>
+		<symbol>65 102 108 46</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
-		<decimalSeparator>.</decimalSeparator>
-		<groupSeparator>,</groupSeparator>
+		<decimalSeparator>,</decimalSeparator>
+		<groupSeparator>.</groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<positivePattern>2</positivePattern>
+		<negativePattern>12</negativePattern>
 		<entity>fnof</entity>
 	</currency>
 	<currency code="AZN">
