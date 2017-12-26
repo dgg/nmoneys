@@ -297,7 +297,7 @@ namespace NMoneys
 		/// <summary>
 		/// Gibraltar Pound
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("en-GI")]
 		GIP = 292,
 		/// <summary>
 		/// Dalasi
