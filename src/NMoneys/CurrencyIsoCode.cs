@@ -707,8 +707,13 @@ namespace NMoneys
 		/// <summary>
 		/// Dobra
 		/// </summary>
-		[EnumMember, CanonicalCulture("pt-ST", Overwritten = true)]
+		[EnumMember, Obsolete]
 		STD = 678,
+		/// <summary>
+		/// Dobra
+		/// </summary>
+		[EnumMember, CanonicalCulture("pt-ST", Overwritten = true)]
+		STN = 930,
 		/// <summary>
 		/// El Salvador Colon
 		/// </summary>

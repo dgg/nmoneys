@@ -1546,6 +1546,18 @@
 		<groupSizes>3</groupSizes>
 		<positivePattern>3</positivePattern>
 		<negativePattern>8</negativePattern>
+		<obsolete>true</obsolete>
+	</currency>
+	<currency code="STN">
+		<englishName>Dobra</englishName>
+		<nativeName>Dobra de São Tomé e Príncipe</nativeName>
+		<symbol>68 98</symbol>
+		<significantDecimalDigits>2</significantDecimalDigits>
+		<decimalSeparator>,</decimalSeparator>
+		<groupSeparator> </groupSeparator>
+		<groupSizes>3</groupSizes>
+		<positivePattern>3</positivePattern>
+		<negativePattern>8</negativePattern>
 	</currency>
 	<currency code="SVC">
 		<englishName>El Salvador Colon</englishName>
