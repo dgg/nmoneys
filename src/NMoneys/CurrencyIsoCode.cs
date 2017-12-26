@@ -122,7 +122,7 @@ namespace NMoneys
 		/// <summary>
 		/// Bahamian Dollar
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("en-BS")]
 		BSD = 044,
 		/// <summary>
 		/// Ngultrum
