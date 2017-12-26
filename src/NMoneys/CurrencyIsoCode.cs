@@ -272,7 +272,7 @@ namespace NMoneys
 		/// <summary>
 		/// Fiji Dollar
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("en-FJ", Overwritten = true)]
 		FJD = 242,
 		/// <summary>
 		/// Falkland Islands Pound
