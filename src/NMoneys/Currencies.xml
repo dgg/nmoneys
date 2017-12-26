@@ -874,14 +874,14 @@
 	</currency>
 	<currency code="KMF">
 		<englishName>Comorian Franc</englishName>
-		<nativeName>Comoro Franc</nativeName>
+		<nativeName>فرنك قمري</nativeName>
 		<symbol>67 70</symbol>
 		<significantDecimalDigits>0</significantDecimalDigits>
 		<decimalSeparator>.</decimalSeparator>
 		<groupSeparator>,</groupSeparator>
 		<groupSizes>3</groupSizes>
-		<positivePattern>0</positivePattern>
-		<negativePattern>0</negativePattern>
+		<positivePattern>2</positivePattern>
+		<negativePattern>9</negativePattern>
 	</currency>
 	<currency code="KPW">
 		<englishName>North Korean Won</englishName>

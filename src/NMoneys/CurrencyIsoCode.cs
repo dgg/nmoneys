@@ -402,7 +402,7 @@ namespace NMoneys
 		/// <summary>
 		/// Comorian Franc
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("ar-KM", Overwritten = true)]
 		KMF = 174,
 		/// <summary>
 		/// Riel
