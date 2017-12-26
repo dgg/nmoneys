@@ -317,7 +317,7 @@ namespace NMoneys
 		/// <summary>
 		/// Guyana Dollar
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("en-GY", Overwritten = true)]
 		GYD = 328,
 		/// <summary>
 		/// Hong Kong Dollar
