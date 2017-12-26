@@ -277,7 +277,7 @@ namespace NMoneys
 		/// <summary>
 		/// Falkland Islands Pound
 		/// </summary>
-		[EnumMember]
+		[EnumMember, CanonicalCulture("en-FK")]
 		FKP = 238,
 		/// <summary>
 		/// Pound Sterling
