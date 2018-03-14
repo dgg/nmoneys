@@ -1,0 +1,1035 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Testing.Commons</name>
+    </assembly>
+    <members>
+        <member name="T:Testing.Commons.Async.PseudoTask">
+            <summary>
+            Creates stubbed values for apis that return asynchronous results in the shape of <see cref="T:System.Threading.Tasks.Task`1"/>.
+            </summary>
+        </member>
+        <member name="M:Testing.Commons.Async.PseudoTask.Create``1(``0)">
+            <summary>
+            Builds an asynchronous result with little overhead.
+            </summary>
+            <typeparam name="T">The type of the result produced by the returned <see cref="T:System.Threading.Tasks.Task`1"/>. </typeparam>
+            <param name="result">The result value to bind to the returned task.</param>
+            <returns>A <see cref="F:System.Threading.Tasks.TaskStatus.RanToCompletion"/> transitioned task.</returns>
+        </member>
+        <member name="T:Testing.Commons.Builders.Builder">
+            <summary>
+            Allows easy extensibility of complex test objects.
+            </summary>
+            <example><code>Builder.For.User()... .Build()</code>
+            where <c>.Exceotion()</c> returns a custom object builder.</example>
+        </member>
+        <member name="T:Testing.Commons.Builders.Builder.OfEntryPoint">
+            <summary>
+            Allows meaningful extensions for complex object creation.
+            </summary>
+        </member>
+        <member name="T:Testing.Commons.Builders.Builder.ForEntryPoint">
+            <summary>
+            Allows meaningful extensions for complex object creation.
+            </summary>
+        </member>
+        <member name="P:Testing.Commons.Builders.Builder.Of">
+            <summary>
+            Allows meaningful extensions for complex object creation.
+            </summary>
+            <example><code>Builder.Of.Users()... .Build()</code>
+            where <c>.Exceotion()</c> returns a custom builder of user instances.</example>
+        </member>
+        <member name="P:Testing.Commons.Builders.Builder.For">
+            <summary>
+            Allows meaningful extensions for complex object creation.
+            </summary>
+            <example><code>Builder.For.User()... .Build()</code>
+            where <c>.Exception()</c> returns a custom builder of user instances.</example>
+        </member>
+        <member name="T:Testing.Commons.Builders.IBuilder`1">
+            <summary>
+            Simple interface for objects that create complex objects for testing purposes.
+            </summary>
+            <typeparam name="T">Type to be built</typeparam>
+        </member>
+        <member name="M:Testing.Commons.Builders.IBuilder`1.Build">
+            <summary>
+            Creates a instance of a complex object as the final step of the building process.
+            </summary>
+            <returns>Instance built.</returns>
+        </member>
+        <member name="T:Testing.Commons.EnumerableExtensions">
+            <summary>
+            Allows extensions of IEnumerable that are useful for testing
+            </summary>
+        </member>
+        <member name="M:Testing.Commons.EnumerableExtensions.Iterate``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Iterates a given enumerable.
+            </summary>
+            <remarks>When testing, the lazy nature of enumerables might give false positives. This provides an easy way to evaluate the enumerable.</remarks>
+            <typeparam name="T">The type of objects to enumerate</typeparam>
+            <param name="enumerable">Enumerable to be iterated.</param>
+        </member>
+        <member name="T:Testing.Commons.Globalization.CultureReseter">
+            <summary>
+            Allows setting and restoring both the culture and the UI culture in the current thread.
+            </summary>
+        </member>
+        <member name="M:Testing.Commons.Globalization.CultureReseter.#ctor">
+            <summary>
+            Creates an instance of the reseter.
+            </summary>
+            <remarks>"Freezes" the current information in order to be restored upon disposal.</remarks>
+        </member>
+        <member name="M:Testing.Commons.Globalization.CultureReseter.Set(System.Globalization.CultureInfo,System.Globalization.CultureInfo)">
+            <summary>
+            Sets culture and UI culture in the current thread to the provided cultures.
+            </summary>
+            <param name="threadCulture">Culture for the current thread.</param>
+            <param name="threadUICulture">Culture used by the <see cref="T:System.Resources.ResourceManager"/></param>
+            <returns>An instance of <see cref="T:Testing.Commons.Globalization.CultureReseter"/> with the cultures set and able to restore the previous cultures.</returns>
+        </member>
+        <member name="M:Testing.Commons.Globalization.CultureReseter.Set(System.String,System.String)">
+            <summary>
+            Sets culture and UI culture in the current thread to the provided cultures.
+            </summary>
+            <remarks>Instances of <see cref="T:System.Globalization.CultureInfo"/> will be retrieved from a cache for the full .NET Framework
+            and instantiated otherwise.</remarks>
+            <param name="cultureName">Culture name for the current thread.</param>
+            <param name="uiCultureName">Culture name used by the <see cref="T:System.Resources.ResourceManager"/></param>
+            <returns>An instance of <see cref="T:Testing.Commons.Globalization.CultureReseter"/> with the cultures set and able to restore the previous cultures.</returns>
+        </member>
+        <member name="M:Testing.Commons.Globalization.CultureReseter.Set(System.Globalization.CultureInfo)">
+            <summary>
+            Sets culture and UI culture in the current thread to the provided culture.
+            </summary>
+            <param name="bothCultures">Culture for the current thread and used by the <see cref="T:System.Resources.ResourceManager"/></param>
+            <returns>An instance of <see cref="T:Testing.Commons.Globalization.CultureReseter"/> with the cultures set and able to restore the previous cultures.</returns>
+        </member>
+        <member name="M:Testing.Commons.Globalization.CultureReseter.Set(System.String)">
+            <summary>
+            Sets culture and UI culture in the current thread to the provided culture.
+            </summary>
+            <remarks>Instances of <see cref="T:System.Globalization.CultureInfo"/> will be retrieved from a cache for the full .NET Framework
+            and instantiated otherwise.</remarks>
+            <param name="bothCultureName">Culture name for the current thread and used by the <see cref="T:System.Resources.ResourceManager"/></param>
+            <returns>An instance of <see cref="T:Testing.Commons.Globalization.CultureReseter"/> with the cultures set and able to restore the previous cultures.</returns>
+        </member>
+        <member name="M:Testing.Commons.Globalization.CultureReseter.Dispose">
+            <summary>
+            Restores culture and UI culture in the current thread to the previous values.
+            </summary>
+        </member>
+        <member name="T:Testing.Commons.GuidBuilder">
+            <summary>
+            Allows creation of deterministic <see cref="T:System.Guid"/> instances.
+            </summary>
+        </member>
+        <member name="M:Testing.Commons.GuidBuilder.Build(System.Char)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Guid"/> structure using the values represented by the specified representation of an hex figure.
+            </summary>
+            <param name="hexFigure">A hexadecimal figure: '0' to '1' or 'A' to 'F' or 'a' to 'f'.</param>
+            <returns>A new instance with the information provided.</returns>
+            <exception cref="T:Testing.Commons.GuidBuilder.NotHexadecimalException"><paramref name="hexFigure"/> is not a hexadecimal figure.</exception>
+        </member>
+        <member name="M:Testing.Commons.GuidBuilder.Build(System.Byte)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Guid"/> structure using the values represented by the specified hex values.
+            </summary>
+            <param name="hexFigure">A hexadecimal figure: 0 to 15 or 0x0 to 0xf.</param>
+            <returns>A new instance with the information provided.</returns>
+            /// <exception cref="T:Testing.Commons.GuidBuilder.NotHexadecimalException"><paramref name="hexFigure"/> is not a hexadecimal figure.</exception>
+        </member>
+        <member name="T:Testing.Commons.GuidBuilder.NotHexadecimalException">
+            <summary>
+            The exception that is thrown when the value of an argument is outside the allowable range of values as defined by the invoked method.
+            </summary>
+            <remarks>When a number or a number representation is not a hexadecimal figure.</remarks>
+        </member>
+        <member name="M:Testing.Commons.GuidBuilder.NotHexadecimalException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Testing.Commons.GuidBuilder.NotHexadecimalException"/> class.
+            </summary>
+        </member>
+        <member name="M:Testing.Commons.GuidBuilder.NotHexadecimalException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Testing.Commons.GuidBuilder.NotHexadecimalException"/> class with the name of the parameter that causes this exception.
+            </summary>
+            <param name="paramName">The parameter name string.</param>
+        </member>
+        <member name="M:Testing.Commons.GuidBuilder.NotHexadecimalException.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Testing.Commons.GuidBuilder.NotHexadecimalException"/> class with a specified error message and the name of the parameter that causes this exception.
+            </summary>
+            <param name="paramName">The parameter name string.</param>
+            <param name="message">The error message string.</param>
+        </member>
+        <member name="M:Testing.Commons.GuidBuilder.NotHexadecimalException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Testing.Commons.GuidBuilder.NotHexadecimalException"/> class with a specified error message and the exception that is the cause of this exception.
+            </summary>
+            <param name="message">The error message string.</param>
+            <param name="innerException">The exception that is the cause of the current exception, or a null reference.</param>
+        </member>
+        <member name="M:Testing.Commons.GuidBuilder.NotHexadecimalException.#ctor(System.String,System.Object,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Testing.Commons.GuidBuilder.NotHexadecimalException"/> class with a specified error message, the parameter name, and the value of the argument.
+            </summary>
+            <param name="paramName">The parameter name string.</param>
+            <param name="actualValue">The argument value.</param>
+            <param name="message">The error message string.</param>
+        </member>
+        <member name="M:Testing.Commons.GuidBuilder.NotHexadecimalException.#ctor(System.String,System.Char)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Testing.Commons.GuidBuilder.NotHexadecimalException"/> class with the parameter name and the value of the argument.
+            </summary>
+            <param name="paramName">The parameter name string.</param>
+            <param name="notHex">The argument value.</param>
+        </member>
+        <member name="M:Testing.Commons.GuidBuilder.NotHexadecimalException.#ctor(System.String,System.Byte)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Testing.Commons.GuidBuilder.NotHexadecimalException"/> class with the parameter name and the value of the argument.
+            </summary>
+            <param name="paramName">The parameter name string.</param>
+            <param name="notHex">The argument value.</param>
+        </member>
+        <member name="T:Testing.Commons.KeyValue">
+            <summary>
+            Creates instances of <see cref="T:System.Collections.Generic.KeyValuePair`2"/> taking advantage of type inference.
+            </summary>
+        </member>
+        <member name="M:Testing.Commons.KeyValue.New``2(``0,``1)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Collections.Generic.KeyValuePair`2"/> structure with the specified key and value.
+            </summary>
+            <typeparam name="TKey">The type of the key.</typeparam>
+            <typeparam name="TValue">The type of the value.</typeparam>
+            <param name="key">The object defined in each key/value pair.</param>
+            <param name="value">The definition associated with <paramref name="key"/>.</param>
+            <returns>A new instance of <see cref="T:System.Collections.Generic.KeyValuePair`2"/> with the specified values.</returns>
+        </member>
+        <member name="M:Testing.Commons.KeyValue.Pair(System.String,System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Collections.Generic.KeyValuePair`2"/> structure with the specified key and value.
+            </summary>
+            <param name="key">The object defined in each key/value pair.</param>
+            <param name="value">The definition associated with <paramref name="key"/>.</param>
+            <returns>A new instance of <see cref="T:System.Collections.Generic.KeyValuePair`2"/> with the specified values.</returns>
+        </member>
+        <member name="T:Testing.Commons.Must">
+            <summary>
+            Allows easy extensibility of assertions for testing frameworks.
+            </summary>
+            <example>In NUnit:
+            <code>Assert.That(2, Must.Be.Even())</code>
+            where <c>.Even()</c> returns a custom assertion.</example>
+        </member>
+        <member name="T:Testing.Commons.Must.ContainEntryPoint">
+            <summary>
+            Allows meaningful extensions for elements of a group, for example, collections.
+            </summary>
+        </member>
+        <member name="T:Testing.Commons.Must.NotContainEntryPoint">
+            <summary>
+            Allows meaningful negative extensions for elements of a group, for example, collections.
+            </summary>
+        </member>
+        <member name="P:Testing.Commons.Must.Contain">
+            <summary>
+            Allows meaningful extensions for elements of a group, for example, collections.
+            </summary>
+            <example>In NUnit:
+            <code>Assert.That(new[]{1, 2, 3}, Must.Contain.ASingleEvenNumber())</code>
+            where <c>.ASingleEvenNumber()</c> returns a custom assertion.</example>
+        </member>
+        <member name="T:Testing.Commons.Must.HaveEntryPoint">
+            <summary>
+            Allows meaningful extensions for elements of a group, for example, a property out of many.
+            </summary>
+        </member>
+        <member name="T:Testing.Commons.Must.NotHaveEntryPoint">
+            <summary>
+            Allows meaningful negative extensions for elements of a group, for example, a property out of many.
+            </summary>
+        </member>
+        <member name="P:Testing.Commons.Must.Have">
+            <summary>
+            Allows meaningful extensions for elements of a group, for example, a property out of many.
+            </summary>
+            <example>In NUnit:
+            <code>Assert.That(aUri, Must.Have.Query())</code>
+            where <c>.Query()</c> returns a custom assertion.</example>
+        </member>
+        <member name="T:Testing.Commons.Must.BeEntryPoint">
+            <summary>
+            Allows meaningful extensions for individual elements.
+            </summary>
+        </member>
+        <member name="T:Testing.Commons.Must.NotBeEntryPoint">
+            <summary>
+            Allows meaningful negative extensions for individual elements.
+            </summary>
+        </member>
+        <member name="P:Testing.Commons.Must.Be">
+            <summary>
+            Allows meaningful extensions for individual elements.
+            </summary>
+            <example>In NUnit:
+            <code>Assert.That(2, Must.Be.Even())</code>
+            where <c>.Even()</c> returns a custom assertion.</example>
+        </member>
+        <member name="T:Testing.Commons.Must.SatisfyEntryPoint">
+            <summary>
+            Allows meaningful extensions for constraints of individual elements.
+            </summary>
+        </member>
+        <member name="T:Testing.Commons.Must.NotSatisfyEntryPoint">
+            <summary>
+            Allows meaningful negative extensions for constraints of individual elements.
+            </summary>
+        </member>
+        <member name="P:Testing.Commons.Must.Satisfy">
+            <summary>
+            Allows meaningful extensions for constraints of individual elements.
+            </summary>
+            <example>In NUnit:
+            <code>Assert.That(collection, Must.Satisfy.Uniqueness())</code>
+            where <c>.Uniqueness()</c> returns a custom assertion.</example>
+        </member>
+        <member name="T:Testing.Commons.Must.MatchEntryPoint">
+            <summary>
+            Allows meaningful extensions for partial constraints of individual elements.
+            </summary>
+        </member>
+        <member name="T:Testing.Commons.Must.NotMatchEntryPoint">
+            <summary>
+            Allows meaningful negative extensions for partial constraints of individual elements.
+            </summary>
+        </member>
+        <member name="P:Testing.Commons.Must.Match">
+            <summary>
+            Allows meaningful extensions for partial constraints of individual elements.
+            </summary>
+            <example>In NUnit:
+            <code>Assert.That("asd", Must.Match.String("as*"))</code>
+            where <c>.String()</c> returns a custom assertion.</example>
+        </member>
+        <member name="T:Testing.Commons.Must.RaiseEntryPoint">
+            <summary>
+            Allows meaningful extensions for constraints for event raising types.
+            </summary>
+        </member>
+        <member name="T:Testing.Commons.Must.NotRaiseEntryPoint">
+            <summary>
+            Allows meaningful negative extensions for constraints for event raising types.
+            </summary>
+        </member>
+        <member name="P:Testing.Commons.Must.Raise">
+            <summary>
+            Allows meaningful extensions for types raising events.
+            </summary>
+            <example>In NUnit:
+            <code>Assert.That(()=>instance.Property = value, Must.Raise.SomeEvent(instance, i => i.Property))</code>.
+            </example>
+        </member>
+        <member name="T:Testing.Commons.Must.Not">
+            <summary>
+            Allows easy extensibility of negative assertions for testing frameworks.
+            </summary>
+            <example>In NUnit:
+            <code>Assert.That(2, Must.Not.Be.Even())</code>
+            where <c>.Even()</c> returns a custom assertion.</example>
+        </member>
+        <member name="P:Testing.Commons.Must.Not.Contain">
+            <summary>
+            Allows meaningful negative extensions for elements of a group, for example, collections.
+            </summary>
+            <example>In NUnit:
+            <code>Assert.That(new[]{1, 3, 5}, Must.Not.Contain.ASingleEvenNumber())</code>
+            where <c>.ASingleEvenNumber()</c> returns a custom assertion.</example>
+        </member>
+        <member name="P:Testing.Commons.Must.Not.Have">
+            <summary>
+            Allows meaningful negative extensions for elements of a group, for example, a property out of many.
+            </summary>
+            <example>In NUnit:
+            <code>Assert.That(aUri, Must.Not.Have.Query())</code>
+            where <c>.Query()</c> returns a custom assertion.</example>
+        </member>
+        <member name="P:Testing.Commons.Must.Not.Be">
+            <summary>
+            Allows meaningful negative extensions for individual elements.
+            </summary>
+            <example>In NUnit:
+            <code>Assert.That(3, Must.Not.Be.Even())</code>
+            where <c>.Even()</c> returns a custom assertion.</example>
+        </member>
+        <member name="P:Testing.Commons.Must.Not.Satisfy">
+            <summary>
+            Allows meaningful negative extensions for constraints of individual elements.
+            </summary>
+            <example>In NUnit:
+            <code>Assert.That(collection, Must.Not.Satisfy.Uniqueness())</code>
+            where <c>.Uniqueness()</c> returns a custom assertion.</example>
+        </member>
+        <member name="P:Testing.Commons.Must.Not.Match">
+            <summary>
+            Allows meaningful negative extensions for partial constraints of individual elements.
+            </summary>
+            <example>In NUnit:
+            <code>Assert.That("asd", Must.Not.Match.String("ds*"))</code>
+            where <c>.String()</c> returns a custom assertion.</example>
+        </member>
+        <member name="P:Testing.Commons.Must.Not.Raise">
+            <summary>
+            Allows meaningful negative extensions for constraints for event raising types.
+            </summary>
+            <example>In NUnit:
+            <code>Assert.That(()=>instance.Property = value, Must.Not.Raise.SomeEvent(instance, i => i.Property))</code>.
+            </example>
+        </member>
+        <member name="T:Testing.Commons.Serialization.DataContractDeserializer">
+            <summary>
+            Allows testing a single cycle of deserialization using data contract serialization.
+            </summary>
+            <remarks>It uses <see cref="T:System.Runtime.Serialization.DataContractSerializer"/> to perform the deserialization.</remarks>
+        </member>
+        <member name="M:Testing.Commons.Serialization.DataContractDeserializer.Deserialize``1(System.String)">
+            <summary>
+            Deserializes the object represented by <paramref name="toDeserialize"/> using data contract serialization.
+            </summary>
+            <param name="toDeserialize">String representation of the serialized object to be data contract-deserialized.</param>
+            <typeparam name="T">Type to be deserialized.</typeparam>
+            <returns>The deserialized object.</returns>
+        </member>
+        <member name="T:Testing.Commons.Serialization.DataContractRoundtripSerializer`1">
+            <summary>
+            Allows testing a single cycle of serialization and deserialization using data contract serialization.
+            </summary>
+            <remarks>It uses <see cref="T:System.Runtime.Serialization.DataContractSerializer"/> to perform the serialization and deserialization.</remarks>
+            <typeparam name="T">Type to be serialized and deserialized.</typeparam>
+        </member>
+        <member name="M:Testing.Commons.Serialization.DataContractRoundtripSerializer`1.#ctor">
+            <summary>
+            Creates an instance of <see cref="T:Testing.Commons.Serialization.DataContractRoundtripSerializer`1"/>
+            </summary>
+        </member>
+        <member name="M:Testing.Commons.Serialization.DataContractRoundtripSerializer`1.Serialize(`0)">
+            <summary>
+            Serializes the specified object using data contract serialization, writting the output to the returned string.
+            </summary>
+            <param name="toSerialize">Object to be data contract-serialized.</param>
+            <returns>The string representation of the serialized object.</returns>
+        </member>
+        <member name="M:Testing.Commons.Serialization.DataContractRoundtripSerializer`1.Deserialize">
+            <summary>
+            Deserializes the previously serialized object (using <see cref="M:Testing.Commons.Serialization.DataContractRoundtripSerializer`1.Serialize(`0)"/>) using data contract serialization.
+            </summary>
+            <remarks>This method must be called after <see cref="M:Testing.Commons.Serialization.DataContractRoundtripSerializer`1.Serialize(`0)"/> as it is temporaly coupled to it.</remarks>
+            <returns>The deserialized object.</returns>
+        </member>
+        <member name="M:Testing.Commons.Serialization.DataContractRoundtripSerializer`1.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+            <remarks>Closes and disposes internal serialization stream.</remarks>
+        </member>
+        <member name="T:Testing.Commons.Serialization.IDeserializer">
+            <summary>
+            Allows testing a single cycle of deserialization.
+            </summary>
+        </member>
+        <member name="M:Testing.Commons.Serialization.IDeserializer.Deserialize``1(System.String)">
+            <summary>
+            Deserializes the object represented by <paramref name="toDeserialize"/>.
+            </summary>
+            <param name="toDeserialize">String representation of the serialized object to be deserialized.</param>
+            <typeparam name="T">Type to be deserialized.</typeparam>
+            <returns>The deserialized object.</returns>
+        </member>
+        <member name="T:Testing.Commons.Serialization.IRoundtripSerializer`1">
+            <summary>
+            Allows testing a single cycle of serialization and deserialization.
+            </summary>
+            <typeparam name="T">Type to be serialized and deserialized.</typeparam>
+        </member>
+        <member name="M:Testing.Commons.Serialization.IRoundtripSerializer`1.Serialize(`0)">
+            <summary>
+            Serializes the specified object, writting the output to the returned string.
+            </summary>
+            <param name="toSerialize">Object to be serialized.</param>
+            <returns>The string representation of the serialized object.</returns>
+        </member>
+        <member name="M:Testing.Commons.Serialization.IRoundtripSerializer`1.Deserialize">
+            <summary>
+            Deserializes the previously serialized object (using <see cref="M:Testing.Commons.Serialization.IRoundtripSerializer`1.Serialize(`0)"/>).
+            </summary>
+            <remarks>This method must be called after <see cref="M:Testing.Commons.Serialization.IRoundtripSerializer`1.Serialize(`0)"/> as it is temporaly coupled to it.</remarks>
+            <returns>The deserialized object.</returns>
+        </member>
+        <member name="T:Testing.Commons.Serialization.JsonString">
+            <summary>
+            Allows easier creation of JSON strings by removing the need to scape quotes.
+            </summary>
+            <remarks>A compact JSON string notation uses single quotes for names and string values instead
+            of double quotes, removing the need to escape such double quotes.
+            <para>And expanded JSON string uses the canonical double quote style for names an string values.</para>
+            </remarks>
+            <example>The string <code>"{\"property\"=\"value\"}"</code> can be written
+            as <code>"{'property'='value'}"</code></example>
+        </member>
+        <member name="M:Testing.Commons.Serialization.JsonString.#ctor(System.String)">
+            <summary>
+            Creates a instance of an easier to write JSON string.
+            </summary>
+            <param name="json">Compact JSON string (single quotes instead of scaped double quotes)</param>
+        </member>
+        <member name="M:Testing.Commons.Serialization.JsonString.ToString">
+            <summary>
+            Returns the non-compact version of the compact JSON string provided.
+            </summary>
+            <returns>The expanded JSON.</returns>
+        </member>
+        <member name="M:Testing.Commons.Serialization.JsonString.op_Implicit(Testing.Commons.Serialization.JsonString)~System.String">
+            <summary>
+            Returns the expanded version of the compact JSON string provided.
+            </summary>
+            <param name="instance">The compact JSON string.</param>
+        </member>
+        <member name="F:Testing.Commons.Serialization.JsonString.Comparer">
+            <summary>
+            Allows comparing expanded JSON strings to compact JSON ones.
+            </summary>
+            <remarks>A compact JSON string notation uses single quotes for names and string values instead
+            of double quotes, removing the need to escape such double quotes.
+            <para>An expanded JSON string uses the canonical double quote style for names an string values.</para>
+            </remarks>
+        </member>
+        <member name="T:Testing.Commons.Serialization.JsonStringExtensions">
+            <summary>
+            Provides extensions to facilite the usage of <see cref="T:Testing.Commons.Serialization.JsonString"/>.
+            </summary>
+        </member>
+        <member name="M:Testing.Commons.Serialization.JsonStringExtensions.Jsonify(System.String)">
+            <summary>
+            Expands a compact JSON string into its expanded JSON representation.
+            </summary>
+            <remarks>A compact JSON string notation uses single quotes for names and string values instead
+            of double quotes, removing the need to escape such double quotes.
+            <para>An extended JSON string uses the canonical double quote style for names an string values.</para>
+            </remarks>
+            <param name="json">JSON string in compact form.</param>
+            <returns>The expanded JSON.</returns>
+        </member>
+        <member name="T:Testing.Commons.Serialization.XmlDeserializer">
+            <summary>
+            Allows testing a single cycle of deserialization using XML serialization.
+            </summary>
+            <remarks>It uses <see cref="T:System.Xml.Serialization.XmlSerializer"/> to perform the deserialization.</remarks>
+        </member>
+        <member name="M:Testing.Commons.Serialization.XmlDeserializer.Deserialize``1(System.String)">
+            <summary>
+            Deserializes the object represented by <paramref name="toDeserialize"/> using XML serialization.
+            </summary>
+            <param name="toDeserialize">String representation of the serialized object to be XML-deserialized.</param>
+            <typeparam name="T">Type to be deserialized.</typeparam>
+            <returns>The deserialized object.</returns>
+        </member>
+        <member name="T:Testing.Commons.Serialization.XmlRoundtripSerializer`1">
+            <summary>
+            Allows testing a single cycle of serialization and deserialization using XML serialization.
+            </summary>
+            <remarks>It uses <see cref="T:System.Xml.Serialization.XmlSerializer"/> to perform the serialization and deserialization.</remarks>
+            <typeparam name="T">Type to be serialized and deserialized.</typeparam>
+        </member>
+        <member name="M:Testing.Commons.Serialization.XmlRoundtripSerializer`1.#ctor">
+            <summary>
+            Creates an instance of <see cref="T:Testing.Commons.Serialization.XmlRoundtripSerializer`1"/>
+            </summary>
+        </member>
+        <member name="M:Testing.Commons.Serialization.XmlRoundtripSerializer`1.Serialize(`0)">
+            <summary>
+            Serializes the specified object using XML serialization, writting the output to the returned string.
+            </summary>
+            <param name="toSerialize">Object to be data XML-serialized.</param>
+            <returns>The string representation of the serialized object.</returns>
+        </member>
+        <member name="M:Testing.Commons.Serialization.XmlRoundtripSerializer`1.Deserialize">
+            <summary>
+            Deserializes the previously serialized object (using <see cref="M:Testing.Commons.Serialization.XmlRoundtripSerializer`1.Serialize(`0)"/>) using XML serialization.
+            </summary>
+            <remarks>This method must be called after <see cref="M:Testing.Commons.Serialization.XmlRoundtripSerializer`1.Serialize(`0)"/> as it is temporaly coupled to it.</remarks>
+            <returns>The deserialized object.</returns>
+        </member>
+        <member name="M:Testing.Commons.Serialization.XmlRoundtripSerializer`1.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+            <remarks>Closes and disposes internal serialization stream.</remarks>
+        </member>
+        <member name="T:Testing.Commons.StringGenerator">
+            <summary>
+            Allows generating strings with different patterns and different lengths.
+            </summary>
+        </member>
+        <member name="M:Testing.Commons.StringGenerator.Numeric(System.UInt32)">
+            <summary>
+            Generates a string with the pattern {0123456789} for the given length.
+            </summary>
+            <param name="length">The number of characters of the string generated.</param>
+            <returns>A string of <paramref name="length"/> characters with figures.</returns>
+            <example><code>
+            .Numeric(2) --> "01"
+            .Numeric(10) --> "0123456789"
+            </code></example>
+        </member>
+        <member name="M:Testing.Commons.StringGenerator.RepeatPattern(System.String,System.UInt32)">
+            <summary>
+            Generates a string with the provided pattern for the given length.
+            </summary>
+            <param name="pattern">The  sequence of characters to loop.</param>
+            <param name="length">The number of characters of the string generated.</param>
+            <returns>A string of <paramref name="length"/> characters with characters from the pattern.</returns>
+            <example><code>
+            .RepeatPattern("abc", 2) --> "ab"
+            .RepeatPattern("abc", 5) --> "abcab"
+            </code></example>
+        </member>
+        <member name="T:Testing.Commons.Time.DateExtensions">
+            <summary>
+            Allows expressive creation of <see cref="T:System.DateTime"/> instances that represent a date.
+            </summary>
+            <example><code>11.March(1977)</code></example>
+        </member>
+        <member name="M:Testing.Commons.Time.DateExtensions.January(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.DateTime"/> structure to the specified year and day in January.
+            </summary>
+            <remarks>Year, month, and day are interpreted as a year, month, and day in the Gregorian calendar.
+            The time of day for the resulting <see cref="T:System.DateTime"/> is midnight (00:00:00). The <see cref="P:System.DateTime.Kind"/> property is initialized to
+            <see cref="F:System.DateTimeKind.Unspecified"/>.</remarks>
+            <param name="day">The day (1 through the number of days in month).</param>
+            <param name="year">The year (1 through 9999).</param>
+            <returns>A new instance with the information provided.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.DateExtensions.February(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.DateTime"/> structure to the specified year and day in February.
+            </summary>
+            <remarks>Year, month, and day are interpreted as a year, month, and day in the Gregorian calendar.
+            The time of day for the resulting <see cref="T:System.DateTime"/> is midnight (00:00:00). The <see cref="P:System.DateTime.Kind"/> property is initialized to
+            <see cref="F:System.DateTimeKind.Unspecified"/>.</remarks>
+            <param name="day">The day (1 through the number of days in month).</param>
+            <param name="year">The year (1 through 9999).</param>
+            <returns>A new instance with the information provided.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.DateExtensions.March(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.DateTime"/> structure to the specified year and day in March.
+            </summary>
+            <remarks>Year, month, and day are interpreted as a year, month, and day in the Gregorian calendar.
+            The time of day for the resulting <see cref="T:System.DateTime"/> is midnight (00:00:00). The <see cref="P:System.DateTime.Kind"/> property is initialized to
+            <see cref="F:System.DateTimeKind.Unspecified"/>.</remarks>
+            <param name="day">The day (1 through the number of days in month).</param>
+            <param name="year">The year (1 through 9999).</param>
+            <returns>A new instance with the information provided.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.DateExtensions.April(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.DateTime"/> structure to the specified year and day in April.
+            </summary>
+            <remarks>Year, month, and day are interpreted as a year, month, and day in the Gregorian calendar.
+            The time of day for the resulting <see cref="T:System.DateTime"/> is midnight (00:00:00). The <see cref="P:System.DateTime.Kind"/> property is initialized to
+            <see cref="F:System.DateTimeKind.Unspecified"/>.</remarks>
+            <param name="day">The day (1 through the number of days in month).</param>
+            <param name="year">The year (1 through 9999).</param>
+            <returns>A new instance with the information provided.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.DateExtensions.May(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.DateTime"/> structure to the specified year and day in May.
+            </summary>
+            <remarks>Year, month, and day are interpreted as a year, month, and day in the Gregorian calendar.
+            The time of day for the resulting <see cref="T:System.DateTime"/> is midnight (00:00:00). The <see cref="P:System.DateTime.Kind"/> property is initialized to
+            <see cref="F:System.DateTimeKind.Unspecified"/>.</remarks>
+            <param name="day">The day (1 through the number of days in month).</param>
+            <param name="year">The year (1 through 9999).</param>
+            <returns>A new instance with the information provided.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.DateExtensions.June(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.DateTime"/> structure to the specified year and day in June.
+            </summary>
+            <remarks>Year, month, and day are interpreted as a year, month, and day in the Gregorian calendar.
+            The time of day for the resulting <see cref="T:System.DateTime"/> is midnight (00:00:00). The <see cref="P:System.DateTime.Kind"/> property is initialized to
+            <see cref="F:System.DateTimeKind.Unspecified"/>.</remarks>
+            <param name="day">The day (1 through the number of days in month).</param>
+            <param name="year">The year (1 through 9999).</param>
+            <returns>A new instance with the information provided.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.DateExtensions.July(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.DateTime"/> structure to the specified year and day in July.
+            </summary>
+            <remarks>Year, month, and day are interpreted as a year, month, and day in the Gregorian calendar.
+            The time of day for the resulting <see cref="T:System.DateTime"/> is midnight (00:00:00). The <see cref="P:System.DateTime.Kind"/> property is initialized to
+            <see cref="F:System.DateTimeKind.Unspecified"/>.</remarks>
+            <param name="day">The day (1 through the number of days in month).</param>
+            <param name="year">The year (1 through 9999).</param>
+            <returns>A new instance with the information provided.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.DateExtensions.August(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.DateTime"/> structure to the specified year and day in August.
+            </summary>
+            <remarks>Year, month, and day are interpreted as a year, month, and day in the Gregorian calendar.
+            The time of day for the resulting <see cref="T:System.DateTime"/> is midnight (00:00:00). The <see cref="P:System.DateTime.Kind"/> property is initialized to
+            <see cref="F:System.DateTimeKind.Unspecified"/>.</remarks>
+            <param name="day">The day (1 through the number of days in month).</param>
+            <param name="year">The year (1 through 9999).</param>
+            <returns>A new instance with the information provided.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.DateExtensions.September(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.DateTime"/> structure to the specified year and day in September.
+            </summary>
+            <remarks>Year, month, and day are interpreted as a year, month, and day in the Gregorian calendar.
+            The time of day for the resulting <see cref="T:System.DateTime"/> is midnight (00:00:00). The <see cref="P:System.DateTime.Kind"/> property is initialized to
+            <see cref="F:System.DateTimeKind.Unspecified"/>.</remarks>
+            <param name="day">The day (1 through the number of days in month).</param>
+            <param name="year">The year (1 through 9999).</param>
+            <returns>A new instance with the information provided.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.DateExtensions.October(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.DateTime"/> structure to the specified year and day in October.
+            </summary>
+            <remarks>Year, month, and day are interpreted as a year, month, and day in the Gregorian calendar.
+            The time of day for the resulting <see cref="T:System.DateTime"/> is midnight (00:00:00). The <see cref="P:System.DateTime.Kind"/> property is initialized to
+            <see cref="F:System.DateTimeKind.Unspecified"/>.</remarks>
+            <param name="day">The day (1 through the number of days in month).</param>
+            <param name="year">The year (1 through 9999).</param>
+            <returns>A new instance with the information provided.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.DateExtensions.November(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.DateTime"/> structure to the specified year and day in November.
+            </summary>
+            <remarks>Year, month, and day are interpreted as a year, month, and day in the Gregorian calendar.
+            The time of day for the resulting <see cref="T:System.DateTime"/> is midnight (00:00:00). The <see cref="P:System.DateTime.Kind"/> property is initialized to
+            <see cref="F:System.DateTimeKind.Unspecified"/>.</remarks>
+            <param name="day">The day (1 through the number of days in month).</param>
+            <param name="year">The year (1 through 9999).</param>
+            <returns>A new instance with the information provided.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.DateExtensions.December(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.DateTime"/> structure to the specified year and day in December.
+            </summary>
+            <remarks>Year, month, and day are interpreted as a year, month, and day in the Gregorian calendar.
+            The time of day for the resulting <see cref="T:System.DateTime"/> is midnight (00:00:00). The <see cref="P:System.DateTime.Kind"/> property is initialized to
+            <see cref="F:System.DateTimeKind.Unspecified"/>.</remarks>
+            <param name="day">The day (1 through the number of days in month).</param>
+            <param name="year">The year (1 through 9999).</param>
+            <returns>A new instance with the information provided.</returns>
+        </member>
+        <member name="T:Testing.Commons.Time.Generate">
+            <summary>
+            Allows random generation of constrained dates.
+            </summary>
+        </member>
+        <member name="T:Testing.Commons.Time.Generate.DateGeneratorBuilder">
+            <summary>
+            Infrastructure class that allows setting the upper bound of the dates generated.
+            </summary>
+        </member>
+        <member name="M:Testing.Commons.Time.Generate.DateGeneratorBuilder.And(System.DateTime)">
+            <summary>
+            Sets the upper bound of the dates generated.
+            </summary>
+            <param name="to">Maximum date to be generated.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Testing.Commons.Time.Generate.DateGeneratorBuilder.DateGenerator">
+            <summary>
+            Infrastructure class that allows access to the generation methods.
+            </summary>
+        </member>
+        <member name="M:Testing.Commons.Time.Generate.DateGeneratorBuilder.DateGenerator.Single">
+            <summary>
+            Generates a single random date between the defined lower and upper bounds.
+            </summary>
+            <returns>A date between the defined ranges.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.Generate.DateGeneratorBuilder.DateGenerator.Stream">
+            <summary>
+            Generated an infinite succession of random dates between the defined lower and upper bounds.
+            </summary>
+            <returns>An infinite series of dates between the defined ranges.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.Generate.DateGeneratorBuilder.DateGenerator.Stream(System.Int32)">
+            <summary>
+            Generated a finite succession of random dates between the defined lower and upper bounds.
+            </summary>
+            <param name="count">The number of dates to be generated.</param>
+            <returns>A finite series of dates between the defined ranges.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.Generate.Between(System.DateTime)">
+            <summary>
+            Allows setting the lower bound of the dates generated.
+            </summary>
+            <param name="from">Minimum date to be generated.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Testing.Commons.Time.OffsetExtensions">
+            <summary>
+            Allows expressive creation of <see cref="T:System.DateTimeOffset"/> instances.
+            </summary>
+            <example><code>11.March(1977).In(TimeSpan.FromHours(1))</code></example>
+        </member>
+        <member name="M:Testing.Commons.Time.OffsetExtensions.In(System.DateTime,System.TimeSpan)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.DateTimeOffset"/> structure using the specified <see cref="T:System.DateTime"/> values and offset.
+            </summary>
+            <param name="dt">A date and time.</param>
+            <param name="offset">The time's offset from Coordinated Universal Time (UTC).</param>
+            <returns>A new instance with the information provided.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.OffsetExtensions.InUtc(System.DateTime)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.DateTimeOffset"/> structure using the specified <see cref="T:System.DateTime"/> values and an offset of <see cref="F:System.TimeSpan.Zero"/>.
+            </summary>
+            <param name="dt">A date and time.</param>
+            <returns>A new instance in the Coordinated Universal Time (UTC) with the information provided.</returns>
+        </member>
+        <member name="T:Testing.Commons.Time.SpanExtensions">
+            <summary>
+            Allows expressive creation of <see cref="T:System.TimeSpan"/> instances.
+            </summary>
+            <example><code>3.Hours()</code>
+            <code>5.Days().Hours(4).Minutes(3)</code></example>
+        </member>
+        <member name="M:Testing.Commons.Time.SpanExtensions.Weeks(System.Int32)">
+            <summary>
+            Returns a <see cref="T:System.TimeSpan"/> that represents a specified number of weeks, where a week is assumed to have 7 days.
+            </summary>
+            <param name="value">A number of weeks.</param>
+            <returns>An object that represents value.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.SpanExtensions.Weeks(System.Int32,System.TimeSpan)">
+            <summary>
+            Adds the specified <see cref="T:System.TimeSpan"/> to the one represented by the specified number of weeks, where a week is assumed to have 7 days.
+            </summary>
+            <remarks>Enables method chaining in order to expressively create instances.</remarks>
+            <param name="value">A number of weeks.</param>
+            <param name="ts">The time interval to add.</param>
+            <returns>An object that represents value plus the value of <paramref name="ts"/>.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.SpanExtensions.Days(System.Int32)">
+            <summary>
+            Returns a <see cref="T:System.TimeSpan"/> that represents a specified number of days.
+            </summary>
+            <param name="value">A number of days.</param>
+            <returns>An object that represents value.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.SpanExtensions.Days(System.Int32,System.TimeSpan)">
+            <summary>
+            Adds the specified <see cref="T:System.TimeSpan"/> to the one represented by the specified number of days.
+            </summary>
+            <remarks>Enables method chaining in order to expressively create instances.</remarks>
+            <param name="value">A number of days.</param>
+            <param name="ts">The time interval to add.</param>
+            <returns>An object that represents value plus the value of <paramref name="ts"/>.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.SpanExtensions.Hours(System.Int32)">
+            <summary>
+            Returns a <see cref="T:System.TimeSpan"/> that represents a specified number of hours.
+            </summary>
+            <param name="value">A number of hours.</param>
+            <returns>An object that represents value.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.SpanExtensions.Hours(System.Int32,System.TimeSpan)">
+            <summary>
+            Adds the specified <see cref="T:System.TimeSpan"/> to the one represented by the specified number of hours.
+            </summary>
+            <remarks>Enables method chaining in order to expressively create instances.</remarks>
+            <param name="value">A number of hours.</param>
+            <param name="ts">The time interval to add.</param>
+            <returns>An object that represents value plus the value of <paramref name="ts"/>.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.SpanExtensions.Minutes(System.Int32)">
+            <summary>
+            Returns a <see cref="T:System.TimeSpan"/> that represents a specified number of minutes.
+            </summary>
+            <param name="value">A number of minutes.</param>
+            <returns>An object that represents value.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.SpanExtensions.Minutes(System.Int32,System.TimeSpan)">
+            <summary>
+            Adds the specified <see cref="T:System.TimeSpan"/> to the one represented by the specified number of minutes.
+            </summary>
+            <remarks>Enables method chaining in order to expressively create instances.</remarks>
+            <param name="value">A number of minutes.</param>
+            <param name="ts">The time interval to add.</param>
+            <returns>An object that represents value plus the value of <paramref name="ts"/>.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.SpanExtensions.Seconds(System.Int32)">
+            <summary>
+            Returns a <see cref="T:System.TimeSpan"/> that represents a specified number of hours.
+            </summary>
+            <param name="value">A number of seconds.</param>
+            <returns>An object that represents value.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.SpanExtensions.Seconds(System.Int32,System.TimeSpan)">
+            <summary>
+            Adds the specified <see cref="T:System.TimeSpan"/> to the one represented by the specified number of seconds.
+            </summary>
+            <remarks>Enables method chaining in order to expressively create instances.</remarks>
+            <param name="value">A number of seconds.</param>
+            <param name="ts">The time interval to add.</param>
+            <returns>An object that represents value plus the value of <paramref name="ts"/>.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.SpanExtensions.Milliseconds(System.Int32)">
+            <summary>
+            Returns a <see cref="T:System.TimeSpan"/> that represents a specified number of milliseconds.
+            </summary>
+            <param name="value">A number of value.</param>
+            <returns>An object that represents value.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.SpanExtensions.Milliseconds(System.Int32,System.TimeSpan)">
+            <summary>
+            Returns a <see cref="T:System.TimeSpan"/> that represents a specified number of milliseconds.
+            </summary>
+            <remarks>Enables method chaining in order to expressively create instances.</remarks>
+            <param name="value">A number of value.</param>
+            <param name="ts">The time interval to add.</param>
+            <returns>An object that represents value plus the value of <paramref name="ts"/>.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.SpanExtensions.Days(System.TimeSpan,System.Int32)">
+            <summary>
+            Returns a <see cref="T:System.TimeSpan"/> with the the information from the passed interval and the specified number of days.
+            </summary>
+            <remarks>Enables method chaining in order to expressively create instances.</remarks>
+            <param name="ts">The interval that contains the information.</param>
+            <param name="days">A number of days.</param>
+            <returns>A new instance with the information of <paramref name="ts"/> and the specified number of days.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.SpanExtensions.Hours(System.TimeSpan,System.Int32)">
+            <summary>
+            Returns a <see cref="T:System.TimeSpan"/> with the the information from the passed interval and the specified number of hours.
+            </summary>
+            <remarks>Enables method chaining in order to expressively create instances.</remarks>
+            <param name="ts">The interval that contains the information.</param>
+            <param name="hours">A number of hours.</param>
+            <returns>A new instance with the information of <paramref name="ts"/> and the specified number of hours.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.SpanExtensions.Minutes(System.TimeSpan,System.Int32)">
+            <summary>
+            Returns a <see cref="T:System.TimeSpan"/> with the the information from the passed interval and the specified number of minutes.
+            </summary>
+            <remarks>Enables method chaining in order to expressively create instances.</remarks>
+            <param name="ts">The interval that contains the information.</param>
+            <param name="minutes">A number of minutes.</param>
+            <returns>A new instance with the information of <paramref name="ts"/> and the specified number of minutes.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.SpanExtensions.Seconds(System.TimeSpan,System.Int32)">
+            <summary>
+            Returns a <see cref="T:System.TimeSpan"/> with the the information from the passed interval and the specified number of seconds.
+            </summary>
+            <remarks>Enables method chaining in order to expressively create instances.</remarks>
+            <param name="ts">The interval that contains the information.</param>
+            <param name="seconds">A number of seconds.</param>
+            <returns>A new instance with the information of <paramref name="ts"/> and the specified number of seconds.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.SpanExtensions.Milliseconds(System.TimeSpan,System.Int32)">
+            <summary>
+            Returns a <see cref="T:System.TimeSpan"/> with the the information from the passed interval and the specified number of milliseconds.
+            </summary>
+            <remarks>Enables method chaining in order to expressively create instances.</remarks>
+            <param name="ts">The interval that contains the information.</param>
+            <param name="milliseconds">A number of milliseconds.</param>
+            <returns>A new instance with the information of <paramref name="ts"/> and the specified number of milliseconds.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.SpanExtensions.Before(System.TimeSpan,System.DateTimeOffset)">
+            <summary>
+            Subtracts a specified time interval from the specified date and time, and yields a new date and time.
+            </summary>
+            <param name="ts">The time interval to subtract .</param>
+            <param name="dt">The date and time object to subtract from.</param>
+            <returns>A new instance whose value is the difference of the values of <paramref name="dt"/> and <paramref name="ts"/>.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.SpanExtensions.After(System.TimeSpan,System.DateTimeOffset)">
+            <summary>
+            Adds a specified time interval to the specified date and time, and yields a new a date and time.
+            </summary>
+            <param name="ts">The time interval to add.</param>
+            <param name="dt">The object to add the time interval to.</param>
+            <returns>A new instance whose value is the sum of the values of <paramref name="dt"/> and <paramref name="ts"/>.</returns>
+        </member>
+        <member name="T:Testing.Commons.Time.TimeExtensions">
+            <summary>
+            Allows expressive creation of <see cref="T:System.DateTime"/> instances that represent a date and a time.
+            </summary>
+            <example><code>11.March(1977).At(15, 35)</code></example>
+        </member>
+        <member name="M:Testing.Commons.Time.TimeExtensions.At(System.DateTime,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.DateTime"/> structure to year, month, day specified by the date and the specified hour, minute, second, and millisecond.
+            </summary>
+            <param name="dt">The date that contains the years, months and days.</param>
+            <param name="hour">The hours (0 through 23).</param>
+            <param name="minute">The minutes (0 through 59).</param>
+            <param name="second">The seconds (0 through 59).</param>
+            <param name="miliSecond">The milliseconds (0 through 999).</param>
+            <returns>A new instance with the information provided.</returns>
+        </member>
+        <member name="M:Testing.Commons.Time.TimeExtensions.At(System.DateTime,System.TimeSpan)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.DateTime"/> structure to year, month, day specified by the date
+            and the hour, minute, second, and millisecond specified in the interval.
+            </summary>
+            <remarks>The days of the interval are ignored.</remarks>
+            <param name="dt">The date that contains the years, months and days.</param>
+            <param name="span">The interval that contains the hours, minutes, seconds and milliseconds.</param>
+            <returns>A new instance with the information provided.</returns>
+        </member>
+        <member name="T:Testing.Commons.Time.TimeExtensions.TimeOfDay">
+            <summary>
+            Represents named times of the day.
+            </summary>
+        </member>
+        <member name="F:Testing.Commons.Time.TimeExtensions.TimeOfDay.Noon">
+            <summary>
+            Midday, twolve o'clock.
+            </summary>
+        </member>
+        <member name="F:Testing.Commons.Time.TimeExtensions.TimeOfDay.MidNight">
+            <summary>
+            Middle of the night, twelve o'clock at night.
+            </summary>
+        </member>
+        <member name="F:Testing.Commons.Time.TimeExtensions.TimeOfDay.EndOfDay">
+            <summary>
+            The last time of a given day to the millisecond
+            </summary>
+        </member>
+        <member name="F:Testing.Commons.Time.TimeExtensions.TimeOfDay.BeginningOfDay">
+            <summary>
+            Middle of the night, twelve o'clock at night.
+            </summary>
+        </member>
+        <member name="M:Testing.Commons.Time.TimeExtensions.At(System.DateTime,System.Func{Testing.Commons.Time.TimeExtensions.TimeOfDay,System.TimeSpan})">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.DateTime"/> structure to year, month, day specified by the date
+            and the hour, minute, second, and millisecond specified in the named interval.
+            </summary>
+            <param name="dt">The date that contains the years, months and days.</param>
+            <param name="timeOfDay">Represents a named time of the day.</param>
+            <returns>A new instance with the information provided.</returns>
+        </member>
+    </members>
+</doc>

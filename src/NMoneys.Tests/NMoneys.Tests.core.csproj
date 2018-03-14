@@ -19,8 +19,8 @@
 	<ItemGroup>
 		<PackageReference Include="NUnit" Version="3.6.1" />
 		<PackageReference Include="NUnitLite" Version="3.6.1" />
-		<PackageReference Include="Testing.Commons" Version="2.0.0" />
-		<PackageReference Include="Testing.Commons.NUnit" Version="4.0.0.20170419" />
+		<PackageReference Include="Testing.Commons" Version="2.0.0.1" />
+		<PackageReference Include="Testing.Commons.NUnit" Version="4.2.0" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -1,6 +1,8 @@
 ﻿using System;
 using NMoneys.Demo.CodeProject.Support;
 using NUnit.Framework;
+#pragma warning disable 219
+#pragma warning disable 618
 
 namespace NMoneys.Demo.CodeProject
 {
