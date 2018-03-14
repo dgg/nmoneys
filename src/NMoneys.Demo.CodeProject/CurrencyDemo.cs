@@ -58,8 +58,8 @@ namespace NMoneys.Demo.CodeProject
 		public void Get_throws_if_currency_cannot_be_found()
 		{
 			CurrencyIsoCode notDefined = (CurrencyIsoCode)0;
-			Assert.That(()=> Currency.Get(notDefined), Throws.InstanceOf<InvalidEnumArgumentException>());
-			Assert.That(()=> Currency.Get("notAnIsoCode"), Throws.InstanceOf<InvalidEnumArgumentException>());
+			Assert.That(()=> Currency.Get(notDefined), Throws.InstanceOf<ArgumentException>());
+			Assert.That(()=> Currency.Get("notAnIsoCode"), Throws.InstanceOf<ArgumentException>());
 			CultureInfo neutralCulture = CultureInfo.GetCultureInfo("da");
 			Assert.That(() => Currency.Get(neutralCulture), Throws.InstanceOf<ArgumentException>());
 		}
