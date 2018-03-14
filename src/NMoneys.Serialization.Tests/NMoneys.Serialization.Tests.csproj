@@ -89,7 +89,6 @@
     <Compile Include="Entity_Framework\Support\TestDbContext.cs" />
     <Compile Include="Entity_Framework\Support\TestEntity.cs" />
     <Compile Include="Entity_Framework\PersistenceTester.cs" />
-    <Compile Include="JsonString.cs" />
     <Compile Include="Json_Net\DeserializationTester.cs" />
     <Compile Include="Json_Net\SerializationTester.cs" />
     <Compile Include="MonetaryQuantityTester.cs" />
