@@ -1315,7 +1315,7 @@
 		<negativePattern>1</negativePattern>
 	</currency>
 	<currency code="PHP">
-		<englishName>Philippine Piso</englishName>
+		<englishName>Philippine Peso</englishName>
 		<nativeName>Piso ng Pilipinas</nativeName>
 		<symbol>8369</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
@@ -1783,6 +1783,18 @@
 	<currency code="VEF">
 		<englishName>Bolívar</englishName>
 		<nativeName>Bolívar</nativeName>
+		<symbol>66 115 46</symbol>
+		<significantDecimalDigits>2</significantDecimalDigits>
+		<decimalSeparator>,</decimalSeparator>
+		<groupSeparator>.</groupSeparator>
+		<groupSizes>3</groupSizes>
+		<positivePattern>0</positivePattern>
+		<negativePattern>2</negativePattern>
+		<obsolete>true</obsolete>
+	</currency>
+	<currency code="VES">
+		<englishName>Bolívar Soberano</englishName>
+		<nativeName>Bolívar Soberano</nativeName>
 		<symbol>66 115 46</symbol>
 		<significantDecimalDigits>2</significantDecimalDigits>
 		<decimalSeparator>,</decimalSeparator>

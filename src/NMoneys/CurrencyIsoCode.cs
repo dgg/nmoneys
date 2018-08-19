@@ -815,10 +815,15 @@ namespace NMoneys
 		[EnumMember, CanonicalCulture("uz-Latn-UZ")]
 		UZS = 860,
 		/// <summary>
-		/// Bolivar Fuerte
+		/// Bolivar
+		/// </summary>
+		[EnumMember, CanonicalCulture("es-VE"), Obsolete]
+		VEF = 937,
+		/// <summary>
+		/// Bolívar Soberano
 		/// </summary>
 		[EnumMember, CanonicalCulture("es-VE")]
-		VEF = 937,
+		VES = 928,
 		/// <summary>
 		/// Dong
 		/// </summary>
