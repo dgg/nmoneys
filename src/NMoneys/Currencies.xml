@@ -1769,6 +1769,17 @@
 		<positivePattern>2</positivePattern>
 		<negativePattern>9</negativePattern>
 	</currency>
+	<currency code="UYW">
+		<englishName>Unidad previsional</englishName>
+		<nativeName>Unidad previsional</nativeName>
+		<symbol>36 85</symbol>
+		<significantDecimalDigits>0</significantDecimalDigits>
+		<decimalSeparator>,</decimalSeparator>
+		<groupSeparator>.</groupSeparator>
+		<groupSizes>3</groupSizes>
+		<positivePattern>2</positivePattern>
+		<negativePattern>14</negativePattern>
+	</currency>
 	<currency code="UZS">
 		<englishName>Uzbekistan Sum</englishName>
 		<nativeName>soʻm</nativeName>

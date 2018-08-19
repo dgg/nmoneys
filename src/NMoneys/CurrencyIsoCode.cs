@@ -810,6 +810,11 @@ namespace NMoneys
 		[EnumMember, CanonicalCulture("es-UY")]
 		UYU = 858,
 		/// <summary>
+		/// Unidad Previsional
+		/// </summary>
+		[EnumMember, CanonicalCulture("es-UY")]
+		UYW = 927,
+		/// <summary>
 		/// Uzbekistan Sum
 		/// </summary>
 		[EnumMember, CanonicalCulture("uz-Latn-UZ")]
