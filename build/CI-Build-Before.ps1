@@ -8,7 +8,7 @@ function fetch-extra-tools($base)
 	$nuget = Join-Path $tools_dir Nuget\Nuget.exe
 	& "$nuget" install opencover -OutputDirectory $tools_dir
 	Throw-If-Error "Could not install package tool 'opencover'"
-	& "$nuget" install coveralls.net -OutputDirectory $tools_dir
+	& "$nuget" install coveralls.net -Version 0.7.0 -OutputDirectory $tools_dir
 	Throw-If-Error "Could not install package tool 'coveralls.net'"
 }
 
