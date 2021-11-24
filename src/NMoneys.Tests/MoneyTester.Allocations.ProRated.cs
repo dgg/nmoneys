@@ -16,7 +16,21 @@ namespace NMoneys.Tests
 		}
 
 		#region scenarios where the sum to allocate can be split exactly even.
-		
+
+		[Test]
+		public void Allocate_ProRated_OneZeroSplit()
+		{
+			var easyEven = 10m.Usd();
+
+			var ratios = new RatioCollection(1m, 0m);
+			Allocation allocated = easyEven.Allocate(ratios);
+			Assert.That(allocated, Is.EqualTo(new[]
+			{
+				10m.Usd(),
+				0m.Usd()
+			}));
+		}
+
 		[Test]
 		public void Allocate_ProRated_EasyEvenSplit()
 		{

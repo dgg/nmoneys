@@ -469,7 +469,7 @@ namespace NMoneys
 		internal decimal Round(decimal share)
 		{
 			decimal raw = share - (.5m * MinAmount);
-			decimal rounded = Math.Round(raw, SignificantDecimalDigits, MidpointRounding.AwayFromZero);
+			decimal rounded = Math.Round(raw, SignificantDecimalDigits, MidpointRounding.ToEven);
 			return rounded;
 		}
 	}
