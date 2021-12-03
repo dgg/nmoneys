@@ -18,16 +18,30 @@ namespace NMoneys.Tests
 		#region scenarios where the sum to allocate can be split exactly even.
 
 		[Test]
-		public void Allocate_ProRated_OneZeroSplit()
+		public void Allocate_ProRated_BounderiesOneZeroEvenSplit()
 		{
 			var easyEven = 10m.Usd();
 
-			var ratios = new RatioCollection(1m, 0m);
+			var ratios = new RatioCollection(decimal.One, decimal.Zero);
 			Allocation allocated = easyEven.Allocate(ratios);
 			Assert.That(allocated, Is.EqualTo(new[]
 			{
 				10m.Usd(),
-				0m.Usd()
+				0m.Usd(),
+			}));
+		}
+
+		[Test]
+		public void Allocate_ProRated_BounderiesZeroOneEvenSplit()
+		{
+			var easyEven = 10m.Usd();
+
+			var ratios = new RatioCollection(decimal.Zero, decimal.One);
+			Allocation allocated = easyEven.Allocate(ratios);
+			Assert.That(allocated, Is.EqualTo(new[]
+			{
+				0m.Usd(),
+				10m.Usd(),
 			}));
 		}
 
@@ -87,6 +101,36 @@ namespace NMoneys.Tests
 				49.5m.Usd(),
 				41.2m.Usd(),
 				9.3m.Usd()
+			}));
+		}
+
+		[Test]
+		public void Allocate_ProRated_Fiver()
+		{
+			var odd = 75m.Usd();
+
+			var ratios = new RatioCollection(.25m, .5m, .25m);
+			Allocation allocated = odd.Allocate(ratios);
+			Assert.That(allocated, Is.EqualTo(new[]
+			{
+				18.75m.Usd(),
+				37.5m.Usd(),
+				18.75m.Usd()
+			}));
+		}
+
+		[Test]
+		public void Allocate_ProRated_OddPennySameRatios()
+		{
+			var odd = 5.37m.Usd();
+
+			var ratios = new RatioCollection(.1m, .45m, .45m);
+			Allocation allocated = odd.Allocate(ratios);
+			Assert.That(allocated, Is.EqualTo(new[]
+			{
+				0.54m.Usd(),
+				2.42m.Usd(),
+				2.41m.Usd()
 			}));
 		}
 
