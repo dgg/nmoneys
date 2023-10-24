@@ -1,0 +1,27 @@
+root = true
+
+[*]
+charset = utf-8
+
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+indent_style = tab
+indent_size = 4
+
+[*.{yaml,yml}]
+indent_style = space
+indent_size = 2
+
+[*.cs]
+dotnet_diagnostic.CA1034.severity = none
+
+# private fields
+dotnet_naming_symbols.private_fields.applicable_kinds = field
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private
+# camel_cased
+dotnet_naming_style.camel_cased.capitalization = camel_case
+# camel-cased private fields
+dotnet_naming_rule.private_fields_camel_cased.symbols = private_fields
+dotnet_naming_rule.private_fields_camel_cased.style = camel_cased

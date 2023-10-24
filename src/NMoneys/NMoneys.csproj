@@ -1,144 +1,54 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{5408F146-6F8A-406C-9E90-292662018F72}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NMoneys</RootNamespace>
-    <AssemblyName>NMoneys</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
-    <ResolveNuGetPackages>false</ResolveNuGetPackages>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NET</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;NET</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\NMoneys.XML</DocumentationFile>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.XML" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Allocations\Allocation.cs" />
-    <Compile Include="Allocations\EvenAllocator.cs" />
-    <Compile Include="Allocations\FirstToLastAllocator.cs" />
-    <Compile Include="Allocations\IRemainderAllocator.cs" />
-    <Compile Include="Allocations\Operations.Allocate.cs" />
-    <Compile Include="Allocations\ProRataAllocator.cs" />
-    <Compile Include="Allocations\RandomAllocator.cs" />
-    <Compile Include="Allocations\Ratio.cs" />
-    <Compile Include="Allocations\RatioCollection.cs" />
-    <Compile Include="Allocations\RemainderAllocator.cs" />
-    <Compile Include="Allocations\RemainderAllocatorBase.cs" />
-    <Compile Include="Allocations\LastToFirstAllocator.cs" />
-    <Compile Include="Change\ChangeSolution.cs" />
-    <Compile Include="Change\IntegralDenomination.cs" />
-    <Compile Include="Change\OptimalChangeSolution.cs" />
-    <Compile Include="Change\Operations.MakeOptimalChange.cs" />
-    <Compile Include="Change\Operations.CountWaysToMakeChange.cs" />
-    <Compile Include="Change\Denomination.cs" />
-    <Compile Include="Change\Operations.MakeChange.cs" />
-    <Compile Include="Change\Positive.cs" />
-    <Compile Include="Change\QuantifiedDenomination.cs" />
-    <Compile Include="Currency.Serialization.Xml.net.cs" />
-    <Compile Include="Currency.Serialization.net.cs" />
-    <Compile Include="Currency.Code.cs" />
-    <Compile Include="Currency.Creation.cs" />
-    <Compile Include="Currency.Formatting.cs" />
-    <Compile Include="Currency.Comparisons.cs" />
-    <Compile Include="Currency.Equality.cs" />
-    <Compile Include="CurrencyCache.cs" />
-    <Compile Include="Exceptions.net.cs" />
-    <Compile Include="Money.Creation.cs" />
-    <Compile Include="Money.Serialization.Xml.net.cs" />
-    <Compile Include="Money.Serialization.net.cs" />
-    <Compile Include="Money.Arithmetic.cs" />
-    <Compile Include="Money.Arithmetic.Operators.cs" />
-    <Compile Include="Money.Parsing.cs" />
-    <Compile Include="Money.Cloning.net.cs" />
-    <Compile Include="Money.Comparisons.cs" />
-    <Compile Include="Money.Equality.cs" />
-    <Compile Include="Money.Formatting.cs" />
-    <Compile Include="PowerOfTen.cs" />
-    <Compile Include="Currency.cs" />
-    <Compile Include="CurrencyCharacterReferences.cs" />
-    <Compile Include="CurrencyEqualityComparer.cs" />
-    <Compile Include="CurrencyInfo.cs" />
-    <Compile Include="CurrencyIsoCode.cs" />
-    <Compile Include="CanonicalCultureAttribute.cs" />
-    <Compile Include="CurrencyIsoCode.Extensions.cs" />
-    <Compile Include="Exceptions.cs" />
-    <Compile Include="Extensions\Money.Extensions.cs" />
-    <Compile Include="CharacterReference.cs" />
-    <Compile Include="ObsoleteCurrencies.cs" />
-    <Compile Include="ObsoleteCurrencyEventArgs.cs" />
-    <Compile Include="ObsoleteCurrencyEventBehavior.cs" />
-    <Compile Include="Properties\NMoneys_AssemblyInfo.cs" />
-    <Compile Include="Providers.cs" />
-    <Compile Include="Serialization\Data.net.cs" />
-    <Compile Include="Serialization\DataContractSurrogate.net.cs" />
-    <Compile Include="Support\Comparer.polyfill.cs" />
-    <Compile Include="Support\IO.polyfill.cs" />
-    <Compile Include="Support\Reflect.polyfill.cs" />
-    <Compile Include="Support\Stringifier.cs" />
-    <Compile Include="Support\GroupSizes.cs" />
-    <Compile Include="Support\Enumeration.cs" />
-    <Compile Include="Money.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Support\Extensions.cs" />
-    <Compile Include="Support\Guard.cs" />
-    <Compile Include="Support\Range.cs" />
-    <Compile Include="Support\TokenizedValue.cs" />
-    <Compile Include="Support\UnicodeSymbol.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Serialization\SerializationSchema.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Currencies.xml">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Currencies.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <Compile Include="Support\Culture.polyfill.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+		<CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<Description>Implementation of the Money Value Object to support representing moneys in the currencies defined in the ISO 4217 standard,
+			operations over monetary quantities and formatting of its representation.</Description>
+		<Product>NMoneys</Product>
+		<Copyright>Copyright © Daniel Gonzalez Garcia 2011</Copyright>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<Authors>Daniel González García</Authors>
+		<PackageProjectUrl>https://github.com/dgg/nmoneys</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/dgg/nmoneys.git</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageIconUrl>https://github.com/dgg/nmoneys/blob/9bb8f1883b1b34496ee859dd3d48919544161dc7/NMoneys_logo.png</PackageIconUrl>
+		<PackageIcon>NMoneys.logo.png</PackageIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageTags>.net;dotnet;C#;currency;money;iso;monetary;quantity;iso4217</PackageTags>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<Version>7.0.0</Version>
+		<AssemblyVersion>7.0.0.0</AssemblyVersion>
+		<FileVersion>7.0.0.0</FileVersion>
+		<PackageVersion>7.0.0</PackageVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+			<_Parameter1>$(AssemblyName).Tests</_Parameter1>
+		</AssemblyAttribute>
+		<AssemblyAttribute Include="System.CLSCompliantAttribute">
+			<_Parameter1>false</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="../../assets/NMoneys.logo.png" Pack="true" PackagePath="/"/>
+		<None Include="../../LICENSE" Pack="true" PackagePath=""/>
+		<None Include="../../README.md" Pack="true" PackagePath="/"/>
+	</ItemGroup>
 </Project>
