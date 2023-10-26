@@ -10,6 +10,17 @@ public sealed partial class Currency
 	#region properties
 
 	/// <summary>
+	/// The ISO 4217 code of the <see cref="Currency"/>
+	/// </summary>
+	public CurrencyIsoCode IsoCode { get; private set; }
+
+	/// <summary>
+	/// Textual representation of the ISO 4217 code
+	/// </summary>
+	[XmlIgnore]
+	public string IsoSymbol { get; private set; }
+
+	/// <summary>
 	/// Gets the name, in English, of the <see cref="Currency"/>.
 	/// </summary>
 	[XmlIgnore]

@@ -21,4 +21,5 @@
     <ProjectReference Include="..\..\src\NMoneys\NMoneys.csproj" />
   </ItemGroup>
 
+
 </Project>
