@@ -1,3 +1,6 @@
+using System.Runtime.Serialization;
+using NMoneys.Support;
+
 namespace NMoneys;
 
 /// <summary>
@@ -7,29 +10,54 @@ namespace NMoneys;
 #pragma warning disable CA1008, CA1028
 public enum CurrencyIsoCode : ushort
 {
+
+	/// <summary>
+	/// Lek
+	/// </summary>
+	[EnumMember, CanonicalCulture("sq-AL")]
+	[Info(
+		englishName: "Lek", nativeName: "Leku Shqiptar", symbol: "L",
+		significantDecimalDigits: 2,
+		decimalSeparator: ".",
+		groupSeparator: "\u00a0", groupSizes: new byte[] { 3 },
+		positivePattern: 3, negativePattern: 8
+	)]
+	ALL = 008,
+	/// <summary>
+	/// Belize Dollar
+	/// </summary>
+	[EnumMember, CanonicalCulture("en-BZ")]
+	[Info(
+		englishName: "Belize Dollar", nativeName: "Belize Dollar", symbol: "BZ$",
+		significantDecimalDigits: 2,
+		decimalSeparator: ".",
+		groupSeparator: ",", groupSizes: new byte[] { 3 },
+		positivePattern: 0, negativePattern: 1
+	)]
+	BZD = 084,
 	/// <summary>
 	/// Test currency
 	/// </summary>
-	//[EnumMember]
+	[EnumMember]
 	[Info(
 		englishName: "Test currency", nativeName: "Test currency", symbol: "¤",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		negativePattern: 0, positivePattern: 0
+		positivePattern: 0, negativePattern: 0
 	)]
 	XTS = 963,
 
 	/// <summary>
 	/// No currency
 	/// </summary>
-	//[EnumMember]
+	[EnumMember]
 	[Info(
 		englishName: "No currency", nativeName: "No currency", symbol: "¤",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		negativePattern: 0, positivePattern: 0
+		positivePattern: 0, negativePattern: 0
 	)]
 	XXX = 999,
 }
