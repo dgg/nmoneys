@@ -5,6 +5,7 @@ namespace NMoneys;
 public sealed partial class Currency : IEquatable<Currency>
 {
 	/// <inheritdoc />
+	[Pure]
 	public bool Equals(Currency? other)
 	{
 		if (other is null) return false;
@@ -20,6 +21,7 @@ public sealed partial class Currency : IEquatable<Currency>
 	}
 
 	/// <inheritdoc />
+	[Pure]
 	public override int GetHashCode()
 	{
 		// ReSharper disable once NonReadonlyMemberInGetHashCode
@@ -33,7 +35,7 @@ public sealed partial class Currency : IEquatable<Currency>
 	///<param name="right">The second <see cref="Currency"/> to compare, or null.</param>
 	///<returns>true if <paramref name="left"/> is equal to <paramref name="right"/>; otherwise, false.</returns>
 	[Pure]
-	public static bool operator ==(Currency left, Currency right)
+	public static bool operator ==(Currency? left, Currency? right)
 	{
 		return Equals(left, right);
 	}

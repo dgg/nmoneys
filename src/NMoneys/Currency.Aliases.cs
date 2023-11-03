@@ -7,18 +7,16 @@ public partial class Currency
 	/// </summary>
 	public static Currency Euro => _eur.Value;
 
-	/*
+
 	/// <summary>
 	/// United States Dollars
 	/// </summary>
-	public static readonly Currency Dollar;
+	public static Currency Dollar => _usd.Value;
 
 	/// <summary>
 	/// United Kingdom Pounds
 	/// </summary>
-	public static readonly Currency Pound;
-	*/
-
+	public static Currency Pound => _gbp.Value;
 
 	/// <summary>
 	/// Non-Existing currency
