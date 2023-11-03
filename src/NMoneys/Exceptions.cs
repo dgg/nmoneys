@@ -36,6 +36,16 @@ public class UndefinedCodeException : ArgumentException
 	{
 		return new UndefinedCodeException($"Value {threeLetterIsoCode} is not defined for {nameof(CurrencyIsoCode)}.", nameof(threeLetterIsoCode));
 	}
+
+	/// <summary>
+	/// Initializes a new instance of the <see cref="UndefinedCodeException"/> class with a descriptive error message
+	/// when the name of the parameter is <b>code</b>.
+	/// </summary>
+	/// <param name="code">Code</param>
+	public static UndefinedCodeException ForCode(ushort code)
+	{
+		return new UndefinedCodeException($"Value {code} is not defined for {nameof(CurrencyIsoCode)}.", nameof(code));
+	}
 }
 
 /// <summary>
