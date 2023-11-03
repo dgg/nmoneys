@@ -1,8 +1,5 @@
-using NMoneys.Support;
-
 namespace NMoneys.Tests;
 
-[TestFixture]
 public partial class CurrencyTester
 {
 	[Test, Explicit]

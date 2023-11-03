@@ -36,6 +36,30 @@ public enum CurrencyIsoCode : ushort
 	)]
 	BZD = 084,
 	/// <summary>
+	/// Danish Krone
+	/// </summary>
+	[EnumMember, CanonicalCulture("da-DK", Overwritten = true)]
+	[Info(
+		englishName: "Danish Krone", nativeName: "Dansk krone", symbol: "kr.",
+		significantDecimalDigits: 2,
+		decimalSeparator: ",",
+		groupSeparator: ".", groupSizes: new byte[] { 3 },
+		positivePattern: 2, negativePattern: 12
+	)]
+	DKK = 208,
+	/// <summary>
+	/// Euro
+	/// </summary>
+	[EnumMember, CanonicalCulture("de-DE")]
+	[Info(
+		englishName: "Euro", nativeName: "Euro", symbol: "€",
+		significantDecimalDigits: 2,
+		decimalSeparator: ",",
+		groupSeparator: ".", groupSizes: new byte[] { 3 },
+		positivePattern: 3, negativePattern: 8
+	)]
+	EUR = 978,
+	/// <summary>
 	/// Test currency
 	/// </summary>
 	[EnumMember]
