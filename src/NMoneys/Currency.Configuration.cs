@@ -39,21 +39,4 @@ public partial class Currency
 			Configure(tuple.Item1, tuple.Item2);
 		}
 	}
-
-	/// <summary>
-	/// Actively initializes the information for all currencies.
-	/// </summary>
-	/// <remarks>Use this method if you plan to use a lot of currencies in your program.
-	/// <para>When most of currencies are expected to be used, it is recommended to initialize the information for all of them,
-	/// saving time each time the first instance is accessed.</para></remarks>
-	public static void InitializeAllCurrencies()
-	{
-		CurrencyIsoCode[] isoCodes = Enum.GetValues<CurrencyIsoCode>();
-
-		for (int i = 0; i < isoCodes.Length; i++)
-		{
-			CurrencyIsoCode code = isoCodes[i];
-			_ = Get(code);
-		}
-	}
 }

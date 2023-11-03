@@ -240,4 +240,36 @@ public partial class Currency
 	}
 
 	#endregion
+
+	/// <summary>
+	/// Actively initializes the information for all currencies.
+	/// </summary>
+	/// <remarks>Use this method if you plan to use a lot of currencies in your program.
+	/// <para>When most of currencies are expected to be used, it is recommended to initialize the information for all of them,
+	/// saving time each time the first instance is accessed.</para></remarks>
+	public static void InitializeAllCurrencies()
+	{
+		CurrencyIsoCode[] isoCodes = Enum.GetValues<CurrencyIsoCode>();
+
+		for (int i = 0; i < isoCodes.Length; i++)
+		{
+			CurrencyIsoCode code = isoCodes[i];
+			_ = Get(code);
+		}
+	}
+
+	/// <summary>
+	/// Retrieves all currencies.
+	/// </summary>
+	/// <remarks>Since all currencies are visited, caches are initialized with all values.</remarks>
+	/// <returns>List of all currencies defined.</returns>
+	[Pure]
+	public static IEnumerable<Currency> FindAll()
+	{
+		CurrencyIsoCode[] codes = Enum.GetValues<CurrencyIsoCode>();
+		for (int i = 0; i < codes.Length; i++)
+		{
+			yield return Get(codes[i]);
+		}
+	}
 }

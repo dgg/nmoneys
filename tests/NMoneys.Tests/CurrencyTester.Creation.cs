@@ -175,4 +175,30 @@ public partial class CurrencyTester
 	{
 		Assert.That(Currency.Get(CurrencyIsoCode.ALL).PaddedNumericCode, Is.EqualTo("008"));
 	}
+
+	#region FindAll
+
+	[Test]
+	public void FindAll_GetsAllCurrencies()
+	{
+		Currency[] allCurrencies = Currency.FindAll().ToArray();
+		CurrencyIsoCode[] allCodes = Enum.GetValues<CurrencyIsoCode>();
+
+		Assert.That(allCurrencies.Select(c => c.IsoCode), Is.EquivalentTo(allCodes));
+	}
+
+	[Test]
+	public void FindAll_CanBeUsedForLinq()
+	{
+		Func<Currency, bool> currenciesWithDollarSymbol = c => c.Symbol.Equals("$", StringComparison.Ordinal);
+		Assert.That(Currency.FindAll().Where(currenciesWithDollarSymbol), Is.Not.Empty);
+	}
+
+	[Test]
+	public void FindAll_ReturnsObsoleteCurrencies()
+	{
+		Assert.That(Currency.FindAll(), Has.Some.Matches(Has.Property(nameof(Currency.IsObsolete)).True));
+	}
+
+	#endregion
 }

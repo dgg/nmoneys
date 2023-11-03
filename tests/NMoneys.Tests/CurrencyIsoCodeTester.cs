@@ -82,10 +82,4 @@ public class CurrencyIsoCodeTester
 	}
 
 	#endregion
-
-	[Test]
-	public void AllCurrencies_Decorated()
-	{
-		Assert.Fail();
-	}
 }
