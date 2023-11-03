@@ -55,11 +55,11 @@ public static class IsoCodeExtensions
 	/// <param name="isoCode">ISO 4217 code</param>
 	/// <returns>The instance of <see cref="Currency"/> represented by the <paramref name="isoCode"/>.</returns>
 	/// <seealso cref="Currency.Get(CurrencyIsoCode)"/>
-	/*[Pure]
+	[Pure]
 	public static Currency AsCurrency(this CurrencyIsoCode isoCode)
 	{
 		return Currency.Get(isoCode);
-	}*/
+	}
 
 	/// <summary>
 	/// Determines whether the specified objects are equal.
