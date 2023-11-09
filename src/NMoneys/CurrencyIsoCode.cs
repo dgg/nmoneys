@@ -97,7 +97,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1
+		positivePattern: 0, negativePattern: 1,
+		codePoint: 36, entityName: "dollar"
 	)]
 	ARS = 032,
 
@@ -110,7 +111,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1
+		positivePattern: 0, negativePattern: 1,
+		codePoint: 36, entityName: "dollar"
 	)]
 	AUD = 036,
 
@@ -162,7 +164,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1
+		positivePattern: 0, negativePattern: 1,
+		codePoint: 36, entityName: "dollar"
 	)]
 	BBD = 052,
 
@@ -227,7 +230,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1
+		positivePattern: 0, negativePattern: 1,
+		codePoint: 36, entityName: "dollar"
 	)]
 	BMD = 060,
 
@@ -240,7 +244,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
-		positivePattern: 2, negativePattern: 9
+		positivePattern: 2, negativePattern: 9,
+		codePoint: 36, entityName: "dollar"
 	)]
 	BND = 096,
 
@@ -292,7 +297,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1
+		positivePattern: 0, negativePattern: 1,
+		codePoint: 36, entityName: "dollar"
 	)]
 	BSD = 044,
 
@@ -358,7 +364,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1
+		positivePattern: 0, negativePattern: 1,
+		codePoint: 36, entityName: "dollar"
 	)]
 	BZD = 084,
 
@@ -371,7 +378,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1
+		positivePattern: 0, negativePattern: 1,
+		codePoint: 36, entityName: "dollar"
 	)]
 	CAD = 124,
 
@@ -436,7 +444,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 4,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
-		positivePattern: 2, negativePattern: 9
+		positivePattern: 2, negativePattern: 9,
+		codePoint: 36, entityName: "dollar"
 	)]
 	CLF = 990,
 
@@ -449,7 +458,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 0,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 2
+		positivePattern: 0, negativePattern: 2,
+		codePoint: 36, entityName: "dollar"
 	)]
 	CLP = 152,
 
@@ -475,7 +485,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1
+		positivePattern: 0, negativePattern: 1,
+		codePoint: 36, entityName: "dollar"
 	)]
 	COP = 170,
 
@@ -488,7 +499,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
-		positivePattern: 2, negativePattern: 14
+		positivePattern: 2, negativePattern: 14,
+		codePoint: 36, entityName: "dollar"
 	)]
 	COU = 970,
 
@@ -514,7 +526,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1
+		positivePattern: 0, negativePattern: 1,
+		codePoint: 36, entityName: "dollar"
 	)]
 	CUC = 931,
 
@@ -527,7 +540,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1
+		positivePattern: 0, negativePattern: 1,
+		codePoint: 36, entityName: "dollar"
 	)]
 	CUP = 192,
 
@@ -671,7 +685,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
-		positivePattern: 3, negativePattern: 8
+		positivePattern: 3, negativePattern: 8,
+		codePoint: 8364, entityName: "euro"
 	)]
 	EUR = 978,
 
@@ -684,7 +699,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1
+		positivePattern: 0, negativePattern: 1,
+		codePoint: 36, entityName: "dollar"
 	)]
 	FJD = 242,
 
@@ -801,7 +817,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1
+		positivePattern: 0, negativePattern: 1,
+		codePoint: 36, entityName: "dollar"
 	)]
 	GYD = 328,
 
@@ -879,7 +896,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1
+		positivePattern: 0, negativePattern: 1,
+		codePoint: 8377
 	)]
 	IDR = 360,
 
@@ -957,7 +975,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1
+		positivePattern: 0, negativePattern: 1,
+		codePoint: 36, entityName: "dollar"
 	)]
 	JMD = 388,
 
@@ -1087,7 +1106,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1
+		positivePattern: 0, negativePattern: 1,
+		codePoint: 36, entityName: "dollar"
 	)]
 	KYD = 136,
 
@@ -1152,7 +1172,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1
+		positivePattern: 0, negativePattern: 1,
+		codePoint: 36, entityName: "dollar"
 	)]
 	LRD = 430,
 
@@ -1375,7 +1396,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1
+		positivePattern: 0, negativePattern: 1,
+		codePoint: 36, entityName: "dollar"
 	)]
 	MXN = 484,
 
@@ -1388,7 +1410,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1
+		positivePattern: 0, negativePattern: 1,
+		codePoint: 36, entityName: "dollar"
 	)]
 	MXV = 979,
 
@@ -1427,7 +1450,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1
+		positivePattern: 0, negativePattern: 1,
+		codePoint: 36, entityName: "dollar"
 	)]
 	NAD = 516,
 
@@ -1492,7 +1516,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1
+		positivePattern: 0, negativePattern: 1,
+		codePoint: 36, entityName: "dollar"
 	)]
 	NZD = 554,
 
@@ -1648,7 +1673,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: "\u00a0", groupSizes: new byte[] { 3 },
-		positivePattern: 3, negativePattern: 8
+		positivePattern: 3, negativePattern: 8,
+		codePoint: 8377
 	)]
 	RUB = 643,
 
@@ -1687,7 +1713,9 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1
+		positivePattern: 0, negativePattern: 1,
+		codePoint: 36, entityName: "dollar"
+
 	)]
 	SBD = 090,
 
@@ -1739,7 +1767,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 0
+		positivePattern: 0, negativePattern: 0,
+		codePoint: 36, entityName: "dollar"
 	)]
 	SGD = 702,
 
@@ -1791,7 +1820,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
-		positivePattern: 2, negativePattern: 12
+		positivePattern: 2, negativePattern: 12,
+		codePoint: 36, entityName: "dollar"
 	)]
 	SRD = 968,
 
@@ -2026,7 +2056,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 0
+		positivePattern: 0, negativePattern: 0,
+		codePoint: 36, entityName: "dollar"
 	)]
 	USD = 840,
 
@@ -2039,7 +2070,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 0
+		positivePattern: 0, negativePattern: 0,
+		codePoint: 36, entityName: "dollar"
 	)]
 	USN = 997,
 
@@ -2052,7 +2084,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 0
+		positivePattern: 0, negativePattern: 0,
+		codePoint: 36, entityName: "dollar"
 	)]
 	USS = 998,
 

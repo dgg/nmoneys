@@ -1,6 +1,4 @@
-using System.Globalization;
 using System.Reflection;
-using NMoneys.Support;
 
 namespace NMoneys;
 
@@ -15,8 +13,10 @@ internal sealed class InfoAttribute : Attribute, ICurrencyInfo
 		byte significantDecimalDigits,
 		string decimalSeparator, string groupSeparator, byte[] groupSizes,
 		byte negativePattern, byte positivePattern,
-		bool isObsolete = false
-	)
+		bool isObsolete = false,
+		ushort codePoint = 0,
+		string? entityName = null
+		)
 	{
 		EnglishName = englishName;
 		NativeName = nativeName;
@@ -28,6 +28,8 @@ internal sealed class InfoAttribute : Attribute, ICurrencyInfo
 		NegativePattern = negativePattern;
 		PositivePattern = positivePattern;
 		IsObsolete = isObsolete;
+		CodePoint = codePoint == 0 ? null: codePoint;
+		EntityName = entityName;
 	}
 
 	public string EnglishName { get; }
@@ -41,6 +43,9 @@ internal sealed class InfoAttribute : Attribute, ICurrencyInfo
 	public byte PositivePattern { get; }
 	public bool IsObsolete { get; }
 
+	public ushort? CodePoint { get; }
+	public string? EntityName { get; }
+
 	public CurrencyInfo MergeWith(CurrencyConfiguration configuration)
 	{
 		CurrencyInfo merged = new CurrencyInfo(
@@ -53,7 +58,9 @@ internal sealed class InfoAttribute : Attribute, ICurrencyInfo
 			GroupSizes: configuration.GroupSizes ?? GroupSizes,
 			NegativePattern: configuration.NegativePattern ?? NegativePattern,
 			PositivePattern: configuration.PositivePattern ?? PositivePattern,
-			IsObsolete: configuration.IsObsolete ?? IsObsolete
+			IsObsolete: configuration.IsObsolete ?? IsObsolete,
+			CodePoint: configuration.Reference.Item1 ?? CodePoint,
+			EntityName: configuration.Reference.Item2 ?? EntityName
 		);
 
 		return merged;

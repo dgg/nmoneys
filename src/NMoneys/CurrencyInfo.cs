@@ -16,7 +16,8 @@ internal interface ICurrencyInfo
 	public byte PositivePattern { get; }
 	public bool IsObsolete { get; }
 
-	// Add CharacterReference when uplifted
+	public ushort? CodePoint { get; }
+	public string? EntityName { get; }
 }
 
 internal record CurrencyInfo(
@@ -29,7 +30,8 @@ internal record CurrencyInfo(
 	byte[] GroupSizes,
 	byte NegativePattern,
 	byte PositivePattern,
-	bool IsObsolete
+	bool IsObsolete,
+	ushort? CodePoint, string? EntityName
 	) : ICurrencyInfo
 {
 

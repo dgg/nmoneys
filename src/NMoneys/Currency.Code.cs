@@ -37,9 +37,9 @@ public sealed partial class Currency
 		/// <remarks>The <paramref name="isoCode"/> can represent an alphabetic or a numeric currency code.
 		/// <para>In the case of alphabetic codes, parsing is case-insensitive.</para>
 		/// <para>Only defined numeric codes can be parsed.</para></remarks>
-		/// <para>If the convertion fails, <paramref name="defaultValue"/> will be returned.</para>
+		/// <para>If the conversion fails, <paramref name="defaultValue"/> will be returned.</para>
 		/// <param name="isoCode">A string containing the name or value to convert.</param>
-		/// <param name="defaultValue">The value to return if the convertion fails.</param>
+		/// <param name="defaultValue">The value to return if the conversion fails.</param>
 		/// <returns>An object of type <see cref="CurrencyIsoCode"/> whose value is represented by value.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="isoCode"/> is null.</exception>
 		/// <exception cref="UndefinedCodeException"><paramref name="isoCode"/> does not represent a defined alphabetic or numeric code.</exception>

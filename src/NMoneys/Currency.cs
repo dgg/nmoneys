@@ -114,12 +114,12 @@ public sealed partial class Currency
 	public bool IsObsolete { get; private set; }
 
 	/// <summary>
-	/// Represents the textual html entity
+	/// Represents the character reference for the currency
 	/// </summary>
 	/// <remarks>Not all currencies have an character reference.
-	/// For those who does not have one, a <see cref="CharacterReference.Empty"/> instance is returned.</remarks>
-	//[XmlIgnore]
-	// public CharacterReference Entity { get; private set; }
+	/// For those who does not have one, a <c>null</c> instance is returned.</remarks>
+	[XmlIgnore]
+	public CharacterReference? Entity { get; private set; } = null;
 
 	/// <summary>
 	/// Gets the default currency symbol.
@@ -152,7 +152,10 @@ public sealed partial class Currency
 		PositivePattern = info.PositivePattern;
 		NegativePattern = info.NegativePattern;
 		IsObsolete = info.IsObsolete;
-
+		if (info.CodePoint.HasValue)
+		{
+			Entity = new CharacterReference(info.CodePoint.Value, info.EntityName);
+		}
 		FormatInfo = CurrencyInfo.ToFormatInfo(info);
 	}
 

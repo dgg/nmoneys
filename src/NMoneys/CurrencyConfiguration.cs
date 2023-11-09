@@ -1,5 +1,3 @@
-using System.Collections.ObjectModel;
-
 namespace NMoneys;
 
 /// <summary>
@@ -42,11 +40,16 @@ public record CurrencyConfiguration()
 	/// </summary>
 	public byte? NegativePattern { get; init; }
 	/// <summary>
-	/// Override <see cref="PositivePattern"/>.
+	/// Override <see cref="Currency.PositivePattern"/>.
 	/// </summary>
 	public byte? PositivePattern { get; init; }
 	/// <summary>
-	/// Override <see cref="IsObsolete"/>.
+	/// Override <see cref="Currency.IsObsolete"/>.
 	/// </summary>
 	public bool? IsObsolete { get; init; }
+
+	/// <summary>
+	/// Override <see cref="Currency.Entity"/>.
+	/// </summary>
+	public ValueTuple<ushort?, string?> Reference { get; init; } = (null, null);
 }

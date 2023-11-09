@@ -15,6 +15,7 @@ public sealed partial class Currency : IEquatable<Currency>
 	}
 
 	/// <inheritdoc />
+	[Pure]
 	public override bool Equals(object? obj)
 	{
 		return ReferenceEquals(this, obj) || obj is Currency other && Equals(other);
