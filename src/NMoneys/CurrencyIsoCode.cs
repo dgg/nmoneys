@@ -405,7 +405,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: "'", groupSizes: new byte[] { 3 },
-		positivePattern: 2, negativePattern: 2
+		positivePattern: 2, negativePattern: 2,
+		codePoint: 8364, entityName: "euro"
 	)]
 	CHE = 947,
 
