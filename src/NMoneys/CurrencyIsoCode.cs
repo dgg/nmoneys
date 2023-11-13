@@ -713,7 +713,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1
+		positivePattern: 0, negativePattern: 1,
+		codePoint: 163, entityName: "pound"
 	)]
 	FKP = 238,
 
@@ -726,7 +727,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1
+		positivePattern: 0, negativePattern: 1,
+		codePoint: 163, entityName: "pound"
 	)]
 	GBP = 826,
 
@@ -765,7 +767,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1
+		positivePattern: 0, negativePattern: 1,
+		codePoint: 163, entityName: "pound"
 	)]
 	GIP = 292,
 
@@ -1781,7 +1784,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1
+		positivePattern: 0, negativePattern: 1,
+		codePoint: 163, entityName: "pound"
 	)]
 	SHP = 654,
 
@@ -1834,7 +1838,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1
+		positivePattern: 0, negativePattern: 1,
+		codePoint: 163, entityName: "pound"
 	)]
 	SSP = 728,
 
