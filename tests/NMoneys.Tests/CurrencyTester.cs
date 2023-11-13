@@ -3,6 +3,7 @@ namespace NMoneys.Tests;
 [TestFixture]
 public partial class CurrencyTester
 {
+	#region Entity
 
 	[Test]
 	public void Entity_NoEntity_Null()
@@ -22,11 +23,10 @@ public partial class CurrencyTester
 		Assert.That(namedReference?.DecimalReference, Is.EqualTo("&#8364;"));
 		Assert.That(namedReference?.HexadecimalReference, Is.EqualTo("&#x20AC;"));
 		Assert.That(namedReference?.Character, Is.EqualTo("€"));
-
 	}
 
 	[Test]
-	public void Entity_UnnamedReference_SetsAllProps()
+	public void Entity_UnnamedReference_SetsSomeProps()
 	{
 		var unnamedReference = Currency.Get(CurrencyIsoCode.IDR).Entity;
 		Assert.That(unnamedReference, Is.Not.Null);
@@ -37,4 +37,19 @@ public partial class CurrencyTester
 		Assert.That(unnamedReference?.HexadecimalReference, Is.EqualTo("&#x20B9;"));
 		Assert.That(unnamedReference?.Character, Is.EqualTo("₹"));
 	}
+
+	[Test]
+	public void Entity_CodesDecoratedWithCodePoint_SetsProps()
+	{
+		var currenciesWithEntity = Enum.GetValues<CurrencyIsoCode>()
+			.Select(c => new { Code = c, Attribute = InfoAttribute.GetFrom(c) })
+			.Where(a => a.Attribute.CodePoint != null)
+			.Select(a => Currency.Get(a.Code));
+
+		Assert.That(currenciesWithEntity, Has.All.Matches(
+			Has.Property(nameof(Currency.Entity)).Not.Null
+		));
+	}
+
+	#endregion
 }
