@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace NMoneys;
+namespace NMoneys.Support;
 
 [AttributeUsage(AttributeTargets.Field)]
 internal sealed class InfoAttribute : Attribute, ICurrencyInfo

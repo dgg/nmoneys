@@ -201,4 +201,10 @@ public partial class CurrencyTester
 	}
 
 	#endregion
+
+	[Test]
+	public void CheckObsolescent()
+	{
+		Assert.Fail("implement me");
+	}
 }

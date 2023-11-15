@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace NMoneys
 {
 	/// <summary>
-	/// Currency codes as stated by the ISO 4217 standard 
+	/// Currency codes as stated by the ISO 4217 standard
 	/// </summary>
 	/// <seealso href="http://www.iso.org/iso/support/currency_codes_list-1.htm" />
 #if NET

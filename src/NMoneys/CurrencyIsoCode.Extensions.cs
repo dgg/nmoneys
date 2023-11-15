@@ -112,7 +112,7 @@ public static class IsoCodeExtensions
 	/// <summary>
 	/// Returns whether the code exists in the <see cref="CurrencyIsoCode"/> enumeration.
 	/// </summary>
-	/// <param name="code">The enumeration value to check.</param>
+	/// <param name="code">The value to check.</param>
 	/// <returns>true if the code is defined within the enum values; otherwise, false.</returns>
 	public static bool CheckDefined(this CurrencyIsoCode code)
 	{
@@ -121,7 +121,23 @@ public static class IsoCodeExtensions
 
 	internal static FieldInfo FieldOf(this CurrencyIsoCode code)
 	{
-		FieldInfo? field = typeof(CurrencyIsoCode).GetField(code.ToString()) ;
+		FieldInfo? field = typeof(CurrencyIsoCode).GetField(code.ToString());
 		return field ?? throw UndefinedCodeException.ForCode(code);
+	}
+
+	internal static bool HasAttribute<TAttribute>(this CurrencyIsoCode code) where TAttribute : Attribute
+	{
+		bool has = code.FieldOf().GetCustomAttribute<TAttribute>() != null;
+		return has;
+	}
+
+	/// <summary>
+	/// Returns whether the code is marked obsolete. <see cref="ObsoleteAttribute"/>.
+	/// </summary>
+	/// <param name="code">The code to check.</param>
+	/// <returns><c>true</c> is obsolete, <c>false</c> otherwise.</returns>
+	public static bool IsObsolete(this CurrencyIsoCode code)
+	{
+		return ObsoleteCurrencies.IsObsolete(code);
 	}
 }

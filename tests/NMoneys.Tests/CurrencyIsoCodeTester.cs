@@ -1,3 +1,5 @@
+using NMoneys.Support;
+
 namespace NMoneys.Tests;
 
 [TestFixture]
@@ -80,6 +82,40 @@ public class CurrencyIsoCodeTester
 		CurrencyIsoCode notDefined = (CurrencyIsoCode)1;
 		Assert.That(notDefined.CheckDefined(), Is.False);
 	}
+
+	#region HasAttribute
+
+	[Test]
+	public void HasAttribute_DecoratedCode_True()
+	{
+		Assert.That(CurrencyIsoCode.EUR.HasAttribute<CanonicalCultureAttribute>(), Is.True);
+	}
+
+	[Test]
+	public void HasAttribute_NotDecoratedCode_False()
+	{
+		Assert.That(CurrencyIsoCode.XXX.HasAttribute<CanonicalCultureAttribute>(), Is.False);
+	}
+
+	#endregion
+
+	#region IsObsolete
+
+	[Test]
+	public void IsObsolete_ObsoleteCurrency_True()
+	{
+#pragma warning disable CS0618 // Type or member is obsolete
+		Assert.That(CurrencyIsoCode.EEK.IsObsolete(), Is.True);
+#pragma warning restore CS0618 // Type or member is obsolete
+	}
+
+	[Test]
+	public void IsObsolete_CurrentCurrency_False()
+	{
+		Assert.That(CurrencyIsoCode.XTS.IsObsolete(), Is.False);
+	}
+
+	#endregion
 
 	#endregion
 }

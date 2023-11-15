@@ -1,3 +1,5 @@
+using NMoneys.Support;
+
 namespace NMoneys.Tests;
 
 public partial class CurrencyTester
@@ -230,4 +232,5 @@ public partial class CurrencyTester
 		}
 
 		#endregion
+
 }

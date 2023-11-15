@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Globalization;
+using NMoneys.Support;
 
 namespace NMoneys;
 
@@ -33,7 +34,7 @@ public partial class Currency
 			return new Currency(c, attribute);
 		});
 
-		//RaiseIfObsolete(code);
+		RaiseIfObsolete(code);
 		return currency;
 	}
 

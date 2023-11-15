@@ -1348,7 +1348,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
-		positivePattern: 2, negativePattern: 9
+		positivePattern: 2, negativePattern: 9,
+		isObsolete: true
 	)]
 	MRO = 478,
 
@@ -2110,7 +2111,8 @@ public enum CurrencyIsoCode : ushort
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
 		positivePattern: 0, negativePattern: 0,
-		codePoint: 36, entityName: "dollar"
+		codePoint: 36, entityName: "dollar",
+		isObsolete: true
 	)]
 	USS = 998,
 
@@ -2501,7 +2503,8 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 0
+		positivePattern: 0, negativePattern: 0,
+		isObsolete: true
 	)]
 	ZMK = 894,
 
