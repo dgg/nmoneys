@@ -1,4 +1,5 @@
 using System.Globalization;
+using NMoneys.Tests.Support;
 
 namespace NMoneys.Tests;
 
@@ -76,6 +77,25 @@ public partial class CurrencyTester
 		);
 	}
 
+	#region Obsolescence
+
+	[Test]
+	public void Get_ObsoleteIsoCode_EventRaised()
+	{
+		CurrencyIsoCode obsolete = Currency.Code.Parse("EEK");
+		Action getObsolete = () => Currency.Get(obsolete);
+		Assert.That(getObsolete, Doez.Raise.ObsoleteEvent());
+	}
+
+	[Test]
+	public void Get_ObsoleteCurrencyCode_EventRaised()
+	{
+		Action getObsolete = () => Currency.Get("EEK");
+		Assert.That(getObsolete, Doez.Raise.ObsoleteEvent());
+	}
+
+	#endregion
+
 	#endregion
 
 	#region TryGet
@@ -143,6 +163,25 @@ public partial class CurrencyTester
 		);
 	}
 
+	#region Obsolescence
+
+	[Test]
+	public void TryGet_ObsoleteIsoCode_EventRaised()
+	{
+		CurrencyIsoCode obsolete = Currency.Code.Parse("EEK");
+		Action tryGetObsolete = () => Currency.TryGet(obsolete, out var currency);
+		Assert.That(tryGetObsolete, Doez.Raise.ObsoleteEvent());
+	}
+
+	[Test]
+	public void TryGet_ObsoleteCurrencyCode_EventRaised()
+	{
+		Action tryGetObsolete = () => Currency.TryGet("EEK", out var currency);
+		Assert.That(tryGetObsolete, Doez.Raise.ObsoleteEvent());
+	}
+
+	#endregion
+
 	#endregion
 
 	[Test]
@@ -201,10 +240,4 @@ public partial class CurrencyTester
 	}
 
 	#endregion
-
-	[Test]
-	public void CheckObsolescent()
-	{
-		Assert.Fail("implement me");
-	}
 }

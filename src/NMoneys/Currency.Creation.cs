@@ -148,7 +148,7 @@ public partial class Currency
 			});
 		}
 
-		//RaiseIfObsolete(currency);
+		RaiseIfObsolete(code);
 		return tryGet;
 	}
 

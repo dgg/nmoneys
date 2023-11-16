@@ -50,12 +50,4 @@ public sealed partial class Currency
 			onObsoleteCurrency(new ObsoleteCurrencyEventArgs(code));
 		}
 	}
-
-	internal static void RaiseIfObsolete(Currency currency)
-	{
-		if (ObsoleteCurrencies.IsObsolete(currency))
-		{
-			onObsoleteCurrency(new ObsoleteCurrencyEventArgs(currency.IsoCode));
-		}
-	}
 }
