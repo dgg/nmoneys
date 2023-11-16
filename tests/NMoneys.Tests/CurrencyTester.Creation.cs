@@ -190,31 +190,6 @@ public partial class CurrencyTester
 		Assert.DoesNotThrow(Currency.InitializeAllCurrencies);
 	}
 
-	[Test]
-	public void NumericValue_HoldsTheValueOfTheCode()
-	{
-		Assert.That(Currency.Get("XXX").NumericCode, Is.EqualTo(999));
-		Assert.That(Currency.Get("XTS").NumericCode, Is.EqualTo(963));
-	}
-
-	[Test]
-	public void PaddedNumericValue_ThreeDigitedValue_NoLeadingZeros()
-	{
-		Assert.That(Currency.Get("XTS").PaddedNumericCode, Is.EqualTo("963"));
-	}
-
-	[Test]
-	public void PaddedNumericValue_TwoDigitedValue_OneLeadingZero()
-	{
-		Assert.That(Currency.Get(CurrencyIsoCode.BZD).PaddedNumericCode, Is.EqualTo("084"));
-	}
-
-	[Test]
-	public void PaddedNumericValue_OneDigitedValue_OneLeadingZero()
-	{
-		Assert.That(Currency.Get(CurrencyIsoCode.ALL).PaddedNumericCode, Is.EqualTo("008"));
-	}
-
 	#region FindAll
 
 	[Test]
@@ -237,6 +212,17 @@ public partial class CurrencyTester
 	public void FindAll_ReturnsObsoleteCurrencies()
 	{
 		Assert.That(Currency.FindAll(), Has.Some.Matches(Has.Property(nameof(Currency.IsObsolete)).True));
+	}
+
+	#endregion
+
+	#region change SEK
+
+	[Test]
+	public void SEK_GroupSeparator_IsDotAgain()
+	{
+		Assert.That(Currency.Sek.GroupSeparator, Is.EqualTo(".").And
+			.Not.EqualTo(" "));
 	}
 
 	#endregion

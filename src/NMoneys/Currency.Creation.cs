@@ -173,7 +173,7 @@ public partial class Currency
 		bool tryGet = false;
 		currency = null;
 
-		if (Enum.TryParse(threeLetterIsoSymbol, ignoreCase: false, out CurrencyIsoCode code))
+		if (Enum.TryParse(threeLetterIsoSymbol, ignoreCase: true, out CurrencyIsoCode code))
 		{
 			return TryGet(code, out currency);
 		}

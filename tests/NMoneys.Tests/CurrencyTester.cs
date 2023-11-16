@@ -6,6 +6,31 @@ namespace NMoneys.Tests;
 [TestFixture]
 public partial class CurrencyTester
 {
+	[Test]
+	public void NumericValue_HoldsTheValueOfTheCode()
+	{
+		Assert.That(Currency.Get("XXX").NumericCode, Is.EqualTo(999));
+		Assert.That(Currency.Get("XTS").NumericCode, Is.EqualTo(963));
+	}
+
+	[Test]
+	public void PaddedNumericValue_ThreeDigitedValue_NoLeadingZeros()
+	{
+		Assert.That(Currency.Get("XTS").PaddedNumericCode, Is.EqualTo("963"));
+	}
+
+	[Test]
+	public void PaddedNumericValue_TwoDigitedValue_OneLeadingZero()
+	{
+		Assert.That(Currency.Get(CurrencyIsoCode.BZD).PaddedNumericCode, Is.EqualTo("084"));
+	}
+
+	[Test]
+	public void PaddedNumericValue_OneDigitedValue_OneLeadingZero()
+	{
+		Assert.That(Currency.Get(CurrencyIsoCode.ALL).PaddedNumericCode, Is.EqualTo("008"));
+	}
+
 	#region Entity
 
 	[Test]
@@ -92,6 +117,36 @@ public partial class CurrencyTester
 			"all currency codes are marked as obsolete");
 		Assert.That(obsoleteCodes, Has.All.Matches<CurrencyIsoCode>(c => c.IsObsolete()),
 			"all currency codes are obsolete");
+	}
+
+	#endregion
+
+	#region Issue 16. Case sensitivity. Currency instances can be obtained by any casing of the IsoCode (Alphbetic code)
+
+	[Test]
+	public void Get_ByIsoCode_IsCaseInsensitive()
+	{
+		Assert.That(Currency.Get("XBA"), Is.SameAs(Currency.Get("xBa")));
+	}
+
+	[Test]
+	public void TryGet_ByIsoCode_IsCaseInsensitive()
+	{
+		Currency upper, mixed;
+		Assert.That(Currency.TryGet("XBA", out upper), Is.True);
+		Assert.That(Currency.TryGet("xBa", out mixed), Is.True);
+
+		Assert.That(upper, Is.SameAs(mixed));
+	}
+
+	#endregion
+
+	#region Issue 29. Allow empty currency symbols
+
+	[Test]
+	public void Get_SymbolLessCurrency_NoException()
+	{
+		Assert.That(() => Currency.Get(CurrencyIsoCode.CVE), Throws.Nothing);
 	}
 
 	#endregion
