@@ -6,16 +6,24 @@ namespace NMoneys;
 public class UndefinedCodeException : ArgumentException
 {
 	/// <inheritdoc />
-	public UndefinedCodeException() { }
+	public UndefinedCodeException()
+	{
+	}
 
 	/// <inheritdoc />
-	public UndefinedCodeException(string message) : base(message) { }
+	public UndefinedCodeException(string message) : base(message)
+	{
+	}
 
 	/// <inheritdoc />
-	public UndefinedCodeException(string message, string paramName) : base(message, paramName) { }
+	public UndefinedCodeException(string message, string paramName) : base(message, paramName)
+	{
+	}
 
 	/// <inheritdoc />
-	public UndefinedCodeException(string message, Exception inner) : base(message, inner) { }
+	public UndefinedCodeException(string message, Exception inner) : base(message, inner)
+	{
+	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="UndefinedCodeException"/> class with a descriptive error message
@@ -34,7 +42,8 @@ public class UndefinedCodeException : ArgumentException
 	/// <param name="threeLetterIsoCode">Three-letter ISO code.</param>
 	public static UndefinedCodeException ForCode(string threeLetterIsoCode)
 	{
-		return new UndefinedCodeException($"Value {threeLetterIsoCode} is not defined for {nameof(CurrencyIsoCode)}.", nameof(threeLetterIsoCode));
+		return new UndefinedCodeException($"Value {threeLetterIsoCode} is not defined for {nameof(CurrencyIsoCode)}.",
+			nameof(threeLetterIsoCode));
 	}
 
 	/// <summary>
@@ -56,20 +65,26 @@ public class MisconfiguredCurrencyException : Exception
 	/// <summary>
 	/// Initializes a new instance of <see cref="MisconfiguredCurrencyException"/>.
 	/// </summary>
-	public MisconfiguredCurrencyException() { }
+	public MisconfiguredCurrencyException()
+	{
+	}
 
 	/// <summary>
 	/// Initializes a new instance of <see cref="MisconfiguredCurrencyException"/>.
 	/// </summary>
 	/// <param name="message">A message that describes why this exception was thrown.</param>
-	public MisconfiguredCurrencyException(string message) : base(message) { }
+	public MisconfiguredCurrencyException(string message) : base(message)
+	{
+	}
 
 	/// <summary>
 	/// Initializes a new instance of <see cref="MisconfiguredCurrencyException"/>.
 	/// </summary>
 	/// <param name="message">A message that describes why this exception was thrown.</param>
 	/// <param name="inner">The exception that caused this exception to be thrown.</param>
-	public MisconfiguredCurrencyException(string message, Exception inner) : base(message, inner) { }
+	public MisconfiguredCurrencyException(string message, Exception inner) : base(message, inner)
+	{
+	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="MisconfiguredCurrencyException"/> class with a descriptive error message.
@@ -89,20 +104,26 @@ public class InitializedCurrencyException : Exception
 	/// <summary>
 	/// Initializes a new instance of <see cref="InitializedCurrencyException"/>.
 	/// </summary>
-	public InitializedCurrencyException() { }
+	public InitializedCurrencyException()
+	{
+	}
 
 	/// <summary>
 	/// Initializes a new instance of <see cref="InitializedCurrencyException"/>.
 	/// </summary>
 	/// <param name="message">A message that describes why this exception was thrown.</param>
-	public InitializedCurrencyException(string message) : base(message) { }
+	public InitializedCurrencyException(string message) : base(message)
+	{
+	}
 
 	/// <summary>
 	/// Initializes a new instance of <see cref="InitializedCurrencyException"/>.
 	/// </summary>
 	/// <param name="message">A message that describes why this exception was thrown.</param>
 	/// <param name="inner">The exception that caused this exception to be thrown.</param>
-	public InitializedCurrencyException(string message, Exception inner) : base(message, inner) { }
+	public InitializedCurrencyException(string message, Exception inner) : base(message, inner)
+	{
+	}
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="InitializedCurrencyException"/> class with a descriptive error message.
@@ -120,5 +141,48 @@ public class InitializedCurrencyException : Exception
 	public static InitializedCurrencyException ForCode(string threeLetterIsoCode)
 	{
 		return new InitializedCurrencyException($"Currency with code {threeLetterIsoCode} was already initialized.");
+	}
+}
+
+/// <summary>
+/// Currency that is thrown when two instances of <see cref="Money"/> are passed into an operation that can only be performed when they have the same currency.
+/// </summary>
+public class DifferentCurrencyException : Exception
+{
+	/// <summary>
+	/// Initializes a new instance of <see cref="DifferentCurrencyException"/>.
+	/// </summary>
+	[Obsolete("Serialization")]
+	public DifferentCurrencyException()
+	{
+	}
+
+	/// <summary>
+	/// Initializes a new instance of <see cref="DifferentCurrencyException"/>.
+	/// </summary>
+	/// <param name="message">A message that describes why this exception was thrown.</param>
+	public DifferentCurrencyException(string message) : base(message)
+	{
+	}
+
+	/// <summary>
+	/// Initializes a new instance of <see cref="DifferentCurrencyException"/>.
+	/// </summary>
+	/// <param name="message">A message that describes why this exception was thrown.</param>
+	/// <param name="inner">The exception that caused this exception to be thrown.</param>
+	public DifferentCurrencyException(string message, Exception inner) : base(message, inner)
+	{
+	}
+
+	/// <summary>
+	/// Initializes a new instance of <see cref="DifferentCurrencyException"/>.
+	/// </summary>
+	/// <param name="expectedIsoSymbol">Textual representation of a ISO 4217 code that was expected for the operation to be successful.</param>
+	/// <param name="actualIsoSymbol">Textual representation of a ISO 4217 code that provoked the exception.</param>
+	public static DifferentCurrencyException ForCodes(string expectedIsoSymbol, string actualIsoSymbol)
+	{
+		string message =
+			$"Expected a currency with symbol \"{expectedIsoSymbol}\", but currency with symbol \"{actualIsoSymbol}\" was passed.";
+		return new DifferentCurrencyException(message);
 	}
 }
