@@ -130,13 +130,17 @@ public sealed partial class Currency
 
 	#region ctors
 
+#pragma warning disable CS8618
 	[Obsolete("serialization")]
-	private Currency() { }
+	private Currency()
+	{
+	}
 
 	internal Currency(CurrencyIsoCode code, ICurrencyInfo info)
 	{
 		setAllFields(code, info);
 	}
+#pragma warning restore CS8618
 
 	private void setAllFields(CurrencyIsoCode code, ICurrencyInfo info)
 	{
@@ -156,6 +160,7 @@ public sealed partial class Currency
 		{
 			Entity = new CharacterReference(info.CodePoint.Value, info.EntityName);
 		}
+
 		FormatInfo = CurrencyInfo.ToFormatInfo(info);
 	}
 

@@ -39,7 +39,7 @@ public partial class CurrencyTester
 	[Test]
 	public void Parse_Null_Exception()
 	{
-		Assert.That(() => Currency.Code.Parse(null), Throws.InstanceOf<ArgumentNullException>());
+		Assert.That(() => Currency.Code.Parse(null!), Throws.InstanceOf<ArgumentNullException>());
 	}
 
 	[Test]
@@ -94,7 +94,7 @@ public partial class CurrencyTester
 	[Test]
 	public void DefaultParse_Null_Exception()
 	{
-		Assert.That(() => Currency.Code.Parse(null, CurrencyIsoCode.XTS), Throws.ArgumentNullException);
+		Assert.That(() => Currency.Code.Parse(null!, CurrencyIsoCode.XTS), Throws.ArgumentNullException);
 	}
 
 	[Test]
@@ -165,7 +165,7 @@ public partial class CurrencyTester
 	[Test]
 	public void TryParse_Null_Exception()
 	{
-		Assert.That(() => Currency.Code.TryParse(null, out var parsed), Throws.ArgumentNullException);
+		Assert.That(() => Currency.Code.TryParse(null!, out var parsed), Throws.ArgumentNullException);
 	}
 
 	[Test]

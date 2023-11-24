@@ -5,7 +5,7 @@ public partial class CurrencyTester
 	[Test]
 	public void CompareTo_NonGeneric_AccordingToSpec()
 	{
-		object to = null;
+		object to = null!;
 		Assert.That(Currency.Xts.CompareTo(to), Is.GreaterThan(0));
 
 		to = Currency.Xts;
@@ -24,7 +24,7 @@ public partial class CurrencyTester
 	[Test]
 	public void CompareTo_Generic_AccordingToSpec()
 	{
-		Currency to = null;
+		Currency to = null!;
 		Assert.That(Currency.Xts.CompareTo(to), Is.GreaterThan(0));
 
 		to = Currency.Xts;
@@ -38,7 +38,7 @@ public partial class CurrencyTester
 	[Test]
 	public void GreaterThan_Generic_AccordingToSpec()
 	{
-		Currency to = null;
+		Currency to = null!;
 		Assert.That(Currency.Xts > to, Is.True);
 
 		to = Currency.Xts;
@@ -52,7 +52,7 @@ public partial class CurrencyTester
 	[Test]
 	public void GreaterOrEqualThan_Generic_AccordingToSpec()
 	{
-		Currency to = null;
+		Currency to = null!;
 		Assert.That(Currency.Xts >= to, Is.True);
 
 		to = Currency.Xts;
@@ -66,7 +66,7 @@ public partial class CurrencyTester
 	[Test]
 	public void LessOrEqualThan_Generic_AccordingToSpec()
 	{
-		Currency to = null;
+		Currency to = null!;
 		Assert.That(Currency.Xts <= to, Is.False);
 
 		to = Currency.Xts;

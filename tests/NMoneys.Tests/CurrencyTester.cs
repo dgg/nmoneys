@@ -132,9 +132,8 @@ public partial class CurrencyTester
 	[Test]
 	public void TryGet_ByIsoCode_IsCaseInsensitive()
 	{
-		Currency upper, mixed;
-		Assert.That(Currency.TryGet("XBA", out upper), Is.True);
-		Assert.That(Currency.TryGet("xBa", out mixed), Is.True);
+		Assert.That(Currency.TryGet("XBA", out Currency? upper), Is.True);
+		Assert.That(Currency.TryGet("xBa", out Currency? mixed), Is.True);
 
 		Assert.That(upper, Is.SameAs(mixed));
 	}

@@ -120,7 +120,7 @@ public partial class CurrencyTester
 	[Test]
 	public void TryGet_NullSymbol_False()
 	{
-		Assert.That(Currency.TryGet((string) null, out var tried), Is.False);
+		Assert.That(Currency.TryGet((string) null!, out var tried), Is.False);
 		Assert.That(tried, Is.Null);
 	}
 
