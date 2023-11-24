@@ -54,6 +54,17 @@ public partial struct Money
 	#region Zero
 
 	/// <summary>
+	/// Creates an instance of <see cref="Money"/> with <see cref="decimal.Zero"/> quantity and the unspecified currency.
+	/// </summary>
+	/// <returns>An <see cref="Money"/> instance with zero <see cref="Amount"/> and unspecified currency (<see cref="CurrencyIsoCode.XXX"/>).</returns>
+	/// <seealso cref="Money(decimal, CurrencyIsoCode)"/>
+	[Pure]
+	public static Money Zero()
+	{
+		return new Money(decimal.Zero);
+	}
+
+	/// <summary>
 	/// Creates an instance of <see cref="Money"/> with <see cref="decimal.Zero"/> quantity and the specified currency.
 	/// </summary>
 	/// <param name="currency">The <see cref="CurrencyCode"/> of the monetary quantity.</param>
@@ -259,6 +270,59 @@ public partial struct Money
 	public static Money ForMinor(long amountMinor, string threeLetterIsoCode)
 	{
 		return ForMinor(amountMinor, Currency.Get(threeLetterIsoCode));
+	}
+
+	#endregion
+
+	#region Some
+
+	/// <summary>
+	/// Creates and initializes an array of <see cref="Money"/> with <paramref name="amount"/> quantity and the specified currency.
+	/// </summary>
+	/// <param name="amount">The <see cref="Amount"/> of each monetary quantity.</param>
+	/// <param name="currency">The <see cref="CurrencyCode"/> of each monetary quantity.</param>
+	/// <param name="numberOfElements">The number of elements in the array.</param>
+	/// <returns>An array of <see cref="Money"/> instances with <paramref name="amount"/> and the specified <paramref name="currency"/>.</returns>
+	/// <seealso cref="Money(decimal, CurrencyIsoCode)"/>
+	/// <exception cref="ArgumentException"><paramref name="currency"/> is not defined.</exception>
+	/// <exception cref="OverflowException"><paramref name="numberOfElements"/> is not a valid array length.</exception>
+	[Pure]
+	public static Money[] Some(decimal amount, CurrencyIsoCode currency, int numberOfElements)
+	{
+		return initArray(numberOfElements, () => new Money(amount, currency));
+	}
+
+	/// <summary>
+	/// Creates and initializes an array of <see cref="Money"/> with <paramref name="amount"/> quantity and the specified currency.
+	/// </summary>
+	/// <param name="amount">The <see cref="Amount"/> of each monetary quantity.</param>
+	/// <param name="currency">The incarnation of the <see cref="CurrencyCode"/> for each monetary quantity.</param>
+	/// <param name="numberOfElements">The number of elements in the array.</param>
+	/// <returns>An array of <see cref="Money"/> instances with <paramref name="amount"/> and the specified <paramref name="currency"/>.</returns>
+	/// <seealso cref="Money(decimal, Currency)"/>
+	/// <exception cref="ArgumentException"><paramref name="currency"/> is not defined.</exception>
+	/// <exception cref="OverflowException"><paramref name="numberOfElements"/> is not a valid array length.</exception>
+	[Pure]
+	public static Money[] Some(decimal amount, Currency currency, int numberOfElements)
+	{
+		return initArray(numberOfElements, () => new Money(amount, currency));
+	}
+
+	/// <summary>
+	/// Creates and initializes an array of <see cref="Money"/> with <paramref name="amount"/> quantity and the specified currency.
+	/// </summary>
+	/// <param name="amount">The <see cref="Amount"/> of each monetary quantity.</param>
+	/// <param name="threeLetterIsoCode">Textual representation of the ISO 4217 <see cref="CurrencyCode"/> for each monetary quantity.</param>
+	/// <param name="numberOfElements">The number of elements in the array.</param>
+	/// <returns>An array of <see cref="Money"/> instances with <paramref name="amount"/> and the specified <paramref name="threeLetterIsoCode"/>.</returns>
+	/// <seealso cref="Money(decimal, string)"/>
+	/// <exception cref="OverflowException"><paramref name="numberOfElements"/> is not a valid array length.</exception>
+	/// <exception cref="ArgumentNullException"><paramref name="threeLetterIsoCode"/> is null.</exception>
+	/// <exception cref="ArgumentException"><paramref name="threeLetterIsoCode"/> is not defined.</exception>
+	[Pure]
+	public static Money[] Some(decimal amount, string threeLetterIsoCode, int numberOfElements)
+	{
+		return initArray(numberOfElements, () => new Money(amount, threeLetterIsoCode));
 	}
 
 	#endregion
