@@ -6,10 +6,9 @@ namespace NMoneys.Allocations;
 /// <summary>
 /// Represents an allocation ratio, that is, a fraction.
 /// </summary>
-public readonly struct Ratio : IComparable<Ratio>, IEquatable<Ratio>, IFormattable
+public readonly record struct Ratio: IComparable<Ratio>, IComparable, IFormattable
 {
 	private static readonly Range<decimal> _range = new(0m.Close(), 1m.Close());
-
 	/// <summary>
 	/// Initializes a new instance of <see cref="Ratio"/> to the value of the specified <see cref="decimal"/>.
 	/// </summary>
@@ -25,8 +24,17 @@ public readonly struct Ratio : IComparable<Ratio>, IEquatable<Ratio>, IFormattab
 	/// <summary>
 	/// Fraction
 	/// </summary>
-	public decimal Value { get; }
+	public decimal Value { get; init; }
 
+	/// <summary>
+	/// Applies (multiplies) the ratio to the specified <paramref name="amount"/>.
+	/// </summary>
+	/// <param name="amount">A decimal amount.</param>
+	/// <returns>The result of multiplying <paramref name="amount"/> by <see cref="Value"/>.</returns>
+	public decimal ApplyTo(decimal amount)
+	{
+		return Value * amount;
+	}
 
 	/// <inheritdoc />
 	public override string ToString()
@@ -40,23 +48,7 @@ public readonly struct Ratio : IComparable<Ratio>, IEquatable<Ratio>, IFormattab
 		return Value.ToString(format, formatProvider);
 	}
 
-	/// <inheritdoc />
-	public bool Equals(Ratio other)
-	{
-		return Value == other.Value;
-	}
-
-	/// <inheritdoc />
-	public override bool Equals(object? obj)
-	{
-		return obj is Ratio other && Equals(other);
-	}
-
-	/// <inheritdoc />
-	public override int GetHashCode()
-	{
-		return Value.GetHashCode();
-	}
+	#region  comparable
 
 	/// <inheritdoc />
 	public int CompareTo(Ratio other)
@@ -64,36 +56,11 @@ public readonly struct Ratio : IComparable<Ratio>, IEquatable<Ratio>, IFormattab
 		return Value.CompareTo(other.Value);
 	}
 
-	/// <summary>
-	/// Applies (multiplies) the ratio to the specified <paramref name="amount"/>.
-	/// </summary>
-	/// <param name="amount">A decimal amount.</param>
-	/// <returns>The result of multiplying <paramref name="amount"/> by <see cref="Value"/>.</returns>
-	public decimal ApplyTo(decimal amount)
+	/// <inheritdoc />
+	public int CompareTo(object? obj)
 	{
-		return Value * amount;
-	}
-
-	/// <summary>
-	/// Indicates whether the current <see cref="Ratio"/> is equal to another <see cref="Ratio"/>.
-	/// </summary>
-	/// <param name="left">A <see cref="Ratio"/> to compare.</param>
-	/// <param name="right">Another <see cref="Ratio"/> to compare against <paramref name="left"/>.</param>
-	/// <returns>true if <paramref name="left"/> is equal to <paramref name="right"/>; otherwise, false.</returns>
-	public static bool operator ==(Ratio left, Ratio right)
-	{
-		return left.Equals(right);
-	}
-
-	/// <summary>
-	/// Indicates whether the current <see cref="Ratio"/> is not equal to another <see cref="Ratio"/>.
-	/// </summary>
-	/// <param name="left">A <see cref="Ratio"/> to compare.</param>
-	/// <param name="right">Another <see cref="Ratio"/> to compare against <paramref name="left"/>.</param>
-	/// <returns>true if <paramref name="left"/> is not equal to <paramref name="right"/>; otherwise, false.</returns>
-	public static bool operator !=(Ratio left, Ratio right)
-	{
-		return !(left == right);
+		if (ReferenceEquals(null, obj)) return 1;
+		return obj is Ratio other ? CompareTo(other) : throw new ArgumentException($"Object must be of type {nameof(Ratio)}");
 	}
 
 	/// <summary>Returns a value indicating whether a specified <see cref="Ratio" /> is less than another specified <see cref="Ratio" />.</summary>
@@ -135,4 +102,7 @@ public readonly struct Ratio : IComparable<Ratio>, IEquatable<Ratio>, IFormattab
 	{
 		return left.CompareTo(right) >= 0;
 	}
+
+	#endregion
 }
+
