@@ -1,4 +1,3 @@
-using System.Linq.Expressions;
 using NUnit.Framework.Constraints;
 using Testing.Commons.NUnit.Constraints;
 

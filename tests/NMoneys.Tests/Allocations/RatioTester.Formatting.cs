@@ -1,4 +1,3 @@
-using System.Globalization;
 using NMoneys.Allocations;
 
 namespace NMoneys.Tests.Allocations;

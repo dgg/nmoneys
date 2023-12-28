@@ -1,5 +1,3 @@
-using NMoneys.Support;
-
 namespace NMoneys.Tests;
 
 public partial class CurrencyTester

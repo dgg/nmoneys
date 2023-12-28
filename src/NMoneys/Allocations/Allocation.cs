@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
-using System.Globalization;
 using System.Text;
 
 namespace NMoneys.Allocations;
@@ -9,8 +8,8 @@ namespace NMoneys.Allocations;
 /// <summary>
 /// Represents the allocated of an allocation operation.
 /// </summary>
-/// <seealso cref="MoneyExtensions.Allocate(Money, int, IRemainderAllocator)"/>
-/// <seealso cref="MoneyExtensions.Allocate(Money, RatioCollection, IRemainderAllocator)"/>
+/// <seealso cref="AllocateOperations.Allocate(Money, int, IRemainderAllocator)"/>
+/// <seealso cref="AllocateOperations.Allocate(Money, RatioCollection, IRemainderAllocator)"/>
 /// <seealso cref="EvenAllocator.Allocate(int)"/>
 /// <seealso cref="ProRataAllocator.Allocate(RatioCollection)"/>
 public record Allocation : IEnumerable<Money>
