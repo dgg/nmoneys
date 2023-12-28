@@ -48,7 +48,7 @@ public class AllocationTester
 	{
 		var subject = new Allocation(moreThanAllocated, allocated);
 
-		Assert.That(subject, Has.Length.EqualTo(allocated.Length));
+		Assert.That(subject, Has.Count.EqualTo(allocated.Length));
 
 		for (int i = 0; i < allocated.Length; i++)
 		{
@@ -173,7 +173,7 @@ public class AllocationTester
 		Assert.That(zero.Remainder, Is.EqualTo(zero.Allocatable));
 
 		// three zero allocations
-		Assert.That(zero.Length, Is.EqualTo(3));
+		Assert.That(zero.Count, Is.EqualTo(3));
 		Assert.That(zero.Remainder, Is.EqualTo(zero.Allocatable));
 		Assert.That(zero, Is.EquivalentTo(new[]
 		{
@@ -193,6 +193,14 @@ public class AllocationTester
 		var tenKroner = 10m.Dkk();
 		var subject = new Allocation(tenKroner, new[] { tenKroner });
 		Assert.That(subject.ToString(), Does.Match(@"^Allocation \{ [\s\S]* \}$"));
+	}
+
+	[Test]
+	public void ToString_SpaceSeparatedPropertyPairs()
+	{
+		var tenKroner = 10m.Dkk();
+		var subject = new Allocation(tenKroner, new[] { tenKroner });
+		Assert.That(subject.ToString(), Does.Not.Contain(","));
 	}
 
 	[Test]

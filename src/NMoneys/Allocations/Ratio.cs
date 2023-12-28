@@ -1,4 +1,6 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Text;
 using NMoneys.Support;
 
 namespace NMoneys.Allocations;
@@ -6,7 +8,7 @@ namespace NMoneys.Allocations;
 /// <summary>
 /// Represents an allocation ratio, that is, a fraction.
 /// </summary>
-public readonly record struct Ratio: IComparable<Ratio>, IComparable, IFormattable
+public readonly record struct Ratio: IComparable<Ratio>, IComparable
 {
 	private static readonly Range<decimal> _range = new(0m.Close(), 1m.Close());
 	/// <summary>
@@ -24,7 +26,7 @@ public readonly record struct Ratio: IComparable<Ratio>, IComparable, IFormattab
 	/// <summary>
 	/// Fraction
 	/// </summary>
-	public decimal Value { get; init; }
+	public decimal Value { get; }
 
 	/// <summary>
 	/// Applies (multiplies) the ratio to the specified <paramref name="amount"/>.
@@ -36,19 +38,18 @@ public readonly record struct Ratio: IComparable<Ratio>, IComparable, IFormattab
 		return Value * amount;
 	}
 
-	/// <inheritdoc />
-	public override string ToString()
+	private bool PrintMembers(StringBuilder builder)
 	{
-		return Value.ToString(CultureInfo.CurrentCulture);
+		PrintMember(builder);
+		return true;
 	}
 
-	/// <inheritdoc />
-	public string ToString(string? format, IFormatProvider? formatProvider)
+	internal StringBuilder PrintMember([NotNull]StringBuilder builder)
 	{
-		return Value.ToString(format, formatProvider);
+		return builder.Append(Value.ToString(CultureInfo.InvariantCulture));
 	}
 
-	#region  comparable
+	#region comparable
 
 	/// <inheritdoc />
 	public int CompareTo(Ratio other)

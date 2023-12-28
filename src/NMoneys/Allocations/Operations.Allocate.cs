@@ -5,7 +5,7 @@ namespace NMoneys.Allocations;
 /// <summary>
 /// Extension class that gives access to extensions methods related to money allocation.
 /// </summary>
-public static class MoneyExtensions
+public static class AllocateOperations
 {
 /// <summary>
 		/// Allocates the sum of money fully and 'fairly', delegating the distribution to a default allocator

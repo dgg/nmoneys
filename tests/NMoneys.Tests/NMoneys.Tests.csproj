@@ -20,6 +20,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\NMoneys\NMoneys.csproj" />
+
+
+
   </ItemGroup>
 
 

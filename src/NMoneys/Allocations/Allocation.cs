@@ -15,29 +15,6 @@ namespace NMoneys.Allocations;
 /// <seealso cref="ProRataAllocator.Allocate(RatioCollection)"/>
 public record Allocation : IEnumerable<Money>
 {
-	/// <summary>
-	/// The monetary quantity being allocated.
-	/// </summary>
-	[Pure]
-	public Money Allocatable { get; init; }
-
-	/// <summary>
-	/// All the money from <see cref="Allocatable"/> that has been allocated.
-	/// </summary>
-	[Pure]
-	public Money TotalAllocated { get; init; }
-
-	/// <summary>
-	/// All the money from <see cref="Allocatable"/> that has not been allocated.
-	/// </summary>
-	[Pure]
-	public Money Remainder { get; init; }
-
-	/// <summary>
-	/// The ISO 4217 code of all monetary quantities of the allocation.
-	/// </summary>
-	[Pure] public CurrencyIsoCode CurrencyCode { get; init; }
-
 	private Money[] Allocated { get; init; }
 
 	/// <summary>
@@ -69,6 +46,30 @@ public record Allocation : IEnumerable<Money>
 	}
 
 	/// <summary>
+	/// The monetary quantity being allocated.
+	/// </summary>
+	[Pure]
+	public Money Allocatable { get; }
+
+	/// <summary>
+	/// All the money from <see cref="Allocatable"/> that has been allocated.
+	/// </summary>
+	[Pure]
+	public Money TotalAllocated { get; }
+
+	/// <summary>
+	/// All the money from <see cref="Allocatable"/> that has not been allocated.
+	/// </summary>
+	[Pure]
+	public Money Remainder { get; }
+
+	/// <summary>
+	/// The ISO 4217 code of all monetary quantities of the allocation.
+	/// </summary>
+	[Pure]
+	public CurrencyIsoCode CurrencyCode { get; }
+
+	/// <summary>
 	/// true if all the money from <see cref="Allocatable"/> has been allocated; otherwise, false.
 	/// </summary>
 	[Pure]
@@ -86,7 +87,7 @@ public record Allocation : IEnumerable<Money>
 	/// </summary>
 	/// <param name="allocatable">The monetary quantity subject of the allocation operation.</param>
 	/// <param name="numberOfRecipients">The number of times to split up the total.</param>
-	/// <returns>An allocation of <see cref="Length"/> equal to <paramref name="numberOfRecipients"/> and zero <see cref="TotalAllocated"/>.</returns>
+	/// <returns>An allocation of <see cref="Count"/> equal to <paramref name="numberOfRecipients"/> and zero <see cref="TotalAllocated"/>.</returns>
 	[Pure]
 	public static Allocation Zero(Money allocatable, int numberOfRecipients)
 	{
@@ -116,53 +117,70 @@ public record Allocation : IEnumerable<Money>
 	/// Gets a 32-bit integer that represents the total number of elements of the <see cref="Allocation"/>.
 	/// </summary>
 	/// <returns>A 32-bit integer that represents the total number of elements of the <see cref="Allocation"/>.</returns>
-	[Pure]
-	public int Length => Allocated.Length;
+	[CLSCompliant(false), Pure]
+	public uint Count => (uint)Allocated.Length;
 
 	#endregion
 
-#pragma warning disable CA1303
 	/// <summary>
-	///
+	/// Builds record members representation.
 	/// </summary>
-	/// <param name="builder"></param>
-	/// <returns></returns>
+	/// <param name="builder">Instance to build the representation into.</param>
+	/// <returns><c>true</c></returns>
 	protected virtual bool PrintMembers([NotNull] StringBuilder builder)
 	{
 		IFormatProvider currencyProvider = Allocatable.GetCurrency();
-		builder.Append(CultureInfo.InvariantCulture, $"{nameof(CurrencyCode)} = {CurrencyCode} ");
-		builder.Append(currencyProvider, $"{nameof(Allocatable)} = {Allocatable.Amount} ");
-		builder.Append(currencyProvider, $"{nameof(TotalAllocated)} = {TotalAllocated.Amount} ");
+		builder.Append(nameof(CurrencyCode))
+			.Append(" = ")
+			.Append(CurrencyCode)
+			.Append(' ');
+		builder.Append(nameof(Allocatable))
+			.Append(" = ")
+			.Append(Allocatable.Amount.ToString(currencyProvider))
+			.Append(' ');
+		builder.Append(nameof(TotalAllocated))
+			.Append(" = ")
+			.Append(TotalAllocated.Amount.ToString(currencyProvider))
+			.Append(' ');
 		// no remainder
 		if (IsComplete)
 		{
-			builder.Append(CultureInfo.InvariantCulture, $"{nameof(IsComplete)} = {IsComplete} ");
+			builder.Append(nameof(IsComplete)).Append(" = ").Append(IsComplete).Append(' ');
 		}
 		// there is a very small remainder
 		else if (IsQuasiComplete)
 		{
-			builder.Append(CultureInfo.InvariantCulture, $"{nameof(IsQuasiComplete)} = {IsQuasiComplete} ");
-			builder.Append(currencyProvider, $"{nameof(Remainder)} = {Remainder.Amount} ");
+			builder.Append(nameof(IsQuasiComplete))
+				.Append(" = ")
+				.Append(IsQuasiComplete)
+				.Append(' ');
+			builder.Append(nameof(Remainder))
+				.Append(" = ")
+				.Append(Remainder.Amount.ToString(currencyProvider))
+				.Append(' ');
 		}
 		// there is a remainder
 		else
 		{
-			builder.Append(currencyProvider, $"{nameof(Remainder)} = {Remainder.Amount} ");
+			builder.Append(nameof(Remainder))
+				.Append(" = ")
+				.Append(Remainder.Amount.ToString(currencyProvider))
+				.Append(' ');
 		}
 
-		builder.Append(CultureInfo.InvariantCulture, $"{nameof(Allocated)} = ");
-		if (Length == 0)
+		builder.Append(nameof(Allocated)).Append(" = ");
+		if (Count == 0)
 		{
 			builder.Append("[]");
 		}
 		else
 		{
-			builder.Append("[ ");
-			builder.Append(String.Join(" | ", Allocated.Select(allocation => allocation.Amount.ToString(currencyProvider))));
-			builder.Append(" ]");
+			builder.Append("[ ")
+				.Append(String.Join(" | ",
+					Allocated.Select(allocation => allocation.Amount.ToString(currencyProvider))))
+				.Append(" ]");
 		}
 
 		return true;
 	}
-#pragma warning restore CA1303
 }

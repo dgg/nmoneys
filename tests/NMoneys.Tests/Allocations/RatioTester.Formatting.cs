@@ -7,28 +7,18 @@ namespace NMoneys.Tests.Allocations;
 public partial class RatioTester
 {
 	[Test, SetCulture("en-US")]
-	public void ToString_ValueString_USFormatting()
+	public void ToString_US_InvariantFormatting()
 	{
 		var pointTwo = new Ratio(.2m);
 
-		Assert.That(pointTwo.ToString(), Is.EqualTo("0.2"), "US decimals with a dot");
+		Assert.That(pointTwo.ToString(), Is.EqualTo("Ratio { 0.2 }"), "US decimals with a dot");
 	}
 
 	[Test, SetCulture("da-DK")]
-	public void ToString_ValueString_DKFormatting()
+	public void ToString_DK_InvariantFormatting()
 	{
 		var pointTwo = new Ratio(.2m);
 
-		Assert.That(pointTwo.ToString(), Is.EqualTo("0,2"), "DK decimals with a comma");
-	}
-
-	[Test]
-	public void ToString_CanReceiveCustomFormatsAndProviders()
-	{
-		var pointTwo = new Ratio(.2m);
-		var snailDecimalSeparator = (NumberFormatInfo)CultureInfo.InvariantCulture.NumberFormat.Clone();
-		snailDecimalSeparator.NumberDecimalSeparator = "@";
-
-		Assert.That(pointTwo.ToString(".000", snailDecimalSeparator), Is.EqualTo("@200"));
+		Assert.That(pointTwo.ToString(), Is.EqualTo("Ratio { 0.2 }"), "DK decimals with a comma");
 	}
 }

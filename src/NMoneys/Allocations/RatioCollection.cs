@@ -1,5 +1,6 @@
 using System.Collections;
-using NMoneys.Support;
+using System.Diagnostics.CodeAnalysis;
+using System.Text;
 
 namespace NMoneys.Allocations;
 
@@ -7,9 +8,9 @@ namespace NMoneys.Allocations;
 /// Maintains a list of ratios suitable for use in an allocation when the
 /// sum of all items is exactly equal to one (100%).
 /// </summary>
-public class RatioCollection : IEnumerable<Ratio>, IFormattable
+public record RatioCollection : IEnumerable<Ratio>
 {
-	private readonly Ratio[] _ratios;
+	private Ratio[] Ratios { get; }
 
 	#region Creation
 
@@ -44,7 +45,7 @@ public class RatioCollection : IEnumerable<Ratio>, IFormattable
 	{
 		assertAllocatable(ratios);
 
-		_ratios = ratios;
+		Ratios = ratios;
 	}
 
 	private static void assertAllocatable(IEnumerable<Ratio> ratios)
@@ -63,19 +64,19 @@ public class RatioCollection : IEnumerable<Ratio>, IFormattable
 	/// <inheritdoc />
 	public IEnumerator<Ratio> GetEnumerator()
 	{
-		return ((IEnumerable<Ratio>)_ratios).GetEnumerator();
+		return ((IEnumerable<Ratio>)Ratios).GetEnumerator();
 	}
 
 	IEnumerator IEnumerable.GetEnumerator()
 	{
-		return _ratios.GetEnumerator();
+		return Ratios.GetEnumerator();
 	}
 
 	/// <summary>
 	/// Gets a 32-bit integer that represents the total number of ratios in the <see cref="RatioCollection"/>.
 	/// </summary>
 	/// <returns>A 32-bit integer that represents the total number of ratios in the <see cref="RatioCollection"/>.</returns>
-	public int Count => _ratios.Length;
+	public int Count => Ratios.Length;
 
 	/// <summary>
 	/// Gets the ratio at the specified index.
@@ -85,24 +86,24 @@ public class RatioCollection : IEnumerable<Ratio>, IFormattable
 	/// <exception cref="ArgumentOutOfRangeException">index is less than zero.
 	/// -or-
 	/// index is equal to or greater than <see cref="Count"/>.</exception>
-	public Ratio this[int index] => _ratios[index];
+	public Ratio this[int index] => Ratios[index];
 
 	#endregion
 
 	/// <summary>
-	/// Returns a <see cref="string"/> that represents the current <see cref="RatioCollection"/>.
+	/// Builds record members representation.
 	/// </summary>
-	/// <returns>
-	/// A <see cref="string"/> that represents the current <see cref="RatioCollection"/>.
-	/// </returns>
-	public override string ToString()
+	/// <param name="builder">Instance to build the representation into.</param>
+	/// <returns><c>true</c></returns>
+	protected virtual bool PrintMembers([NotNull] StringBuilder builder)
 	{
-		return Stringifier.Default.Stringify(_ratios);
-	}
+		Ratios.Aggregate(
+				builder.Append("[ "),
+				(sb, r) => r.PrintMember(sb).Append(" | ")
+			)
+			.Remove(builder.Length - 3, 3)
+			.Append(" ]");
 
-	/// <inheritdoc />
-	public string ToString(string? format, IFormatProvider? formatProvider)
-	{
-		return Stringifier.Default.Stringify(_ratios, r => r.ToString(format, formatProvider));
+		return true;
 	}
 }

@@ -4,9 +4,9 @@ internal class LastToFirstAllocator : RemainderAllocatorBase
 {
 	public override Allocation Allocate(Allocation allocatedSoFar)
 	{
-		int index = allocatedSoFar.Length - 1;
+		uint index = allocatedSoFar.Count - 1;
 		Allocation beingAllocated = allocatedSoFar;
-		while (!beingAllocated.IsComplete && index < beingAllocated.Length)
+		while (!beingAllocated.IsComplete && index < beingAllocated.Count)
 		{
 			beingAllocated = apply(beingAllocated, index);
 			index--;

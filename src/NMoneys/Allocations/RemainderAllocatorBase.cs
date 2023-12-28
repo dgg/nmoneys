@@ -8,7 +8,7 @@ internal abstract class RemainderAllocatorBase : IRemainderAllocator
 	/// Distributes the minimal amount to the specified result.
 	/// </summary>
 	/// <remarks>Immutable operation: creates other instance of allocation.</remarks>
-	protected static Allocation apply(Allocation allocation, int index)
+	protected static Allocation apply(Allocation allocation, uint index)
 	{
 		Money[] results = allocation
 			.Select((m, i) => i != index ? m : m + m.MinValue)
