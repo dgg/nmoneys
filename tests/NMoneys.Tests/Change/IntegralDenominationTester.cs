@@ -24,6 +24,5 @@ public class IntegralDenominationTester
 		var subject = new IntegralDenomination(pieceOfFive, Currency.Jpy);
 
 		Assert.That(subject.ToString(), Is.EqualTo("IntegralDenomination { IntegralAmount = 5 Denomination { 5 } }"));
-		Console.WriteLine(subject.ToString());
 	}
 }
