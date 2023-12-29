@@ -1,6 +1,7 @@
 using NMoneys;
 using NMoneys.Support;
 
+namespace NMoneys.Tests.Support;
 
 [TestFixture]
 public class EnumerationTester
