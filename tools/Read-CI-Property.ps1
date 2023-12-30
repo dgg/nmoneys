@@ -10,5 +10,5 @@ param(
 $ci = [System.Globalization.CultureInfo]::GetCultureInfo($CultureName)
 
 $value = $ci.$Container.$Property
-[System.Windows.Forms.Clipboard]::SetText($value)
-Write-Host "Copied '$value' to clipboard"
+
+Write-Host $value

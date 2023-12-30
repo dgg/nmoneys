@@ -19,7 +19,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<Authors>Daniel González García</Authors>
+		<Authors>Daniel González García and contributors</Authors>
 		<PackageProjectUrl>https://github.com/dgg/nmoneys</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/dgg/nmoneys.git</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>

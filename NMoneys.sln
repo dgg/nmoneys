@@ -11,6 +11,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6454722E-571
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NMoneys", "src\NMoneys\NMoneys.csproj", "{891B60F6-888D-488A-89D0-6E25FE1A7883}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "archive", "archive", "{DB66F4E1-075E-4E1C-931E-5DD8F956E484}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NMoneys.Exchange", "archive\NMoneys.Exchange\NMoneys.Exchange.csproj", "{97C58515-92D8-4ECF-86B6-CFAABD66279D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,9 +32,14 @@ Global
 		{891B60F6-888D-488A-89D0-6E25FE1A7883}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{891B60F6-888D-488A-89D0-6E25FE1A7883}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{891B60F6-888D-488A-89D0-6E25FE1A7883}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97C58515-92D8-4ECF-86B6-CFAABD66279D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97C58515-92D8-4ECF-86B6-CFAABD66279D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97C58515-92D8-4ECF-86B6-CFAABD66279D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97C58515-92D8-4ECF-86B6-CFAABD66279D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0484566C-1D24-433E-90F2-B8B44BEF2FB2} = {558BFE88-EB25-4BFA-91B8-4CFF8696CED4}
 		{891B60F6-888D-488A-89D0-6E25FE1A7883} = {6454722E-5710-44B0-8EDE-1DE92929E641}
+		{97C58515-92D8-4ECF-86B6-CFAABD66279D} = {DB66F4E1-075E-4E1C-931E-5DD8F956E484}
 	EndGlobalSection
 EndGlobal
