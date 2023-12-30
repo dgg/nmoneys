@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.Linq;
-using NMoneys.Support;
 
-namespace NMoneys.Change
+namespace NMoneys.Change;
+
+public static partial class ChangeOperations
 {
-	public static partial class ChangeOperations
-	{
-		/// <summary>
+/// <summary>
 		/// Returns a way to make change for a particular amount of money given a set of denominations in
 		/// a simple an efficient manner.
 		/// </summary>
@@ -27,19 +23,19 @@ namespace NMoneys.Change
 		public static ChangeSolution MakeChange(this Money money, params Denomination[] denominations)
 		{
 			Positive.Amounts.AssertArgument(nameof(money), money.Amount);
-			Guard.AgainstNullArgument(nameof(denominations), denominations);
+			ArgumentNullException.ThrowIfNull(denominations, nameof(denominations));
 
 			Denomination[] orderedDenominations = denominations.OrderByDescending(d => d.Value).ToArray();
 			decimal remainder = money.Amount;
 			bool canContinue = true;
 
 			List<Denomination> usedDenominations = new List<Denomination>();
-			
+
 			while (remainder > 0 && canContinue)
 			{
 				for (int i = 0; i < orderedDenominations.Length; i++)
 				{
-					// if the denomination can be substracted from what's left
+					// if the denomination can be subtracted from what's left
 					while (remainder >= orderedDenominations[i].Value)
 					{
 						// use the denomination
@@ -50,7 +46,7 @@ namespace NMoneys.Change
 				// make sure we can finish in case we cannot change
 				canContinue = false;
 			}
-			ChangeSolution solution = new ChangeSolution(usedDenominations, 
+			ChangeSolution solution = new ChangeSolution(usedDenominations,
 				new Money(remainder, money.CurrencyCode));
 			return solution;
 		}
@@ -69,9 +65,8 @@ namespace NMoneys.Change
 		[Pure]
 		public static ChangeSolution MakeChange(this Money money, params decimal[] denominationValues)
 		{
-			Guard.AgainstNullArgument(nameof(denominationValues), denominationValues);
+			ArgumentNullException.ThrowIfNull(denominationValues, nameof(denominationValues));
 
 			return money.MakeChange(denominationValues.Select(v => new Denomination(v)).ToArray());
 		}
-	}
 }

@@ -1,65 +1,65 @@
-﻿using System;
 using System.Diagnostics.Contracts;
 
-namespace NMoneys
+namespace NMoneys;
+
+public  partial struct Money
 {
-	public partial struct Money
+	/// <summary>
+	/// Converts the numeric value of the <see cref="Amount"/> to its equivalent string representation using an instance of the <see cref="Currency"/>
+	/// identified by <see cref="CurrencyCode"/> for culture-specific format information.
+	/// </summary>
+	/// <remarks>The return value is formatted with the currency numeric format specifier ("C").</remarks>
+	/// <returns>The string representation of the value of this instance as specified by the <c>"Currency"</c> format specifier.</returns>
+	[Pure]
+	public override string ToString()
 	{
-		/// <summary>
-		/// Converts the numeric value of the <see cref="Amount"/> to its equivalent string representation using an instance of the <see cref="Currency"/>
-		/// identified by <see cref="CurrencyCode"/> for culture-specific format information.
-		/// </summary>
-		/// <remarks>The return value is formatted with the currency numeric format specifier ("C").</remarks>
-		/// <returns>The string representation of the value of this instance as specified by the <c>"Currency"</c> format specifier.</returns>
-		[Pure]
-		public override string ToString()
-		{
-			return ToString("C");
-		}
+#pragma warning disable CA1305
+		return ToString("C");
+#pragma warning restore CA1305
+	}
 
-		/// <summary>
-		/// Converts the numeric value of the <see cref="Amount"/> to its equivalent string representation using an instance of the <see cref="Currency"/>
-		/// identified by <see cref="CurrencyCode"/> for culture-specific format information.
-		/// </summary>
-		/// <param name="format">A numeric format string</param>
-		/// <returns>The string representation of the value of this instance as specified by the format specifier and an instance of the <see cref="Currency"/>
-		/// identified by <see cref="CurrencyCode"/> as the provider.</returns>
-		[Pure]
-		public string ToString(string format)
-		{
-			Currency currency = Currency.Get(CurrencyCode);
-			return Amount.ToString(format, currency);
-		}
+	/// <summary>
+	/// Converts the numeric value of the <see cref="Amount"/> to its equivalent string representation using an instance of the <see cref="Currency"/>
+	/// identified by <see cref="CurrencyCode"/> for culture-specific format information.
+	/// </summary>
+	/// <param name="format">A numeric format string</param>
+	/// <returns>The string representation of the value of this instance as specified by the format specifier and an instance of the <see cref="Currency"/>
+	/// identified by <see cref="CurrencyCode"/> as the provider.</returns>
+	[Pure]
+	public string ToString(string format)
+	{
+		Currency currency = Currency.Get(CurrencyCode);
+		return Amount.ToString(format, currency);
+	}
 
+	/// <summary>
+	/// Converts the numeric value of the <see cref="Amount"/> to its equivalent string representation using <paramref name="provider"/>
+	/// for culture-specific format information.
+	/// </summary>
+	/// <param name="provider">An object that supplies culture-specific formatting information.</param>
+	/// <returns>The string representation of the value of this instance as specified by the<c>"Currency"</c> format specifier and
+	/// <paramref name="provider"/>.</returns>
+	[Pure]
+	public string ToString(IFormatProvider provider)
+	{
+		return ToString("C", provider);
+	}
 
-		/// <summary>
-		/// Converts the numeric value of the <see cref="Amount"/> to its equivalent string representation using <paramref name="provider"/>
-		/// for culture-specific format information.
-		/// </summary>
-		/// <param name="provider">An object that supplies culture-specific formatting information.</param>
-		/// <returns>The string representation of the value of this instance as specified by the<c>"Currency"</c> format specifier and 
-		/// <paramref name="provider"/>.</returns>
-		[Pure]
-		public string ToString(IFormatProvider provider)
-		{
-			return ToString("C", provider);
-		}
+	/// <summary>
+	/// Converts the numeric value of the <see cref="Amount"/> to its equivalent string representation using the specified <paramref name="format"/>
+	/// and culture-specific format information.
+	/// </summary>
+	/// <param name="format">A numeric format string</param>
+	/// <param name="provider">An object that supplies culture-specific formatting information.</param>
+	/// <returns>The string representation of the value of this instance as specified by <paramref name="format"/>the<c>"Currency"</c> format specifier and
+	/// and <paramref name="provider"/>.</returns>
+	[Pure]
+	public string ToString(string format, IFormatProvider provider)
+	{
+		return Amount.ToString(format, provider);
+	}
 
-		/// <summary>
-		/// Converts the numeric value of the <see cref="Amount"/> to its equivalent string representation using the specified <paramref name="format"/>
-		/// and culture-specific format information.
-		/// </summary>
-		/// <param name="format">A numeric format string</param>
-		/// <param name="provider">An object that supplies culture-specific formatting information.</param>
-		/// <returns>The string representation of the value of this instance as specified by <paramref name="format"/>the<c>"Currency"</c> format specifier and 
-		/// and <paramref name="provider"/>.</returns>
-		[Pure]
-		public string ToString(string format, IFormatProvider provider)
-		{
-			return Amount.ToString(format, provider);
-		}
-
-		/// <summary>
+	/// <summary>
 		/// Replaces the format item in a specified <code>string</code> with information from the <see cref="Currency"/>
 		/// identified by the instance's <see cref="CurrencyCode"/>.
 		/// An instance of the <see cref="Currency"/> identified by <see cref="CurrencyCode"/> will be supplying culture-specific formatting information.
@@ -103,7 +103,7 @@ namespace NMoneys
 			return string.Format(currency, format, Amount, currency.Symbol, currency.IsoCode, currency.EnglishName, currency.NativeName);
 		}
 
-		/// <summary>
+	/// <summary>
 		/// Replaces the format item in a specified <code>string</code> with information from the <see cref="Currency"/>
 		/// identified by the instance's <see cref="CurrencyCode"/>.
 		/// The <paramref name="provider"/> will be supplying culture-specific formatting information.
@@ -147,5 +147,4 @@ namespace NMoneys
 			Currency currency = Currency.Get(CurrencyCode);
 			return string.Format(provider, format, Amount, currency.Symbol, currency.IsoCode, currency.EnglishName, currency.NativeName);
 		}
-	}
 }

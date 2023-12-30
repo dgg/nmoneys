@@ -1,48 +1,29 @@
-﻿using System;
+using System.Text;
 
-namespace NMoneys.Change
+namespace NMoneys.Change;
+
+internal readonly record struct IntegralDenomination(Denomination Denomination, long IntegralAmount)
 {
-	internal struct IntegralDenomination : IEquatable<IntegralDenomination>
+	internal IntegralDenomination(Denomination denomination, Currency operationCurrency) :
+		this(denomination, CalculateAmount(denomination, operationCurrency))
 	{
-		public Denomination Denomination { get; }
-		public long IntegralAmount { get; }
+	}
 
-		public IntegralDenomination(Denomination denomination, Currency operationCurrency)
-		{
-			Denomination = denomination;
-			IntegralAmount = CalculateAmount(denomination, operationCurrency);
-		}
+	private bool PrintMembers(StringBuilder builder)
+	{
+		builder.Append(nameof(IntegralAmount)).Append(" = ").Append(IntegralAmount).Append(' ');
+		builder.Append(Denomination);
+		return true;
+	}
 
-		public static IntegralDenomination Default(Currency operationCurrency)
-		{
-			return new IntegralDenomination(new Denomination(1), operationCurrency);
-		}
+	internal static long CalculateAmount(Denomination denomination, Currency operationCurrency)
+	{
+		long integralAmount = Convert.ToInt64(Money.CalculateMinorAmount(denomination.Value, operationCurrency));
+		return integralAmount;
+	}
 
-		internal static long CalculateAmount(Denomination denomination, Currency operationCurrency)
-		{
-			long integralAmount = Convert.ToInt64(Money.CalculateMinorAmount(denomination.Value, operationCurrency));
-			return integralAmount;
-		}
-
-
-		public bool Equals(IntegralDenomination other)
-		{
-			return Denomination.Equals(other.Denomination) &&
-				IntegralAmount == other.IntegralAmount;
-		}
-
-		public override bool Equals(object obj)
-		{
-			if (ReferenceEquals(null, obj)) return false;
-			return obj is IntegralDenomination denomination && Equals(denomination);
-		}
-
-		public override int GetHashCode()
-		{
-			unchecked
-			{
-				return (Denomination.GetHashCode() * 397) ^ IntegralAmount.GetHashCode();
-			}
-		}
+	internal static IntegralDenomination Default(Currency operationCurrency)
+	{
+		return new IntegralDenomination(new Denomination(1), operationCurrency);
 	}
 }

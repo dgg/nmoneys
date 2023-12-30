@@ -1,18 +1,16 @@
-namespace NMoneys.Allocations
+namespace NMoneys.Allocations;
+
+internal class LastToFirstAllocator : RemainderAllocatorBase
 {
-	internal class LastToFirstAllocator : RemainderAllocatorBase
+	public override Allocation Allocate(Allocation allocatedSoFar)
 	{
-		public override Allocation Allocate(Allocation allocatedSoFar)
+		uint index = allocatedSoFar.Count - 1;
+		Allocation beingAllocated = allocatedSoFar;
+		while (!beingAllocated.IsComplete && index < beingAllocated.Count)
 		{
-			int index = allocatedSoFar.Length - 1;
-			Allocation beingAllocated = allocatedSoFar;
-			while (!beingAllocated.IsComplete && index < beingAllocated.Length)
-			{
-				beingAllocated = apply(beingAllocated, index);
-				index--;
-			}
-			return beingAllocated;
+			beingAllocated = apply(beingAllocated, index);
+			index--;
 		}
+		return beingAllocated;
 	}
 }
- 

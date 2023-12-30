@@ -1,24 +1,21 @@
-﻿using System;
+namespace NMoneys;
 
-namespace NMoneys
+/// <summary>
+/// Provides data for the <see cref="Currency.ObsoleteCurrency"/> event.
+/// </summary>
+public sealed class ObsoleteCurrencyEventArgs : EventArgs
 {
 	/// <summary>
-	/// Provides data for the <see cref="Currency.ObsoleteCurrency"/> event.
+	/// Initializes a new instance of the <see cref="ObsoleteCurrencyEventArgs"/> class.
 	/// </summary>
-	public class ObsoleteCurrencyEventArgs : EventArgs
+	/// <param name="code"></param>
+	public ObsoleteCurrencyEventArgs(CurrencyIsoCode code)
 	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="ObsoleteCurrencyEventArgs"/> class.
-		/// </summary>
-		/// <param name="code"></param>
-		public ObsoleteCurrencyEventArgs(CurrencyIsoCode code)
-		{
-			Code = code;
-		}
-
-		/// <summary>
-		/// ISO code of the obsolete currency.
-		/// </summary>
-		public CurrencyIsoCode Code { get; private set; }
+		Code = code;
 	}
+
+	/// <summary>
+	/// ISO code of the obsolete currency.
+	/// </summary>
+	public CurrencyIsoCode Code { get; init; }
 }

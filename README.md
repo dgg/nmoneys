@@ -22,7 +22,7 @@ _NMoneys_ __does not provide__ any support for __exchanging__ monetary quantitie
 That means that you could not "convert", for example, 10 Euro into the equivalent quantity in dollars using an internal exchange rate in the library.
 Instead, you could, for example, perform the conversion with numeric types and then display the resultant quantity in a meaningful way by using types provided by NMoneys.
 
-If you need to convert monetary quantities into other currencies you can use the framework provided by _NMoneys.Exchange_ alongside your trusted currency rates feed.
+If you need to convert monetary quantities into other currencies you can use the (from now an on) archived library _NMoneys.Exchange_ alongside your trusted currency rates feed.
 
 NMoneys does not provide, as of now, __complex monetary or financial operations__
 

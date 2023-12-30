@@ -1,14 +1,10 @@
-using System;
 using System.Diagnostics.Contracts;
-using System.Linq;
-using NMoneys.Extensions;
-using NMoneys.Support;
 
-namespace NMoneys.Change
+namespace NMoneys.Change;
+
+public static partial class ChangeOperations
 {
-	public static partial class ChangeOperations
-	{
-		/// <summary>
+	/// <summary>
 		/// Returns a way to make an optimal change (in terms of number of denominations) for a particular amount of money given a regardless of the set of denominations in
 		/// an efficient manner.
 		/// </summary>
@@ -17,7 +13,7 @@ namespace NMoneys.Change
 		/// <para>This way of computing yields an optimal solution (in terms of number of denominations) even for
 		/// arbitrary, non-canonical, denomination sets.</para>
 		/// <para>This strategy allows computing the result in O(m*n) time, being n the size of <paramref name="money"/> and m the length of <paramref name="denominations"/>.</para>
-		/// <para>An optimal change is only considered for denomination sets that provide a complete (non-partial) 
+		/// <para>An optimal change is only considered for denomination sets that provide a complete (non-partial)
 		/// way of making change for the given amount. Partial change solutions are not considered optimal solutions and thus, not calculated.</para>
 		/// <para>A practical infinite (or sufficiently large) number of denominations is assumed. That is, we are not going to run out of denominations when making the change.</para>
 		/// </remarks>
@@ -30,7 +26,7 @@ namespace NMoneys.Change
 		public static OptimalChangeSolution MakeOptimalChange(this Money money, params Denomination[] denominations)
 		{
 			Positive.Amounts.AssertArgument(nameof(money), money.Amount);
-			Guard.AgainstNullArgument(nameof(denominations), denominations);
+			ArgumentNullException.ThrowIfNull(denominations, nameof(denominations));
 
 			long n = money.MinorIntegralAmount;
 			int m = denominations.Length;
@@ -83,9 +79,8 @@ namespace NMoneys.Change
 		[Pure]
 		public static OptimalChangeSolution MakeOptimalChange(this Money money, params decimal[] denominationValues)
 		{
-			Guard.AgainstNullArgument(nameof(denominationValues), denominationValues);
+			ArgumentNullException.ThrowIfNull(denominationValues, nameof(denominationValues));
 
 			return money.MakeOptimalChange(denominationValues.Select(v => new Denomination(v)).ToArray());
 		}
-	}
 }

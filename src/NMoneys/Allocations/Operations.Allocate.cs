@@ -1,16 +1,13 @@
-﻿using System;
 using System.Diagnostics.Contracts;
-using NMoneys.Extensions;
-using NMoneys.Support;
 
-namespace NMoneys.Allocations
+namespace NMoneys.Allocations;
+
+/// <summary>
+/// Extension class that gives access to extensions methods related to money allocation.
+/// </summary>
+public static class AllocateOperations
 {
-	/// <summary>
-	/// Extension class that gives access to extensions methods related to money allocation.
-	/// </summary>
-	public static class AllocateOperations
-	{
-		/// <summary>
+/// <summary>
 		/// Allocates the sum of money fully and 'fairly', delegating the distribution to a default allocator
 		/// </summary>
 		/// <remarks>
@@ -40,7 +37,7 @@ namespace NMoneys.Allocations
 		/// A US Dollar split three (3) ways cannot be distributed evenly and is therefore inherently 'unfair'. The
 		/// best we can do is minimize the amount of the remainder (in this case a cent) and allocate it in a way
 		/// that seems random and thus fair to the recipients.</para>
-		/// <para>The precision to use for rounding will be the <see cref="Currency.SignificantDecimalDigits"/> 
+		/// <para>The precision to use for rounding will be the <see cref="Currency.SignificantDecimalDigits"/>
 		/// of the currency represented by <see cref="Money.CurrencyCode"/>.</para>
 		/// </remarks>
 		/// <param name="money">The monetary quantity to distribute.</param>
@@ -53,6 +50,7 @@ namespace NMoneys.Allocations
 		[Pure]
 		public static Allocation Allocate(this Money money, int numberOfRecipients, IRemainderAllocator allocator)
 		{
+			ArgumentNullException.ThrowIfNull(allocator, nameof(allocator));
 			EvenAllocator.AssertNumberOfRecipients(nameof(numberOfRecipients), numberOfRecipients);
 
 			if (money.notEnoughToAllocate()) return Allocation.Zero(money, numberOfRecipients);
@@ -95,7 +93,8 @@ namespace NMoneys.Allocations
 		[Pure]
 		public static Allocation Allocate(this Money money, RatioCollection ratios, IRemainderAllocator allocator)
 		{
-			Guard.AgainstNullArgument(nameof(ratios), ratios);
+			ArgumentNullException.ThrowIfNull(ratios, nameof(ratios));
+			ArgumentNullException.ThrowIfNull(allocator, nameof(allocator));
 
 			if (money.notEnoughToAllocate()) return Allocation.Zero(money, ratios.Count);
 
@@ -123,5 +122,4 @@ namespace NMoneys.Allocations
 		{
 			return money.Allocate(ratios, RemainderAllocator.FirstToLast);
 		}
-	}
 }

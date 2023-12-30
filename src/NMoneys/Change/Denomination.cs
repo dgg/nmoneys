@@ -1,101 +1,113 @@
-﻿using System;
 using System.Diagnostics.Contracts;
 using System.Globalization;
+using System.Text;
 
-namespace NMoneys.Change
+namespace NMoneys.Change;
+
+/// <summary>
+/// Represents a proper description of a currency amount, usually coins or bank notes.
+/// </summary>
+/// <remarks>Only positive valued denominations make actual sense for the operations they are meant for,
+/// so its <see cref="Value"/> is restricted to that range.
+/// <para>Denominations are currency-less, taking the currency dimension from the operation they are used for.</para>
+/// <para>The value of a denomination is to be expressed in major units (<seealso cref="Money.MajorAmount"/>).</para>
+/// </remarks>
+/// <example>To represent 50 cents of a dollar, one would create a denomination of value .5
+/// <code>var fiftyCents = new Denomination(.5m);</code></example>
+public readonly record struct Denomination : IComparable<Denomination>, IComparable
 {
 	/// <summary>
-	/// Represents a proper description of a currency amount, usually coins or bank notes.
+	/// Creates an instance of <see cref="Denomination"/> with the given value.
 	/// </summary>
-	/// <remarks>Only positive valued denominations make actual sense for the operations they are meant for,
-	/// so its <see cref="Value"/> is restricted to that range.
-	/// <para>Denominations are currency-less, taking the currency dimension from the operation they are used for.</para>
-	/// <para>The value of a denomination is to be expressed in major units (<seealso cref="Money.MajorAmount"/>).</para>
-	/// </remarks>
+	/// <remarks></remarks>
+	/// <param name="value">Positive amount of the denomination in major units.</param>
 	/// <example>To represent 50 cents of a dollar, one would create a denomination of value .5
 	/// <code>var fiftyCents = new Denomination(.5m);</code></example>
-	public struct Denomination : IEquatable<Denomination>, IFormattable
+	/// <exception cref="ArgumentOutOfRangeException">If <paramref name="value"/> is not a positive amount.</exception>
+	public Denomination(decimal value)
 	{
-		/// <summary>
-		/// Creates an instance of <see cref="Denomination"/> with the given value.
-		/// </summary>
-		/// <remarks></remarks>
-		/// <param name="value">Positive amount of the denomination in major units.</param>
-		/// <example>To represent 50 cents of a dollar, one would create a denomination of value .5
-		/// <code>var fiftyCents = new Denomination(.5m);</code></example>
-		/// <exception cref="ArgumentOutOfRangeException">If <paramref name="value"/> is not a positive amount.</exception>
-		public Denomination(decimal value)
-		{
-			Positive.Amounts.AssertArgument(nameof(value), value);
-			_value = value;
-		}
-
-		private readonly decimal? _value;
-		/// <summary>
-		/// Value of the denomination.
-		/// </summary>
-		[Pure]
-		public decimal Value => _value.GetValueOrDefault(1);
-
-
-		/// <summary>Returns representation of the value of this instance.</summary>
-		/// <returns>A <see cref="string" /> containing a textual representation.</returns>
-		[Pure]
-		public override string ToString()
-		{
-			return Value.ToString(CultureInfo.CurrentCulture);
-		}
-
-		/// <summary>
-		/// Formats the value of the current instance using the specified format.
-		/// </summary>
-		/// <returns>A <see cref="string"/> containing the value of the current instance in the specified format.</returns>
-		/// <param name="format">The <see cref="string"/> specifying the format to use.                   
-		/// -or- 
-		/// null to use the default format defined for the type of the <see cref="IFormattable"/> implementation.
-		/// </param>
-		/// <param name="formatProvider">The <see cref="IFormatProvider"/> to use to format the value.
-		/// -or- 
-		/// null to obtain the numeric format information from the current locale setting of the operating system. 
-		/// </param>
-		[Pure]
-		public string ToString(string format, IFormatProvider formatProvider)
-		{
-			return Value.ToString(format, formatProvider);
-		}
-
-		[Pure]
-		internal IntegralDenomination ToIntegral(Currency operationCurrency)
-		{
-			return new IntegralDenomination(this, operationCurrency);
-		}
-
-		/// <summary>
-		/// Indicates whether the current object is equal to another object of the same type.</summary>
-		/// <returns>true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.</returns>
-		/// <param name="other">A <see cref="Denomination"/> to compare with this object.</param>
-		[Pure]
-		public bool Equals(Denomination other)
-		{
-			return _value == other._value;
-		}
-
-		/// <summary>
-		/// Indicates whether this instance and a specified object are equal.</summary>
-		/// <returns>true if <paramref name="obj" /> and this instance are the same type and represent the same value; otherwise, false. </returns>
-		/// <param name="obj">Another object to compare to. </param>
-		[Pure]
-		public override bool Equals(object obj)
-		{
-			if (ReferenceEquals(null, obj)) return false;
-			return obj is Denomination denomination && Equals(denomination);
-		}
-
-		/// <inheritdoc />
-		[Pure]
-		public override int GetHashCode()
-		{
-			return _value.GetHashCode();
-		}
+		Positive.Amounts.AssertArgument(nameof(value), value);
+		_value = value;
 	}
+
+	// ReSharper disable once InconsistentNaming
+	private decimal? _value { get; }
+
+	/// <summary>
+	/// Value of the denomination.
+	/// </summary>
+	[Pure]
+	public decimal Value => _value.GetValueOrDefault(1);
+
+	[Pure]
+	internal IntegralDenomination ToIntegral(Currency operationCurrency)
+	{
+		return new IntegralDenomination(this, operationCurrency);
+	}
+
+
+	private bool PrintMembers(StringBuilder builder)
+	{
+		builder.Append(Value.ToString(CultureInfo.InvariantCulture));
+		return true;
+	}
+
+	#region comparable
+
+	/// <inheritdoc />
+	public int CompareTo(Denomination other)
+	{
+		return Value.CompareTo(other.Value);
+	}
+
+	/// <inheritdoc />
+	public int CompareTo(object? obj)
+	{
+		if (ReferenceEquals(null, obj)) return 1;
+		return obj is Denomination other
+			? CompareTo(other)
+			: throw new ArgumentException($"Object must be of type {nameof(Denomination)}");
+	}
+
+	/// <summary>Returns a value indicating whether a specified <see cref="Denomination" /> is less than another specified <see cref="Denomination" />.</summary>
+	/// <param name="left">The first value to compare.</param>
+	/// <param name="right">The second value to compare.</param>
+	/// <returns>
+	/// <see langword="true" /> if <paramref name="left" /> is less than <paramref name="right" />; otherwise, <see langword="false" />.</returns>
+	public static bool operator <(Denomination left, Denomination right)
+	{
+		return left.CompareTo(right) < 0;
+	}
+
+	/// <summary>Returns a value indicating whether a specified <see cref="Denomination" /> is greater than another specified <see cref="Denomination" />.</summary>
+	/// <param name="left">The first value to compare.</param>
+	/// <param name="right">The second value to compare.</param>
+	/// <returns>
+	/// <see langword="true" /> if <paramref name="left" /> is greater than <paramref name="right" />; otherwise, <see langword="false" />.</returns>
+	public static bool operator >(Denomination left, Denomination right)
+	{
+		return left.CompareTo(right) > 0;
+	}
+
+	/// <summary>Returns a value indicating whether a specified <see cref="Denomination" /> is less than or equal to another specified <see cref="Denomination" />.</summary>
+	/// <param name="left">The first value to compare.</param>
+	/// <param name="right">The second value to compare.</param>
+	/// <returns>
+	/// <see langword="true" /> if <paramref name="left" /> is less than or equal to <paramref name="right" />; otherwise, <see langword="false" />.</returns>
+	public static bool operator <=(Denomination left, Denomination right)
+	{
+		return left.CompareTo(right) <= 0;
+	}
+
+	/// <summary>Returns a value indicating whether a specified <see cref="Denomination" /> is greater than or equal to another specified <see cref="Denomination" />.</summary>
+	/// <param name="left">The first value to compare.</param>
+	/// <param name="right">The second value to compare.</param>
+	/// <returns>
+	/// <see langword="true" /> if <paramref name="left" /> is greater than or equal to <paramref name="right" />; otherwise, <see langword="false" />.</returns>
+	public static bool operator >=(Denomination left, Denomination right)
+	{
+		return left.CompareTo(right) >= 0;
+	}
+
+	#endregion
 }
