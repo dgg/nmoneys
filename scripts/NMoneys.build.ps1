@@ -37,12 +37,26 @@ task Test {
 		exec {
 			& dotnet test --no-build -c $configuration --nologo -v $verbosity $tests_dir `
 				--results-directory $RELEASE_DIR `
+				--collect:"XPlat Code Coverage" `
 				-l:"console;verbosity=minimal;NoSummary=true" `
 				-l:"trx;LogFileName=$trx" `
 				-l:"html;LogFileName=$html" `
 				-- NUnit.TestOutputXml=TestResults NUnit.OutputXmlFolderMode=RelativeToResultDirectory
 		}
 	}
+
+	$test_results_dir = Join-Path $RELEASE_DIR TestResults
+	# copy coverage file to $RELEASE_DIR/TestResults
+	$RELEASE_DIR |
+	Get-ChildItem -exclude TestResults |
+	Get-ChildItem -Recurse |
+	Where-Object { $_.Name -match 'coverage.cobertura.xml' } |
+	Copy-Item -Destination $test_results_dir
+
+	# clean coverage directories
+	$RELEASE_DIR |
+	Get-ChildItem -Directory -Exclude 'TestResults' |
+	Remove-Item -Recurse
 
 	# TODO: generate extra HTML reports
 }
@@ -67,17 +81,6 @@ task Publish -depends Restore, Compile, Pack {
 	Get-ChildItem -Recurse |
 	Where-Object { $_.Name -match '.nupkg' } |
 	push
-}
-
-task VerifyCI {
-	$artifacts_dir = Join-Path $RELEASE_DIR artifacts
-	$workflow = Join-Path $BASE_DIR .github workflows build.yml
-	exec { & act `
-			-W $workflow `
-			-P ubuntu-22.04=catthehacker/ubuntu:pwsh-22.04 `
-			--artifact-server-path $artifacts_dir `
-			-q
-	}
 }
 
 function push {

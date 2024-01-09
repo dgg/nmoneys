@@ -33,9 +33,7 @@ jobs:
       - name: Copy-Artifacts
         shell: pwsh
         run: ./build.ps1 -task CopyArtifacts -verbosity "${{ env.VERBOSITY }}" -configuration "${{ env.CONFIGURATION }}"
-      #- name: Build-All
-      #  shell: pwsh
-      #  run: ./build.ps1
+
       - name: Test Reporter
         if: ${{ !env.ACT }}
         uses: dorny/test-reporter@v1.6.0
@@ -67,3 +65,13 @@ jobs:
         with:
           name: packages
           path: ./release/*.nupkg
+
+      - name: Upload Codecov Coverage
+        uses: codecov/codecov-action@v3
+        with:
+          # token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./release/TestResults/coverage.cobertura.xml
+          flags: unittests # optional
+          name: codecov-nmoneys # optional
+          fail_ci_if_error: true # optional (default = false)
+          verbose: true # optional (default = false)
