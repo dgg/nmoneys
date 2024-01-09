@@ -70,10 +70,7 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           files: ./release/TestResults/coverage.cobertura.xml
-          flags: unittests # optional
-          name: codecov-nmoneys # optional
-          fail_ci_if_error: true # optional (default = false)
-          verbose: true # optional (default = false)
+          fail_ci_if_error: true
 
       - name: Upload Coveralls coverage
         uses: coverallsapp/github-action@v2
