@@ -66,12 +66,17 @@ jobs:
           name: packages
           path: ./release/*.nupkg
 
-      - name: Upload Codecov Coverage
+      - name: Upload Codecov coverage
         uses: codecov/codecov-action@v3
         with:
-          # token: ${{ secrets.CODECOV_TOKEN }}
           files: ./release/TestResults/coverage.cobertura.xml
           flags: unittests # optional
           name: codecov-nmoneys # optional
           fail_ci_if_error: true # optional (default = false)
           verbose: true # optional (default = false)
+
+      - name: Upload Coveralls coverage
+        uses: coverallsapp/github-action@v2
+        with:
+          files: ./release/TestResults/coverage.cobertura.xml
+          format: cobertura
