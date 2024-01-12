@@ -1,0 +1,55 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+		<CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<Description>Custom serialization/deserialization code samples of monetary quantities with several popular serialization libraries.</Description>
+		<Product>NMoneys.Serialization</Product>
+		<Copyright>Copyright © Daniel Gonzalez Garcia 2011</Copyright>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<RepositoryUrl>https://github.com/dgg/nmoneys.git</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageTags>.net;dotnet;C#;currency;money;iso;monetary;quantity;iso4217;serialization;Json.NET;BSON;Xml;System.Text.Json;Entity Framework</PackageTags>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<Version>5.0.0</Version>
+		<AssemblyVersion>5.0.0.0</AssemblyVersion>
+		<FileVersion>5.0.0.0</FileVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<AssemblyAttribute Include="System.CLSCompliantAttribute">
+			<_Parameter1>false</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+	</ItemGroup>
+
+	<PropertyGroup>
+		<NoWarn>CA1707,CA1508</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Folder Include="BSON\" />
+	  <Folder Include="EFCore\" />
+	  <Folder Include="Xml\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\NMoneys\NMoneys.csproj" />
+	</ItemGroup>
+
+</Project>

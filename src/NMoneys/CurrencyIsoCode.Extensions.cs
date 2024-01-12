@@ -76,7 +76,7 @@ public static class IsoCodeExtensions
 	/// Asserts whether the code exists in the <see cref="CurrencyIsoCode"/> enumeration, throwing if it doesn't.
 	/// </summary>
 	/// <param name="code">The enumeration value to assert against.</param>
-	/// <exception cref="ArgumentException"><paramref name="code"/> is not defined within <see cref="CurrencyIsoCode"/>.</exception>
+	/// <exception cref="UndefinedCodeException"><paramref name="code"/> is not defined within <see cref="CurrencyIsoCode"/>.</exception>
 	public static void AssertDefined(this CurrencyIsoCode code)
 	{
 		if (!CheckDefined(code))
