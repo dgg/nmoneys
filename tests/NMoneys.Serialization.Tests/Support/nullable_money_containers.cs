@@ -1,9 +1,20 @@
+using MongoDB.Bson;
+
 namespace NMoneys.Serialization.Tests.Support;
 
-public record NullableMoneyRecord(string Prop, Money? Money);
+public record NullableMoneyRecord(string? S, Money? M, int N);
+
+public record NullableMoneyRecordDoc(ObjectId Id, string? S, Money? M, int N);
 
 public class NullableMoneyContainer
 {
-	public string? Prop { get; set; }
-	public Money? Money { get; set; }
+	public string? S { get; set; }
+	public Money? M { get; set; }
+
+	public int N { get; set; }
+}
+
+public class NullableMoneyDoc : NullableMoneyContainer
+{
+	public ObjectId Id { get; set; }
 }

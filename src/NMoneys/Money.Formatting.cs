@@ -1,8 +1,9 @@
 using System.Diagnostics.Contracts;
+using System.Globalization;
 
 namespace NMoneys;
 
-public  partial struct Money
+public partial struct Money
 {
 	/// <summary>
 	/// Converts the numeric value of the <see cref="Amount"/> to its equivalent string representation using an instance of the <see cref="Currency"/>
@@ -60,91 +61,123 @@ public  partial struct Money
 	}
 
 	/// <summary>
-		/// Replaces the format item in a specified <code>string</code> with information from the <see cref="Currency"/>
-		/// identified by the instance's <see cref="CurrencyCode"/>.
-		/// An instance of the <see cref="Currency"/> identified by <see cref="CurrencyCode"/> will be supplying culture-specific formatting information.
-		/// </summary>
-		/// <remarks>
-		/// The following table describes the tokens that will be replaced in the <paramref name="format"/>:
-		/// <list type="table">
-		/// <listheader>
-		/// <term>Token</term>
-		/// <description>Description</description>
-		/// </listheader>
-		/// <item>
-		/// <term>{0}</term>
-		/// <description>This token represents the <see cref="Amount"/> of the current instance.</description>
-		/// </item>
-		/// <item>
-		/// <term>{1}</term>
-		/// <description>This token represents the <see cref="Currency.Symbol"/> for the currency of the current instance</description>
-		/// </item>
-		/// <item>
-		/// <term>{2}</term>
-		/// <description>This token represents the <see cref="Currency.IsoCode"/> for the currency of the current instance</description>
-		/// </item>
-		/// <item>
-		/// <term>{3}</term>
-		/// <description>This token represents the <see cref="Currency.EnglishName"/> for the currency of the current instance</description>
-		/// </item>
-		/// <item>
-		/// <term>{4}</term>
-		/// <description>This token represents the <see cref="Currency.NativeName"/> for the currency of the current instance</description>
-		/// </item>
-		/// </list>
-		/// </remarks>
-		/// <param name="format">A composite format string that can contain tokens to be replaced by properties of the <see cref="Currency"/>
-		/// identified by the instance's <see cref="CurrencyCode"/>.</param>
-		/// <returns>A copy of <paramref name="format"/> in which the format items have been replaced by the string representation of the corresponding tokens.</returns>
-		[Pure]
-		public string Format(string format)
-		{
-			Currency currency = Currency.Get(CurrencyCode);
-			return string.Format(currency, format, Amount, currency.Symbol, currency.IsoCode, currency.EnglishName, currency.NativeName);
-		}
+	/// Returns a string representation of the monetary quantity suitable for serialization/storage.
+	/// </summary>
+	/// <remarks>
+	/// A string with the format '<c>{three_letter_currency_code} {invariant_numeric_amount}</c>' is used due to ease of parsing and compactness.
+	/// </remarks>
+	/// <returns>A compact, unequivocal representation of the monetary quantity.</returns>
+	[Pure]
+	public string AsQuantity()
+	{
+		string quantity = AsQuantity(Amount, CurrencyCode);
+		return quantity;
+	}
 
 	/// <summary>
-		/// Replaces the format item in a specified <code>string</code> with information from the <see cref="Currency"/>
-		/// identified by the instance's <see cref="CurrencyCode"/>.
-		/// The <paramref name="provider"/> will be supplying culture-specific formatting information.
-		/// </summary>
-		/// <remarks>
-		/// The following table describes the tokens that will be replaced in the <paramref name="format"/>:
-		/// <list type="table">
-		/// <listheader>
-		/// <term>Token</term>
-		/// <description>Description</description>
-		/// </listheader>
-		/// <item>
-		/// <term>{0}</term>
-		/// <description>This token represents the <see cref="Amount"/> of the current instance.</description>
-		/// </item>
-		/// <item>
-		/// <term>{1}</term>
-		/// <description>This token represents the <see cref="Currency.Symbol"/> for the currency of the current instance</description>
-		/// </item>
-		/// <item>
-		/// <term>{2}</term>
-		/// <description>This token represents the <see cref="Currency.IsoCode"/> for the currency of the current instance</description>
-		/// </item>
-		/// <item>
-		/// <term>{3}</term>
-		/// <description>This token represents the <see cref="Currency.EnglishName"/> for the currency of the current instance</description>
-		/// </item>
-		/// <item>
-		/// <term>{4}</term>
-		/// <description>This token represents the <see cref="Currency.NativeName"/> for the currency of the current instance</description>
-		/// </item>
-		/// </list>
-		/// </remarks>
-		/// <param name="format">A composite format string that can contain tokens to be replaced by properties of the <see cref="Currency"/>
-		/// identified by the instance's <see cref="CurrencyCode"/>.</param>
-		/// <param name="provider">An object that supplies culture-specific formatting information.</param>
-		/// <returns>A copy of <paramref name="format"/> in which the format items have been replaced by the string representation of the corresponding tokens.</returns>
-		[Pure]
-		public string Format(string format, IFormatProvider provider)
-		{
-			Currency currency = Currency.Get(CurrencyCode);
-			return string.Format(provider, format, Amount, currency.Symbol, currency.IsoCode, currency.EnglishName, currency.NativeName);
-		}
+	/// Returns a string representation of the monetary quantity suitable for serialization/storage.
+	/// </summary>
+	/// <remarks>
+	/// A string with the format '<c>{three_letter_currency_code} {invariant_numeric_amount}</c>' is used due to ease of parsing and compactness.
+	/// </remarks>
+	/// <param name="amount">The amount of a monetary quantity.</param>
+	/// <param name="currency">The ISO 4217 code of the currency of a monetary quantity.</param>
+	/// <returns>A compact, unequivocal representation of the monetary quantity.</returns>
+	[Pure]
+	internal static string AsQuantity(decimal amount, CurrencyIsoCode currency)
+	{
+		string quantity = string.Format(NumberFormatInfo.InvariantInfo, "{0} {1:r}", currency, amount);
+		return quantity;
+	}
+
+	/// <summary>
+	/// Replaces the format item in a specified <code>string</code> with information from the <see cref="Currency"/>
+	/// identified by the instance's <see cref="CurrencyCode"/>.
+	/// An instance of the <see cref="Currency"/> identified by <see cref="CurrencyCode"/> will be supplying culture-specific formatting information.
+	/// </summary>
+	/// <remarks>
+	/// The following table describes the tokens that will be replaced in the <paramref name="format"/>:
+	/// <list type="table">
+	/// <listheader>
+	/// <term>Token</term>
+	/// <description>Description</description>
+	/// </listheader>
+	/// <item>
+	/// <term>{0}</term>
+	/// <description>This token represents the <see cref="Amount"/> of the current instance.</description>
+	/// </item>
+	/// <item>
+	/// <term>{1}</term>
+	/// <description>This token represents the <see cref="Currency.Symbol"/> for the currency of the current instance</description>
+	/// </item>
+	/// <item>
+	/// <term>{2}</term>
+	/// <description>This token represents the <see cref="Currency.IsoCode"/> for the currency of the current instance</description>
+	/// </item>
+	/// <item>
+	/// <term>{3}</term>
+	/// <description>This token represents the <see cref="Currency.EnglishName"/> for the currency of the current instance</description>
+	/// </item>
+	/// <item>
+	/// <term>{4}</term>
+	/// <description>This token represents the <see cref="Currency.NativeName"/> for the currency of the current instance</description>
+	/// </item>
+	/// </list>
+	/// </remarks>
+	/// <param name="format">A composite format string that can contain tokens to be replaced by properties of the <see cref="Currency"/>
+	/// identified by the instance's <see cref="CurrencyCode"/>.</param>
+	/// <returns>A copy of <paramref name="format"/> in which the format items have been replaced by the string representation of the corresponding tokens.</returns>
+	[Pure]
+	public string Format(string format)
+	{
+		Currency currency = Currency.Get(CurrencyCode);
+		return string.Format(currency, format, Amount, currency.Symbol, currency.IsoCode, currency.EnglishName,
+			currency.NativeName);
+	}
+
+	/// <summary>
+	/// Replaces the format item in a specified <code>string</code> with information from the <see cref="Currency"/>
+	/// identified by the instance's <see cref="CurrencyCode"/>.
+	/// The <paramref name="provider"/> will be supplying culture-specific formatting information.
+	/// </summary>
+	/// <remarks>
+	/// The following table describes the tokens that will be replaced in the <paramref name="format"/>:
+	/// <list type="table">
+	/// <listheader>
+	/// <term>Token</term>
+	/// <description>Description</description>
+	/// </listheader>
+	/// <item>
+	/// <term>{0}</term>
+	/// <description>This token represents the <see cref="Amount"/> of the current instance.</description>
+	/// </item>
+	/// <item>
+	/// <term>{1}</term>
+	/// <description>This token represents the <see cref="Currency.Symbol"/> for the currency of the current instance</description>
+	/// </item>
+	/// <item>
+	/// <term>{2}</term>
+	/// <description>This token represents the <see cref="Currency.IsoCode"/> for the currency of the current instance</description>
+	/// </item>
+	/// <item>
+	/// <term>{3}</term>
+	/// <description>This token represents the <see cref="Currency.EnglishName"/> for the currency of the current instance</description>
+	/// </item>
+	/// <item>
+	/// <term>{4}</term>
+	/// <description>This token represents the <see cref="Currency.NativeName"/> for the currency of the current instance</description>
+	/// </item>
+	/// </list>
+	/// </remarks>
+	/// <param name="format">A composite format string that can contain tokens to be replaced by properties of the <see cref="Currency"/>
+	/// identified by the instance's <see cref="CurrencyCode"/>.</param>
+	/// <param name="provider">An object that supplies culture-specific formatting information.</param>
+	/// <returns>A copy of <paramref name="format"/> in which the format items have been replaced by the string representation of the corresponding tokens.</returns>
+	[Pure]
+	public string Format(string format, IFormatProvider provider)
+	{
+		Currency currency = Currency.Get(CurrencyCode);
+		return string.Format(provider, format, Amount, currency.Symbol, currency.IsoCode, currency.EnglishName,
+			currency.NativeName);
+	}
 }
