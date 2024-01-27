@@ -18,3 +18,8 @@ public class MoneyDoc : MoneyContainer
 {
 	public ObjectId Id { get; set; }
 }
+
+public class MoneyModel : MoneyContainer
+{
+	public Guid Id { get; set; }
+}

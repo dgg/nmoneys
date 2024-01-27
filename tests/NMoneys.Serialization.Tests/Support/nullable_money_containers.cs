@@ -18,3 +18,8 @@ public class NullableMoneyDoc : NullableMoneyContainer
 {
 	public ObjectId Id { get; set; }
 }
+
+public class NullableMoneyModel : NullableMoneyContainer
+{
+	public Guid Id { get; set; }
+}

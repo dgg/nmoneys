@@ -26,7 +26,7 @@ public partial struct Money
 	}
 
 	/// <summary>
-	/// Tries to converts the string representation of a monetary quantity (<see cref="AsQuantity"/>) to its <see cref="Money"/> equivalent.
+	/// Tries to converts the string representation of a monetary quantity (<see cref="Money.AsQuantity"/>) to its <see cref="Money"/> equivalent.
 	/// </summary>
 	/// <param name="quantity"></param>
 	/// <param name="money">When this method returns, contains the monetary quantity <see cref="Money"/> equivalent to its representation contained in <paramref name="quantity"/>,
