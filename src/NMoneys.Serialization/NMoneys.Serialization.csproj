@@ -12,13 +12,12 @@
 	<PropertyGroup>
 		<Description>Custom serialization/deserialization code samples of monetary quantities with several popular serialization libraries.</Description>
 		<Product>NMoneys.Serialization</Product>
-		<Copyright>Copyright © Daniel Gonzalez Garcia 2011</Copyright>
+		<Copyright>Copyright © Daniel Gonzalez Garcia 2024</Copyright>
 	</PropertyGroup>
 
 	<PropertyGroup>
 		<RepositoryUrl>https://github.com/dgg/nmoneys.git</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageTags>.net;dotnet;C#;currency;money;iso;monetary;quantity;iso4217;serialization;Json.NET;BSON;Xml;System.Text.Json;Entity Framework</PackageTags>
 	</PropertyGroup>
 

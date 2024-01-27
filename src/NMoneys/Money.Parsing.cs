@@ -6,7 +6,7 @@ namespace NMoneys;
 public partial struct Money
 {
 	/// <summary>
-	/// Converts the string representation of a monetary quantity (<see cref="AsQuantity"/>) to its <see cref="Money"/> equivalent.
+	/// Converts the string representation of a monetary quantity (<see cref="Money.AsQuantity()"/>) to its <see cref="Money"/> equivalent.
 	/// </summary>
 	/// <exception cref="ArgumentException">The currency value does not contain <see cref="CurrencyIsoCode"/> enumeration information.</exception>
 	/// <exception cref="FormatException">The amount value is not in the correct <see cref="Decimal"/> format.</exception>
@@ -26,7 +26,7 @@ public partial struct Money
 	}
 
 	/// <summary>
-	/// Tries to converts the string representation of a monetary quantity (<see cref="Money.AsQuantity"/>) to its <see cref="Money"/> equivalent.
+	/// Tries to converts the string representation of a monetary quantity (<see cref="Money.AsQuantity()"/>) to its <see cref="Money"/> equivalent.
 	/// </summary>
 	/// <param name="quantity"></param>
 	/// <param name="money">When this method returns, contains the monetary quantity <see cref="Money"/> equivalent to its representation contained in <paramref name="quantity"/>,
