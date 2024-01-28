@@ -33,6 +33,67 @@ The aim of _NMoneys_ is being simple and to-the-point: represent monetary quanti
 
 But, one of the reasons of making it Open-Source is that people with knowledge in the areas related with the subject of the library, that is money, can contribute with correct and useful ways to operate with the concepts in the library without cluttering its original purpose.
 
+# Quickstart
+
+Install [Nuget package](https://www.nuget.org/packages/NMoneys).
+
+```shell
+dotnet add package NMoneys
+```
+
+Instantiate monetary quantities:
+``` csharp
+var threeDollars = new Money(3m, Currency.Usd);
+var twoandAHalfPounds = new Money(2.5m, CurrencyIsoCode.GBP);
+var tenEuro = new Money(10m, "EUR");
+```
+
+Obtain currencies or symbols:
+``` csharp
+Currency cad = Currency.Get(CurrencyIsoCode.CAD);
+Currency australianDollar = Currency.Get("AUD");
+Currency euro = Currency.Get(CultureInfo.GetCultureInfo("es-ES"));
+
+string isoSymbol;
+bool wasFound = Currency.TryGet(isoSymbol, out Currency? itMightNotBe);
+
+Currency.Code.TryCast(36, out CurrencyIsoCode? maybeAud);
+Currency.Code.TryParse("036", out CurrencyIsoCode? possiblyAud);
+```
+
+Operate with monetary quantities:
+
+```csharp
+int isPositive = new Money(3m, Currency.Nok).CompareTo(new Money(2m, CurrencyIsoCode.NOK));
+
+var three = new Money(3m);
+var two = new Money(2m);
+Money five = three.Plus(two);
+Money oneOwed = two - three;
+Money one = oneOwed.Abs();
+
+10m.Eur().ToString(); // default formatting "10,00 €"
+new Money(1500, Currency.Eur).Format("{1} {0:#,#.00}"); // rich formatting "€ 1.500,00"
+
+Allocation fair = 40m.Eur().Allocate(4);
+// fair.IsComplete --> true
+// fair.Remainder --> 0€
+// fair --> < 10€, 10€, 10€ >
+
+Money moneyBack = 1m.Usd().Minus(.37m.Usd()); // ¢63
+Denomination[] usCoins = 
+{
+	new Denomination(.25m), // quarters
+	new Denomination(.10m), // dimes
+	new Denomination(.05m), // nickels
+	new Denomination(.01m)  // pennies
+};
+ChangeSolution change = moneyBack.MakeChange(usCoins);
+// --> six coins (optimal): 2 quarters, 1 dime, 3 pennies
+```
+
+A more complete quick-start can be found [here](https://github.com/dgg/nmoneys/wiki/DeveloperQuickStart#use-the-library).
+
 # Why
 
 ## The .NET Framework
