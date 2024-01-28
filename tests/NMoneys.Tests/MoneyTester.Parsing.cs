@@ -9,6 +9,63 @@ public partial class MoneyTester
 {
 	#region Parse
 
+	#region quantity
+
+	private static TestCaseData[] quantities = new[]
+	{
+		new TestCaseData("XTS 50", CurrencyIsoCode.XTS, 50m)
+			.SetName("positive integral"),
+		new TestCaseData("XXX -50", CurrencyIsoCode.XXX, -50m)
+			.SetName("negative integral"),
+		new TestCaseData("GBP 5.75", CurrencyIsoCode.GBP, 5.75m)
+			.SetName("positive fractional"),
+		new TestCaseData("EUR -5.765", CurrencyIsoCode.EUR, -5.765m)
+			.SetName("negative fractional"),
+		new TestCaseData("AUD 1.000000000000000001", CurrencyIsoCode.AUD, 1.000000000000000001m)
+			.SetName("many decimals")
+	};
+
+	[Test, TestCaseSource(nameof(quantities))]
+	public void Parse_Quantity_MoneyCreatedAsPerSpec(string quantity, CurrencyIsoCode currency, decimal amount)
+	{
+		Money parsed = Money.Parse(quantity);
+		Assert.That(parsed, Is.EqualTo(new Money(amount, currency)));
+	}
+
+	[Test]
+	public void Parse_ExponentialQuantity_MoneyParsed()
+	{
+		Money parsed = Money.Parse("USD 1E6");
+		// cannot be written by .AsQuantity(), but can be parse
+		Assert.That(parsed, Is.EqualTo(1000000m.Usd()));
+	}
+
+	[Test]
+	public void Parse_ThousandsQuantity_Exception()
+	{
+		Assert.That(() => Money.Parse("XXX 1,000.1"), Throws.InstanceOf<FormatException>());
+	}
+
+	[Test]
+	public void Parse_TrailingSignQuantity_Exception()
+	{
+		Assert.That(() => Money.Parse("USD 1-"), Throws.InstanceOf<FormatException>());
+	}
+
+	[Test]
+	public void Parse_UndefinedCurrency_Exception()
+	{
+		Assert.That(() => Money.Parse("LOL 1"), Throws.InstanceOf<ArgumentException>());
+	}
+
+	[Test]
+	public void Parse_MissingAmount_Exception()
+	{
+		Assert.That(() => Money.Parse("USD"), Throws.InstanceOf<ArgumentOutOfRangeException>());
+	}
+
+	#endregion
+
 	[TestCaseSource(nameof(positiveAmounts))]
 	public void Parse_CurrencyStyle_PositiveAmount_MoneyParsed(string positiveAmount, Currency currency, decimal amount)
 	{
@@ -134,106 +191,157 @@ public partial class MoneyTester
 
 	#region TryParse
 
-		[TestCaseSource(nameof(positiveAmounts))]
-		public void TryParse_CurrencyStyle_PositiveAmount_MoneyParsed(string positiveAmount, Currency currency, decimal amount)
-		{
-			Assert.That(Money.TryParse(positiveAmount, currency, out Money? parsed), Is.True);
-			Assert.That(parsed, Iz.MoneyWith(amount, currency));
-		}
+	#region quantity
 
-		[TestCaseSource(nameof(negativeAmounts))]
-		public void TryParse_CurrencyStyle_NegativeAmount_MoneyParsed(string negativeAmount, Currency currency, decimal amount)
-		{
-			Assert.That(Money.TryParse(negativeAmount, currency, out Money? parsed), Is.True);
-			Assert.That(parsed, Iz.MoneyWith(amount, currency));
-		}
+	[Test, TestCaseSource(nameof(quantities))]
+	public void TryParse_Quantity_MoneyCreatedAsPerSpec(string quantity, CurrencyIsoCode currency, decimal amount)
+	{
+		Assert.That(Money.TryParse(quantity, out Money? parsed), Is.True);
+		Assert.That(parsed, Is.EqualTo(new Money(amount, currency)));
+	}
 
-		[Test]
-		public void TryParse_CurrencyStyle_MoreSignificantDecimalDigits_PrecisionMaintained()
-		{
-			Assert.That(Money.TryParse("$1.5678", Currency.Usd, out Money? parsed), Is.True);
-			Assert.That(parsed, Iz.MoneyWith(1.5678m, Currency.Usd));
-		}
+	[Test]
+	public void TryParse_ExponentialQuantity_MoneyParsed()
+	{
+		// cannot be written by .AsQuantity(), but can be parsed
+		Assert.That(Money.TryParse("USD 1E6", out Money? parsed), Is.True);
+		Assert.That(parsed, Is.EqualTo(1000000m.Usd()));
+	}
 
-		[Test]
-		public void TryParse_CurrencyStyle_CurrenciesWithNoDecimals_MaintainsAmountButNoRepresented()
-		{
-			Money.TryParse("¥1.49", Currency.Jpy, out Money? moreThanOneYen);
-			Assert.That(moreThanOneYen, Iz.MoneyWith(1.49m, Currency.Jpy));
-			Assert.That(moreThanOneYen.ToString(), Is.EqualTo("¥1"));
+	[Test]
+	public void TryParse_ThousandsQuantity_False()
+	{
+		Assert.That(Money.TryParse("XXX 1,000.1", out Money? parsed), Is.False);
+		Assert.That(parsed, Is.Null);
+	}
 
-			Money.TryParse("¥1.5", Currency.Jpy, out Money? lessThanTwoYen);
-			Assert.That(lessThanTwoYen, Iz.MoneyWith(1.5m, Currency.Jpy));
-			Assert.That(lessThanTwoYen.ToString(), Is.EqualTo("¥2"));
-		}
+	[Test]
+	public void TryParse_TrailingSignQuantity_False()
+	{
+		Assert.That(Money.TryParse("USD 1-", out Money? parsed), Is.False);
+		Assert.That(parsed, Is.Null);
+	}
 
-		[TestCaseSource(nameof(flexibleParsing))]
-		public void TryParse_CurrencyStyle_IsAsFlexibleAsParsingDecimals(string flexibleParse, Currency currency, decimal amount)
-		{
-			Assert.That(Money.TryParse(flexibleParse, currency, out Money? parsed), Is.True);
-			Assert.That(parsed, Iz.MoneyWith(amount, currency));
-		}
+	[Test]
+	public void TryParse_UndefinedCurrency_Exception()
+	{
+		Assert.That(Money.TryParse("LOL 1", out Money? parsed), Is.False);
+		Assert.That(parsed, Is.Null);
+	}
 
-		[Test]
-		public void TryParse_Default_IncorrectFormat_False()
-		{
-			Assert.That(Money.TryParse("not a Number", Currency.None, out Money? notParsed), Is.False);
-			Assert.That(notParsed, Is.Null);
-			Assert.That(Money.TryParse("1--", Currency.None, out notParsed), Is.False);
-			Assert.That(notParsed, Is.Null);
-		}
+	[Test]
+	public void Parse_MissingAmount_False()
+	{
+		Assert.That(Money.TryParse("USD", out Money? parsed), Is.False);
+		Assert.That(parsed, Is.Null);
+	}
 
-		[Test]
-		public void TryParse_WithStyle_AllowsIgnoringCurrencySymbols()
-		{
-			Assert.That(Money.TryParse("3", NumberStyles.Number, Currency.Nok, out Money? parsed), Is.True);
-			Assert.That(parsed, Iz.MoneyWith(3m, Currency.Nok));
-		}
+	#endregion
 
-		[Test]
-		public void TryParse_WithStyle_AllowsHavingStandardSignedAmounts()
-		{
-			// in usd, negative amounts go between parenthesis, we can override that behavior
-			Assert.That(Money.TryParse("-73", NumberStyles.Number, Currency.Usd, out Money? parsed), Is.True);
-			Assert.That(parsed, Iz.MoneyWith(-73m, Currency.Usd));
-		}
+	[TestCaseSource(nameof(positiveAmounts))]
+	public void TryParse_CurrencyStyle_PositiveAmount_MoneyParsed(string positiveAmount, Currency currency,
+		decimal amount)
+	{
+		Assert.That(Money.TryParse(positiveAmount, currency, out Money? parsed), Is.True);
+		Assert.That(parsed, Iz.MoneyWith(amount, currency));
+	}
 
-		[Test]
-		public void TryParse_WithStyle_IncorrectFormat_False()
-		{
-			Assert.That(Money.TryParse("¤1.4", NumberStyles.Integer, Currency.None, out Money? notParsed), Is.False);
-			Assert.That(notParsed, Is.Null);
-			Assert.That(Money.TryParse("1e-1", NumberStyles.Currency, Currency.None, out Money? notParsedEither), Is.False);
-			Assert.That(notParsedEither, Is.Null);
-		}
+	[TestCaseSource(nameof(negativeAmounts))]
+	public void TryParse_CurrencyStyle_NegativeAmount_MoneyParsed(string negativeAmount, Currency currency,
+		decimal amount)
+	{
+		Assert.That(Money.TryParse(negativeAmount, currency, out Money? parsed), Is.True);
+		Assert.That(parsed, Iz.MoneyWith(amount, currency));
+	}
 
-		[Test, Combinatorial]
-		public void TryParse_CanParseAllWrittenCurrencies(
-			[ValueSource(nameof(nonFractionalAmounts))]decimal amount,
-			[ValueSource(nameof(allCurrencies))]Currency currency)
-		{
-			Money beforeWritting = new Money(amount, currency);
-			Money.TryParse(beforeWritting.ToString(), currency, out Money? afterParsing);
+	[Test]
+	public void TryParse_CurrencyStyle_MoreSignificantDecimalDigits_PrecisionMaintained()
+	{
+		Assert.That(Money.TryParse("$1.5678", Currency.Usd, out Money? parsed), Is.True);
+		Assert.That(parsed, Iz.MoneyWith(1.5678m, Currency.Usd));
+	}
 
-			Assert.That(beforeWritting, Is.EqualTo(afterParsing));
-		}
+	[Test]
+	public void TryParse_CurrencyStyle_CurrenciesWithNoDecimals_MaintainsAmountButNoRepresented()
+	{
+		Money.TryParse("¥1.49", Currency.Jpy, out Money? moreThanOneYen);
+		Assert.That(moreThanOneYen, Iz.MoneyWith(1.49m, Currency.Jpy));
+		Assert.That(moreThanOneYen.ToString(), Is.EqualTo("¥1"));
 
-		#region Issue 28. Support detachment of parsing logic from currency
+		Money.TryParse("¥1.5", Currency.Jpy, out Money? lessThanTwoYen);
+		Assert.That(lessThanTwoYen, Iz.MoneyWith(1.5m, Currency.Jpy));
+		Assert.That(lessThanTwoYen.ToString(), Is.EqualTo("¥2"));
+	}
 
-		[Test]
-		public void TryParse_ParsingDetachedFromCurrency_FullControlOverParsing()
-		{
-			// currency does the parsing and the money construction: dot is not a decimal separator
-			Money.TryParse("€1000.00", Currency.Eur, out Money? parsed);
-			Assert.That(parsed, Is.EqualTo(100000m.Eur()));
+	[TestCaseSource(nameof(flexibleParsing))]
+	public void TryParse_CurrencyStyle_IsAsFlexibleAsParsingDecimals(string flexibleParse, Currency currency,
+		decimal amount)
+	{
+		Assert.That(Money.TryParse(flexibleParse, currency, out Money? parsed), Is.True);
+		Assert.That(parsed, Iz.MoneyWith(amount, currency));
+	}
 
-			// NumberFormatInfo used for parsing, currency for building the money instance
-			NumberFormatInfo parser = CultureInfo.GetCultureInfo("en-GB").NumberFormat;
-			Money.TryParse("€1000.00", NumberStyles.Currency, parser, Currency.Eur, out parsed);
-			Assert.That(parsed, Is.EqualTo(1000m.Eur()));
-		}
+	[Test]
+	public void TryParse_Default_IncorrectFormat_False()
+	{
+		Assert.That(Money.TryParse("not a Number", Currency.None, out Money? notParsed), Is.False);
+		Assert.That(notParsed, Is.Null);
+		Assert.That(Money.TryParse("1--", Currency.None, out notParsed), Is.False);
+		Assert.That(notParsed, Is.Null);
+	}
 
-		#endregion
+	[Test]
+	public void TryParse_WithStyle_AllowsIgnoringCurrencySymbols()
+	{
+		Assert.That(Money.TryParse("3", NumberStyles.Number, Currency.Nok, out Money? parsed), Is.True);
+		Assert.That(parsed, Iz.MoneyWith(3m, Currency.Nok));
+	}
 
-		#endregion
+	[Test]
+	public void TryParse_WithStyle_AllowsHavingStandardSignedAmounts()
+	{
+		// in usd, negative amounts go between parenthesis, we can override that behavior
+		Assert.That(Money.TryParse("-73", NumberStyles.Number, Currency.Usd, out Money? parsed), Is.True);
+		Assert.That(parsed, Iz.MoneyWith(-73m, Currency.Usd));
+	}
+
+	[Test]
+	public void TryParse_WithStyle_IncorrectFormat_False()
+	{
+		Assert.That(Money.TryParse("¤1.4", NumberStyles.Integer, Currency.None, out Money? notParsed), Is.False);
+		Assert.That(notParsed, Is.Null);
+		Assert.That(Money.TryParse("1e-1", NumberStyles.Currency, Currency.None, out Money? notParsedEither), Is.False);
+		Assert.That(notParsedEither, Is.Null);
+	}
+
+	[Test, Combinatorial]
+	public void TryParse_CanParseAllWrittenCurrencies(
+		[ValueSource(nameof(nonFractionalAmounts))]
+		decimal amount,
+		[ValueSource(nameof(allCurrencies))] Currency currency)
+	{
+		Money beforeWritting = new Money(amount, currency);
+		Money.TryParse(beforeWritting.ToString(), currency, out Money? afterParsing);
+
+		Assert.That(beforeWritting, Is.EqualTo(afterParsing));
+	}
+
+	#region Issue 28. Support detachment of parsing logic from currency
+
+	[Test]
+	public void TryParse_ParsingDetachedFromCurrency_FullControlOverParsing()
+	{
+		// currency does the parsing and the money construction: dot is not a decimal separator
+		Money.TryParse("€1000.00", Currency.Eur, out Money? parsed);
+		Assert.That(parsed, Is.EqualTo(100000m.Eur()));
+
+		// NumberFormatInfo used for parsing, currency for building the money instance
+		NumberFormatInfo parser = CultureInfo.GetCultureInfo("en-GB").NumberFormat;
+		Money.TryParse("€1000.00", NumberStyles.Currency, parser, Currency.Eur, out parsed);
+		Assert.That(parsed, Is.EqualTo(1000m.Eur()));
+	}
+
+	#endregion
+
+	#endregion
 }
