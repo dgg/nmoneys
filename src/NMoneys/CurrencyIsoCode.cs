@@ -2168,6 +2168,19 @@ public enum CurrencyIsoCode : ushort
 	UZS = 860,
 
 	/// <summary>
+	/// Bolívar Soberano
+	/// </summary>
+	[CanonicalCulture("es-VE")]
+	[Info(
+		englishName: "Bolívar Soberano", nativeName: "Bolívar Digital", symbol: "Bs.D",
+		significantDecimalDigits: 2,
+		decimalSeparator: ",",
+		groupSeparator: ".", groupSizes: new byte[] { 3 },
+		positivePattern: 0, negativePattern: 2
+	)]
+	VED = 926,
+
+	/// <summary>
 	/// Bolivar
 	/// </summary>
 	[CanonicalCulture("es-VE"), Obsolete("deprecated in favor of VES")]
