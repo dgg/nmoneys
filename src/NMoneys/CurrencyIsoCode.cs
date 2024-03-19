@@ -858,13 +858,14 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Croatian Kuna
 	/// </summary>
-	[CanonicalCulture("hr-HR")]
+	[CanonicalCulture("hr-HR"), Obsolete("deprecated in favor of EUR")]
 	[Info(
 		englishName: "Kuna", nativeName: "hrvatska kuna", symbol: "kn",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
-		positivePattern: 3, negativePattern: 8
+		positivePattern: 3, negativePattern: 8,
+		isObsolete: true
 	)]
 	HRK = 191,
 
