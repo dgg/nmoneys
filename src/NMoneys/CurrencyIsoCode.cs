@@ -1817,6 +1817,19 @@ public enum CurrencyIsoCode : ushort
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
 		positivePattern: 0, negativePattern: 1
 	)]
+	SLE = 925,
+
+	/// <summary>
+	/// Leone
+	/// </summary>
+	[CanonicalCulture("en-SL"), Obsolete("deprecated in favor of SLE")]
+	[Info(
+		englishName: "Leone", nativeName: "Leone", symbol: "Le",
+		significantDecimalDigits: 2,
+		decimalSeparator: ".",
+		groupSeparator: ",", groupSizes: new byte[] { 3 },
+		positivePattern: 0, negativePattern: 1
+	)]
 	SLL = 694,
 
 	/// <summary>
