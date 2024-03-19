@@ -858,13 +858,14 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Croatian Kuna
 	/// </summary>
-	[CanonicalCulture("hr-HR")]
+	[CanonicalCulture("hr-HR"), Obsolete("deprecated in favor of EUR")]
 	[Info(
 		englishName: "Kuna", nativeName: "hrvatska kuna", symbol: "kn",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
-		positivePattern: 3, negativePattern: 8
+		positivePattern: 3, negativePattern: 8,
+		isObsolete: true
 	)]
 	HRK = 191,
 
@@ -1817,6 +1818,20 @@ public enum CurrencyIsoCode : ushort
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
 		positivePattern: 0, negativePattern: 1
 	)]
+	SLE = 925,
+
+	/// <summary>
+	/// Leone
+	/// </summary>
+	[CanonicalCulture("en-SL"), Obsolete("deprecated in favor of SLE")]
+	[Info(
+		englishName: "Leone", nativeName: "Leone", symbol: "Le",
+		significantDecimalDigits: 2,
+		decimalSeparator: ".",
+		groupSeparator: ",", groupSizes: new byte[] { 3 },
+		positivePattern: 0, negativePattern: 1,
+		isObsolete: true
+	)]
 	SLL = 694,
 
 	/// <summary>
@@ -2166,6 +2181,19 @@ public enum CurrencyIsoCode : ushort
 		positivePattern: 2, negativePattern: 9
 	)]
 	UZS = 860,
+
+	/// <summary>
+	/// Bolívar Soberano
+	/// </summary>
+	[CanonicalCulture("es-VE")]
+	[Info(
+		englishName: "Bolívar Soberano", nativeName: "Bolívar Digital", symbol: "Bs.D",
+		significantDecimalDigits: 2,
+		decimalSeparator: ",",
+		groupSeparator: ".", groupSizes: new byte[] { 3 },
+		positivePattern: 0, negativePattern: 2
+	)]
+	VED = 926,
 
 	/// <summary>
 	/// Bolivar
