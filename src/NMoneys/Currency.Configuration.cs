@@ -1,3 +1,4 @@
+using System.Reflection;
 using NMoneys.Support;
 
 namespace NMoneys;
@@ -38,5 +39,16 @@ public partial class Currency
 		{
 			Configure(tuple.Item1, tuple.Item2);
 		}
+	}
+
+	/// <summary>
+	/// Returns the corresponding canonical culture assigned to the currency.
+	/// </summary>
+	/// <remarks>For internal verification purposes.</remarks>
+	/// <returns>The canonical culture or <c>null</c> is not decorated.</returns>
+	public CanonicalCultureAttribute? GetCanonicalCulture()
+	{
+		CanonicalCultureAttribute? attribute = IsoCode.FieldOf().GetCustomAttribute<CanonicalCultureAttribute>();
+		return attribute;
 	}
 }

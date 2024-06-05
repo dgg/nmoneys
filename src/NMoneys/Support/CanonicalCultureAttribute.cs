@@ -7,8 +7,12 @@ namespace NMoneys.Support;
 /// </summary>
 /// <remarks>For internal verification purposes, it does not have any effect on currency runtime.</remarks>
 [AttributeUsage(AttributeTargets.Field)]
-internal sealed class CanonicalCultureAttribute : Attribute
+public sealed class CanonicalCultureAttribute : Attribute
 {
+	/// <summary>
+	/// Initializes a new instance of the <see cref="CanonicalCultureAttribute"/> class.
+	/// </summary>
+	/// <param name="cultureName">Name of the corresponding <see cref="CultureInfo"/> instance.</param>
 	public CanonicalCultureAttribute(string cultureName)
 	{
 		CultureName = cultureName;
