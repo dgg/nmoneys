@@ -2135,8 +2135,8 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("es-UY")]
 	[Info(
-		englishName: "Uruguay Peso en Unidades Indexadas (URUIURUI)",
-		nativeName: "Uruguay Peso en Unidades Indexadas (URUIURUI)", symbol: "$U",
+		englishName: "Uruguay Peso en Unidades Indexadas (UI)",
+		nativeName: "Uruguay Peso en Unidades Indexadas (UI)", symbol: "$U",
 		significantDecimalDigits: 0,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
@@ -2148,7 +2148,7 @@ public enum CurrencyIsoCode : ushort
 	/// Peso Uruguayo
 	/// </summary>
 	[Info(
-		englishName: "Peso Uruguayo", nativeName: "Peso uruguayo", symbol: "$U",
+		englishName: "Uruguayan Peso", nativeName: "Peso uruguayo", symbol: "$U",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
@@ -2326,7 +2326,7 @@ public enum CurrencyIsoCode : ushort
 	XBB = 956,
 
 	/// <summary>
-	/// European Unit of Account 9(E.U.A.-9)
+	/// European Unit of Account 9 (E.U.A.-9)
 	/// </summary>
 	[Info(
 		englishName: "European Unit of Account 9 (E.U.A.-9)", nativeName: "European Unit of Account 9 (E.U.A.-9)",
@@ -2340,7 +2340,7 @@ public enum CurrencyIsoCode : ushort
 	XBC = 957,
 
 	/// <summary>
-	/// European Unit of Account 17(E.U.A.-17)
+	/// European Unit of Account 17 (E.U.A.-17)
 	/// </summary>
 	[Info(
 		englishName: "European Unit of Account 17 (E.U.A.-17)", nativeName: "European Unit of Account 17 (E.U.A.-17)",
