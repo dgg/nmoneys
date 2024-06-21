@@ -2133,20 +2133,20 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// >Uruguay Peso en Unidades Indexadas (UI)
 	/// </summary>
-	[CanonicalCulture("es-UY")]
 	[Info(
 		englishName: "Uruguay Peso en Unidades Indexadas (UI)",
 		nativeName: "Uruguay Peso en Unidades Indexadas (UI)", symbol: "$U",
 		significantDecimalDigits: 0,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
-		positivePattern: 2, negativePattern: 14
+		positivePattern: 2, negativePattern: 9
 	)]
 	UYI = 940,
 
 	/// <summary>
 	/// Peso Uruguayo
 	/// </summary>
+	[CanonicalCulture("es-UY")]
 	[Info(
 		englishName: "Uruguayan Peso", nativeName: "Peso uruguayo", symbol: "$U",
 		significantDecimalDigits: 2,
@@ -2159,13 +2159,12 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Unidad Previsional
 	/// </summary>
-	[CanonicalCulture("es-UY")]
 	[Info(
-		englishName: "Unidad previsional", nativeName: "Unidad previsional", symbol: "$U",
-		significantDecimalDigits: 0,
+		englishName: "Unidad Previsional", nativeName: "Unidad Previsional", symbol: "$U",
+		significantDecimalDigits: 4,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
-		positivePattern: 2, negativePattern: 14
+		positivePattern: 2, negativePattern: 9
 	)]
 	UYW = 927,
 
