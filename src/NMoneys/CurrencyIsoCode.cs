@@ -178,7 +178,7 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3, 2 },
-		positivePattern: 2, negativePattern: 12,
+		positivePattern: 1, negativePattern: 5,
 		codePoint: 2547
 	)]
 	BDT = 050,
