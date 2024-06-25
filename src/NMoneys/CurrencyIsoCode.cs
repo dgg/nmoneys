@@ -255,7 +255,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("es-BO")]
 	[Info(
-		englishName: "Boliviano", nativeName: "Boliviano", symbol: "Bs.",
+		englishName: "Boliviano", nativeName: "boliviano", symbol: "Bs",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
