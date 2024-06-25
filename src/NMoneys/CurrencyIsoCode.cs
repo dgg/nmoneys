@@ -201,11 +201,11 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("ar-BH")]
 	[Info(
-		englishName: "Bahraini Dinar", nativeName: "دينار بحريني", symbol: "د.ب.‏",
+		englishName: "Bahraini Dinar", nativeName: "دينار بحريني", symbol: "د.ب.‏",
 		significantDecimalDigits: 3,
-		decimalSeparator: ".",
-		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 2, negativePattern: 3
+		decimalSeparator: "٫",
+		groupSeparator: "٬", groupSizes: new byte[] { 3 },
+		positivePattern: 3, negativePattern: 8
 	)]
 	BHD = 048,
 
