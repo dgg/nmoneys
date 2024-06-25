@@ -96,7 +96,7 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1,
+		positivePattern: 2, negativePattern: 9,
 		codePoint: 36, entityName: "dollar"
 	)]
 	ARS = 032,
