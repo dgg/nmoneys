@@ -324,7 +324,7 @@ public enum CurrencyIsoCode : ushort
 		englishName: "Pula", nativeName: "Pula", symbol: "P",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
-		groupSeparator: " ", groupSizes: new byte[] { 3 },
+		groupSeparator: " ", groupSizes: new byte[] { 3 },
 		positivePattern: 0, negativePattern: 1
 	)]
 	BWP = 072,
