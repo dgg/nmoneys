@@ -620,9 +620,9 @@ public enum CurrencyIsoCode : ushort
 	[Info(
 		englishName: "Algerian Dinar", nativeName: "دينار جزائري", symbol: "د.ج.",
 		significantDecimalDigits: 2,
-		decimalSeparator: ".",
-		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 2, negativePattern: 3
+		decimalSeparator: ",",
+		groupSeparator: ".", groupSizes: new byte[] { 3 },
+		positivePattern: 2, negativePattern: 9
 	)]
 	DZD = 012,
 
