@@ -160,7 +160,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("en-BB", Overwritten = true)]
 	[Info(
-		englishName: "Barbados Dollar", nativeName: "Barbados Dollar", symbol: "$",
+		englishName: "Barbados Dollar", nativeName: "Barbadian Dollar", symbol: "$",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
