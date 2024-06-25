@@ -40,8 +40,8 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("sq-AL")]
 	[Info(
-		englishName: "Lek", nativeName: "Leku Shqiptar", symbol: "L",
-		significantDecimalDigits: 2,
+		englishName: "Lek", nativeName: "Leku shqiptar", symbol: "L",
+		significantDecimalDigits: 0,
 		decimalSeparator: ",",
 		groupSeparator: "\u00a0", groupSizes: new byte[] { 3 },
 		positivePattern: 3, negativePattern: 8
@@ -2368,13 +2368,12 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// SDR (Special Drawing Right)
 	/// </summary>
-	[CanonicalCulture("es-419")]
 	[Info(
-		englishName: "SDR (Special Drawing Right)", nativeName: "Derechos especiales de giro", symbol: "¤",
+		englishName: "SDR (Special Drawing Right)", nativeName: "SDR (Special Drawing Right)", symbol: "¤",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 2, negativePattern: 9,
+		positivePattern: 0, negativePattern: 0,
 		codePoint: 164, entityName: "curren"
 	)]
 	XDR = 960,
