@@ -56,7 +56,7 @@ public enum CurrencyIsoCode : ushort
 		englishName: "Armenian Dram", nativeName: "դրամ", symbol: "֏",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
-		groupSeparator: ",", groupSizes: new byte[] { 3 },
+		groupSeparator: " ", groupSizes: new byte[] { 3 },
 		positivePattern: 3, negativePattern: 8
 	)]
 	AMD = 051,
