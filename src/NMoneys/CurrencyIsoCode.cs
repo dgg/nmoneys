@@ -55,7 +55,7 @@ public enum CurrencyIsoCode : ushort
 	[Info(
 		englishName: "Armenian Dram", nativeName: "դրամ", symbol: "֏",
 		significantDecimalDigits: 2,
-		decimalSeparator: ".",
+		decimalSeparator: ",",
 		groupSeparator: " ", groupSizes: new byte[] { 3 },
 		positivePattern: 3, negativePattern: 8
 	)]
@@ -514,7 +514,7 @@ public enum CurrencyIsoCode : ushort
 		englishName: "Costa Rican Colon", nativeName: "colón costarricense", symbol: "₡",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
-		groupSeparator: " ", groupSizes: new byte[] { 3 },
+		groupSeparator: " ", groupSizes: new byte[] { 3 },
 		positivePattern: 0, negativePattern: 1,
 		codePoint: 8353
 	)]
@@ -1065,7 +1065,7 @@ public enum CurrencyIsoCode : ushort
 		englishName: "Comorian Franc", nativeName: "فرنك قمري", symbol: "CF",
 		significantDecimalDigits: 0,
 		decimalSeparator: "٫",
-		groupSeparator: ".", groupSizes: new byte[] { 3 },
+		groupSeparator: "٬", groupSizes: new byte[] { 3 },
 		positivePattern: 3, negativePattern: 8
 	)]
 	KMF = 174,
@@ -1171,7 +1171,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("si-LK")]
 	[Info(
-		englishName: "Sri Lanka Rupee", nativeName: "ශ්‍රී ලංකා රුපියල්", symbol: "රු.",
+		englishName: "Sri Lanka Rupee", nativeName: "ශ්‍රී ලංකා රුපියල", symbol: "රු.",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
