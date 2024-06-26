@@ -214,10 +214,10 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("fr-BI", Overwritten = true)]
 	[Info(
-		englishName: "Burundi Franc", nativeName: "Franc burundais", symbol: "FBu",
+		englishName: "Burundi Franc", nativeName: "franc burundais", symbol: "FBu",
 		significantDecimalDigits: 0,
 		decimalSeparator: ",",
-		groupSeparator: "\u00a0", groupSizes: new byte[] { 3 },
+		groupSeparator: " ", groupSizes: new byte[] { 3 },
 		positivePattern: 3, negativePattern: 8
 	)]
 	BIF = 108,
@@ -1050,8 +1050,8 @@ public enum CurrencyIsoCode : ushort
 	[Info(
 		englishName: "Riel", nativeName: "រៀលកម្ពុជា", symbol: "៛",
 		significantDecimalDigits: 2,
-		decimalSeparator: ".",
-		groupSeparator: ",", groupSizes: new byte[] { 3 },
+		decimalSeparator: ",",
+		groupSeparator: ".", groupSizes: new byte[] { 3 },
 		positivePattern: 1, negativePattern: 5,
 		codePoint: 6107
 	)]
