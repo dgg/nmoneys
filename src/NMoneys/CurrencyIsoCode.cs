@@ -1064,9 +1064,9 @@ public enum CurrencyIsoCode : ushort
 	[Info(
 		englishName: "Comorian Franc", nativeName: "فرنك قمري", symbol: "CF",
 		significantDecimalDigits: 0,
-		decimalSeparator: ".",
-		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 2, negativePattern: 9
+		decimalSeparator: "٫",
+		groupSeparator: ".", groupSizes: new byte[] { 3 },
+		positivePattern: 3, negativePattern: 8
 	)]
 	KMF = 174,
 
