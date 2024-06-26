@@ -511,10 +511,10 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("es-CR")]
 	[Info(
-		englishName: "Costa Rican Colon", nativeName: "Colón costarricense", symbol: "₡",
+		englishName: "Costa Rican Colon", nativeName: "colón costarricense", symbol: "₡",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
-		groupSeparator: ".", groupSizes: new byte[] { 3 },
+		groupSeparator: " ", groupSizes: new byte[] { 3 },
 		positivePattern: 0, negativePattern: 1,
 		codePoint: 8353
 	)]
