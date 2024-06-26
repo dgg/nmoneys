@@ -361,7 +361,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("en-BZ")]
 	[Info(
-		englishName: "Belize Dollar", nativeName: "Belize Dollar", symbol: "BZ$",
+		englishName: "Belize Dollar", nativeName: "Belize Dollar", symbol: "$",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
