@@ -1304,11 +1304,11 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("my-MM")]
 	[Info(
-		englishName: "Kyat", nativeName: "ကျပ်", symbol: "K",
-		significantDecimalDigits: 2,
+		englishName: "Kyat", nativeName: "ကျပ်ငွေ", symbol: "K",
+		significantDecimalDigits: 0,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 2, negativePattern: 9
+		positivePattern: 3, negativePattern: 8
 	)]
 	MMK = 104,
 
