@@ -474,7 +474,7 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 2
+		positivePattern: 0, negativePattern: 1
 	)]
 	CNY = 156,
 
@@ -553,7 +553,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("pt-CV", Overwritten = true)]
 	[Info(
-		englishName: "Cabo Verde Escudo", nativeName: "Escudo cabo-verdiano", symbol: "",
+		englishName: "Cabo Verde Escudo", nativeName: "escudo cabo-verdiano", symbol: "",
 		significantDecimalDigits: 2,
 		decimalSeparator: "$",
 		groupSeparator: "\u00a0", groupSizes: new byte[] { 3 },
@@ -1171,7 +1171,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("si-LK")]
 	[Info(
-		englishName: "Sri Lanka Rupee", nativeName: "රුපියල්", symbol: "රු.",
+		englishName: "Sri Lanka Rupee", nativeName: "ශ්‍රී ලංකා රුපියල්", symbol: "රු.",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
