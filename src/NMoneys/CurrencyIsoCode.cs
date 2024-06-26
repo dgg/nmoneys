@@ -483,11 +483,11 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("es-CO")]
 	[Info(
-		englishName: "Colombian Peso", nativeName: "Peso colombiano", symbol: "$",
+		englishName: "Colombian Peso", nativeName: "peso colombiano", symbol: "$",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1,
+		positivePattern: 2, negativePattern: 9,
 		codePoint: 36, entityName: "dollar"
 	)]
 	COP = 170,
