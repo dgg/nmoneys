@@ -900,7 +900,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("id-ID")]
 	[Info(
-		englishName: "Rupiah", nativeName: "Rupiah", symbol: "Rp",
+		englishName: "Rupiah", nativeName: "Rupiah Indonesia", symbol: "Rp",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
