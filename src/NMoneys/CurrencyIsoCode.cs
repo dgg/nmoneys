@@ -847,7 +847,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("es-HN")]
 	[Info(
-		englishName: "Lempira", nativeName: "Lempira", symbol: "L",
+		englishName: "Lempira", nativeName: "lempira hondureño", symbol: "L",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
