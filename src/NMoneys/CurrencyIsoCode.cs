@@ -579,10 +579,10 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("fr-DJ")]
 	[Info(
-		englishName: "Djibouti Franc", nativeName: "Franc Djibouti", symbol: "Fdj",
+		englishName: "Djibouti Franc", nativeName: "Franc djiboutien", symbol: "Fdj",
 		significantDecimalDigits: 0,
 		decimalSeparator: ",",
-		groupSeparator: "\u00a0", groupSizes: new byte[] { 3 },
+		groupSeparator: " ", groupSizes: new byte[] { 3 },
 		positivePattern: 3, negativePattern: 8
 	)]
 	DJF = 262,
