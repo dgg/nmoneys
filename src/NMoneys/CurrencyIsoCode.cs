@@ -794,10 +794,10 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("fr-GN", Overwritten = true)]
 	[Info(
-		englishName: "Guinean Franc", nativeName: "Franc Guinéen", symbol: "FG",
+		englishName: "Guinean Franc", nativeName: "franc guinéen", symbol: "FG",
 		significantDecimalDigits: 0,
 		decimalSeparator: ",",
-		groupSeparator: "\u00a0", groupSizes: new byte[] { 3 },
+		groupSeparator: " ", groupSizes: new byte[] { 3 },
 		positivePattern: 3, negativePattern: 8
 	)]
 	GNF = 324,
