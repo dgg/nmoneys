@@ -874,10 +874,10 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("fr-HT")]
 	[Info(
-		englishName: "Gourde", nativeName: "gourde", symbol: "G",
+		englishName: "Gourde", nativeName: "gourde haïtienne", symbol: "G",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
-		groupSeparator: "\u00a0", groupSizes: new byte[] { 3 },
+		groupSeparator: " ", groupSizes: new byte[] { 3 },
 		positivePattern: 3, negativePattern: 8
 	)]
 	HTG = 332,
