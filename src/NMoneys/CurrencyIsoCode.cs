@@ -1905,13 +1905,14 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// El Salvador Colon
 	/// </summary>
-	[CanonicalCulture("es-SV")]
+	[CanonicalCulture("es-SV"), Obsolete("deprecated in favor of USD")]
 	[Info(
-		englishName: "El Salvador Colon", nativeName: "Colón salvadoreño", symbol: "¢",
+		englishName: "El Salvador Colon", nativeName: "colón salvadoreño", symbol: "₡",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3, 0 },
-		positivePattern: 0, negativePattern: 0
+		positivePattern: 0, negativePattern: 0,
+		isObsolete: true
 	)]
 	SVC = 222,
 
