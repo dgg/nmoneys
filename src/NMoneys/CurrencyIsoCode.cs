@@ -968,7 +968,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("is-IS")]
 	[Info(
-		englishName: "Iceland Krona", nativeName: "íslensk króna", symbol: "kr.",
+		englishName: "Iceland Krona", nativeName: "króna", symbol: "kr",
 		significantDecimalDigits: 0,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
