@@ -781,7 +781,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("en-GM", Overwritten = true)]
 	[Info(
-		englishName: "Dalasi", nativeName: "Dalasi", symbol: "D",
+		englishName: "Dalasi", nativeName: "Gambian Dalasi", symbol: "D",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
