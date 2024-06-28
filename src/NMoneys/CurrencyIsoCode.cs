@@ -834,11 +834,11 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("zh-HK")]
 	[Info(
-		englishName: "Hong Kong Dollar", nativeName: "港幣", symbol: "HK$",
+		englishName: "Hong Kong Dollar", nativeName: "港元", symbol: "HK$",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 0
+		positivePattern: 0, negativePattern: 1
 	)]
 	HKD = 344,
 
