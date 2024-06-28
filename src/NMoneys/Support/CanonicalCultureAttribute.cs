@@ -26,6 +26,7 @@ public sealed class CanonicalCultureAttribute : Attribute
 	/// <summary>
 	/// Indicates whether one or more values of the currency are different from ones specified by the <see cref="CultureInfo"/>.
 	/// </summary>
+	/// <remarks>Except <see cref="Currency.EnglishName"/>, which is controlled by the ISO currency list.
 	public bool Overwritten { get; set; }
 
 	/// <summary>

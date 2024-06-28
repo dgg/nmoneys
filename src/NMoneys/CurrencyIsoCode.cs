@@ -38,7 +38,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Lek
 	/// </summary>
-	[CanonicalCulture("sq-AL")]
+	[CanonicalCulture("sq-AL", Overwritten = true)]
 	[Info(
 		englishName: "Lek", nativeName: "Leku shqiptar", symbol: "L",
 		significantDecimalDigits: 0,
@@ -51,7 +51,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Armenian Dram
 	/// </summary>
-	[CanonicalCulture("hy-AM")]
+	[CanonicalCulture("hy-AM", Overwritten = true)]
 	[Info(
 		englishName: "Armenian Dram", nativeName: "դրամ", symbol: "֏",
 		significantDecimalDigits: 2,
@@ -90,7 +90,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Argentine Peso
 	/// </summary>
-	[CanonicalCulture("es-AR")]
+	[CanonicalCulture("es-AR", Overwritten = true)]
 	[Info(
 		englishName: "Argentine Peso", nativeName: "Peso", symbol: "$",
 		significantDecimalDigits: 2,
@@ -158,7 +158,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Barbados Dollar
 	/// </summary>
-	[CanonicalCulture("en-BB", Overwritten = true)]
+	[CanonicalCulture("en-BB")]
 	[Info(
 		englishName: "Barbados Dollar", nativeName: "Barbadian Dollar", symbol: "$",
 		significantDecimalDigits: 2,
@@ -172,7 +172,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Taka
 	/// </summary>
-	[CanonicalCulture("bn-BD")]
+	[CanonicalCulture("bn-BD", Overwritten = true)]
 	[Info(
 		englishName: "Taka", nativeName: "টাকা", symbol: "৳",
 		significantDecimalDigits: 2,
@@ -212,7 +212,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Burundi Franc
 	/// </summary>
-	[CanonicalCulture("fr-BI", Overwritten = true)]
+	[CanonicalCulture("fr-BI")]
 	[Info(
 		englishName: "Burundi Franc", nativeName: "franc burundais", symbol: "FBu",
 		significantDecimalDigits: 0,
@@ -225,7 +225,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Bermudian Dollar
 	/// </summary>
-	[CanonicalCulture("en-BM", Overwritten = true)]
+	[CanonicalCulture("en-BM")]
 	[Info(
 		englishName: "Bermudian Dollar", nativeName: "Bermudian Dollar", symbol: "$",
 		significantDecimalDigits: 2,
@@ -239,7 +239,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Brunei Dollar
 	/// </summary>
-	[CanonicalCulture("ms-BN")]
+	[CanonicalCulture("ms-BN", Overwritten = true)]
 	[Info(
 		englishName: "Brunei Dollar", nativeName: "ringgit Brunei", symbol: "$",
 		significantDecimalDigits: 2,
@@ -319,7 +319,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Pula
 	/// </summary>
-	[CanonicalCulture("tn-BW")]
+	[CanonicalCulture("tn-BW", Overwritten = true)]
 	[Info(
 		englishName: "Pula", nativeName: "Pula", symbol: "P",
 		significantDecimalDigits: 2,
@@ -551,7 +551,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Cape Verde Escudo
 	/// </summary>
-	[CanonicalCulture("pt-CV", Overwritten = true)]
+	[CanonicalCulture("pt-CV")]
 	[Info(
 		englishName: "Cabo Verde Escudo", nativeName: "escudo cabo-verdiano", symbol: "",
 		significantDecimalDigits: 2,
@@ -564,7 +564,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Czech Koruna
 	/// </summary>
-	[CanonicalCulture("cs-CZ")]
+	[CanonicalCulture("cs-CZ", Overwritten = true)]
 	[Info(
 		englishName: "Czech Koruna", nativeName: "koruna česká", symbol: "Kč",
 		significantDecimalDigits: 2,
@@ -577,7 +577,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Djibouti Franc
 	/// </summary>
-	[CanonicalCulture("fr-DJ")]
+	[CanonicalCulture("fr-DJ", Overwritten = true)]
 	[Info(
 		englishName: "Djibouti Franc", nativeName: "Franc djiboutien", symbol: "Fdj",
 		significantDecimalDigits: 0,
@@ -590,9 +590,9 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Danish Krone
 	/// </summary>
-	[CanonicalCulture("da-DK", Overwritten = true)]
+	[CanonicalCulture("da-DK")]
 	[Info(
-		englishName: "Danish Krone", nativeName: "Dansk krone", symbol: "kr.",
+		englishName: "Danish Krone", nativeName: "dansk krone", symbol: "kr.",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
@@ -629,7 +629,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Estonian Kroon
 	/// </summary>
-	[CanonicalCulture("et-EE"), Obsolete("deprecated in favor of EUR")]
+	[CanonicalCulture("et-EE", Overwritten = true), Obsolete("deprecated in favor of EUR")]
 	[Info(
 		englishName: "Estonian Kroon", nativeName: "Kroon", symbol: "kr",
 		significantDecimalDigits: 2,
@@ -656,7 +656,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Nakfa
 	/// </summary>
-	[CanonicalCulture("ti-ER")]
+	[CanonicalCulture("ti-ER", Overwritten = true)]
 	[Info(
 		englishName: "Nakfa", nativeName: "ናቕፋ", symbol: "Nfk",
 		significantDecimalDigits: 2,
@@ -696,7 +696,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Fiji Dollar
 	/// </summary>
-	[CanonicalCulture("en-FJ", Overwritten = true)]
+	[CanonicalCulture("en-FJ")]
 	[Info(
 		englishName: "Fiji Dollar", nativeName: "Fijian Dollar", symbol: "$",
 		significantDecimalDigits: 2,
@@ -779,7 +779,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Dalasi
 	/// </summary>
-	[CanonicalCulture("en-GM", Overwritten = true)]
+	[CanonicalCulture("en-GM")]
 	[Info(
 		englishName: "Dalasi", nativeName: "Gambian Dalasi", symbol: "D",
 		significantDecimalDigits: 2,
@@ -805,7 +805,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Quetzal
 	/// </summary>
-	[CanonicalCulture("es-GT")]
+	[CanonicalCulture("es-GT", Overwritten = true)]
 	[Info(
 		englishName: "Quetzal", nativeName: "quetzal guatemalteco", symbol: "Q",
 		significantDecimalDigits: 2,
@@ -858,7 +858,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Croatian Kuna
 	/// </summary>
-	[CanonicalCulture("hr-HR"), Obsolete("deprecated in favor of EUR")]
+	[CanonicalCulture("hr-HR", Overwritten = true), Obsolete("deprecated in favor of EUR")]
 	[Info(
 		englishName: "Kuna", nativeName: "hrvatska kuna", symbol: "kn",
 		significantDecimalDigits: 2,
@@ -885,7 +885,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Forint
 	/// </summary>
-	[CanonicalCulture("hu-HU")]
+	[CanonicalCulture("hu-HU", Overwritten = true)]
 	[Info(
 		englishName: "Forint", nativeName: "Magyar forint", symbol: "Ft",
 		significantDecimalDigits: 2,
@@ -955,18 +955,18 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("fa-IR")]
 	[Info(
-		englishName: "Iranian Rial", nativeName: "ریال", symbol: "ريال",
+		englishName: "Iranian Rial", nativeName: "ریال ایران", symbol: "ريال",
 		significantDecimalDigits: 2,
-		decimalSeparator: "/",
-		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 3
+		decimalSeparator: "٫",
+		groupSeparator: "٬", groupSizes: new byte[] { 3 },
+		positivePattern: 0, negativePattern: 1
 	)]
 	IRR = 364,
 
 	/// <summary>
 	/// Iceland Krona
 	/// </summary>
-	[CanonicalCulture("is-IS")]
+	[CanonicalCulture("is-IS", Overwritten = true)]
 	[Info(
 		englishName: "Iceland Krona", nativeName: "króna", symbol: "kr",
 		significantDecimalDigits: 0,
@@ -1302,7 +1302,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Kyat
 	/// </summary>
-	[CanonicalCulture("my-MM")]
+	[CanonicalCulture("my-MM", Overwritten = true)]
 	[Info(
 		englishName: "Kyat", nativeName: "ကျပ်ငွေ", symbol: "K",
 		significantDecimalDigits: 0,
@@ -1905,7 +1905,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// El Salvador Colon
 	/// </summary>
-	[CanonicalCulture("es-SV"), Obsolete("deprecated in favor of USD")]
+	[CanonicalCulture("es-SV", Overwritten = true), Obsolete("deprecated in favor of USD")]
 	[Info(
 		englishName: "El Salvador Colon", nativeName: "colón salvadoreño", symbol: "₡",
 		significantDecimalDigits: 2,
