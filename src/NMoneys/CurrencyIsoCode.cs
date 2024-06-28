@@ -539,7 +539,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("es-CU", Overwritten = true)]
 	[Info(
-		englishName: "Cuban Peso", nativeName: "Peso cubano", symbol: "$",
+		englishName: "Cuban Peso", nativeName: "peso cubano", symbol: "$",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
