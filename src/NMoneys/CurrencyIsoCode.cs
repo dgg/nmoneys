@@ -605,7 +605,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("es-DO")]
 	[Info(
-		englishName: "Dominican Peso", nativeName: "Peso", symbol: "RD$",
+		englishName: "Dominican Peso", nativeName: "peso dominicano", symbol: "RD$",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
