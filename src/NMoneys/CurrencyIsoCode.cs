@@ -944,9 +944,9 @@ public enum CurrencyIsoCode : ushort
 	[Info(
 		englishName: "Iraqi Dinar", nativeName: "دينار عراقي", symbol: "د.ع.",
 		significantDecimalDigits: 3,
-		decimalSeparator: ".",
-		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 2, negativePattern: 3
+		decimalSeparator: "٫",
+		groupSeparator: "٬", groupSizes: new byte[] { 3 },
+		positivePattern: 3, negativePattern: 8
 	)]
 	IQD = 368,
 
