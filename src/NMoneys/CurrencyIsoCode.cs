@@ -928,11 +928,11 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("hi-IN")]
 	[Info(
-		englishName: "Indian Rupee", nativeName: "रुपया", symbol: "₹",
+		englishName: "Indian Rupee", nativeName: "भारतीय रुपया", symbol: "₹",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3, 2 },
-		positivePattern: 2, negativePattern: 12,
+		positivePattern: 0, negativePattern: 1,
 		codePoint: 8377
 	)]
 	INR = 356,
