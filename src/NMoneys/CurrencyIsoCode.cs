@@ -807,7 +807,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("es-GT")]
 	[Info(
-		englishName: "Quetzal", nativeName: "Quetzal", symbol: "Q",
+		englishName: "Quetzal", nativeName: "quetzal guatemalteco", symbol: "Q",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
