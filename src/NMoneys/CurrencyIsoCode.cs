@@ -596,7 +596,7 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
-		positivePattern: 2, negativePattern: 12
+		positivePattern: 3, negativePattern: 8
 	)]
 	DKK = 208,
 
