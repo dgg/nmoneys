@@ -820,7 +820,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("en-GY", Overwritten = true)]
 	[Info(
-		englishName: "Guyana Dollar", nativeName: "Guyana Dollar", symbol: "$",
+		englishName: "Guyana Dollar", nativeName: " Guyanaese Dollar", symbol: "$",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
