@@ -698,7 +698,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("en-FJ", Overwritten = true)]
 	[Info(
-		englishName: "Fiji Dollar", nativeName: "Fiji Dollar", symbol: "$",
+		englishName: "Fiji Dollar", nativeName: "Fijian Dollar", symbol: "$",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
