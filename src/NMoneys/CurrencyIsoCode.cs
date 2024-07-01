@@ -1932,9 +1932,9 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Lilangeni
 	/// </summary>
-	[CanonicalCulture("ss-SZ")]
+	[CanonicalCulture("ss-SZ", Overwritten = true)]
 	[Info(
-		englishName: "Lilangeni", nativeName: "Lilangeni", symbol: "E",
+		englishName: "Lilangeni", nativeName: "Swazi lilangeni", symbol: "E",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: "\u00a0", groupSizes: new byte[] { 3 },
