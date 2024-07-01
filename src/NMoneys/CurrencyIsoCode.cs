@@ -2252,7 +2252,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Tala
 	/// </summary>
-	[CanonicalCulture("en-WS")]
+	[CanonicalCulture("en-WS", Overwritten = true)]
 	[Info(
 		englishName: "Tala", nativeName: "Samoa tālā", symbol: "WS$",
 		significantDecimalDigits: 2,
@@ -2485,13 +2485,13 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Yemeni Rial
 	/// </summary>
-	[CanonicalCulture("ar-YE")]
+	[CanonicalCulture("ar-YE", Overwritten = true)]
 	[Info(
 		englishName: "Yemeni Rial", nativeName: "ريال يمني", symbol: "ر.ي.",
 		significantDecimalDigits: 2,
-		decimalSeparator: ".",
-		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 2, negativePattern: 3
+		decimalSeparator: "٫",
+		groupSeparator: "٬", groupSizes: new byte[] { 3 },
+		positivePattern: 3, negativePattern: 8
 	)]
 	YER = 886,
 
@@ -2511,13 +2511,13 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Zambian Kwacha
 	/// </summary>
-	[CanonicalCulture("en-ZM"), Obsolete("deprecated in favor of ZMW")]
+	[CanonicalCulture("en-ZM", Overwritten = true), Obsolete("deprecated in favor of ZMW")]
 	[Info(
 		englishName: "Zambian Kwacha", nativeName: "Zambian Kwacha", symbol: "ZK",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 0,
+		positivePattern: 0, negativePattern: 1,
 		isObsolete: true
 	)]
 	ZMK = 894,
@@ -2527,7 +2527,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("en-ZM")]
 	[Info(
-		englishName: "Zambian Kwacha", nativeName: "Zambian Kwacha", symbol: "ZK",
+		englishName: "Zambian Kwacha", nativeName: "Zambian Kwacha", symbol: "K",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
