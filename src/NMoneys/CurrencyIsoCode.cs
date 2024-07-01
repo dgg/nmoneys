@@ -2227,7 +2227,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("vi-VN")]
 	[Info(
-		englishName: "Dong", nativeName: "Đồng", symbol: "₫",
+		englishName: "Dong", nativeName: "Đồng Việt Nam", symbol: "₫",
 		significantDecimalDigits: 0,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
