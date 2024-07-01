@@ -1254,9 +1254,9 @@ public enum CurrencyIsoCode : ushort
 	[Info(
 		englishName: "Moroccan Dirham", nativeName: "درهم مغربي", symbol: "د.م.",
 		significantDecimalDigits: 2,
-		decimalSeparator: ".",
-		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 2, negativePattern: 3
+		decimalSeparator: ",",
+		groupSeparator: ".", groupSizes: new byte[] { 3 },
+		positivePattern: 2, negativePattern: 9
 	)]
 	MAD = 504,
 
