@@ -1342,13 +1342,13 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Ouguiya
 	/// </summary>
-	[CanonicalCulture("ar-MR"), Obsolete("deprecated in favor of MRU")]
+	[CanonicalCulture("ar-MR", Overwritten = true), Obsolete("deprecated in favor of MRU")]
 	[Info(
 		englishName: "Ouguiya", nativeName: "أوقية موريتانية", symbol: "أ.م.",
 		significantDecimalDigits: 2,
-		decimalSeparator: ",",
-		groupSeparator: ".", groupSizes: new byte[] { 3 },
-		positivePattern: 2, negativePattern: 9,
+		decimalSeparator: "٫",
+		groupSeparator: "٬", groupSizes: new byte[] { 3 },
+		positivePattern: 3, negativePattern: 8,
 		isObsolete: true
 	)]
 	MRO = 478,
@@ -1360,9 +1360,9 @@ public enum CurrencyIsoCode : ushort
 	[Info(
 		englishName: "Ouguiya", nativeName: "أوقية موريتانية", symbol: "أ.م.",
 		significantDecimalDigits: 2,
-		decimalSeparator: ",",
-		groupSeparator: ".", groupSizes: new byte[] { 3 },
-		positivePattern: 2, negativePattern: 9
+		decimalSeparator: "٫",
+		groupSeparator: "٬", groupSizes: new byte[] { 3 },
+		positivePattern: 3, negativePattern: 8
 	)]
 	MRU = 929,
 
