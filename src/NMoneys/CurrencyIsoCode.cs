@@ -281,7 +281,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("pt-BR")]
 	[Info(
-		englishName: "Brazilian Real", nativeName: "Real", symbol: "R$",
+		englishName: "Brazilian Real", nativeName: "Real brasileiro", symbol: "R$",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
