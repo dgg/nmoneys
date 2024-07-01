@@ -400,12 +400,12 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// WIR Euro
 	/// </summary>
-	[CanonicalCulture("de-CH")]
+	[CanonicalCulture("de-CH", Overwritten = true)]
 	[Info(
 		englishName: "WIR Euro", nativeName: "WIR Euro", symbol: "€",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
-		groupSeparator: "'", groupSizes: new byte[] { 3 },
+		groupSeparator: "’", groupSizes: new byte[] { 3 },
 		positivePattern: 2, negativePattern: 2,
 		codePoint: 8364, entityName: "euro"
 	)]
