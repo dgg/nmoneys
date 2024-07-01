@@ -345,7 +345,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Belarussian Ruble
 	/// </summary>
-	[CanonicalCulture("be-BY"), Obsolete("deprecated in favor of BYN")]
+	[CanonicalCulture("be-BY", Overwritten = true), Obsolete("deprecated in favor of BYN")]
 	[Info(
 		englishName: "Belarussian Ruble", nativeName: "беларускі рубель", symbol: "Br",
 		significantDecimalDigits: 0,
