@@ -188,10 +188,10 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("bg-BG")]
 	[Info(
-		englishName: "Bulgarian Lev", nativeName: "български лев", symbol: "лв.",
+		englishName: "Bulgarian Lev", nativeName: "Български лев", symbol: "лв.",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
-		groupSeparator: "\u00a0", groupSizes: new byte[] { 3 },
+		groupSeparator: "\u00a0", groupSizes: new byte[] { 0 },
 		positivePattern: 3, negativePattern: 8
 	)]
 	BGN = 975,
