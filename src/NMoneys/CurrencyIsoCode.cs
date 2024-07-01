@@ -1241,9 +1241,9 @@ public enum CurrencyIsoCode : ushort
 	[Info(
 		englishName: "Libyan Dinar", nativeName: "دينار ليبي", symbol: "د.ل.",
 		significantDecimalDigits: 3,
-		decimalSeparator: ".",
-		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 3
+		decimalSeparator: ",",
+		groupSeparator: ".", groupSizes: new byte[] { 3 },
+		positivePattern: 2, negativePattern: 9
 	)]
 	LYD = 434,
 
