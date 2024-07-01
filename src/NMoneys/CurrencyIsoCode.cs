@@ -266,13 +266,13 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Mvdol
 	/// </summary>
-	[CanonicalCulture("es-BO")]
+	[CanonicalCulture("es-BO", Overwritten = true)]
 	[Info(
 		englishName: "Mvdol", nativeName: "Boliviano con Mantenimiento de Valor respecto al Dólar", symbol: "$b",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
-		positivePattern: 2, negativePattern: 14
+		positivePattern: 0, negativePattern: 1
 	)]
 	BOV = 984,
 
