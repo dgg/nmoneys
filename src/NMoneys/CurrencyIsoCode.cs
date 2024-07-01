@@ -1989,9 +1989,9 @@ public enum CurrencyIsoCode : ushort
 	[Info(
 		englishName: "Tunisian Dinar", nativeName: "دينار تونسي", symbol: "د.ت.",
 		significantDecimalDigits: 3,
-		decimalSeparator: ".",
-		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 2, negativePattern: 3
+		decimalSeparator: ",",
+		groupSeparator: ".", groupSizes: new byte[] { 3 },
+		positivePattern: 2, negativePattern: 9
 	)]
 	TND = 788,
 
