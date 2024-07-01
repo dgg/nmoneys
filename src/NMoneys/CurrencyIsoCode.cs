@@ -414,12 +414,12 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Swiss Franc
 	/// </summary>
-	[CanonicalCulture("de-CH")]
+	[CanonicalCulture("de-CH", Overwritten = true)]
 	[Info(
 		englishName: "Swiss Franc", nativeName: "Schweizer Franken", symbol: "Fr.",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
-		groupSeparator: "'", groupSizes: new byte[] { 3 },
+		groupSeparator: "’", groupSizes: new byte[] { 3 },
 		positivePattern: 2, negativePattern: 2
 	)]
 	CHF = 756,
