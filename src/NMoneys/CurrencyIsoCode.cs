@@ -1464,7 +1464,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("en-NA")]
 	[Info(
-		englishName: "Namibia Dollar", nativeName: "Namibia Dollar", symbol: "$",
+		englishName: "Namibia Dollar", nativeName: "Namibian Dollar", symbol: "$",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
