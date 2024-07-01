@@ -1196,7 +1196,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Loti
 	/// </summary>
-	[CanonicalCulture("en-LS")]
+	[CanonicalCulture("en-LS", Overwritten = true)]
 	[Info(
 		englishName: "Loti", nativeName: "Loti", symbol: "L",
 		significantDecimalDigits: 2,
@@ -1223,7 +1223,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Latvian Lats
 	/// </summary>
-	[CanonicalCulture("lv-LV"), Obsolete("deprecated in favor of EUR")]
+	[CanonicalCulture("lv-LV", Overwritten = true), Obsolete("deprecated in favor of EUR")]
 	[Info(
 		englishName: "Latvian Lats", nativeName: "Lats", symbol: "Ls",
 		significantDecimalDigits: 2,
