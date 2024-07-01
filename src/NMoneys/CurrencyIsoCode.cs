@@ -1289,13 +1289,13 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Denar
 	/// </summary>
-	[CanonicalCulture("mk-MK")]
+	[CanonicalCulture("mk-MK", Overwritten = true)]
 	[Info(
-		englishName: "Denar", nativeName: "денар", symbol: "ден",
+		englishName: "Denar", nativeName: "денар", symbol: "ден.",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
-		positivePattern: 2, negativePattern: 9
+		positivePattern: 3, negativePattern: 8
 	)]
 	MKD = 807,
 
