@@ -1675,9 +1675,9 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Serbian Dinar
 	/// </summary>
-	[CanonicalCulture("sr-Latn-RS")]
+	[CanonicalCulture("sr-Latn-RS", Overwritten = true)]
 	[Info(
-		englishName: "Serbian Dinar", nativeName: "dinar", symbol: "RSD",
+		englishName: "Serbian Dinar", nativeName: "Srpski dinar", symbol: "RSD",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
@@ -1760,9 +1760,9 @@ public enum CurrencyIsoCode : ushort
 	[Info(
 		englishName: "Sudanese Pound", nativeName: "جنيه سوداني", symbol: "ج.س.",
 		significantDecimalDigits: 2,
-		decimalSeparator: ".",
-		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 2, negativePattern: 9
+		decimalSeparator: "٫",
+		groupSeparator: "٬", groupSizes: new byte[] { 3 },
+		positivePattern: 3, negativePattern: 8
 	)]
 	SDG = 938,
 
