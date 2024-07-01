@@ -1690,7 +1690,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("ru-RU")]
 	[Info(
-		englishName: "Russian Ruble", nativeName: "рубль", symbol: "₽",
+		englishName: "Russian Ruble", nativeName: "российский рубль", symbol: "₽",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: "\u00a0", groupSizes: new byte[] { 3 },
