@@ -1972,13 +1972,13 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Turkmenistan New Manat
 	/// </summary>
-	[CanonicalCulture("tk-TM")]
+	[CanonicalCulture("tk-TM", Overwritten = true)]
 	[Info(
-		englishName: "Turkmenistan New Manat", nativeName: "manat", symbol: "m.",
+		englishName: "Turkmenistan New Manat", nativeName: "Türkmen manady", symbol: "m",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: "\u00a0", groupSizes: new byte[] { 3 },
-		positivePattern: 1, negativePattern: 5
+		positivePattern: 3, negativePattern: 8
 	)]
 	TMT = 934,
 
