@@ -1702,9 +1702,9 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Rwanda Franc
 	/// </summary>
-	[CanonicalCulture("rw-RW")]
+	[CanonicalCulture("rw-RW", Overwritten = true)]
 	[Info(
-		englishName: "Rwanda Franc", nativeName: "Ifaranga", symbol: "RF",
+		englishName: "Rwanda Franc", nativeName: "Ifaranga ry'u Rwanda", symbol: "RF",
 		significantDecimalDigits: 0,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
