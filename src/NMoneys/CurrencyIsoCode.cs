@@ -1653,9 +1653,9 @@ public enum CurrencyIsoCode : ushort
 	[Info(
 		englishName: "Qatari Rial", nativeName: "ريال قطري", symbol: "ر.ق.",
 		significantDecimalDigits: 2,
-		decimalSeparator: ".",
-		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 2, negativePattern: 3
+		decimalSeparator: "٫",
+		groupSeparator: "٬", groupSizes: new byte[] { 3 },
+		positivePattern: 3, negativePattern: 8
 	)]
 	QAR = 634,
 
