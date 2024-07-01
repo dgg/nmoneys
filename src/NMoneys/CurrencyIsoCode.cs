@@ -1745,7 +1745,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("en-SC")]
 	[Info(
-		englishName: "Seychelles Rupee", nativeName: "Roupie seychelloise", symbol: "SR",
+		englishName: "Seychelles Rupee", nativeName: "Seychellois Rupee", symbol: "SR",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
