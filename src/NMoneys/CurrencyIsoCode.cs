@@ -2066,11 +2066,11 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("uk-UA")]
 	[Info(
-		englishName: "Hryvnia", nativeName: "гривня", symbol: "₴",
+		englishName: "Hryvnia", nativeName: "українська гривня", symbol: "₴",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: "\u00a0", groupSizes: new byte[] { 3 },
-		positivePattern: 1, negativePattern: 5,
+		positivePattern: 3, negativePattern: 8,
 		codePoint: 8372
 	)]
 	UAH = 980,
