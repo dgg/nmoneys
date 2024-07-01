@@ -1492,7 +1492,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("es-NI")]
 	[Info(
-		englishName: "Cordoba Oro", nativeName: "Córdoba nicaragüense", symbol: "C$",
+		englishName: "Cordoba Oro", nativeName: "córdoba nicaragüense", symbol: "C$",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
