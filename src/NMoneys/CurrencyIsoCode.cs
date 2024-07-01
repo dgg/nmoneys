@@ -1719,9 +1719,9 @@ public enum CurrencyIsoCode : ushort
 	[Info(
 		englishName: "Saudi Riyal", nativeName: "ريال سعودي", symbol: "ر.س.",
 		significantDecimalDigits: 2,
-		decimalSeparator: ".",
-		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 2, negativePattern: 3
+		decimalSeparator: "٫",
+		groupSeparator: "٬", groupSizes: new byte[] { 3 },
+		positivePattern: 3, negativePattern: 8
 	)]
 	SAR = 682,
 
