@@ -2500,7 +2500,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("en-ZA")]
 	[Info(
-		englishName: "Rand", nativeName: "Rand", symbol: "R",
+		englishName: "Rand", nativeName: "South African Rand", symbol: "R",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: "\u00a0", groupSizes: new byte[] { 3 },
