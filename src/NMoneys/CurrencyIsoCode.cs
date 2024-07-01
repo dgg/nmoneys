@@ -25,12 +25,12 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Afghani
 	/// </summary>
-	[CanonicalCulture("ps-AF")]
+	[CanonicalCulture("ps-AF", Overwritten = true)]
 	[Info(
-		englishName: "Afghani", nativeName: "افغانى", symbol: "؋",
+		englishName: "Afghani", nativeName: "افغانۍ", symbol: "؋",
 		significantDecimalDigits: 2,
-		decimalSeparator: ",",
-		groupSeparator: ".", groupSizes: new byte[] { 3 },
+		decimalSeparator: "٫",
+		groupSeparator: "٬", groupSizes: new byte[] { 3 },
 		positivePattern: 3, negativePattern: 8
 	)]
 	AFN = 971,
