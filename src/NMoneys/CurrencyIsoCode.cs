@@ -1503,7 +1503,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Norwegian Krone
 	/// </summary>
-	[CanonicalCulture("nn-NO")]
+	[CanonicalCulture("nn-NO", Overwritten = true)]
 	[Info(
 		englishName: "Norwegian Krone", nativeName: "Norsk krone", symbol: "kr",
 		significantDecimalDigits: 2,
@@ -1611,11 +1611,11 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("ur-PK")]
 	[Info(
-		englishName: "Pakistan Rupee", nativeName: "روپيه", symbol: "Rs",
+		englishName: "Pakistan Rupee", nativeName: "پاکستانی روپیہ", symbol: "Rs",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 3
+		positivePattern: 2, negativePattern: 9
 	)]
 	PKR = 586,
 
