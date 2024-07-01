@@ -1919,13 +1919,13 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Syrian Pound
 	/// </summary>
-	[CanonicalCulture("ar-SY")]
+	[CanonicalCulture("ar-SY", Overwritten = true)]
 	[Info(
-		englishName: "Syrian Pound", nativeName: "ليرة سوري", symbol: "ل.س.",
+		englishName: "Syrian Pound", nativeName: "ليرة سورية", symbol: "ل.س.",
 		significantDecimalDigits: 2,
-		decimalSeparator: ".",
-		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 2, negativePattern: 3
+		decimalSeparator: "٫",
+		groupSeparator: "٬", groupSizes: new byte[] { 3 },
+		positivePattern: 3, negativePattern: 8
 	)]
 	SYP = 760,
 
