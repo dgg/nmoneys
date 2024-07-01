@@ -427,12 +427,12 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// WIR Franc
 	/// </summary>
-	[CanonicalCulture("de-CH")]
+	[CanonicalCulture("de-CH", Overwritten = true)]
 	[Info(
 		englishName: "WIR Franc", nativeName: "WIR Franken", symbol: "Fr.",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
-		groupSeparator: "'", groupSizes: new byte[] { 3 },
+		groupSeparator: "’", groupSizes: new byte[] { 3 },
 		positivePattern: 2, negativePattern: 2
 	)]
 	CHW = 948,
