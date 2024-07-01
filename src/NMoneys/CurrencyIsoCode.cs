@@ -724,7 +724,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Pound Sterling
 	/// </summary>
-	[CanonicalCulture("en-GB")]
+	[CanonicalCulture("en-GB", Overwritten = true)]
 	[Info(
 		englishName: "Pound Sterling", nativeName: "Pound Sterling", symbol: "£",
 		significantDecimalDigits: 2,
