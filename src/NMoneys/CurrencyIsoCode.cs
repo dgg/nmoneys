@@ -1998,9 +1998,9 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Paʻanga
 	/// </summary>
-	[CanonicalCulture("to-TO")]
+	[CanonicalCulture("to-TO", Overwritten = true)]
 	[Info(
-		englishName: "Pa’anga", nativeName: "paʻanga", symbol: "T$",
+		englishName: "Pa’anga", nativeName: "Tonga paʻanga", symbol: "T$",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
