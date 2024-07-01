@@ -523,9 +523,9 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Peso Convertible
 	/// </summary>
-	[CanonicalCulture("es-CU")]
+	[CanonicalCulture("es-CU", Overwritten = true)]
 	[Info(
-		englishName: "Peso Convertible", nativeName: "Peso Convertible", symbol: "$",
+		englishName: "Peso Convertible", nativeName: "peso cubano convertible", symbol: "CUC$",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
