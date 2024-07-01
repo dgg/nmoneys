@@ -1371,7 +1371,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("en-MU")]
 	[Info(
-		englishName: "Mauritius Rupee", nativeName: "Mauritius Rupee", symbol: "Rs",
+		englishName: "Mauritius Rupee", nativeName: "Mauritian Rupee", symbol: "Rs",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
