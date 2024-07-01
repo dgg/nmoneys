@@ -79,7 +79,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("pt-AO")]
 	[Info(
-		englishName: "Kwanza", nativeName: "Kwanza", symbol: "Kz",
+		englishName: "Kwanza", nativeName: "kwanza angolano", symbol: "Kz",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: "\u00a0", groupSizes: new byte[] { 3 },
