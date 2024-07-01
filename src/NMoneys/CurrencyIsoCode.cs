@@ -392,7 +392,7 @@ public enum CurrencyIsoCode : ushort
 		englishName: "Congolese Franc", nativeName: "franc congolais", symbol: "FC",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
-		groupSeparator: "\u00a0", groupSizes: new byte[] { 3 },
+		groupSeparator: " ", groupSizes: new byte[] { 3 },
 		positivePattern: 3, negativePattern: 8
 	)]
 	CDF = 976,
