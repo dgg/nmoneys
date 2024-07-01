@@ -2013,11 +2013,11 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("tr-TR")]
 	[Info(
-		englishName: "Turkish Lira", nativeName: "Türk lirası", symbol: "₺",
+		englishName: "Turkish Lira", nativeName: "Türk Lirası", symbol: "₺",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
-		positivePattern: 3, negativePattern: 8,
+		positivePattern: 0, negativePattern: 1,
 		codePoint: 8378
 	)]
 	TRY = 949,
