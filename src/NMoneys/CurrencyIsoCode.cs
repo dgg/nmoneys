@@ -1329,13 +1329,13 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Pataca
 	/// </summary>
-	[CanonicalCulture("zh-MO")]
+	[CanonicalCulture("zh-MO", Overwritten = true)]
 	[Info(
-		englishName: "Pataca", nativeName: "澳門幣", symbol: "MOP",
+		englishName: "Pataca", nativeName: "澳門元", symbol: "$",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 0
+		positivePattern: 0, negativePattern: 1
 	)]
 	MOP = 446,
 
