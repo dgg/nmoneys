@@ -2267,10 +2267,10 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("fr-CM")]
 	[Info(
-		englishName: "CFA Franc BEAC", nativeName: "franc CFA", symbol: "FCFA",
+		englishName: "CFA Franc BEAC", nativeName: "franc CFA (BEAC)", symbol: "FCFA",
 		significantDecimalDigits: 0,
 		decimalSeparator: ",",
-		groupSeparator: "\u00a0", groupSizes: new byte[] { 3 },
+		groupSeparator: " ", groupSizes: new byte[] { 3 },
 		positivePattern: 3, negativePattern: 8
 	)]
 	XAF = 950,
@@ -2384,11 +2384,11 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("wo-SN")]
 	[Info(
-		englishName: "CFA Franc BCEAO", nativeName: "CFA Franc BCEAO", symbol: "CFA",
+		englishName: "CFA Franc BCEAO", nativeName: "Franc CFA bu Afrik Sowwu-jant", symbol: "CFA",
 		significantDecimalDigits: 0,
 		decimalSeparator: ",",
-		groupSeparator: "\u00a0", groupSizes: new byte[] { 3 },
-		positivePattern: 3, negativePattern: 8
+		groupSeparator: ".", groupSizes: new byte[] { 3 },
+		positivePattern: 2, negativePattern: 9
 	)]
 	XOF = 952,
 
