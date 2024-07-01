@@ -1796,7 +1796,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Saint Helena Pound
 	/// </summary>
-	[CanonicalCulture("en-SH")]
+	[CanonicalCulture("en-SH", Overwritten = true)]
 	[Info(
 		englishName: "Saint Helena Pound", nativeName: "Saint Helena Pound", symbol: "£",
 		significantDecimalDigits: 2,
