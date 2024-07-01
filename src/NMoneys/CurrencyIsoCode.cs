@@ -1209,7 +1209,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Lithuanian Litas
 	/// </summary>
-	[CanonicalCulture("lt-LT"), Obsolete("deprecated in favor of EUR")]
+	[CanonicalCulture("lt-LT", Overwritten = true), Obsolete("deprecated in favor of EUR")]
 	[Info(
 		englishName: "Lithuanian Litas", nativeName: "Litas", symbol: "Lt",
 		significantDecimalDigits: 2,
