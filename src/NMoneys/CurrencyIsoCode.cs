@@ -2105,7 +2105,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// US Dollar (Next day)
 	/// </summary>
-	[CanonicalCulture("en-US")]
+	[CanonicalCulture("en-US", Overwritten = true)]
 	[Info(
 		englishName: "US Dollar (Next day)", nativeName: "US Dollar (Next day)", symbol: "$",
 		significantDecimalDigits: 2,
@@ -2119,7 +2119,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// US Dollar (Same day)
 	/// </summary>
-	[CanonicalCulture("en-US"), Obsolete("No longer in use")]
+	[CanonicalCulture("en-US", Overwritten = true), Obsolete("No longer in use")]
 	[Info(
 		englishName: "US Dollar (Same day)", nativeName: "US Dollar (Same day)", symbol: "$",
 		significantDecimalDigits: 2,
