@@ -1516,13 +1516,13 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Nepalese Rupee
 	/// </summary>
-	[CanonicalCulture("ne-NP")]
+	[CanonicalCulture("ne-NP", Overwritten = true)]
 	[Info(
-		englishName: "Nepalese Rupee", nativeName: "रुपैयाँ", symbol: "रु",
+		englishName: "Nepalese Rupee", nativeName: "रुपैयाँ", symbol: "	रु.",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
-		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1
+		groupSeparator: ",", groupSizes: new byte[] { 3, 2 },
+		positivePattern: 2, negativePattern: 9
 	)]
 	NPR = 524,
 
