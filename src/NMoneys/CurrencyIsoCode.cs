@@ -753,7 +753,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("en-GH")]
 	[Info(
-		englishName: "Ghana Cedi", nativeName: "Ghana Cedi", symbol: "GH₵",
+		englishName: "Ghana Cedi", nativeName: "Ghanaian cedi", symbol: "GH₵",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
