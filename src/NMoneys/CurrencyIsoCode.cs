@@ -1556,7 +1556,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Balboa
 	/// </summary>
-	[CanonicalCulture("es-PA", Overwritten = true)]
+	[CanonicalCulture("es-PA")]
 	[Info(
 		englishName: "Balboa", nativeName: "balboa panameño", symbol: "B/.",
 		significantDecimalDigits: 2,
@@ -1584,7 +1584,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("en-PG")]
 	[Info(
-		englishName: "Kina", nativeName: "Kina", symbol: "K",
+		englishName: "Kina", nativeName: "Papua New Guinean Kina", symbol: "K",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
