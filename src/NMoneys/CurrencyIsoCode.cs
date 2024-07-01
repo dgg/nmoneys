@@ -64,7 +64,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Netherlands Antillean Guilder
 	/// </summary>
-	[CanonicalCulture("nl-CW")]
+	[CanonicalCulture("nl-CW", Overwritten = true)]
 	[Info(
 		englishName: "Netherlands Antillean Guilder", nativeName: "Antilliaanse gulden", symbol: "NAf.",
 		significantDecimalDigits: 2,
