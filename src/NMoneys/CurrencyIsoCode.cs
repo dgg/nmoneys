@@ -2038,7 +2038,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// New Taiwan Dollar
 	/// </summary>
-	[CanonicalCulture("zh-TW")]
+	[CanonicalCulture("zh-TW", Overwritten = true)]
 	[Info(
 		englishName: "New Taiwan Dollar", nativeName: "新台幣", symbol: "NT$",
 		significantDecimalDigits: 2,
@@ -2185,9 +2185,9 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Bolívar Soberano
 	/// </summary>
-	[CanonicalCulture("es-VE")]
+	[CanonicalCulture("es-VE", Overwritten = true)]
 	[Info(
-		englishName: "Bolívar Soberano", nativeName: "Bolívar Digital", symbol: "Bs.D",
+		englishName: "Bolívar Soberano", nativeName: "bolívar digital soberano", symbol: "Bs.D",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
@@ -2198,9 +2198,9 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Bolivar
 	/// </summary>
-	[CanonicalCulture("es-VE"), Obsolete("deprecated in favor of VES")]
+	[CanonicalCulture("es-VE", Overwritten = true), Obsolete("deprecated in favor of VES")]
 	[Info(
-		englishName: "Bolívar", nativeName: "Bolívar", symbol: "Bs.",
+		englishName: "Bolívar", nativeName: "bolívar", symbol: "Bs.",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
@@ -2212,9 +2212,9 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Bolívar Soberano
 	/// </summary>
-	[CanonicalCulture("es-VE")]
+	[CanonicalCulture("es-VE", Overwritten = true)]
 	[Info(
-		englishName: "Bolívar Soberano", nativeName: "Bolívar Soberano", symbol: "Bs.",
+		englishName: "Bolívar Soberano", nativeName: "bolívar soberano", symbol: "Bs.",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
