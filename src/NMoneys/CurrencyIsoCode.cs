@@ -1662,7 +1662,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// New Romanian Leu
 	/// </summary>
-	[CanonicalCulture("ro-RO")]
+	[CanonicalCulture("ro-RO", Overwritten = true)]
 	[Info(
 		englishName: "Romanian Leu", nativeName: "Leu românesc", symbol: "lei",
 		significantDecimalDigits: 2,
