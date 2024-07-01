@@ -1810,7 +1810,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Leone
 	/// </summary>
-	[CanonicalCulture("en-SL")]
+	[CanonicalCulture("en-SL", Overwritten = true)]
 	[Info(
 		englishName: "Leone", nativeName: "Leone", symbol: "Le",
 		significantDecimalDigits: 2,
@@ -1823,7 +1823,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Leone
 	/// </summary>
-	[CanonicalCulture("en-SL"), Obsolete("deprecated in favor of SLE")]
+	[CanonicalCulture("en-SL", Overwritten = true), Obsolete("deprecated in favor of SLE")]
 	[Info(
 		englishName: "Leone", nativeName: "Leone", symbol: "Le",
 		significantDecimalDigits: 2,
