@@ -118,9 +118,9 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Aruban Florin
 	/// </summary>
-	[CanonicalCulture("nl-AW")]
+	[CanonicalCulture("nl-AW", Overwritten = true)]
 	[Info(
-		englishName: "Aruban Florin", nativeName: "Arubaanse florijn", symbol: "Afl.",
+		englishName: "Aruban Florin", nativeName: "Arubaanse florin", symbol: "Afl.",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
