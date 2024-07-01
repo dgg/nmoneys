@@ -1784,11 +1784,11 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("zh-SG")]
 	[Info(
-		englishName: "Singapore Dollar", nativeName: "新币", symbol: "$",
+		englishName: "Singapore Dollar", nativeName: "新加坡元", symbol: "$",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 0,
+		positivePattern: 0, negativePattern: 1,
 		codePoint: 36, entityName: "dollar"
 	)]
 	SGD = 702,
