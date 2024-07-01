@@ -1771,10 +1771,10 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("sv-SE")]
 	[Info(
-		englishName: "Swedish Krona", nativeName: "Svensk krona", symbol: "kr",
+		englishName: "Swedish Krona", nativeName: "svensk krona", symbol: "kr",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
-		groupSeparator: ".", groupSizes: new byte[] { 3 },
+		groupSeparator: " ", groupSizes: new byte[] { 3 },
 		positivePattern: 3, negativePattern: 8
 	)]
 	SEK = 752,
