@@ -1635,9 +1635,9 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Guarani
 	/// </summary>
-	[CanonicalCulture("es-PY")]
+	[CanonicalCulture("es-PY", Overwritten = true)]
 	[Info(
-		englishName: "Guarani", nativeName: "Guaraní", symbol: "₲",
+		englishName: "Guarani", nativeName: "guaraní paraguayo", symbol: "₲",
 		significantDecimalDigits: 0,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
