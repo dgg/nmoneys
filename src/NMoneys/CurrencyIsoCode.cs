@@ -2172,13 +2172,13 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Uzbekistan Sum
 	/// </summary>
-	[CanonicalCulture("uz-Latn-UZ")]
+	[CanonicalCulture("uz-Latn-UZ", Overwritten = true)]
 	[Info(
-		englishName: "Uzbekistan Sum", nativeName: "soʻm", symbol: "soʻm",
+		englishName: "Uzbekistan Sum", nativeName: "Oʻzbek soʻmi", symbol: "soʻm",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: "\u00a0", groupSizes: new byte[] { 3 },
-		positivePattern: 2, negativePattern: 9
+		positivePattern: 3, negativePattern: 8
 	)]
 	UZS = 860,
 
