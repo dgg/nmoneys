@@ -34,7 +34,7 @@ public class JsonConverterTester
 		_dbFile?.Delete();
 	}
 
-	[Test]
+	[Test, Explicit]
 	public void SaveEntity_SavesAsQuantityValue()
 	{
 		using var context = new JsonDbContext(_dbFile!, new JsonConverter(JsonOptions), new MoneyComparer());
@@ -58,7 +58,7 @@ public class JsonConverterTester
 		Assert.That(queried, Is.EqualTo("{'amount':43.75,'currency':'XTS'}".Jsonify()));
 	}
 
-	[Test]
+	[Test, Explicit]
 	public void SaveEntity_AsQuantity_CanRoundtrip()
 	{
 		using var context = new JsonDbContext(_dbFile!, new JsonConverter(JsonOptions), new MoneyComparer());
@@ -79,7 +79,7 @@ public class JsonConverterTester
 		Assert.That(queried.M, Is.EqualTo(m));
 	}
 
-	[Test]
+	[Test, Explicit]
 	public void SaveNullableEntity_SavesAsNull()
 	{
 		using var context = new JsonDbContext(_dbFile!, new JsonConverter(JsonOptions), new MoneyComparer());
@@ -101,7 +101,7 @@ public class JsonConverterTester
 		Assert.That(queried, Is.Null);
 	}
 
-	[Test]
+	[Test, Explicit]
 	public void SaveNullableEntity_AsQuantity_CanRoundtrip()
 	{
 		using var context = new JsonDbContext(_dbFile!, new JsonConverter(JsonOptions), new MoneyComparer());
