@@ -1959,9 +1959,9 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Somoni
 	/// </summary>
-	[CanonicalCulture("tg-Cyrl-TJ")]
+	[CanonicalCulture("tg-Cyrl-TJ", Overwritten = true)]
 	[Info(
-		englishName: "Somoni", nativeName: "Сомонӣ", symbol: "смн",
+		englishName: "Somoni", nativeName: "Сомонӣ", symbol: "SM",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: "\u00a0", groupSizes: new byte[] { 3 },
