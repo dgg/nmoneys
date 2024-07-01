@@ -2538,13 +2538,13 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Zimbabwe Dollar
 	/// </summary>
-	[CanonicalCulture("en-ZW")]
+	[CanonicalCulture("en-ZW", Overwritten = true)]
 	[Info(
-		englishName: "Zimbabwe Dollar", nativeName: "Zimbabwe Dollar", symbol: "Z$",
+		englishName: "Zimbabwe Dollar", nativeName: "Zimbabwean dollar", symbol: "Z$",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 0
+		positivePattern: 0, negativePattern: 1
 	)]
 	ZWL = 932
 }
