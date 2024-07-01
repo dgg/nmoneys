@@ -2147,9 +2147,9 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Peso Uruguayo
 	/// </summary>
-	[CanonicalCulture("es-UY")]
+	[CanonicalCulture("es-UY", Overwritten = true)]
 	[Info(
-		englishName: "Uruguayan Peso", nativeName: "Peso uruguayo", symbol: "$U",
+		englishName: "Uruguayan Peso", nativeName: "peso uruguayo", symbol: "$U",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
