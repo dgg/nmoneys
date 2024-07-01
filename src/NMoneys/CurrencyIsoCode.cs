@@ -2025,7 +2025,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Trinidad and Tobago Dollar
 	/// </summary>
-	[CanonicalCulture("en-TT")]
+	[CanonicalCulture("en-TT", Overwritten = true)]
 	[Info(
 		englishName: "Trinidad and Tobago Dollar", nativeName: "Trinidad and Tobago Dollar", symbol: "TT$",
 		significantDecimalDigits: 2,
