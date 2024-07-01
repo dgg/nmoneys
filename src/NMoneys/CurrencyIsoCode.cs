@@ -2407,12 +2407,12 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// CFP Franc
 	/// </summary>
-	[CanonicalCulture("fr-NC")]
+	[CanonicalCulture("fr-NC", Overwritten = true)]
 	[Info(
-		englishName: "CFP Franc", nativeName: "franc pacifique", symbol: "CFP",
+		englishName: "CFP Franc", nativeName: "franc pacifique", symbol: "F",
 		significantDecimalDigits: 0,
 		decimalSeparator: ",",
-		groupSeparator: "\u00a0", groupSizes: new byte[] { 3 },
+		groupSeparator: " ", groupSizes: new byte[] { 3 },
 		positivePattern: 3, negativePattern: 8
 	)]
 	XPF = 953,
