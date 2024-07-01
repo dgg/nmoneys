@@ -1422,9 +1422,9 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Mexican Unidad de Inversion (UDI)
 	/// </summary>
-	[CanonicalCulture("es-MX")]
+	[CanonicalCulture("es-MX", Overwritten = true)]
 	[Info(
-		englishName: "Mexican Unidad de Inversion (UDI)", nativeName: "Unidad de Inversión (UDI)", symbol: "$",
+		englishName: "Mexican Unidad de Inversion (UDI)", nativeName: "Unidad de inversión (UDI)", symbol: "$",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
