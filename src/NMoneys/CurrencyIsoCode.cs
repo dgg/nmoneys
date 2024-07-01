@@ -1408,9 +1408,9 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Mexican Peso
 	/// </summary>
-	[CanonicalCulture("es-MX")]
+	[CanonicalCulture("es-MX", Overwritten = true)]
 	[Info(
-		englishName: "Mexican Peso", nativeName: "Peso", symbol: "$",
+		englishName: "Mexican Peso", nativeName: "Peso Mexicano", symbol: "$",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
