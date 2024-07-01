@@ -1837,9 +1837,9 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Somali Shilling
 	/// </summary>
-	[CanonicalCulture("so-SO")]
+	[CanonicalCulture("so-SO", Overwritten = true)]
 	[Info(
-		englishName: "Somali Shilling", nativeName: "Shilin soomaali", symbol: "S",
+		englishName: "Somali Shilling", nativeName: "Shilin Soomaali", symbol: "S",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
