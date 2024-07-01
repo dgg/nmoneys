@@ -740,7 +740,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("ka-GE")]
 	[Info(
-		englishName: "Lari", nativeName: "ლარი", symbol: "₾",
+		englishName: "Lari", nativeName: "ქართული ლარი", symbol: "₾",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: "\u00a0", groupSizes: new byte[] { 3 },
