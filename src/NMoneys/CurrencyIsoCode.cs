@@ -1878,9 +1878,9 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Dobra
 	/// </summary>
-	[CanonicalCulture("pt-ST"), Obsolete("deprecated in favor of STN")]
+	[CanonicalCulture("pt-ST", Overwritten = true), Obsolete("deprecated in favor of STN")]
 	[Info(
-		englishName: "Dobra", nativeName: "Dobra de São Tomé e Príncipe", symbol: "Db",
+		englishName: "Dobra", nativeName: "dobra de São Tomé e Príncipe", symbol: "Db",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: "\u00a0", groupSizes: new byte[] { 3 },
@@ -1894,7 +1894,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("pt-ST")]
 	[Info(
-		englishName: "Dobra", nativeName: "Dobra de São Tomé e Príncipe", symbol: "Db",
+		englishName: "Dobra", nativeName: "dobra de São Tomé e Príncipe", symbol: "Db",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: "\u00a0", groupSizes: new byte[] { 3 },
