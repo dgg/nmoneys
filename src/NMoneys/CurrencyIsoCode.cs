@@ -137,7 +137,7 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
-		positivePattern: 2, negativePattern: 9,
+		positivePattern: 3, negativePattern: 8,
 		codePoint: 8380
 	)]
 	AZN = 944,
