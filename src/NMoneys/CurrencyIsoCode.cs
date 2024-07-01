@@ -2097,7 +2097,7 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 0,
+		positivePattern: 0, negativePattern: 1,
 		codePoint: 36, entityName: "dollar"
 	)]
 	USD = 840,
@@ -2111,7 +2111,7 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 0,
+		positivePattern: 0, negativePattern: 1,
 		codePoint: 36, entityName: "dollar"
 	)]
 	USN = 997,
@@ -2125,7 +2125,7 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 0,
+		positivePattern: 0, negativePattern: 1,
 		codePoint: 36, entityName: "dollar",
 		isObsolete: true
 	)]
