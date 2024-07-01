@@ -495,13 +495,13 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Unidad de Valor Real
 	/// </summary>
-	[CanonicalCulture("es-CO")]
+	[CanonicalCulture("es-CO", Overwritten = true)]
 	[Info(
 		englishName: "Unidad de Valor Real", nativeName: "Unidad de Valor Real", symbol: "$",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
-		positivePattern: 2, negativePattern: 14,
+		positivePattern: 2, negativePattern: 9,
 		codePoint: 36, entityName: "dollar"
 	)]
 	COU = 970,
@@ -1276,7 +1276,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Malagasy Ariary
 	/// </summary>
-	[CanonicalCulture("mg-MG")]
+	[CanonicalCulture("mg-MG", Overwritten = true)]
 	[Info(
 		englishName: "Malagasy Ariary", nativeName: "Ariary", symbol: "Ar",
 		significantDecimalDigits: 2,
