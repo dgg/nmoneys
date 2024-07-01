@@ -1571,11 +1571,11 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("es-PE")]
 	[Info(
-		englishName: "Sol", nativeName: "Sol", symbol: "S/.",
+		englishName: "Sol", nativeName: "sol peruano", symbol: "S/",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1
+		positivePattern: 2, negativePattern: 9
 	)]
 	PEN = 604,
 
