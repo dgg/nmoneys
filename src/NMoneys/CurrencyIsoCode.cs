@@ -953,7 +953,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Iranian Rial
 	/// </summary>
-	[CanonicalCulture("fa-IR")]
+	[CanonicalCulture("fa-IR", Overwritten = true)]
 	[Info(
 		englishName: "Iranian Rial", nativeName: "ریال ایران", symbol: "ريال",
 		significantDecimalDigits: 2,
