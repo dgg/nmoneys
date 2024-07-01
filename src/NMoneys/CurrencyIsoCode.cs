@@ -440,13 +440,13 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Unidad de Fomento
 	/// </summary>
-	[CanonicalCulture("es-CL")]
+	[CanonicalCulture("es-CL", Overwritten = true)]
 	[Info(
 		englishName: "Unidad de Fomento", nativeName: "Unidad de Fomento", symbol: "$",
 		significantDecimalDigits: 4,
 		decimalSeparator: ",",
 		groupSeparator: ".", groupSizes: new byte[] { 3 },
-		positivePattern: 2, negativePattern: 9,
+		positivePattern: 0, negativePattern: 2,
 		codePoint: 36, entityName: "dollar"
 	)]
 	CLF = 990,
