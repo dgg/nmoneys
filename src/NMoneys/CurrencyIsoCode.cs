@@ -1547,9 +1547,9 @@ public enum CurrencyIsoCode : ushort
 	[Info(
 		englishName: "Rial Omani", nativeName: "ريال عماني", symbol: "ر.ع.",
 		significantDecimalDigits: 3,
-		decimalSeparator: ".",
-		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 2, negativePattern: 3
+		decimalSeparator: "٫",
+		groupSeparator: "٬", groupSizes: new byte[] { 3 },
+		positivePattern: 3, negativePattern: 8
 	)]
 	OMR = 512,
 
