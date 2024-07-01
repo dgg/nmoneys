@@ -1451,7 +1451,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("pt-MZ")]
 	[Info(
-		englishName: "Mozambique Metical", nativeName: "metical moçanbicano", symbol: "MTn",
+		englishName: "Mozambique Metical", nativeName: "metical moçambicano", symbol: "MTn",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: "\u00a0", groupSizes: new byte[] { 3 },
