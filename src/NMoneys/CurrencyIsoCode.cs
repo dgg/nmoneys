@@ -1624,7 +1624,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("pl-PL")]
 	[Info(
-		englishName: "Zloty", nativeName: "Złoty", symbol: "zł",
+		englishName: "Zloty", nativeName: "złoty polski", symbol: "zł",
 		significantDecimalDigits: 2,
 		decimalSeparator: ",",
 		groupSeparator: "\u00a0", groupSizes: new byte[] { 3 },
