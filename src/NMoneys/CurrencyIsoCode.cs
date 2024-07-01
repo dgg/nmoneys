@@ -145,7 +145,7 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Convertible Mark
 	/// </summary>
-	[CanonicalCulture("bs-Latn-BA")]
+	[CanonicalCulture("bs-Latn-BA", Overwritten = true)]
 	[Info(
 		englishName: "Convertible Mark", nativeName: "Konvertibilna marka", symbol: "KM",
 		significantDecimalDigits: 2,
