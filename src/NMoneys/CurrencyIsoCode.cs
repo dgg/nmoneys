@@ -1478,7 +1478,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("ha-Latn-NG")]
 	[Info(
-		englishName: "Naira", nativeName: "Naira", symbol: "₦",
+		englishName: "Naira", nativeName: "Nairar Najeriya", symbol: "₦",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
