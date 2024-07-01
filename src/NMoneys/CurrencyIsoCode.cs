@@ -1382,13 +1382,13 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Rufiyaa
 	/// </summary>
-	[CanonicalCulture("dv-MV")]
+	[CanonicalCulture("dv-MV", Overwritten = true)]
 	[Info(
-		englishName: "Rufiyaa", nativeName: "ރުފިޔާ", symbol: "ރ.",
+		englishName: "Rufiyaa", nativeName: "ދިވެހި ރުފިޔާ", symbol: "ރ.",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 3, negativePattern: 10
+		positivePattern: 2, negativePattern: 9
 	)]
 	MVR = 462,
 
