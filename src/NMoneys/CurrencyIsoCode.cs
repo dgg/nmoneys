@@ -1317,7 +1317,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("mn-MN")]
 	[Info(
-		englishName: "Tugrik", nativeName: "төгрөг", symbol: "₮",
+		englishName: "Tugrik", nativeName: "Монгол төгрөг", symbol: "₮",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
