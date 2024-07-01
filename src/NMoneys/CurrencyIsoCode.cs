@@ -2084,7 +2084,7 @@ public enum CurrencyIsoCode : ushort
 		significantDecimalDigits: 0,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1
+		positivePattern: 2, negativePattern: 9
 	)]
 	UGX = 800,
 
