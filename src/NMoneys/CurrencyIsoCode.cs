@@ -1397,7 +1397,7 @@ public enum CurrencyIsoCode : ushort
 	/// </summary>
 	[CanonicalCulture("en-MW")]
 	[Info(
-		englishName: "Malawi Kwacha", nativeName: "Malawi Kwacha", symbol: "MK",
+		englishName: "Malawi Kwacha", nativeName: "Malawian Kwacha", symbol: "MK",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
