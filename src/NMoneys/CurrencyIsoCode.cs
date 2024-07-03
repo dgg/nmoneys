@@ -2536,15 +2536,29 @@ public enum CurrencyIsoCode : ushort
 	ZMW = 967,
 
 	/// <summary>
-	/// Zimbabwe Dollar
+	/// Zimbabwe Gold
 	/// </summary>
 	[CanonicalCulture("en-ZW", Overwritten = true)]
+	[Info(
+		englishName: "Zimbabwe Gold", nativeName: "Zimbabwe Gold", symbol: "Z$",
+		significantDecimalDigits: 2,
+		decimalSeparator: ".",
+		groupSeparator: ",", groupSizes: new byte[] { 3 },
+		positivePattern: 0, negativePattern: 1
+	)]
+	ZWG = 924,
+
+	/// <summary>
+	/// Zimbabwe Dollar
+	/// </summary>
+	[CanonicalCulture("en-ZW", Overwritten = true), Obsolete("deprecated in favor of ZWG")]
 	[Info(
 		englishName: "Zimbabwe Dollar", nativeName: "Zimbabwean dollar", symbol: "Z$",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
-		positivePattern: 0, negativePattern: 1
+		positivePattern: 0, negativePattern: 1,
+		isObsolete: true
 	)]
 	ZWL = 932
 }
