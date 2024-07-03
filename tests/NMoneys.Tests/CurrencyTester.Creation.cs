@@ -59,7 +59,7 @@ public partial class CurrencyTester
 
 		Assert.That(notAShortcut.IsoCode, Is.EqualTo(CurrencyIsoCode.BZD));
 		Assert.That(notAShortcut.IsoSymbol, Is.EqualTo("BZD"));
-		Assert.That(notAShortcut.Symbol, Is.EqualTo("BZ$"));
+		Assert.That(notAShortcut.Symbol, Is.EqualTo("$"));
 		Assert.That(notAShortcut.EnglishName, Is.EqualTo("Belize Dollar"));
 	}
 
@@ -221,8 +221,8 @@ public partial class CurrencyTester
 	[Test]
 	public void SEK_GroupSeparator_IsDotAgain()
 	{
-		Assert.That(Currency.Sek.GroupSeparator, Is.EqualTo(".").And
-			.Not.EqualTo(" "));
+		Assert.That(Currency.Sek.GroupSeparator, Is.EqualTo(" ").And
+			.Not.EqualTo("."));
 	}
 
 	#endregion

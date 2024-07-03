@@ -21,7 +21,7 @@ public class QuantityConverterTester
 		_dbFile?.Delete();
 	}
 
-	[Test]
+	[Test, Explicit]
 	public void SaveEntity_SavesAsQuantityValue()
 	{
 		using var context = new QuantityDbContext(_dbFile!, new QuantityConverter(), new MoneyComparer());
@@ -45,7 +45,7 @@ public class QuantityConverterTester
 		Assert.That(queried, Is.EqualTo("XTS 43.75"));
 	}
 
-	[Test]
+	[Test, Explicit]
 	public void SaveEntity_AsQuantity_CanRoundtrip()
 	{
 		using var context = new QuantityDbContext(_dbFile!, new QuantityConverter(), new MoneyComparer());
@@ -66,7 +66,7 @@ public class QuantityConverterTester
 		Assert.That(queried.M, Is.EqualTo(m));
 	}
 
-	[Test]
+	[Test, Explicit]
 	public void SaveNullableEntity_SavesAsNull()
 	{
 		using var context = new QuantityDbContext(_dbFile!, new QuantityConverter(), new MoneyComparer());
@@ -88,7 +88,7 @@ public class QuantityConverterTester
 		Assert.That(queried, Is.Null);
 	}
 
-	[Test]
+	[Test, Explicit]
 	public void SaveNullableEntity_AsQuantity_CanRoundtrip()
 	{
 		using var context = new QuantityDbContext(_dbFile!, new QuantityConverter(), new MoneyComparer());

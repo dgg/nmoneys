@@ -44,6 +44,10 @@ public class MoneyDemo
 		3.5m.ToMoney(Currency.Aud);
 		3.5m.ToMoney(CurrencyIsoCode.AUD);
 		CurrencyIsoCode.AUD.ToMoney(3.5m);
+
+		// also with integers
+		3.Xts();
+		3.ToMoney();
 	}
 
 	[Test]
@@ -64,7 +68,7 @@ public class MoneyDemo
 	[Test]
 	[SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
 	[SuppressMessage("Performance", "CA1806:Do not ignore method results")]
-	public void when_you_money_worths_nothing()
+	public void when_your_money_worths_nothing()
 	{
 		Money.Zero();
 		Money.Zero(Currency.Usd);

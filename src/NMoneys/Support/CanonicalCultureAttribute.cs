@@ -7,8 +7,12 @@ namespace NMoneys.Support;
 /// </summary>
 /// <remarks>For internal verification purposes, it does not have any effect on currency runtime.</remarks>
 [AttributeUsage(AttributeTargets.Field)]
-internal sealed class CanonicalCultureAttribute : Attribute
+public sealed class CanonicalCultureAttribute : Attribute
 {
+	/// <summary>
+	/// Initializes a new instance of the <see cref="CanonicalCultureAttribute"/> class.
+	/// </summary>
+	/// <param name="cultureName">Name of the corresponding <see cref="CultureInfo"/> instance.</param>
 	public CanonicalCultureAttribute(string cultureName)
 	{
 		CultureName = cultureName;
@@ -22,6 +26,9 @@ internal sealed class CanonicalCultureAttribute : Attribute
 	/// <summary>
 	/// Indicates whether one or more values of the currency are different from ones specified by the <see cref="CultureInfo"/>.
 	/// </summary>
+	/// <remarks>
+	/// Except <see cref="Currency.EnglishName"/>, which is controlled by the ISO currency list.
+	/// </remarks>
 	public bool Overwritten { get; set; }
 
 	/// <summary>
