@@ -35,13 +35,18 @@ task Test {
 		$html = Join-Path TestResults "$test_project.html"
 
 		exec {
-			& dotnet test --no-build -c $configuration --nologo -v $verbosity $tests_dir `
+			& dotnet run --no-build -c $configuration -v $verbosity --project $tests_dir -- `
+			--results-directory $RELEASE_DIR `
+			--coverage --coverage-output-format cobertura --coverage-output "$test_project.coverage.cobertura.xml" `
+        	--settings ./tests/.runsettings
+			<# & dotnet test --no-build -c $configuration --nologo -v $verbosity $tests_dir `
 				--results-directory $RELEASE_DIR `
 				--collect:"XPlat Code Coverage" `
 				-l:"console;verbosity=minimal;NoSummary=true" `
 				-l:"trx;LogFileName=$trx" `
 				-l:"html;LogFileName=$html" `
 				-- NUnit.TestOutputXml=TestResults NUnit.OutputXmlFolderMode=RelativeToResultDirectory
+			#>
 		}
 	}
 
