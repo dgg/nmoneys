@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- For more information, see https://docs.microsoft.com/en-us/visualstudio/test/configure-unit-tests-by-using-a-dot-runsettings-file?view=vs-2019  -->
+
+<RunSettings>
+	<RunConfiguration />
+	<NUnit>
+		<NumberOfTestWorkers>-1</NumberOfTestWorkers>
+		<Verbosity>-1</Verbosity>
+		<DumpXmlTestResults>true</DumpXmlTestResults>
+		<ShowInternalProperties>false</ShowInternalProperties>
+		<TestOutputXml>TestOutputXml</TestOutputXml>
+		<OutputXmlFolderMode>UseResultDirectory</OutputXmlFolderMode>
+	</NUnit>
+</RunSettings>

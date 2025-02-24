@@ -523,14 +523,15 @@ public enum CurrencyIsoCode : ushort
 	/// <summary>
 	/// Peso Convertible
 	/// </summary>
-	[CanonicalCulture("es-CU", Overwritten = true)]
+	[CanonicalCulture("es-CU", Overwritten = true), Obsolete("withdrawn of circulation")]
 	[Info(
 		englishName: "Peso Convertible", nativeName: "peso cubano convertible", symbol: "CUC$",
 		significantDecimalDigits: 2,
 		decimalSeparator: ".",
 		groupSeparator: ",", groupSizes: new byte[] { 3 },
 		positivePattern: 0, negativePattern: 1,
-		codePoint: 36, entityName: "dollar"
+		codePoint: 36, entityName: "dollar",
+		isObsolete: true
 	)]
 	CUC = 931,
 

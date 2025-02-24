@@ -31,10 +31,10 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<Version>7.3.0</Version>
-		<AssemblyVersion>7.3.0.0</AssemblyVersion>
-		<FileVersion>7.3.0.0</FileVersion>
-		<PackageVersion>7.3.0</PackageVersion>
+		<Version>7.4.0</Version>
+		<AssemblyVersion>7.4.0.0</AssemblyVersion>
+		<FileVersion>7.4.0.0</FileVersion>
+		<PackageVersion>7.4.0</PackageVersion>
 	</PropertyGroup>
 
 	<ItemGroup>

@@ -16,6 +16,12 @@ task default -depends Clean, Restore, Compile, Test, Pack, CopyArtifacts
 
 task Clean {
 	exec { & dotnet clean -c $configuration -v $verbosity --nologo $BASE_DIR }
+	# clear built packages
+	Join-Path $BASE_DIR src NMoneys bin $configuration |
+    	Get-ChildItem |
+    	Where-Object { $_.Name -match '.nupkg' } |
+    	Remove-Item
+    # clear release folder
 	Remove-Item $RELEASE_DIR -Recurse -Force -ErrorAction SilentlyContinue | Out-Null
 }
 
@@ -31,32 +37,16 @@ task Test {
 	$test_projects = @('NMoneys.Tests')
 	foreach ($test_project in $test_projects) {
 		$tests_dir = Join-Path $BASE_DIR tests $test_project
-		$trx = Join-Path TestResults "$test_project.trx"
-		$html = Join-Path TestResults "$test_project.html"
+		$test_results_dir = Join-Path $RELEASE_DIR TestResults
+		$runsettings_path = Join-Path $BASE_DIR tests .runsettings
 
 		exec {
-			& dotnet test --no-build -c $configuration --nologo -v $verbosity $tests_dir `
-				--results-directory $RELEASE_DIR `
-				--collect:"XPlat Code Coverage" `
-				-l:"console;verbosity=minimal;NoSummary=true" `
-				-l:"trx;LogFileName=$trx" `
-				-l:"html;LogFileName=$html" `
-				-- NUnit.TestOutputXml=TestResults NUnit.OutputXmlFolderMode=RelativeToResultDirectory
+			& dotnet run --no-build -c $configuration -v $verbosity --project $tests_dir -- `
+			--results-directory $test_results_dir `
+			--coverage --coverage-output-format cobertura --coverage-output "$test_project.cobertura.xml" `
+        	--settings $runsettings_path
 		}
 	}
-
-	$test_results_dir = Join-Path $RELEASE_DIR TestResults
-	# copy coverage file to $RELEASE_DIR/TestResults
-	$RELEASE_DIR |
-	Get-ChildItem -exclude TestResults |
-	Get-ChildItem -Recurse |
-	Where-Object { $_.Name -match 'coverage.cobertura.xml' } |
-	Copy-Item -Destination $test_results_dir
-
-	# clean coverage directories
-	$RELEASE_DIR |
-	Get-ChildItem -Directory -Exclude 'TestResults' |
-	Remove-Item -Recurse
 
 	# TODO: generate extra HTML reports
 }
