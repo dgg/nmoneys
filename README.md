@@ -8,6 +8,7 @@ Implementation of the Money Value Object to support representing moneys in the c
 [![codecov](https://codecov.io/gh/dgg/nmoneys/branch/master/graph/badge.svg)](https://codecov.io/gh/dgg/nmoneys)
 
 ![Nuget NMoneys](https://img.shields.io/nuget/v/nmoneys?logo=nuget&label=NMoneys)
+[![libs.tech recommends](https://libs.tech/project/32461990/badge.svg)](https://libs.tech/project/32461990/nmoneys)
 
 # What
 
