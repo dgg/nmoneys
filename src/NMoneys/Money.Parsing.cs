@@ -38,7 +38,8 @@ public partial struct Money
 	/// if the conversion succeeded, or <c>null</c> if the conversion failed.</param>
 	/// <returns><c>true</c> if <paramref name="quantity"/> was converted successfully; otherwise, <c>false</c>.</returns>
 	[Pure]
-	public static bool TryParse(string quantity, out Money? money) => TryParse(quantity.AsSpan(), out money);
+	public static bool TryParse(string quantity, [NotNullWhen(true)] out Money? money) =>
+		TryParse(quantity.AsSpan(), out money);
 
 	/// <inheritdoc cref="TryParse(string, out Money?)"/>
 	[Pure]
@@ -153,12 +154,14 @@ public partial struct Money
 	/// <exception cref="ArgumentNullException"><paramref name="currency"/> is <c>null</c>.</exception>
 	/// <seealso cref="decimal.TryParse(string, NumberStyles, IFormatProvider, out decimal)" />
 	[Pure]
-	public static bool TryParse(string s, NumberStyles style, Currency currency, [NotNullWhen(true)] out Money? money) =>
+	public static bool TryParse(string s, NumberStyles style, Currency currency,
+		[NotNullWhen(true)] out Money? money) =>
 		TryParse(s.AsSpan(), style, currency, out money);
 
 	/// <inheritdoc cref="TryParse(string, NumberStyles, Currency, out Money?)"/>
 	[Pure]
-	public static bool TryParse(ReadOnlySpan<char> s, NumberStyles style, Currency currency, [NotNullWhen(true)] out Money? money)
+	public static bool TryParse(ReadOnlySpan<char> s, NumberStyles style, Currency currency,
+		[NotNullWhen(true)] out Money? money)
 	{
 		money = tryParse(s, style, currency.FormatInfo, currency.IsoCode);
 		return money.HasValue;

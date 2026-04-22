@@ -133,7 +133,7 @@ public partial class Currency
 	/// <exception cref="MisconfiguredCurrencyException">The currency represented by <paramref name="code" />
 	/// has not been properly configured by the library implementor. Please, log a issue.</exception>
 	[Pure]
-	public static bool TryGet(CurrencyIsoCode code, out Currency? currency)
+	public static bool TryGet(CurrencyIsoCode code, [NotNullWhen(true)] out Currency? currency)
 	{
 		bool tryGet = false;
 		currency = null;
@@ -168,7 +168,7 @@ public partial class Currency
 	/// lookup succeeds, or null if the lookup fails.</param>
 	/// <returns>true if <paramref name="threeLetterIsoSymbol"/> was looked up successfully; otherwise, false.</returns>
 	[Pure]
-	public static bool TryGet(string threeLetterIsoSymbol, out Currency? currency)
+	public static bool TryGet(string threeLetterIsoSymbol, [NotNullWhen(true)] out Currency? currency)
 	{
 		bool tryGet = false;
 		currency = null;
@@ -202,7 +202,7 @@ public partial class Currency
 	/// the <paramref name="culture"/> if the lookup succeeds, or null if the lookup fails.</param>
 	/// <returns>true if <paramref name="currency"/> was looked up successfully; otherwise, false.</returns>
 	[Pure]
-	public static bool TryGet([NotNull] CultureInfo culture, out Currency? currency)
+	public static bool TryGet([NotNull] CultureInfo culture, [NotNullWhen(true)] out Currency? currency)
 	{
 		bool tryGet = false;
 		currency = null;
@@ -235,7 +235,7 @@ public partial class Currency
 	/// the <paramref name="region"/> if the lookup succeeds, or null if the lookup fails.</param>
 	/// <returns>true if <paramref name="currency"/> was looked up successfully; otherwise, false.</returns>
 	[Pure]
-	public static bool TryGet([NotNull] RegionInfo region, out Currency? currency)
+	public static bool TryGet([NotNull] RegionInfo region, [NotNullWhen(true)] out Currency? currency)
 	{
 		return TryGet(region.ISOCurrencySymbol, out currency);
 	}
