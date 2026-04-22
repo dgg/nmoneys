@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 
@@ -8,18 +9,22 @@ public partial struct Money
 	/// <summary>
 	/// Converts the string representation of a monetary quantity (<see cref="Money.AsQuantity()"/>) to its <see cref="Money"/> equivalent.
 	/// </summary>
+	/// <param name="quantity">Monetary quantity representation to be parsed.</param>
 	/// <exception cref="ArgumentException">The currency value does not contain <see cref="CurrencyIsoCode"/> enumeration information.</exception>
 	/// <exception cref="FormatException">The amount value is not in the correct <see cref="Decimal"/> format.</exception>
 	/// <exception cref="UndefinedCodeException">The currency value does not contain a defined <see cref="CurrencyIsoCode"/>.</exception>
 	/// <exception cref="ArgumentOutOfRangeException">Components of the representation are missing.</exception>
 	/// <returns>Monetary quantity equivalent to its representation.</returns>
 	[Pure]
-	public static Money Parse(string quantity)
+	public static Money Parse(string quantity) => Parse(quantity.AsSpan());
+
+	/// <inheritdoc cref="Parse(string)"/>
+	[Pure]
+	public static Money Parse(ReadOnlySpan<char> quantity)
 	{
-		ReadOnlySpan<char> span = quantity.AsSpan();
-		CurrencyIsoCode currency = Enum.Parse<CurrencyIsoCode>(span[..3], ignoreCase: false);
+		CurrencyIsoCode currency = Enum.Parse<CurrencyIsoCode>(quantity[..3], ignoreCase: false);
 		currency.AssertDefined();
-		decimal amount = decimal.Parse(span[4..],
+		decimal amount = decimal.Parse(quantity[4..],
 			style: NumberStyles.Float,
 			provider: NumberFormatInfo.InvariantInfo);
 		return new Money(amount, currency);
@@ -33,25 +38,22 @@ public partial struct Money
 	/// if the conversion succeeded, or <c>null</c> if the conversion failed.</param>
 	/// <returns><c>true</c> if <paramref name="quantity"/> was converted successfully; otherwise, <c>false</c>.</returns>
 	[Pure]
-	public static bool TryParse(string quantity, out Money? money)
+	public static bool TryParse(string quantity, out Money? money) => TryParse(quantity.AsSpan(), out money);
+
+	/// <inheritdoc cref="TryParse(string, out Money?)"/>
+	[Pure]
+	public static bool TryParse(ReadOnlySpan<char> quantity, [NotNullWhen(true)] out Money? money)
 	{
-		ReadOnlySpan<char> span = quantity.AsSpan();
-		try
+		if (quantity.Length >= 5)
 		{
-			if (Enum.TryParse(span[..3], out CurrencyIsoCode currencyCode) &&
+			if (Enum.TryParse(quantity[..3], out CurrencyIsoCode currencyCode) &&
 			    currencyCode.CheckDefined() &&
-			    decimal.TryParse(span[4..], NumberStyles.Float, NumberFormatInfo.InvariantInfo, out decimal amount))
+			    decimal.TryParse(quantity[4..], NumberStyles.Float, NumberFormatInfo.InvariantInfo, out decimal amount))
 			{
 				money = new Money(amount, currencyCode);
 				return true;
 			}
 		}
-#pragma warning disable CA1031
-		catch
-		{
-			// span indexing operation can throw
-		}
-#pragma warning restore CA1031
 
 		money = null;
 		return false;
@@ -70,10 +72,11 @@ public partial struct Money
 	/// <exception cref="ArgumentNullException"><paramref name="s"/> is null.</exception>
 	/// <seealso cref="decimal.Parse(string, NumberStyles, IFormatProvider)" />
 	[Pure]
-	public static Money Parse(string s, Currency currency)
-	{
-		return Parse(s, NumberStyles.Currency, currency);
-	}
+	public static Money Parse(string s, Currency currency) => Parse(s, NumberStyles.Currency, currency);
+
+	/// <inheritdoc cref="Parse(string, Currency)"/>
+	[Pure]
+	public static Money Parse(ReadOnlySpan<char> s, Currency currency) => Parse(s, NumberStyles.Currency, currency);
 
 	/// <summary>
 	/// Converts the string representation of a monetary quantity to its <see cref="Money"/> equivalent
@@ -94,7 +97,11 @@ public partial struct Money
 	/// </exception>
 	/// <seealso cref="decimal.Parse(string, NumberStyles, IFormatProvider)" />
 	[Pure]
-	public static Money Parse(string s, NumberStyles style, Currency currency)
+	public static Money Parse(string s, NumberStyles style, Currency currency) => Parse(s.AsSpan(), style, currency);
+
+	/// <inheritdoc cref="Parse(string, NumberStyles, Currency)"/>
+	[Pure]
+	public static Money Parse(ReadOnlySpan<char> s, NumberStyles style, Currency currency)
 	{
 		decimal amount = decimal.Parse(s, style, currency);
 
@@ -116,10 +123,13 @@ public partial struct Money
 	/// <returns>true if s was converted successfully; otherwise, false.</returns>
 	/// <seealso cref="decimal.TryParse(string, NumberStyles, IFormatProvider, out decimal)" />
 	[Pure]
-	public static bool TryParse(string s, Currency currency, out Money? money)
-	{
-		return TryParse(s, NumberStyles.Currency, currency, out money);
-	}
+	public static bool TryParse(string s, Currency currency, [NotNullWhen(true)] out Money? money) =>
+		TryParse(s, NumberStyles.Currency, currency, out money);
+
+	/// <inheritdoc cref="TryParse(string, Currency, out Money?)"/>
+	[Pure]
+	public static bool TryParse(ReadOnlySpan<char> s, Currency currency, [NotNullWhen(true)] out Money? money) =>
+		TryParse(s, NumberStyles.Currency, currency, out money);
 
 	/// <summary>
 	/// Converts the string representation of a monetary quantity to its <see cref="Money"/> equivalent
@@ -143,9 +153,13 @@ public partial struct Money
 	/// <exception cref="ArgumentNullException"><paramref name="currency"/> is <c>null</c>.</exception>
 	/// <seealso cref="decimal.TryParse(string, NumberStyles, IFormatProvider, out decimal)" />
 	[Pure]
-	public static bool TryParse(string s, NumberStyles style, Currency currency, out Money? money)
+	public static bool TryParse(string s, NumberStyles style, Currency currency, [NotNullWhen(true)] out Money? money) =>
+		TryParse(s.AsSpan(), style, currency, out money);
+
+	/// <inheritdoc cref="TryParse(string, NumberStyles, Currency, out Money?)"/>
+	[Pure]
+	public static bool TryParse(ReadOnlySpan<char> s, NumberStyles style, Currency currency, [NotNullWhen(true)] out Money? money)
 	{
-		ArgumentNullException.ThrowIfNull(currency, nameof(currency));
 		money = tryParse(s, style, currency.FormatInfo, currency.IsoCode);
 		return money.HasValue;
 	}
@@ -178,14 +192,16 @@ public partial struct Money
 	/// This parameter is passed uninitialized.
 	/// </param>
 	/// <returns> true if s was converted successfully; otherwise, false. </returns>
-	/// <exception cref="ArgumentNullException"><paramref name="numberFormatInfo"/> or <paramref name="currency"/> is <c>null</c>.</exception>
 	[Pure]
 	public static bool TryParse(string s, NumberStyles style, NumberFormatInfo numberFormatInfo, Currency currency,
-		out Money? money)
-	{
-		ArgumentNullException.ThrowIfNull(numberFormatInfo, nameof(numberFormatInfo));
-		ArgumentNullException.ThrowIfNull(currency, nameof(currency));
+		[NotNullWhen(true)] out Money? money) => TryParse(s.AsSpan(), style, numberFormatInfo, currency, out money);
 
+	/// <inheritdoc cref="TryParse(string, NumberStyles, NumberFormatInfo, Currency, out Money?)"/>
+	[Pure]
+	public static bool TryParse(ReadOnlySpan<char> s, NumberStyles style, NumberFormatInfo numberFormatInfo,
+		Currency currency,
+		[NotNullWhen(true)] out Money? money)
+	{
 		var mergedNumberFormatInfo = (NumberFormatInfo)numberFormatInfo.Clone();
 		mergedNumberFormatInfo.CurrencySymbol = currency.Symbol;
 
@@ -194,11 +210,10 @@ public partial struct Money
 		return money.HasValue;
 	}
 
-	private static Money? tryParse(string s, NumberStyles style, NumberFormatInfo formatProvider,
+	private static Money? tryParse(ReadOnlySpan<char> s, NumberStyles style, NumberFormatInfo formatProvider,
 		CurrencyIsoCode currency)
 	{
-		decimal amount;
-		bool result = decimal.TryParse(s, style, formatProvider, out amount);
+		bool result = decimal.TryParse(s, style, formatProvider, out var amount);
 		return result ? new Money(amount, currency) : null;
 	}
 }
