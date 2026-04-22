@@ -18,7 +18,7 @@ task Clean {
 	exec { & dotnet clean -c $configuration -v $verbosity --nologo $BASE_DIR }
 	# clear built packages
 	Join-Path $BASE_DIR src NMoneys bin $configuration |
-    	Get-ChildItem |
+    	Get-ChildItem -ErrorAction SilentlyContinue |
     	Where-Object { $_.Name -match '.nupkg' } |
     	Remove-Item
     # clear release folder
@@ -44,7 +44,7 @@ task Test {
 			& dotnet run --no-build -c $configuration -v $verbosity --project $tests_dir -- `
 			--results-directory $test_results_dir `
 			--coverage --coverage-output-format cobertura --coverage-output "$test_project.cobertura.xml" `
-        	--settings $runsettings_path
+			--settings $runsettings_path
 		}
 	}
 

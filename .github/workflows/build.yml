@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 8.0.406
+          global-json-path: ${{ github.workspace }}/global.json
       #- name: Info
       #  run: dotnet --info
       - name: Restore

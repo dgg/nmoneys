@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace NMoneys.Support;
@@ -73,7 +74,7 @@ internal sealed class InfoAttribute : Attribute, ICurrencyInfo
 		return attribute;
 	}
 
-	public static bool TryGetFrom(CurrencyIsoCode code, out InfoAttribute? attribute)
+	public static bool TryGetFrom(CurrencyIsoCode code, [NotNullWhen(true)] out InfoAttribute? attribute)
 	{
 		FieldInfo field = code.FieldOf();
 		attribute = field.GetCustomAttribute<InfoAttribute>();
